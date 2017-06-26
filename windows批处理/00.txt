@@ -1,0 +1,47 @@
+
+bat的变量不区分大小写
+
+set 会显示当前所有的系统环境变量
+set c 会显示所有的以c开头或C开头的变量（也即不区分大小写）；
+
+SET [variable=[string]]
+SET /P variable=[promptString]
+SET /A expression
+
+set /a 执行数学计算
+set /p 提示用户输入
+比如 set /p a=等待POP输入： ，然后窗口提示“等待POP输入：” ，输入完后 按回车
+
+SET /A expression
+SET /P variable=[promptString]
+
+cmd一行执行多条语句用 &
+cmd /c rd /s /q C:\Users\yao\Desktop\qq & md C:\Users\yao\Desktop\qq
+
+
+echo %path%|findstr /i "D:\python" && echo 123
+echo %path%|findstr /i "D:\python355" || echo 456
+
+
+dos 下的set设置的环境变量只对当前窗口有效，关闭后自动消失
+set xx=yy 设置环境变量xx值为yy
+set xx= 删除环境变量
+
+第三个技巧可以改变前景色和背景色：CMD /t:gf(g是指定背景色的十六进制数字，
+常用的颜色有以下值：0 黑色，1蓝色，2 绿色，3 浅绿色，4红色，5紫色，6黄色，7白色，8灰色，9浅蓝，A浅绿，B浅蓝色，C浅红色，D浅紫色，E浅黄色，F亮白色）。
+
+color 02
+0代表背景色，2代表前景色
+
+@rem 此BAT文件名一定不能是"tree.bat",否则tree命令会实效,不知道为什么
+@rem 可能是因为系统目录有"tree.com",系统会混淆吧.
+@rem 用"dir.bat"作文件名却可以.
+@echo off
+rem 在当前目录生成很漂亮的结构树
+tree /f > 1.TXT
+
+rem 象DIR命令一样,不过每个下级目录文件也列出
+DIR /S > 2.txt
+
+rem 简洁地列出目录当前目录文件
+DIR /d > 3.txt

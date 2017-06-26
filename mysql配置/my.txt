@@ -1,0 +1,8 @@
+
+
+#my.cnf常用配置
+[mysqld]
+max_connections = 30000
+innodb_file_per_table=1
+skip-name-resolve
+

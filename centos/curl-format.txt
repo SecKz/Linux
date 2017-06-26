@@ -1,0 +1,11 @@
+time_namelookup:  %{time_namelookup}\n
+time_connect:  %{time_connect}\n
+time_appconnect:  %{time_appconnect}\n
+time_pretransfer:  %{time_pretransfer}\n
+time_redirect:  %{time_redirect}\n
+time_starttransfer:  %{time_starttransfer}\n
+local_ip:  %{local_ip}\n
+remote_ip:  %{remote_ip}\n
+local_port:  %{local_port}\n
+-------------------------------------\n
+time_total:  %{time_total}\n

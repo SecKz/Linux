@@ -1,0 +1,22 @@
+
+
+http://help.dedecms.com/v53/archives/tag/list/
+
+功能说明：表示列表模板里的分页内容列表
+适用范围：仅列表模板 list_*.htm
+基本语法：
+{dede:list col='' titlelen='' infolen='' imgwidth='' imgheight='' listtype='' orderby='' pagesize='' orderway=''}{/dede:list}
+参数说明：
+col='' 内容列数
+titlelen='' 标题长度
+infolen='' 内容摘要长度
+imgwidth='' 缩略图宽
+imgheight='' 缩略图高
+orderby='' 排序方式，有效的排序方式有 senddate、pubdate、id、click、lastpost、postnum ，默认为 sortrank
+pagesize='20' 分页大小
+底层模板字段：
+ID(同 id),typeid,sortrank,flag,ismake,channel,arcrank,click,money,title,shorttitle,color,writer,
+source,litpic(同picname),pubdate,senddate,mid, lastpost,scores,goodpost,badpost,notpost,
+description(同infos),filename, image, imglink, fulltitle, textlink, typelink,plusurl, memberurl, templeturl,
+stime(pubdate 的"0000-00-00"格式)
+注：list标记除了支持档案表的基本模板变量外，还支持附加表的字段，你可以在模型管理中知道附加表支持列表使用的字段有哪些。

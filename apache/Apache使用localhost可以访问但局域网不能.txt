@@ -1,0 +1,12 @@
+httpd.conf
+
+# Controls who can get stuff from this server.
+Order allow,deny
+Allow from 127.0.0.1
+# 如果将 127.0.0.1 改成 all，所有的外网都可访问。
+
+
+Order Deny,Allow
+#   Deny from all
+Allow from 127.0.0.1
+Allow from 192.168.1.*

@@ -1,0 +1,16 @@
+使用nginx设置root时要注意一个问题，就是如果该root设置的前端目录不是根目录，那么在写root的绝对地址时，要把前端目录的部分省略掉。
+我们用设置虚拟目录指向的alias来和root比较一下就非常明显了
+
+location /abc/ {
+alias /home/html/abc/;
+}
+
+在这段配置下，http://test/abc/a.html就指定的是 /home/html/abc/a.html。这段配置亦可改成
+
+location /abc/ {
+root /home/html/;
+}
+
+可以看到，使用root设置目录的绝对路径时，少了/abc,也就是说，使用root来设置前端非根目录时，nginx会组合root和location的路径。
+另外，使用alias时目录名后面一定要加“/”
+

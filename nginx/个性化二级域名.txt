@@ -1,0 +1,37 @@
+server {
+	listen       80;
+	server_name  www.qksjk.com;
+	index	index.php index.html index.htm;
+	root   /home/www/qksjk.com/;
+	#access_log  /var/log/nginx/qksjk.com.access.log  ;
+	include	g.conf;
+	include /home/www/qksjk.com/.htaccess;
+}
+
+server {
+	listen       80;
+	server_name  qksjk.com;
+	return       301 http://www.qksjk.com$request_uri;
+}
+
+server {
+	listen       80;
+	server_name  ~^([0-9]+)\.qksjk.com;
+        root   /home/www/qksjk.com/;
+	index	index.html index.htm index.php;
+	include	g.conf;
+
+	if ($http_host ~ "([0-9]+).qksjk.com$") {
+		set $sub_domain $1;
+		rewrite ^/$		/zxtg.php?id=$sub_domain break;
+	}
+
+	location / {
+		 deny  all;
+	}
+
+}
+
+
+
+http://wendal.net/413.html

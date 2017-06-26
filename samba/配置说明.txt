@@ -1,0 +1,81 @@
+[global]
+
+workgroup = LinuxSir
+netbios name = LinuxSir05
+server string = Linux Samba Server TestServer
+security = share
+
+[linuxsir]
+path = /opt/linuxsir
+writeable = yes
+browseable = yes
+guest ok = yes
+valid users = @hr　　　　　　// 这个表示只有hr组的成员才能够访问hr目录
+
+[global]这段是全局配置，是必段写的。其中有如下的几行；
+workgroup 就是Windows中显示的工作组；在这里我设置的是LINUXSIR （用大写）；
+netbios name 就是在Windows中显示出来的计算机名；
+server string 就是Samba服务器说明，可以自己来定义；这个不是什么重要的；
+security 这是验证和登录方式，这里我们用了share ；验证方式有好多种，这是其中一种；另外一种常用的是user的验证方式；如果用share呢，就是不用设置用户和密码了；
+
+[linuxsir] 这个在Windows中显示出来是共享的目录；
+path = 可以设置要共享的目录放在哪里；
+writeable 是否可写，这里我设置为可写；
+browseable 是否可以浏览，可以；可以浏览意味着，我们在工作组下能看到共享文件夹。如果您不想显示出来，那就设置为 browseable=no
+guest ok 匿名用户以guest身份是登录；
+public = yes                                      //所有人可查看,等效于guest ok = yes
+
+[共享文件夹名]
+Path=/home/…/文件夹名
+Valid user=用户名1，用户名2，用户名3…
+Create mask=0777（此处权限设定依具体情况而定）
+
+public        是否允许匿名访问和guest  ok的效果一样
+brownseable  = no  指的是除了自己以外,不许任何人访问..
+writable    后定义共享目录是否可写..
+valid users  定义哪些用户可以访问,也可以定义组,如果是组的话,在组名前面加上@或者+.....
+write list     定义哪些用户可以写入,也可以定义组,如果是组的话,在组名前面加上@
+
+[共享名]
+
+comment = 任意字符串
+说明：comment是对该共享的描述，可以是任意字符串。
+
+path = 共享目录路径
+说 明：path用来指定共享目录的路径。可以用%u、%m这样的宏来代替路径里的unix用户和客户机的Netbios名，用宏表示主要用于[homes] 共享域。例如：如果我们不打算用home段做为客户的共享，而是在/home/share/下为每个Linux用户以他的用户名建个目录，作为他的共享目 录，这样path就可以写成：path = /home/share/%u; 。用户在连接到这共享时具体的路径会被他的用户名代替，要注意这个用户名路径一定要存在，否则，客户机在访问时会找不到网络路径。同样，如果我们不是以用 户来划分目录，而是以客户机来划分目录，为网络上每台可以访问samba的机器都各自建个以它的netbios名的路径，作为不同机器的共享资源，就可以 这样写：path = /home/share/%m 。
+
+browseable = yes/no
+说明：browseable用来指定该共享是否可以浏览。
+
+writable = yes/no
+说明：writable用来指定该共享路径是否可写。
+
+available = yes/no
+说明：available用来指定该共享资源是否可用。
+
+admin users = 该共享的管理者
+说明：admin users用来指定该共享的管理员（对该共享具有完全控制权限）。在samba 3.0中，如果用户验证方式设置成“security=share”时，此项无效。
+例如：admin users =david，sandy（多个用户中间用逗号隔开）。
+
+valid users = 允许访问该共享的用户
+说明：valid users用来指定允许访问该共享资源的用户。
+例如：valid users = david，@dave，@tech（多个用户或者组中间用逗号隔开，如果要加入一个组就用“@组名”表示。）
+
+invalid users = 禁止访问该共享的用户
+说明：invalid users用来指定不允许访问该共享资源的用户。
+例如：invalid users = root，@bob（多个用户或者组中间用逗号隔开。）
+
+write list = 允许写入该共享的用户
+说明：write list用来指定可以在该共享下写入文件的用户。
+例如：write list = david,@dave
+
+public = yes/no
+说明：public用来指定该共享是否允许guest账户访问。
+
+guest ok = yes/no
+说明：意义同“public”。
+
+由于要设置匿名用户可以下载或上传共享文件，所以要给/share目录授权为nobody权限。
+
+共享的文件没有写权限
+请把共享的文件的owner,group设为Valid user指定的用户

@@ -1,0 +1,23 @@
+
+刚刚遇到了mysql无法插入数据，报错：the table xxx is full。
+
+查询原因，是xx表使用了memory engine，其中mysql的memory engine中有max_heap_table_size限制，数据稍多就满了。
+
+于是就修改Mysql的配置文件my.ini，在[mysqld]下添加/修改两行：
+tmp_table_size = 256M
+max_heap_table_size = 256M
+
+
+
+max_heap_table_size
+用户可以创建的内存表(memory table)的大小。这个值用来计算内存表的最大行数值。这个变量支持动态改变，即set @max_heap_table_size=#
+这个变量和tmp_table_size一起限制了内部内存表的大小。如果某个内部heap（堆积）表大小超过tmp_table_size，MySQL可以根据需要自动将内存中的heap表改为基于硬盘的MyISAM表。
+
+tmp_table_size
+通过设置tmp_table_size选项来增加一张临时表的大小，例如做高级GROUP BY操作生成的临时表。如果调高该值，MySQL同时将增加heap表的大小，可达到提高联接查询速度的效果，建议尽量优化查询，要确保查询过程中生成的临时表在内存中，避免临时表过大导致生成基于硬盘的MyISAM表。
+
+Memory存储引擎的使用场合
+速度要求快的，临时数据 ，比如session
+丢失以后，对项目整体没有或者负面影响不大的时候。
+
+http://blog.csdn.net/kevon_sun/article/details/7967728

@@ -1,0 +1,43 @@
+卷 新加卷 的文件夹 PATH 列表
+卷序列号为 3A3D-7A55
+D:.
+    00.bat
+    0time.txt
+    1.bat
+    1.txt
+    2.txt
+    a.txt
+    aa.bat
+    and.bat
+    arg.bat
+    basic.bat
+    call.bat
+    clean.bat
+    defined.bat
+    dir.bat
+    dir.txt
+    dp0.bat
+    echo.bat
+    errorlevel.bat
+    find.bat
+    findstr.txt
+    findstr1.bat
+    for-dir.bat
+    for.bat
+    for1.bat
+    goto.bat
+    gotopath.bat
+    if.bat
+    if2.bat
+    netstat1.bat
+    path.bat
+    pipe.bat
+    set.bat
+    set1.bat
+    setlocal.bat
+    start.bat
+    substr.bat
+    type.bat
+    
+没有子文件夹 
+

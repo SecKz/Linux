@@ -1,0 +1,16 @@
+
+.gitignore文件只是ignore没有被staged(cached)文件，对于已经被staged文件，加入ignore文件时一定要先从staged移除。
+
+因此，要想用gitignore忽略文件，必须先把它们从staged中移除：
+commit你已有的改变，保存当前的工作。
+git rm --cached file/path/to/be/ignored。
+git add .
+git commit -m "fixed untracked files"
+
+
+原因：
+在git库中已存在了这个文件，之前push提交过该文件。
+.gitignore文件只对还没有加入版本管理的文件起作用，如果之前已经用git把这些文件纳入了版本库，就不起作用了
+解决：
+需要在git库中删除该文件，并更新。
+然后再次git status查看状态，file1文件不再显示状态。

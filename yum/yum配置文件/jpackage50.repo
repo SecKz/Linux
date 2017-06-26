@@ -1,0 +1,69 @@
+# Be sure to enable the distro specific repository for your distro below:
+# - jpackage-fc for Fedora Core
+# - jpackage-rhel for Red Hat Enterprise Linux and derivatives
+
+[jpackage-generic]
+name=JPackage (free), generic
+mirrorlist=http://www.jpackage.org/mirrorlist.php?dist=generic&type=free&release=5.0
+failovermethod=priority
+gpgcheck=1
+gpgkey=http://www.jpackage.org/jpackage.asc
+enabled=1
+
+[jpackage-fc]
+name=JPackage (free) for Fedora Core $releasever
+mirrorlist=http://www.jpackage.org/mirrorlist.php?dist=fedora-$releasever&type=free&release=5.0
+failovermethod=priority
+gpgcheck=1
+gpgkey=http://www.jpackage.org/jpackage.asc
+enabled=0
+
+[jpackage-rhel]
+name=JPackage (free) for Red Hat Enterprise Linux $releasever
+mirrorlist=http://www.jpackage.org/mirrorlist.php?dist=redhat-el-$releasever&type=free&release=5.0
+failovermethod=priority
+gpgcheck=1
+gpgkey=http://www.jpackage.org/jpackage.asc
+enabled=0
+
+[jpackage-generic-nonfree]
+name=JPackage (non-free), generic
+mirrorlist=http://www.jpackage.org/jpackage_generic_nonfree_5.0.txt
+failovermethod=priority
+gpgcheck=1
+gpgkey=http://www.jpackage.org/jpackage.asc
+enabled=0
+
+# Updates
+
+[jpackage-generic-updates]
+name=JPackage (free), generic
+mirrorlist=http://www.jpackage.org/mirrorlist.php?dist=generic&type=free&release=5.0-updates
+failovermethod=priority
+gpgcheck=1
+gpgkey=http://www.jpackage.org/jpackage.asc
+enabled=1
+
+[jpackage-fc-updates]
+name=JPackage (free) for Fedora Core $releasever
+mirrorlist=http://www.jpackage.org/mirrorlist.php?dist=fedora-$releasever&type=free&release=5.0-updates
+failovermethod=priority
+gpgcheck=1
+gpgkey=http://www.jpackage.org/jpackage.asc
+enabled=0
+
+[jpackage-rhel-updates]
+name=JPackage (free) for Red Hat Enterprise Linux $releasever
+mirrorlist=http://www.jpackage.org/mirrorlist.php?dist=redhat-el-$releasever&type=free&release=5.0-updates
+failovermethod=priority
+gpgcheck=1
+gpgkey=http://www.jpackage.org/jpackage.asc
+enabled=0
+
+[jpackage-generic-nonfree-updates]
+name=JPackage (non-free), generic
+mirrorlist=http://www.jpackage.org/jpackage_generic_nonfree_5.0-updates.txt
+failovermethod=priority
+gpgcheck=1
+gpgkey=http://www.jpackage.org/jpackage.asc
+enabled=0

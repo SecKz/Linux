@@ -1,0 +1,7 @@
+
+在config.inc.php添加
+$cfg['LoginCookieValidity'] = 7200;
+
+
+还是不行就在修改php.ini
+session.gc_maxlifetime = 14400

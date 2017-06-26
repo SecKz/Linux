@@ -1,0 +1,23 @@
+
+按大小搜索
+size:20kb		搜索大小等于20kb的文件
+size:medium
+size:large
+size:>1mb
+搜索大于120kb，含有apache的文件
+size:>120kb apache
+
+tiny	0 KB < size <= 10 KB
+small	10 KB < size <= 100 KB
+medium	100 KB < size <= 1 MB
+large	1 MB < size <= 16 MB
+huge	16 MB < size <= 128 MB
+gigantic	size > 128 MB
+
+
+
+ABC 123		Search for ABC and 123:
+ABC|123		Search for ABC or 123:
+!ABC		Search for everything except ABC:
+*.mp3		Search for mp3 files:
+<d:|e:> *.mp3	Search for mp3 files on the D: or E: drive:

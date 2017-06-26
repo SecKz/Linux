@@ -1,0 +1,56 @@
+
+
+如果dede是装在网站的二级目录下，如根目录的dede ，在后台的"系统"菜单中设置
+站点根网址：http://localhost
+站点设置的网页主页链接：  /dede
+核心设置的DedeCMS安装目录: /dede
+图片/上传文件默认路径： /upload
+
+dede后台登录验证
+include\userlogin.class.php
+
+密码加密方式
+substr(md5($pwd), 5, 20)
+
+
+标签名称：arclist
+http://help.dedecms.com/v53/archives/tag/global/arclist/
+
+field
+http://help.dedecms.com/v53/archives/tag/global/field/
+
+{dede:field.id/}等于{dede:field name='id'/}
+
+按文章ID排序
+{dede:arclist row='12' titlelen='100' typeid='31' orderby='id'}
+
+织梦模板标记简介：
+http://www.dedecms.com/archives/templethelp/help/tag.htm
+
+发布文章时缩略图：浏览出现
+Fatal error: Call to a member function read() on a non-object in D:\dede\include\dialog\select_images.php on line 167
+修改图片/上传文件默认路径： /upload
+
+DEDE后台卡死解决办法
+打开目录dede/templets/
+找到index_body.htm文件中的第25行至第35行部分屏蔽
+<script type="text/javascript">
+function showMore() {   $("#allInfo").toggle();   $("#allInfoTD").toggle(); }
+$(function() {  $.get("index_testenv.php",function(data) {   if(data !== '')   {       $("#__testEvn").html(data);   } }) })
+</script>
+
+
+
+DEDE如何批量修改为动态浏览[内容页和栏目页]+伪静态
+
+此为记录帖，防止我找不到，同时需要的人拿吧。
+进入后台→系统→SQL命令行工具→运行SQL命令行： 单行命令执行查询命令：
+1.将所有文档设置为“仅动态”：update dede_archives set ismake=-1
+2.将所有文档设置为“仅静态”：update dede_archives set ismake=1
+3.将所有栏目设置为“使用动态页”： update dede_arctype set isdefault=-1
+4.将所有栏目设置为“使用静态页”： update dede_arctype set isdefault=1
+
+
+
+--------------------dede数据库操作类
+include\dedesql.class.php

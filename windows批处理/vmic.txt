@@ -1,0 +1,26 @@
+
+
+ENVIRONMENT - 系统环境设置管理
+
+::获取temp环境变量
+wmic ENVIRONMENT where "name='temp'" get UserName,VariableValue
+
+::更改path环境变量值,新增e:\tools
+wmic ENVIRONMENT where "name='path' and username='<system>'" set VariableValue="%path%;e:\tools"
+
+::新增系统环境变量home,值为%HOMEDRIVE%%HOMEPATH%
+wmic ENVIRONMENT create name="home",username="<system>",VariableValue="%HOMEDRIVE%%HOMEPATH%"
+
+::删除home环境变量
+wmic ENVIRONMENT where "name='home'" delete
+
+http://blog.163.com/aner_rui/blog/static/121312328200911211214735/
+
+
+wmic ENVIRONMENT create name="JAVA_HOME",username="<system>",VariableValue="C:\tools\Java\jdk1.6.0_29"
+
+wmic ENVIRONMENT where "name='JAVA_HOME' and username='<system>'" set VariableValue="%JAVA_HOME%;D:/ee"
+
+echo %path%|findstr /i "D:\python35"
+
+D:\python35\Scripts\;D:\python35\;C:\Program Files (x86)\Common Files\NetSarang;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\SVN\bin;D:\wamp\bin\php\php5.2.6;D:/cc

@@ -1,0 +1,44 @@
+
+template函数文件的template函数
+phpcms\libs\functions\global.func.php
+
+m=content&c=index&a=lists&catid=4
+phpcms/modules/centent/index文件中的lists方法
+
+系统配置文件
+caches/configs
+模版的配置文件在
+/phpcms/templates/default/config.php
+
+phpcms数据操作类
+phpcms\libs\classes\mysql.class.php
+model操作类
+phpcms/libs/classes/model.class.php
+
+单网页在v9_page表
+content的控制器在phpcms/modules/content/content.php
+
+
+去除验证码登陆
+http://localhost/hbykdxxb/index.php?m=admin&c=index&a=login
+在/phpcms/modules/admin/index.php的login方法
+
+数据库配置文件
+caches\configs\database.php
+
+系统配置文件caches\configs\system.php
+网站根目录，css,js目录均在system.php都可以配置
+
+文章栏目在表v9_category
+新闻在v9_news
+
+用户密码加密方式 md5(md5(123).encrypt),在表admin
+
+
+catid调用栏目ID， num数据调用数量 order排序类型
+{pc:content action="lists" catid="13" order="id DESC" num="12" cache="3600"}
+{loop $data $r}
+<li><span class="ico"></span><a href="{$r[url]}">{str_cut($r[title],78,'...')}</a><span class="time">{date('Y-m-d',$r[inputtime])}</span></li>
+{/loop}
+{/pc}
+

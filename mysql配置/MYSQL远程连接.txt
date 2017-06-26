@@ -1,0 +1,8 @@
+共有两种：
+
+a. 该表法。可能是你的账号不允许从远程登陆，只能在localhost。这个时候只要在localhost的那台电脑，登录mysql后，更改“mysql”数据库里的'user'表的"host"项，从“localhost”改称“%”
+
+b. 授权法。在mysql1.5.6自带的命令工具中输入
+
+mysql> grant all privileges on *.* to 'root'@'%' identified by '123456' with grant option;
+mysql> flush privileges;

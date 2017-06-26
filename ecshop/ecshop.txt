@@ -1,0 +1,16 @@
+
+后
+台用户登录 表ecs_admin_user
+登录密码 md5(md5($_POST['password']).$ec_salt)
+
+前台用户登录 表ecs_users
+登录密码md5(md5($password).$ec_salt);
+
+登录流程
+$user->login
+login函数	includes\modules\integrates\integrate.php
+check_user函数  includes\modules\integrates\ecshop.php
+
+mysql类
+ecshop\includes\cls_mysql
+登录密码 md5(md5($_POST['password']).$ec_salt)

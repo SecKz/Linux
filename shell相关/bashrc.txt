@@ -1,0 +1,19 @@
+
+
+~/.bash_profile:每个用户都可使用该文件输入专用于自己使用的shell信息,当用户登录时,该文件仅仅执行一次!默认情况下,他设置一些环境变量,执行用户的.bashrc文件.
+
+此文件类似于/etc/profile，也是需要需要重启才会生效，/etc/profile对所有用户生效，~/.bash_profile只对当前用户生效。
+
+~/.bashrc:该文件包含专用于你的bash shell的bash信息,当登录时以及每次打开新的shell时,该文件被读取.（每个用户都有一个.bashrc文件，在用户目录下）
+
+此文件类似于/etc/bashrc，不需要重启生效，重新打开一个bash即可生效，  /etc/bashrc对所有用户新打开的bash都生效，但~/.bashrc只对当前用户新打开的bash生效。
+
+~/.bash_logout:当每次退出系统(退出bash shell)时,执行该文件. 
+
+
+~/.bash_profile 是交互式、login 方式进入 bash 运行的
+~/.bashrc 是交互式 non-login 方式进入 bash 运行的
+通常二者设置大致相同，所以通常前者会调用后者。
+所以一般优先把变量设置在.bashrc里面。比如在crontab里面执行一个命令，.bashrc设置的环境变量会生效，而.bash_profile不会。
+
+https://www.zhihu.com/question/22990045

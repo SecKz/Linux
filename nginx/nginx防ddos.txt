@@ -1,0 +1,25 @@
+
+awk '{a[$1]++;}END{for(i in a){print a[i], i;}}' access.log | wc -l 						 独立IP数
+awk '{a[$1]++;}END{for(i in a){print a[i], i;}}' access.log | sort -n 						 统计每个IP的连接数
+awk '{a[$1]++;}END{for(i in a){if(a[i]>1000) {print a[i], i;}}}' access.log | sort -n	     打印连接数大于1000的IP
+
+cat access.log | fgrep '116.1.78.28' | wc -l
+
+
+
+http://kyprizel.github.io/testcookie-nginx-module/
+estcookie
+
+https://github.com/aufi/anddos/wiki
+anddos
+
+nginx限制某个IP同一时间段的访问次数
+http://www.nginx.cn/446.html
+
+limit_conn_zone $binary_remote_addr zone=conn_limit_per_ip:20m;
+limit_req_zone $binary_remote_addr zone=req_limit_per_ip:20m rate=20r/s;
+
+limit_conn conn_limit_per_ip 25;
+#limit_req zone=req_limit_per_ip burst=5 nodelay;
+
+google搜nginx ddos protection

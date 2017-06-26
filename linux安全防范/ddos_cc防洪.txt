@@ -1,0 +1,39 @@
+
+
+php ddos攻击
+http://www.nigesb.com/phpddos-code.html
+http://blog.csdn.net/linvo/article/details/7169718
+http://yangbo.name/archives/3208.html
+
+Linux减少cc攻击
+http://www.cszhi.com/20111010/iptables-remission-ddos-cc.html
+http://www.nigesb.com/linux-cc-defence.html
+
+每人IP打开的连接
+http://www.commandlinefu.com/commands/view/1767/number-of-open-connections-per-ip.
+
+安全防范：Linux系统下防DDOS攻击的方法
+http://os.51cto.com/art/200801/64078.htm
+
+
+iptables组件--APF和BFD
+http://asram.blog.51cto.com/1442164/341540
+
+iptables -I INPUT -p tcp --dport 80 -m connlimit -connlimit-above 10 -j DROP
+iptables -I INPUT -p tcp --dport 80 -m connlimit --connlimit-above 10 -j REJECT
+
+
+Linux VPS下简单解决CC攻击[转]
+http://www.vpser.net/security/linux-vps-cc-attack.html
+
+51cto.com
+licl52
+JTpgPlK7yFxcosR1yW0w 
+986387040
+
+用iptables
+防ddos　cc
+http://bbs.chinaunix.net/thread-4093432-1-1.html
+http://bbs.chinaunix.net/thread-4089035-1-1.html
+
+http://www.path8.net/tn/archives/5864

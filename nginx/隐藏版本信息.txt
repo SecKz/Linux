@@ -1,0 +1,18 @@
+apache隐藏版本信息
+ServerTokens Prod
+ServerSignature Off
+
+隐藏Nginx版本信息:开启 nginx.conf，在http { }里加上：
+server_tokens off;
+
+隐藏php-fpm版本信息：
+编辑php-fpm配置文件：
+fastcgi_param SERVER_SOFTWARE nginx/$nginx_version;
+改为：
+fastcgi_param SERVER_SOFTWARE nginx0.0.0; #(这个nginx0.0.0就是显示的内容)
+
+隐藏PHP版本信息：编辑php.ini :
+expose_php = Off  重新启动 Apache/Nginx 即可。
+
+# curl -I 192.168.0.103
+我们看到X-Powered-By: PHP/5.1.6信息隐藏了。这样会进一步提高服务器的安全性。

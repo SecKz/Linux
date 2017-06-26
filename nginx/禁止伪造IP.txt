@@ -1,0 +1,33 @@
+服务器重新配置X-Forward-For 为正确的值。
+ 
+如对典型的nginx + php fastcgi 环境（ nginx 与 php fastcgi 是否位于同一机器，并不妨碍此问题的产生） , nginx 和 php fastcig 进程直接通信：
+
+切记，$_SERVER['REMOTE_ADDR']  是由 nginx 传递给 php 的参数，就代表了与当前 nginx 直接通信的客户端的 IP （是不能伪造的）。
+ 
+再比如，存在中间层代理服务器的环境： 
+
+以HTTP_ 开头的header,  均属于客户端发送的内容， 都是可以伪造的。
+$_SERVER['REMOTE_ADDR'] 是不能伪造的。
+
+服务器集群之间的通信，是可以信任的。我们要做的就是在离用户最近的前端代理上，强制设定X-Forward-For 的值，后端所有机器不作任何设置，直接信任并使用前端机器传递过来的 X-Forward-For 值即可。
+ 
+即在最前端的Nginx 上设置：
+location  ~  ^/static {
+proxy_pass  ....;
+proxy_set_header X-Forward-For $remote_addr ;
+}
+ 
+如果最前端（与用户直接通信）代理服务器是与php fastcgi 直接通信，则需要在其上设定：
+location ~ "\.+\.php$" {
+fastcgi_pass localhost:9000;
+fastcgi_param  HTTP_X_FORWARD_FOR  $remote_addr;
+}
+记住，$remote_addr 是 nginx 的内置变量，代表了客户端真实（网络传输层） IP 。通过此项措施，强行将 X-Forward-For 设置为客户端 ip,  使客户端无法通过本文所述方式“伪造 IP ”。
+ 
+
+
+
+http://zhangxugg-163-com.iteye.com/blog/1663687
+
+
+

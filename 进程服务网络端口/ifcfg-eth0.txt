@@ -1,0 +1,9 @@
+# Digital Equipment Corporation DECchip 21140 [FasterNet]
+DEVICE=eth0
+BOOTPROTO=none
+ONBOOT=yes
+HWADDR=00:15:5d:7e:d2:23
+NETMASK=255.255.255.0
+IPADDR=119.147.143.50
+GATEWAY=119.147.143.1
+TYPE=Ethernet

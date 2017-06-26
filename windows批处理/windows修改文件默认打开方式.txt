@@ -1,0 +1,8 @@
+
+windows修改文件默认打开方式
+\HKEY_CURRENT_USER\SOFTWARE\MICROSOFT\WINDOWS\currentversion\Explorer\FileExts\.bat
+删除除了openwithlist 和 openwithprogids 这两项外的其他所有选项。
+
+
+
+

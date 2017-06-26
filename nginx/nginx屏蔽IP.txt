@@ -1,0 +1,33 @@
+
+首先要建一个封ip的配置文件block_ip_ngx.conf
+deny 1.2.3.4;
+deny 91.212.45.0/24;
+deny 91.212.65.0/24;
+
+然后保存此文件，并且打开nginx.conf文件，在http配置节内添加下面一行配置：
+include block_ip_ngx.conf;
+
+保存nginx.conf文件，然后测试现在的nginx配置文件是否是合法的：
+/usr/local/nginx/sbin/nginx -t
+
+
+deny 192.168.1.1;
+allow 127.0.0.0/24;
+allo w 192.168.0.0/16;
+allow 10.10.0.0/16;
+deny all;
+
+一、服务器全局限IP
+#vi nginx.conf
+    allow 10.57.22.172;  #允许的IP
+    deny all;
+
+二、站点限IP
+#vi vhosts.conf
+站点全局限IP:
+location / {
+    index  index.html index.htm index.php;
+    allow 10.57.22.172;
+    deny all;
+
+    }
