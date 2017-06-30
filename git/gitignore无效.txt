@@ -1,4 +1,15 @@
 
+
+*.a       # 忽略所有 .a 结尾的文件
+!lib.a    # 但 lib.a 除外
+/TODO     # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO
+build/    # 忽略 build/ 目录下的所有文件
+doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+
+fd1/*　说明：忽略目录 fd1 下的全部内容；注意，不管是根目录下的 /fd1/ 目录，还是某个子目录 /child/fd1/ 目录，都会被忽略；
+
+/fd1/*  说明：忽略根目录下的 /fd1/ 目录的全部内容；
+
 .gitignore文件只是ignore没有被staged(cached)文件，对于已经被staged文件，加入ignore文件时一定要先从staged移除。
 
 因此，要想用gitignore忽略文件，必须先把它们从staged中移除：
@@ -14,3 +25,6 @@ git commit -m "fixed untracked files"
 解决：
 需要在git库中删除该文件，并更新。
 然后再次git status查看状态，file1文件不再显示状态。
+
+
+
