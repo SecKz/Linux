@@ -126,7 +126,7 @@ fi
 
 if [ "$inapps" = 'y' -o "$inapps" = 'Y' ]; then
 	yum install kernel gcc gcc-c++ glibc automake autoconf libtool make curl curl-devel ibmcrypt-devel mhash-devel libxslt-devel zlib zlib-devel glibc glibc-devel openssl openssl-devel bash wget rpm
-	yum install net-tools psmisc rar unzip zip p7zip lsof util-linux-ng man bind-utils cronie screen mlocate iftop nethogs htop lvm2 tree sysstat mailx rsync openssh-clients openssl finger vim ntpdate iptables-services iptables pciutils python tcpdump the_silver_searcher
+	yum install net-tools psmisc rar unzip zip p7zip lsof util-linux-ng man bind-utils cronie screen mlocate iftop nethogs htop lvm2 tree sysstat mailx rsync openssh-clients openssl finger vim ntpdate iptables-services iptables pciutils python tcpdump the_silver_searcher virt-what
 	#yum install jemalloc
 	service crond start
 	chkconfig crond on
