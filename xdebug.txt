@@ -6,3 +6,10 @@ Xdebug的var_dump重载
 1.xdebug.overload_var_dump = 1
 参数类型Boolean，默认值为1
 当设置1，则重载var_dump()。即启用xdebug的var_dump()
+
+Xdebug方式是
+xdebug_start_trace();
+/* 业务代码     */
+xdebug_stop_trace();
+
+
