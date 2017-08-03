@@ -20,6 +20,7 @@ make -j && make install
 
 ln -svf /usr/local/python35/bin/python3.5 /usr/bin/python3
 ln -svf /usr/local/python35/bin/pip3 /usr/bin/pip3
+ln -svf /usr/local/python35/bin/easy_install /usr/bin/easy_install3
 
 python3 -m ensurepip
 python3 -m pip install --upgrade pip
