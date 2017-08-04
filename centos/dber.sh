@@ -22,7 +22,7 @@ otime=$((60*24*days-60))					#以分钟算更精确的控制，减60，防止保
 
 port=3306
 host=localhost
-user=root
+user="root"
 pwd=aJt94RLjfcP8H7lZmAHPmNG2OYP7FI
 
 [ -d "$dir" ] || mkdir -p "$dir"
