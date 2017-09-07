@@ -1,6 +1,15 @@
 
+run context configuration
+Alt + 1
 
+CTRL /		注释、取消注释行
+cltr + d	复制光标所在的行
+cltr + J	 插入常用代码
+cltr + q	 显示光标所在的包的信息
+Ctrl + G	跳到指定行
+Ctrl+F12	显示当前文件的全部类、函数、变量
+Shift+F6	批量重命名变量
 
-cltr + / 快速注释
-cler + d 复制光标所在的行
-cltr + J   插入常用代码
+提示
+CTRL Q: 在参数列表位置，显示可以输入的所有参数。
+CTRL Q: 查看选中方法的文档字符串

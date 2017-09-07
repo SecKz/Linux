@@ -1,0 +1,84 @@
+
+启动MongoDB 服务器 在 MongoDB 安装目录的 bin 目录下执行 mongod
+mongod --auth --port 27017 --dbpath d:\MongoDB\data\db --logpath d:\MongoDB\mongo.log
+
+通过配置文件来启动mongo服务，配置文件需要自己创建，只需要在-f 后制定你自己的配置文件路径即可
+mongod -f d:\MongoDB\mongo.conf
+
+--logpath	定MongoDB日志文件，注意是指定文件不是目录
+--logappend	使用追加的方式写日志
+--dbpath	指定数据库路径
+--port	指定服务端口号，默认端口27017
+
+http://localhost:27017/
+
+
+连接MongoDB(针对客户端) 客户端通过mongo.exe来连接mongoDB。先打开mongodb装目录的下的bin目录，然后执行mongo.exe文件
+D:\MongoDB\Server\3.4\bin\mongo.exe 127.0.0.1:27017
+
+
+从3.0 版本起，默认只有 local 库，没有admin 库，需要我们自己来创建。
+
+
+> db.version()		查看mongoDB版本 
+> db.getMongo()		查看当前连接机器的ip
+> db.help()		查看命令提示 
+> db			查看当前所在数据库的名字 
+> use zcx		表示切换或是创建数据库。就是当数据库不存在的时候，MongoDB中的use可以创建数据库。
+> show dbs		显示数据库
+> show collections	显示表
+> db.dropDatabase()	删除当前数据。
+> db.stats()		查看当前数据的状态 
+
+> show users		查看创建的用户 
+> db.system.users.find()
+> db.auth("admin","123456")		用户验证登录
+
+MongoDB 中默认的数据库为 test，如果你没有创建新的数据库，集合将存放在 test 数据库中。
+1. MongoDB是没有默认管理员账号，所以要先添加管理员账号，再开启权限认证。
+2. 切换到admin数据库，添加的账号才是管理员账号。
+3. 用户只能在用户所在数据库登录，包括管理员账号。
+4. 管理员可以管理所有数据库，但是不能直接管理其他数据库，要先在admin数据库认证后才可以。
+
+
+> use zcx
+> db.zcx.insert({"name":"菜鸟教程"})	
+
+创建管理员
+> use admin
+> db.createUser({user: "dba", pwd: "123456", roles:[ { role: "userAdminAnyDatabase", db: "admin" }]})
+重启mongodb
+> mongod --auth --port 27017 --dbpath /var/lib/mongodb
+
+> mongo --port 27017 -u "root" -p "123456" --authenticationDatabase 'admin'
+
+http://www.jianshu.com/p/a4e94bb8a052
+http://www.cnblogs.com/mymelody/p/5906199.html
+http://ibruce.info/2015/03/03/mongodb3-auth/
+
+创建管理员
+首先，不使用 –auth 参数，启动 mongoDB
+use admin
+db.createUser(
+  {
+    user: "admin",
+    pwd: "123456",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+)
+
+创建普通用户
+use zcx
+db.createUser(
+ {
+   user: "bao",
+   pwd: "123456",
+   roles: [
+      { role: "readWrite", db: "zcx" },
+      { role: "read", db: "zcx2" }
+   ]
+ }
+)
+
+db.auth("bao","123456")
+

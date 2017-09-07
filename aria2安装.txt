@@ -1,0 +1,16 @@
+
+repoforge源安装
+http://repoforge.org/use/
+
+yum install aria2
+
+直接下载
+aria2c url
+使用6个连接
+aria2c -x10 url
+断点续传
+aria2c -c -s 5 url
+-c : 断点续传
+-s : 使用线程数
+
+
