@@ -39,16 +39,17 @@ slowlog = /var/log/php-fpm/phpslow.log
 pm.status_path = /phpfpm_status
 
 
-php_admin_value[error_log] = /var/log/php-fpm/www-error.log
+php_admin_value[error_log] = /var/log/php-fpm/phperror.log
 php_admin_flag[log_errors] = on
 php_value[session.save_handler] = files
 php_value[session.save_path] = /var/lib/php/session
 php_value[soap.wsdl_cache_dir]  = /var/lib/php/wsdlcache
 
-#env[TEMP] = /tmp
+;env[TEMP] = /tmp
 
 EOF
 
+touch /var/log/php-fpm/phperror.log
 
 Mem=$(free -m | grep 'Mem:' | awk '{print $2}')
 

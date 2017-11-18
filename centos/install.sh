@@ -1,6 +1,6 @@
 #!/bin/sh
 # centos安装，若有/home/html目录，请先备份。
-#mkfs -t ext3 /dev/sdb1; mount /dev/sdb1 /home; echo '/dev/sdb1               /home                   ext3    defaults        1 2' >> /etc/fstab
+#mkfs -t ext3 /dev/sdb1; mount /dev/sdb1 /home; echo '/dev/sdb1               /home                   ext4    defaults        1 2' >> /etc/fstab
 # http://dev.mysql.com/downloads/repo/yum/
 # /usr/sbin/ntpdate -u pool.ntp.org && /sbin/hwclock -w
 
@@ -26,8 +26,8 @@ if [ "$1" = 'un' ]; then
 		service memcached stop;
 		yum remove "php*" mysql "httpd*" pure-ftpd nginx "redis*" "memcache*"
 		rm -rf /var/log/mysqld.log /var/log/mysqld.log.rpmsave /etc/php.ini.rpmsave /etc/my.cnf.rpmsave
-		rm -rf /var/lib/mysql
 		rm -rf /etc/nginx /etc/pure-ftpd
+		cp -a /var/lib/mysql /root
 	fi
 	exit;
 fi
@@ -106,13 +106,12 @@ if [ "$inyums" = 'y' -o "$inyums" = 'Y' ]; then
 		green "remi.repo已安装";
 	fi
 
-	# http://repo.mysql.com/
+	# https://dev.mysql.com/downloads/repo/yum/
 	if [ ! -f 'mysql-community.repo' ]; then
-		rpm -Uvh http://repo.mysql.com/mysql-community-release-el${version}-7.noarch.rpm
+		rpm -Uvh http://repo.mysql.com/mysql57-community-release-el${version}-11.noarch.rpm
 	else
 		green "mysql-community.repo已安装";
 	fi
-
 fi
 
 if [ "$upyum" = 'y' -o "$upyum" = 'Y' ]; then
@@ -125,8 +124,8 @@ if [ "$upyum" = 'y' -o "$upyum" = 'Y' ]; then
 fi
 
 if [ "$inapps" = 'y' -o "$inapps" = 'Y' ]; then
-	yum install kernel gcc gcc-c++ glibc automake autoconf libtool make curl curl-devel ibmcrypt-devel mhash-devel libxslt-devel zlib zlib-devel glibc glibc-devel openssl openssl-devel bash wget rpm
-	yum install net-tools psmisc rar unzip zip p7zip lsof util-linux-ng man man-pages bind-utils cronie screen mlocate iftop nethogs htop lvm2 tree sysstat mailx rsync openssh-clients openssl finger vim ntpdate iptables-services iptables pciutils python tcpdump the_silver_searcher virt-what
+	yum install -y kernel gcc gcc-c++ glibc automake autoconf libtool make curl curl-devel ibmcrypt-devel mhash-devel libxslt-devel zlib zlib-devel glibc glibc-devel openssl openssl-devel bash wget rpm
+	yum install -y net-tools psmisc rar unzip zip p7zip lsof util-linux-ng man man-pages bind-utils cronie screen mlocate iftop nethogs htop lvm2 tree sysstat mailx rsync openssh-clients openssl finger vim ntpdate iptables-services iptables pciutils python tcpdump the_silver_searcher virt-what
 	#yum install jemalloc
 	service crond start
 	chkconfig crond on
@@ -240,7 +239,7 @@ read -p "是否优化sysctl.conf [Y/N] " sysanswer
 
 ##################################### rsync
 if [ "$rsyncyn" = 'y' -o "$rsyncyn" = 'Y' ]; then
-	rpm -q rsync || yum install rsync
+	rpm -q rsync || yum install -y rsync
 	grep -q '^rsync --daemon' /etc/rc.local || echo "rsync --daemon" >> /etc/rc.local
 	if [ $? = 0 ]; then
 		\cp -a /root/centos/rsyncd.conf /etc
@@ -248,7 +247,6 @@ if [ "$rsyncyn" = 'y' -o "$rsyncyn" = 'Y' ]; then
 		rsync --daemon
 		grep -q '/root/centos/rsync.sh' /var/spool/cron/root &> /dev/null || echo '0 2 * * * /root/centos/rsync.sh' >> /var/spool/cron/root
 		rpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c30)
-		#rpass=12hgf5d3241766ytrjgUI899FDLKzxccn
 		echo "backer:$rpass" > /etc/rsyncd.pass
 		chmod 600 /etc/rsyncd.pass
 		chown root.root /etc/rsyncd.pass
@@ -264,24 +262,25 @@ fi
 if [ "$mysqlyn" = 'y' -o "$mysqlyn" = 'Y' ]; then
 	rpm -q mysql-community-server > /dev/null
 	if [ $? != 0 ]; then
-		# yum install mysql-server mysql mysql-devel  # --enablerepo=remi
-		yum install mysql-community-server
+		yum install -y mysql-community-server
 		if [ $? = 0 ]; then
 			mysql_root_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c32)
-			echo $mysql_root_password > /root/centos/myroot_pwd.txt
-			service mysqld start;
-			\cp /etc/my.cnf /root
-			mysql -e "drop user 'root'@'::1'; drop user 'root'@'127.0.0.1'; drop user ''@'localhost';drop user ''@'%';";
-			mysql -e "delete from mysql.user where user!='root' or host!='localhost';";
-			mysql -e "show databases;drop database if exists test;flush privileges;"
-			mysql -e "select user,host,password from mysql.user;";
-			mysql -e "update mysql.user set password=password('$mysql_root_password') where user='root';";
 			red "mysql root密码 $mysql_root_password"
+			echo $mysql_root_password > /root/centos/mypwd.txt
+			/root/centos/mysql.sh
+			service mysqld start;
+
+			mysql -uroot << EOF
+			flush privileges;
+			update mysql.user set authentication_string=password('$mysql_root_password'), password_expired = 'N', password_last_changed = now() where user='root';
+EOF
+
 			sed -i "s/^pwd=.*/pwd=${mysql_root_password}/" "/root/centos/dber.sh"
 			sed -i "s/^pwd=.*/pwd=${mysql_root_password}/" "/root/centos/addsite.sh"
 			sed -i "s/^define('DBPW'.*/define('DBPW', '${mysql_root_password}');/" "/root/centos/expuser.php"
-			[ -f '/root/centos/mysql.sh' ] && /root/centos/mysql.sh
 			ln -vsf /root/centos/dber.sh /sbin
+			sed -i 's/^skip-grant-tables/#skip-grant-tables/' /etc/my.cnf
+			rm -f /var/lock/subsys/mysqld
 			service mysqld restart
 			chkconfig mysqld on;
 		fi
@@ -293,15 +292,16 @@ fi
 if [ "$ftpyn" = 'y' -o "$ftpyn" = 'Y' ]; then
 	rpm -q pure-ftpd > /dev/null
 	if [ $? != 0 ]; then
-		mysql -uroot -p$mysql_root_password -e ''
+		hup="-uroot -p$mysql_root_password"
+		mysql $hup -e ''
 		if [ $? = 0 ]; then
-			yum install pure-ftpd
+			yum install -y pure-ftpd
 			if [ $? = 0 ]; then
 				pureftpd_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c32)
 				green "pureftpd密码 $pureftpd_password"
-				mysql -uroot -p$mysql_root_password  < /root/centos/pureftpd.sql
-				mysql -uroot -p$mysql_root_password -e "grant all privileges on pureftpd.* to 'pureftpd'@'localhost' identified by '${pureftpd_password}';";
-				mysql -uroot -p$mysql_root_password -e "flush privileges;select user,host,password from mysql.user;show databases;";
+				mysql $hup  < /root/centos/pureftpd.sql
+				mysql $hup -e "grant all privileges on pureftpd.* to 'pureftpd'@'localhost' identified by '${pureftpd_password}';";
+				mysql $hup -e "flush privileges;select user,host,password from mysql.user;show databases;";
 				sed -i "s/^MYSQLPassword.*/MYSQLPassword	$pureftpd_password/" /root/centos/pureftpd-mysql.conf
 				cd /etc/pure-ftpd
 				sed -i 's/^# MySQLConfigFile/MySQLConfigFile/' pure-ftpd.conf
@@ -330,7 +330,7 @@ if [ "$nginxyn" = 'y' -o "$nginxyn" = 'Y' ]; then
 
 	rpm -q nginx > /dev/null
 	if [ $? != 0 ]; then
-		yum install nginx 			# nginx-1.8.0-1.el6.ngx
+		yum install -y nginx 			# nginx-1.8.0-1.el6.ngx
 		if [ $? = 0 ]; then
 			\mv /etc/nginx/nginx.conf /root
 			\cp -a /root/centos/nginx.conf /etc/nginx/
@@ -357,8 +357,8 @@ fi
 if [ -n "$arepo" ]; then
 	rpm -q php-fpm > /dev/null
 	if [ $? != 0 ]; then
-		yum install php php-fpm php-gd php-xml php-mbstring php-ldap php-mcrypt php-pear php-devel php-mysqlnd php-pecl-zendopcache --enablerepo=$arepo
-		rpm -q php-mysqlnd || yum install php-mysql --disablerepo="remi*"
+		yum install -y php php-fpm php-gd php-xml php-mbstring php-ldap php-mcrypt php-pear php-devel php-mysqlnd php-pecl-zendopcache --enablerepo=$arepo
+		rpm -q php-mysqlnd || yum install -y php-mysql --disablerepo="remi*"
 		if [ -f '/etc/php.ini' ]; then
 			\cp /etc/php.ini /root
 			\cp /etc/php-fpm.d/www.conf /root
@@ -380,8 +380,8 @@ fi
 if [ "$redisyn" = 'y' -o "$redisyn" = 'Y' ]; then
 	rpm -q redis > /dev/null
 	if [ $? != 0 ]; then
-		yum install redis --enablerepo=remi
-		yum install php-pecl-redis --enablerepo=$arepo
+		yum install -y redis --enablerepo=remi
+		yum install -y php-pecl-redis --enablerepo=$arepo
 		grep -q 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' /etc/rc.local || echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local
 		grep -q '^vm.overcommit_memory = 1' /etc/sysctl.conf || echo 'vm.overcommit_memory = 1' >> /etc/sysctl.conf
 		chkconfig redis on
@@ -403,8 +403,8 @@ fi
 if [ "$memcachedyn" = 'y' -o "$memcachedyn" = 'Y' ]; then
 	rpm -q php memcached > /dev/null
 	if [ $? != 0 ]; then
-		yum install memcached --enablerepo=remi
-		yum install php-pecl-memcached --enablerepo=$arepo
+		yum install -y memcached --enablerepo=remi
+		yum install -y php-pecl-memcached --enablerepo=$arepo
 		chkconfig memcached on
 		service memcached start
 		service php-fpm restart
@@ -452,11 +452,19 @@ if [ $? != 0  ]; then
 fi
 fi
 
+myslow="/var/log/mysqlslow.log"
+
+if [ ! -f "$myslow" ]; then
+	touch $myslow
+	chown mysql.mysql $myslow
+	rm -f /var/lock/subsys/mysqld
+	service mysqld restart
+fi
+
 if [ -f '/etc/init.d/yum-updatesd' ]; then
 	service yum-updatesd stop
 	chkconfig yum-updatesd off
 fi
-
 
 if ! grep -q '* hard nofile 65535' /etc/security/limits.conf; then
 ulimit -n 65535
@@ -475,6 +483,8 @@ if [ "${version}" -gt 6 ]; then
 else
 	chkconfig --list | egrep -i 'php-fpm|mysqld|pure-ftpd|nginx|crond|iptables|redis|memcache'
 fi
+
+[ -f '/usr/share/zoneinfo/Asia/Shanghai' ] && ln -svf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 red ++-----------------------------------------------------++
 crontab -l
@@ -505,7 +515,7 @@ echo;
 purple ++-----------------------------------------------------++
 
 yellow "nginx错误日志 /var/log/nginx/error.log"
-yellow "php-fpm错误日志 /var/log/php-fpm/www-error.log"
+yellow "php-fpm错误日志 /var/log/php-fpm/phperror.log"
 yellow "php-fpm慢日志 /var/log/php-fpm/phpslow.log"
 yellow "mysql慢日志 /var/log/mysqlslow.log"
 yellow "mysql错误日志 /var/log/mysqld.log"

@@ -44,8 +44,11 @@ curl -I http://192.168.0.159/cad/file/index.php
 用法如下:
 
 fastcgi_param  PHP_VALUE  "参数名=值";
+
+
 放在PHP的Location段中即可（不是用nginx+php-fpm跑PHP的请自觉无视~） 例如一台机器上放了好多的站的童鞋,为了增加安全性,可以使用下面的配置
 fastcgi_param  PHP_VALUE  "open_basedir=$document_root:/tmp/:/proc/";
+
 这就把PHP的读取路径权限限制死了,限制在了当前的站点根路径以及缓存和线程执行路径下,增加了服务器的安全性
 然后再拓宽,可以直接用来禁用一些危险的PHP函数
 

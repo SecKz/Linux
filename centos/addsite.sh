@@ -23,9 +23,12 @@ ftppwd=$(</dev/urandom tr -dc A-Za-z0-9 | head -c20)
 date=$(date)
 uid=$(id -u www)
 pwd=HXMFS7ofUv79D72RGRl57bruoLsaPdEN
+hup="-h127.0.0.1 -uroot -p$pwd"
+
 IP=$(python get_ipaddr.py)
 [ -z "$IP" ] && IP=$(ifconfig | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
 
+# 删除用户
 if [  $# = 2 -a "$2" = r  ]; then
 	echo "drop user ${domain1}@localhost; drop database ${domain1}; delete from pureftpd.ftpusers where User='${domain}' limit 1;"
 	echo "rm -rf $sitehome /etc/nginx/conf.d/${domain}.conf"
@@ -39,17 +42,17 @@ if [ -d "$sitehome" ]; then
 	echo "目录${sitehome}已经存在"
 fi
 
-mysql -uroot -p$pwd -e '';
+mysql $hup -e '';
 if [ $? -ne 0 ]; then
-echo "数据库连接错误"
+	echo "数据库连接错误"
 exit
 fi
 
 read -p "是否添加FTP [Y/N] (Default N) " ftpanswer
 [ "$ftpanswer" = 'Y' ] && ftpanswer=y
 if [ "$ftpanswer" = 'y' ]; then
-mysql -uroot -p$pwd << EOF
-insert into pureftpd.ftpusers values( '$domain', MD5('$ftppwd'), '$uid', '$uid', '$sitehome', '0', '0', '0', '0', '*', '' , '1');
+	mysql $hup << EOF
+		insert into pureftpd.ftpusers values( '$domain', MD5('$ftppwd'), '$uid', '$uid', '$sitehome', '0', '0', '0', '0', '*', '' , '1');
 EOF
 fi
 
@@ -58,10 +61,10 @@ fi
 read -p "是否添加数据库和用户 [Y/N] (Default N) " dbanswer
 [ "$dbanswer" = 'Y' ] && dbanswer=y
 if [ "$dbanswer" = 'y' ]; then
-mysql -uroot -p$pwd -e "create database IF NOT EXISTS $domain1;";
+	mysql $hup -e "create database IF NOT EXISTS $domain1;";
 
-mysql -uroot -p$pwd << EOF
-grant all privileges on $domain1.* to '$domain1'@'localhost' identified by '$mysqlpwd';
+	mysql $hup << EOF
+	grant all privileges on $domain1.* to '$domain1'@'localhost' identified by '$mysqlpwd';
 EOF
 
 fi

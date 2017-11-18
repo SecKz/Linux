@@ -82,3 +82,6 @@ db.createUser(
 
 db.auth("bao","123456")
 
+
+http://www.cnblogs.com/buzhiqianduan/p/7612905.html
+

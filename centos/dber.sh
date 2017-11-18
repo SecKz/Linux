@@ -27,6 +27,13 @@ pwd=aJt94RLjfcP8H7lZmAHPmNG2OYP7FI
 
 [ -d "$dir" ] || mkdir -p "$dir"
 
+VER=$(mysql -V |awk -F"," '{ print $1}' | awk '{ print $NF}' | grep -Eo '[0-9]+.[0-9]+')
+
+pwzd="password"
+if (( $(echo "$VER >= 5.7 " | bc) )); then
+	pwzd="authentication_string"
+fi
+
 hup="-h$host -u$user -p$pwd -P$port";
 
 if [ $# = 1 -a "$1" = 0 ]; then
@@ -34,20 +41,23 @@ if [ $# = 1 -a "$1" = 0 ]; then
 elif [ $# = 1 -a "$1" = 1 ]; then
 	mysql $hup -e 'show databases;'
 elif [ $# = 1 -a "$1" = 'u'  ]; then								#查看数据库用户
-	mysql $hup -e "select user,host,password from mysql.user;"
+	mysql $hup -e "select user,host,$pwzd from mysql.user;"
 elif [ $# = 2 -a "$1" = 't'  ]; then								#查看数据库表
 	mysql $hup -e "use $2;show tables;"
 elif [ $# = 2 -a "$1" = e ]; then					#导出数据库
 	mysqldump $hup $2 > ${dir}${2}-$time.sql
 elif [ $# = 3 -a "$1" = e ]; then					#导出数据库的单个表
 	mysqldump $hup $2 $3 > ${dir}${2}-${3}-$time.sql
-elif [ $# = 3 -a "$1" = i ]; then					#导入sql文件到已有的数据库
+elif [ $# = 3 -a "$1" = i ]; then					#导入sql文件到数据库，没有则创建数据库
+	mysql $hup -e "create database IF NOT EXISTS $2;";
 	mysql $hup $2 < $3;
 elif [ $# = 2 -a "$1" = v ]; then					#查询配置项
 	mysql $hup -e "show variables like '%$2%';"
 elif [ $# = 2 -a "$1" = s ]; then					#查询服务器的状态信息
 	mysql $hup -e "show global status like '%$2%';"
 elif [ "$1" = p ]; then								#查询进程
+	mysql $hup -e "show processlist\G;"
+elif [ "$1" = pp ]; then								#查询进程
 	mysql $hup -e "show processlist;"
 elif [ $# = 1 ]; then
 	head -10 $0 | tail -n +3 | grep '^#'

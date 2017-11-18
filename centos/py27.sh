@@ -29,9 +29,9 @@ python -m pip install --upgrade pip
 pip install --upgrade setuptools
 
 pip install wheel
-#pip install requests
-#pip install psutil
-#pip install lxml
-
-
+pip install requests
+pip install psutil
+pip install lxml
+pip install beautifulsoup4
+pip install virtualenv
 

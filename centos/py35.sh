@@ -31,3 +31,6 @@ pip3 install requests
 pip3 install psutil
 pip3 install lxml
 pip3 install gevent
+pip3 install beautifulsoup4
+pip3 install virtualenv
+

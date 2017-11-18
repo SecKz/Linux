@@ -1,0 +1,13 @@
+
+
+ proxy_cache_path /data/cache levels=1:2 keys_zone=web:10m max_size=1G inactive=10;　　　//缓存数据存储在/data/cache目录中
+
+levels：配置在该目录下再分两层目录，一层1个随机字符作为名称，二层2个随机字符作为名称，levels最多三层，每层最多两个字符，这是为了加快访问文件的速度；最后使用代理url的哈希值作为关键字与文件名，一个缓存数据如下： /data/nginx/cache/c/29/b7f54b2df7773722d382f4809d65029c;
+keys_zone：用来为这个缓存区起名，并设置大小。上面的例子就是指定名称为web，这个名称后面proxy_cache需要引用；而10m就是内存空间的大小；
+max_size：指定最大缓存数据磁盘空间的大小；
+inactive：在inactive指定的时间内，未被访问的缓存数据将从缓存中删除。
+
+http://www.cnblogs.com/keerya/p/7819842.html
+https://www.cnblogs.com/dudu/p/4597351.html
+https://www.cnblogs.com/zlingh/p/5879988.html
+

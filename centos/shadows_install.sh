@@ -62,3 +62,5 @@ cp /root/centos/shadowsocks.ini /etc/init.d/shadowsocks
 #wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks -O /etc/init.d/shadowsocks;
 chmod +x /etc/init.d/shadowsocks
 service shadowsocks start
+chkconfig shadowsocks on
+

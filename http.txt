@@ -1,0 +1,38 @@
+
+
+客户端如何判断服务器的数据已经发生完成
+当客户端向服务器请求一个静态页面或者一张图片时，服务器可以很清楚的知道内容大小，然后通过Content-length消息首部字段告诉客户端需要接收多少数据。
+但是如果是动态页面等时，服务器是不可能预先知道内容大小，这时就可以使用Transfer-Encoding：chunk模式来传输数据了。
+即如果要一边产生数据，一边发给客户端，服务器就需要使用"Transfer-Encoding: chunked"这样的方式来代替Content-Length。
+其实关键就一点：有了Transfer-Encoding，则不能有Content-Length。
+HTTP1.1必须支持chunk模式。因为当不确定消息长度的时候，可以通过chunk机制来处理这种情况。
+
+分块传输编码只在HTTP协议1.1版本（HTTP/1.1）中提供。
+
+content-length字段的作用   
+Conent-Length表示实体内容长度，客户端（服务器）可以根据这个值来判断数据是否接收完成。
+但是如果消息中没有Conent-Length，那该如何来判断呢？又在什么情况会没有Conent-Length呢？
+
+没有Content-length时，客户端如何来判断数据是否接收完成呢？
+1）静态页面或者图片：当客户端向服务器请求一个静态页面或者一张图片时，服务器可以很清楚的知道内容大小，然后通过Content-length消息首部字段告诉客户端 需要接收多少数据。
+2）动态页面： 如果是动态页面等时，服务器是不可能预先知道内容大小，这时就可以使用Transfer-Encoding：chunk模式来传输 数据了。即如果要一边产生数据，一边发给客户端，服务器就需要使用”Transfer-Encoding: chunked”这样的方式来代替Content-Length。
+采用Transfer-encoding的目的
+一边产生数据，一边发给客户端。
+
+
+Transfer-Encoding: chunked		分块传输。当不确定消息长度的时候，可以通过chunk机制来处理这种情况。
+Connection: keep-alive			持久连接，通俗说法长连接 浏览器重用已经打开的空闲持久连接，可以避开缓慢的三次握手
+Content-Encoding: gzip			对实体内容进行压缩编码，大幅减小传输体积
+Content-Length: 162			表示实体内容长度，客户端可以根据这个值来判断数据是否接收完成。
+
+如果存在Transfer-Encoding，则在header中不能有Content-Length，有也会被忽视。
+
+chunk编码将数据分成一块一块的发生。Chunked编码将使用若干个Chunk串连而成，由一个标明长度为0 的chunk标示结束。每个Chunk分为头部和正文两部分，头部内容指定正文的字符总数（十六进制的数字 ）和数量单位（一般不写），正文部分就是指定长度的实际内容，两部分之间用回车换行(CRLF) 隔开。在最后一个长度为0的Chunk中的内容是称为footer的内容，是一些附加的Header信息（通常可以直接忽略）。
+
+Transfer-Encoding，是一个 HTTP 头部字段，字面意思是「传输编码」。实际上，HTTP 协议中还有另外一个头部与编码有关：Content-Encoding（内容编码）。Content-Encoding 通常用于对实体内容进行压缩编码，目的是优化传输，例如用 gzip 压缩文本文件，能大幅减小体积。内容编码通常是选择性的，例如 jpg / png 这类文件一般不开启，因为图片格式已经是高度压缩过的，再压一遍没什么效果不说还浪费 CPU。
+
+而 Transfer-Encoding 则是用来改变报文格式，它不但不会减少实体内容传输大小，甚至还会使传输变大，那它的作用是什么呢？本文接下来主要就是讲这个。我们先记住一点，Content-Encoding 和 Transfer-Encoding 二者是相辅相成的，对于一个 HTTP 报文，很可能同时进行了内容编码和传输编码。
+
+http://blog.csdn.net/yankai0219/article/details/8269922
+https://imququ.com/post/transfer-encoding-header-in-http.html
+

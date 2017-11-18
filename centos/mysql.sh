@@ -1,5 +1,4 @@
 #!/bin/sh
-#mysql优化
 
 mv /etc/my.cnf /root
 
@@ -41,17 +40,15 @@ query_cache_type = 1
 query_cache_size = 8M
 query_cache_limit = 2M
 
-long_query_time = 2
 slow_query_log = 1
+long_query_time = 2
 slow_query_log_file = /var/log/mysqlslow.log
 
 #lower_case_table_names = 1
 
 character-set-server = utf8
-#default-character-set = utf8
 
-#skip-grant-tables
-
+skip-grant-tables
 skip-external-locking
 
 bulk_insert_buffer_size = 8M
@@ -59,27 +56,27 @@ myisam_sort_buffer_size = 8M
 myisam_max_sort_file_size = 10G
 myisam_repair_threads = 1
 
-#performance_schema_max_table_instances = 2000
+#server-id = 1
+#log_bin = mybin
+#expire_logs_days = 7
 
-[mysqldump]
-quick
-max_allowed_packet = 500M
+#general_log = on
+#general_log_file=/var/log/query.log
 
-[myisamchk]
-key_buffer_size = 8M
-sort_buffer_size = 8M
-read_buffer = 4M
-write_buffer = 4M
-
-[mysqld_safe]
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
 
+validate_password_special_char_count=0
+validate_password_mixed_case_count=0
+validate_password_number_count=0
 
 EOF
 
-#touch /var/log/mysqlslow.log;
-#chown mysql.mysql /var/log/mysqlslow.log
+touch /var/log/mysqlslow.log;
+chown mysql.mysql /var/log/mysqlslow.log
+
+touch /var/log/query.log;
+chown mysql.mysql /var/log/query.log
 
 Mem=$(free -m | grep 'Mem:' | awk '{print $2}')
 

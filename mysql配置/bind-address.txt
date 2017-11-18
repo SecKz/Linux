@@ -1,0 +1,18 @@
+
+Windows 7 用 localhost 连接本地 MySQL，速度会很慢。
+Windows 7 用 127.0.0.1 连接本地 MySQL，速度则是正常的。
+
+1.my.ini里配置bind-address=127.0.0.1时,Win7及其以上版本系统PHP用localhost连接MySQL耗时超过1秒,比用127.0.0.1连接慢了400倍.
+2.my.ini里配置bind-address=::1时,Win7及其以上版本系统PHP用localhost连接MySQL速度是正常的,但用127.0.0.1连接又不正常了.
+3.去掉bind-address配置,则用localhost或127.0.0.1连接MySQL速度都是正常的.
+
+是MYSQL用来监听某个单独的TCP/IP连接,只能绑定一个IP地址,被绑定的IP地址可以映射多个网络接口. 
+可以是IPv4,IPv6或是主机名,但需要在MYSQL启动的时候指定(主机名在服务启动的时候解析成IP地址进行绑定).
+默认是"*"
+
+*					接收所有的IPv4 或 IPv6 连接请求
+0.0.0.0				接受所有的IPv4地址
+::						接受所有的IPv4 或 IPv6 地址
+IPv4-mapped			接受所有的IPv4地址或IPv4邦定格式的地址（例 ::ffff:127.0.0.1）
+IPv4（IPv6）			只接受对应的IPv4（IPv6）地址
+
