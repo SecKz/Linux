@@ -413,8 +413,8 @@ fi
 
 
 if [ "$sysanswer" = 'y' -o "$sysanswer" = 'Y' ]; then
-cp /etc/sysctl.conf /root/sysctl.conf
-grep -q '^fs.file-max' /etc/sysctl.conf || cat >> /etc/sysctl.conf << EOF
+	cp /etc/sysctl.conf /root/sysctl.conf
+	grep -q '^fs.file-max' /etc/sysctl.conf || cat >> /etc/sysctl.conf << EOF
 fs.file-max=65535
 net.ipv4.tcp_max_tw_buckets = 60000
 net.ipv4.tcp_sack = 1
@@ -445,11 +445,11 @@ net.netfilter.nf_conntrack_tcp_timeout_time_wait = 120
 net.netfilter.nf_conntrack_tcp_timeout_established = 3600
 EOF
 
-sysctl -p
-if [ $? != 0  ]; then
-	modprobe bridge
-	grep -q '^modprobe bridge' /etc/rc.local || echo "modprobe bridge" >> /etc/rc.local
-fi
+	sysctl -p
+	if [ $? != 0  ]; then
+		modprobe bridge
+		grep -q '^modprobe bridge' /etc/rc.local || echo "modprobe bridge" >> /etc/rc.local
+	fi
 fi
 
 myslow="/var/log/mysqlslow.log"
@@ -501,7 +501,7 @@ echo "${IP}/01pinfo.php"
 
 purple ++-----------------------------------------------------++
 green "压力测试"
-echo "ab -H 'Accept-Encoding: gzip' -n300000 -kc10000 ${IP}/01pinfo.php"
+echo "ab -H 'Accept-Encoding: gzip' -n1000000 -kc10000 ${IP}/01pinfo.php"
 purple ++-----------------------------------------------------++
 
 green "检测nginx配置"
@@ -525,8 +525,9 @@ updatedb
 sync
 purple "别忘了reboot，删除安装文件"
 
+# curl 127.0.0.1/nginx_status; curl 127.0.0.1/phpfpm_status
 
-# ab -n30000 -kc1000 ${IP}/01pinfo.php
+# ab -H 'Accept-Encoding: gzip' -n1000000 -kc10000 ${IP}/01pinfo.php
 
 #echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all
 #echo "当前的mta是："

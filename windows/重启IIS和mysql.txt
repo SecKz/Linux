@@ -1,0 +1,42 @@
+
+
+IIS下MySQL停止和启动的方法
+mysql服务的启动与停止：点击开始--运行，输入services.msc 。找到mysql重启
+
+MySQL 5中，出现错误提示：Field 'id' doesn't have a default value
+打开my.ini，查找
+sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+修改为
+sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+然后重启MYSQL
+
+重启IIS
+点击 开始->运行，输入iisreset 回车。
+
+界面操作
+打开“控制面板”->“管理工具”->“服务”。找到“IIS Admin Service” 右键点击“重新启动” 弹出 “停止其它服务” 窗口，点击“是”。
+
+依次单击“开始”→“管理工具”→“Internet信息服务（IIS）管理器”菜单项，打开“Internet信息服务（IIS）管理器”窗口。
+在“Internet信息服务（IIS）管理器”窗口的左窗格中用鼠标右键单击“Computer2003（本地计算机）”选项，在打开的快捷菜单中依次执行“所有任务/重新启动IIS”命令，如图所示。
+
+WINDOWS提供WEB服务的IIS有时候会出现访问过大导致网站打不开，这时重启IIS是最好的选择。
+
+Net 命令操作
+点击 “开始”->“运行”，输入cmd 打开命令窗口；
+输入 net stop iisadmin /y  回车停止IIS；
+再输入 net start iisadmin  回车启动IIS；
+再输入 net start w3svc 回车WEB服务。
+
+
+
+
+
+
+
+
+
+
+
+
+
+

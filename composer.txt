@@ -1,0 +1,39 @@
+
+# composer -V		查看版本
+# composer selfupdate	更新composer
+
+使用 Composer 来安装项目的依赖。当前目录下要有一个 composer.json 文件
+# composer install					如果你进行了全局安装，并且没有 phar 文件在当前目录，直接composer
+# php composer.phar install			在项目根目录，执行安装命令
+# composer update					在要更新的项目目录中执行
+
+
+composer list  列出所有可用的命令
+composer init   初始化composer.json文件(就不劳我们自己费力创建啦)，会要求输入一些信息来描述我们当前的项目，还会要求输入依赖包
+composer install  读取composer.json内容，解析依赖关系，安装依赖包到vendor目录下
+composer update   更新最新的依赖关系到compsoer.lock文件，解析最新的依赖关系并且写入composer.lock文件
+composer search packagename 搜索包，packagename替换为你想查找的包名称
+composer require packagename 添加对packagename的依赖，packagename可修改为你想要的包名称
+composer show packagename
+composer self-update 更新 composer.phar文件自身
+composer dump-autoload --optimize 优化一下自动加载
+
+composer command --help 以上所有命令都可以添加 --help选项查看帮助信息
+
+http://www.cnblogs.com/bean-sprout/p/6377085.html
+http://www.zhihu.com/question/22885542
+http://docs.phpcomposer.com/04-schema.html	
+
+linux下全局安装composer 
+# curl -sS https://getcomposer.org/installer | php  
+# mv composer.phar /usr/local/bin/composer
+
+windows下把composer.phar加入系统的 PATH 
+
+
+You are running composer with xdebug enabled. This has a major impact on runtime performance. See https://getcomposer.org/xdebug
+禁用 Xdebug
+这是一个非常常见的冲突，而且这个冲突对 composer 运行的影响还是蛮大的，当我们启用 Xdebug 功能时，将使得我们的 composer 运行放慢 3-4 倍。
+换句话说：xdebug 对我们程序调试来说非常重要，但对 composer 来说却增加了内存占用和进程时间。
+
+
