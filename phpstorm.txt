@@ -1,2 +1,5 @@
 
+Phpstorm激活
+激活时选择License server 填入http://idea.higherbros.com 点击Active即可。
+http://www.imsxm.com/jetbrains-license-server.html
 

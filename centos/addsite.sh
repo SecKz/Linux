@@ -23,7 +23,7 @@ ftppwd=$(</dev/urandom tr -dc A-Za-z0-9 | head -c20)
 date=$(date)
 uid=$(id -u www)
 pwd=HXMFS7ofUv79D72RGRl57bruoLsaPdEN
-hup="-h127.0.0.1 -uroot -p$pwd"
+hup="-hlocalhost -uroot -p$pwd"
 
 IP=$(python get_ipaddr.py)
 [ -z "$IP" ] && IP=$(ifconfig | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
