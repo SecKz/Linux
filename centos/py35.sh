@@ -11,12 +11,12 @@ yum groupinstall "Development tools"
 yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel openssl-static
 
 cd /root
-wget --no-check-certificate https://www.python.org/ftp/python/3.5.3/Python-3.5.3.tar.xz
+[ -e "Python-3.5.3.tar.xz" ] || wget --no-check-certificate https://www.python.org/ftp/python/3.5.3/Python-3.5.3.tar.xz
 tar xf Python-3.5.3.tar.xz
 cd Python-3.5.3
 
 ./configure --prefix=/usr/local/python35
-make -j && make install
+make && make install
 
 ln -svf /usr/local/python35/bin/python3.5 /usr/bin/python3
 ln -svf /usr/local/python35/bin/pip3 /usr/bin/pip3

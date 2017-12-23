@@ -12,12 +12,12 @@ yum groupinstall "Development tools"
 yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel openssl-static
 
 cd /root
-wget --no-check-certificate https://www.python.org/ftp/python/2.7.14/Python-2.7.14.tar.xz
+[ -e "Python-2.7.14.tar.xz" ] || wget --no-check-certificate https://www.python.org/ftp/python/2.7.14/Python-2.7.14.tar.xz
 tar xf Python-2.7.14.tar.xz
 cd Python-2.7.14
 
 ./configure --prefix=/usr/local
-make -j && make install
+make && make install
 
 
 
