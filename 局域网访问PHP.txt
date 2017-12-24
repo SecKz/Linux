@@ -1,0 +1,8 @@
+
+
+测试局域网其他机器是否可以访问本机的PHP程序
+http://本机IP
+
+更改httpd.conf，找到<Directory "D:/wamp/www/">  
+把 Allow from 127.0.0.1 改为Allow from  all ;意思是允许所有来源的访问
+
