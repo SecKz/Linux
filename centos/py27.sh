@@ -13,6 +13,7 @@ yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel open
 
 cd /root
 [ -e "Python-2.7.14.tar.xz" ] || wget --no-check-certificate https://www.python.org/ftp/python/2.7.14/Python-2.7.14.tar.xz
+[ -d "Python-2.7.14" ] && rm -rf "Python-2.7.14"
 tar xf Python-2.7.14.tar.xz
 cd Python-2.7.14
 

@@ -12,6 +12,7 @@ yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel open
 
 cd /root
 [ -e "Python-3.5.3.tar.xz" ] || wget --no-check-certificate https://www.python.org/ftp/python/3.5.3/Python-3.5.3.tar.xz
+[ -d "Python-3.5.3" ] && rm -rf "Python-3.5.3"
 tar xf Python-3.5.3.tar.xz
 cd Python-3.5.3
 
