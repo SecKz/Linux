@@ -32,3 +32,5 @@ pip install psutil
 pip install lxml
 pip install beautifulsoup4
 pip install virtualenv
+pip3 install pillow
+pip3 install pymysql

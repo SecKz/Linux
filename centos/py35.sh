@@ -33,4 +33,5 @@ pip3 install lxml
 pip3 install gevent
 pip3 install beautifulsoup4
 pip3 install virtualenv
-
+pip3 install pillow
+pip3 install pymysql
