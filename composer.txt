@@ -36,4 +36,8 @@ You are running composer with xdebug enabled. This has a major impact on runtime
 这是一个非常常见的冲突，而且这个冲突对 composer 运行的影响还是蛮大的，当我们启用 Xdebug 功能时，将使得我们的 composer 运行放慢 3-4 倍。
 换句话说：xdebug 对我们程序调试来说非常重要，但对 composer 来说却增加了内存占用和进程时间。
 
+composer.json
+
+require和require-dev的区别
+前者用于声明项目发布版本的依赖包，后者用于声明项目开发或测试中依赖的包。
 

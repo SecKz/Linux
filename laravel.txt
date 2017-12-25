@@ -1,0 +1,61 @@
+
+Laravel中设置默认控制器?
+application / routes.php
+Route::get('/', 'article@index');
+
+laravel 5.3之后就不存在routes.php文件了。而是改用routes文件夹中的web.php文件。
+
+
+重新生产.env.php中的APP_KEY
+php artisan key:generate
+
+清空laravel缓存
+php artisan view:clear
+
+laravel5中 blade模板引入项目中的css js文件
+<script type="text/javascript" src="{{ URL::asset('/umeditor/lang/zh-cn/zh-cn.js') }}"></script>
+
+
+nginx下的laravel在网站目录的二级目录下url重写的方法
+http://blog.csdn.net/cxwithyxy/article/details/50572434
+
+location /quickstart/ {  
+	index  index.php index.html index.htm ;  
+	if (!-e $request_filename){  
+		rewrite  ^/quickstart/(.*)$  /quickstart/server.php?s=$1  last;  
+	}  
+}  
+
+Route::auth();是什么用的？ 就是通过这个可以把认证路由加到我们的路由中。
+login和logout的路由都在Illuminate/Routing/Router.php的函数auth添加
+
+
+php artisan make:auth
+這些指令會產生一些view 、所有認證的路由跟HomeController
+
+Laravel 自定义错误页面
+http://blog.csdn.net/hxx_yang/article/details/51911447
+
+
+模板中输出控制器和方法
+
+{{ dd(request()->route()->getAction()) }}
+
+print_r(Route::getCurrentRoute()->getAction());
+echo Route::currentRouteAction();
+
+
+
+Laravel 中间件原理
+Laravel 中间件提供了一种方便的机制来过滤进入应用的 HTTP 请求, 如ValidatePostSize用来验证POST请求体大小、ThrottleRequests用于限制请求频率等。
+
+使用Laravel中间件有三个步骤:
+使用php artisan生成一个中间件,这里假设生成一个TestMiddleware的中间件
+重写TestMiddleware中的handle函数,其中代码逻辑写在return $next($request);之前或者之后表示在执行请求之前或者之后运行这段代码.
+
+http://blog.csdn.net/panjiapengfly/article/details/72284776
+
+在app/Http/Kernel.php的routeMiddleware注册一个中间件
+
+https://laravel-china.org/articles/5180/laravel-middleware-principle#reply27558
+https://segmentfault.com/a/1190000007715254

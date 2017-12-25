@@ -1,0 +1,91 @@
+
+使用 /d 开关，除了改变驱动器的当前目录之外，还可改变当前驱动器。没有/d， cmd进入指定路径分两部，先进入盘符，在cd在指定目录
+> cd /d e:/mp3				
+> d:							进入d盘	
+> cd php					进入php目录
+> cd ..						返回上层目录
+> cd \						返回盘符
+
+> dir /o/d						目录优先列出文件，已列表形式展示
+> dir							列出文件
+> dir /d							文件是按栏分类列出
+> dir /w
+> dir /d/o:g
+> dir /d/o:gn		目录优先，按名称
+
+> PATH 					显示或设置可执行文件的搜索路径。
+
+> tree					树形显示当前目录结构，不包含文件
+> tree /f					树形显示当前文件目录结构
+
+复制文件
+> copy /?					查看copy命令的帮助
+> copy a.txt b.txt				复制文件
+> copy left.php e:\left.php	
+
+> xcopy js js2 /e/h/i				复制目录
+> rename aa bb					重命名
+> move aa dir					把aa移动到dir中
+
+删除
+> del "d:\linux\windows\新建 文本文档.txt"				文件及目录路径：若存在空格，应使用双引号将路径引起来
+> del b.txt											删除文件
+> rd/s/q js2											删除整个js2目录
+> del/s/q js2											删除目录下全部文件，但不删除目录
+
+
+> start 0.txt			打开文件
+> dir /?						查看帮助
+
+
+cmd 支持gbk中文
+> chcp 936					中文显示为乱码	 936表示当前使用的是简体中文（GB2312）编码 字体选择点阵字体
+cmd 支持utf8中文
+> chcp 65001				UTF8代码页的编号：65001 右键-字体选择Lucida Console 确定->“只应用到当前窗口”
+
+cmd中出现The system cannot write to the specified device
+修改注册表， HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe，找到CodePage将其值更改为936(十进制),936代表简体中文
+
+
+更改cmd默认路径(多种修改方法)
+我们还可以给快捷方式添加参数临时更改默认路径。打开“开始/程序/附件”后，右键单击“命令提示符”，选择“属性”，“快捷方式”标签页的“起始位置”中输入路径，单击“确定”退出。
+
+ipconfig：查看本机IP
+ipconfig /all：可看到本地IP与物理地址的，在控制面板中也可以看到
+
+如何在cmd命令查看计算机的用户名和密码
+查看本机的所有用户使用net user
+查看当前登陆用户使用echo %username%
+
+怎样用cmd命令查看局域网内其他计算机的ip？
+net view 可以查看到所有人计算机名 
+在用ping 用户名，就可以看到这个人的IP了
+
+cls 清除屏幕。
+cmd 打开另一个 windows 命令解释程序窗口。
+color 设置默认控制台前景和背景颜色。
+date 显示或设置日期。
+del 删除至少一个文件。
+dir 显示一个目录中的文件和子目录。
+fc 比较两个或两套文件，并显示不同处。
+find 在文件中搜索文字字符串。
+findstr 在文件中搜索字符串。
+for 为一套文件中的每个文件运行一个指定的命令。
+format 格式化磁盘，以便跟 windows 使用。
+ftype 显示或修改用于文件扩展名关联的文件类型。
+goto 将 windows 命令解释程序指向批处理程序中某个标明的行。
+help 提供 windows 命令的帮助信息。
+ren 重命名文件。
+rename 重命名文件。
+replace 替换文件。
+rmdir 删除目录。
+rd 删除目录。
+md 创建目录。
+mkdir 创建目录。
+more 一次显示一个结果屏幕。
+move 将文件从一个目录移到另一个目录。
+
+
+
+
+
