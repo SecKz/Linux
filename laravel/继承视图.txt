@@ -1,0 +1,17 @@
+
+继承视图可以使用以下两种方式：
+
+第一种：
+
+父视图中：使用   @yield("content")  ，留出子视图显示位置。
+子视图中：先使用  @extends("parent_filename")  先继承父视图，再使用  @section("content")  //子视图内容 ...  @endsection  继承父视图中的位置。
+
+
+
+第二种：
+
+父视图中：使用  @section("flag-name")   //父视图内容 ...   @show  留出继承区域位置。
+子视图中：使用  @extends("父模板文件名")  继承父视图；
+使用 @section("flag-name")  继承 flag-name 标记位；
+使用 @parent  可以调用父视图对应标签中的内容；
+使用 @endsection  或  @stop  结束一个位置的继承，@endsection 和@stop 的不同是，@endsection 之后，当前文件还可以被其它文件继承，而@stop  则表示终止，不再被继承。

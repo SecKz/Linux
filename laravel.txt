@@ -59,3 +59,34 @@ http://blog.csdn.net/panjiapengfly/article/details/72284776
 
 https://laravel-china.org/articles/5180/laravel-middleware-principle#reply27558
 https://segmentfault.com/a/1190000007715254
+
+
+
+5.2以后的自定义函数可以放在app/helpers/helper.php文件中
+https://stackoverflow.com/questions/28290332/best-practices-for-custom-helpers-on-laravel-5
+
+
+App::getLocale();获取当前语言
+App::setLocale();设置语言配置文件
+
+语言配置文件config/app.php
+locale 是默认语言，fallback_locale为备用语言
+语言字符串存放在resources/lang目录中，Blade模板引擎打印语言行{{ trans('messages.welcome') }}
+
+
+session("ra2", 22)是取得sessioin ra的只，不存在就设为22
+
+5.5的login和logout的路由在 
+D:\any\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php
+D:\any\vendor\laravel\framework\src\Illuminate\Auth\SessionGuard.php
+
+
+5.2的login和logout的路由在
+Illuminate/Routing/Router.php的函数auth添加
+
+auth改用email或user登陆
+http://laraveldaily.com/auth-login-with-username-instead-of-email/
+https://sujipthapa.co/blog/laravel-v55-login-register-with-username-or-email
+
+
+
