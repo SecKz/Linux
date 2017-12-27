@@ -1,11 +1,17 @@
 
 # composer -V		查看版本
 # composer selfupdate	更新composer
+# composer diagnose  
 
 使用 Composer 来安装项目的依赖。当前目录下要有一个 composer.json 文件
 # composer install					如果你进行了全局安装，并且没有 phar 文件在当前目录，直接composer
 # php composer.phar install			在项目根目录，执行安装命令
 # composer update					在要更新的项目目录中执行
+
+composer install - 如有 composer.lock 文件，直接安装，否则从 composer.json 安装最新扩展包和依赖；
+composer update - 从 composer.json 安装最新扩展包和依赖；
+composer update vendor/package - 从 composer.json 或者对应包的配置，并更新到最新；
+composer require new/package - 添加安装 new/package, 可以指定版本，如： composer require new/package ~2.5.
 
 
 composer list  列出所有可用的命令
@@ -28,9 +34,6 @@ linux下全局安装composer
 # curl -sS https://getcomposer.org/installer | php  
 # mv composer.phar /usr/local/bin/composer
 
-windows下把composer.phar加入系统的 PATH 
-
-
 You are running composer with xdebug enabled. This has a major impact on runtime performance. See https://getcomposer.org/xdebug
 禁用 Xdebug
 这是一个非常常见的冲突，而且这个冲突对 composer 运行的影响还是蛮大的，当我们启用 Xdebug 功能时，将使得我们的 composer 运行放慢 3-4 倍。
@@ -41,3 +44,19 @@ composer.json
 require和require-dev的区别
 前者用于声明项目发布版本的依赖包，后者用于声明项目开发或测试中依赖的包。
 
+composer create-project  --prefer-dist  laravel/laravel=5.5.*  blog
+blog 是你的项目目录，安装完成后所有的文件都会在这个目录中。
+
+--prefer-dist 参数是干什么用的？
+为了强制使用压缩包，而不是克隆源代码。
+--prefer-dist would try to download and unzip archives of the dependencies using GitHub or another API when available. This is used for faster downloading of dependencies in most cases.
+
+
+为项目添加新扩展包
+原有项目新添加扩展的，都使用 composer require new/package 这种方式来安装。
+需要加版本的话	composer require "foo/bar:1.0.0"
+
+那么，准备添加一个扩展包，install, update, require 三个命令都可以用来安装扩展包，选择哪一个才是正确的呢？
+答案是：使用 composer require 命令
+http://blog.csdn.net/xianglingchuan/article/details/51930960
+https://segmentfault.com/a/1190000000355928
