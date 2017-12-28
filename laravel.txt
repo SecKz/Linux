@@ -1,4 +1,8 @@
 
+查看 Laravel 的版本
+php artisan --version
+
+
 Laravel中设置默认控制器?
 application / routes.php
 Route::get('/', 'article@index');
