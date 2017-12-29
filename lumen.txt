@@ -1,0 +1,3 @@
+
+Lumen如何生成APP_KEY
+http://www.fidding.me/article/37

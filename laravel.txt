@@ -1,4 +1,14 @@
 
+Laravel中创建Model
+php artisan make:model Admin				在app目录创建
+php artisan make:model models\Admin			在app/model目录创建
+
+
+laravel框架中使用model层
+
+laravel 在添加操作自动完成对时间保存修改timestamps 
+https://www.cnblogs.com/huangshoushi/p/6378288.html
+
 Laravel中设置默认控制器?
 application / routes.php
 Route::get('/', 'article@index');
@@ -19,12 +29,12 @@ laravel5中 blade模板引入项目中的css js文件
 nginx下的laravel在网站目录的二级目录下url重写的方法
 http://blog.csdn.net/cxwithyxy/article/details/50572434
 
-location /quickstart/ {  
-	index  index.php index.html index.htm ;  
-	if (!-e $request_filename){  
-		rewrite  ^/quickstart/(.*)$  /quickstart/server.php?s=$1  last;  
-	}  
-}  
+location /quickstart/ {
+	index  index.php index.html index.htm ;
+	if (!-e $request_filename){
+		rewrite  ^/quickstart/(.*)$  /quickstart/server.php?s=$1  last;
+	}
+}
 
 Route::auth();是什么用的？ 就是通过这个可以把认证路由加到我们的路由中。
 login和logout的路由都在Illuminate/Routing/Router.php的函数auth添加
@@ -85,8 +95,36 @@ D:\any\vendor\laravel\framework\src\Illuminate\Auth\SessionGuard.php
 Illuminate/Routing/Router.php的函数auth添加
 
 auth改用email或user登陆
+https://d.laravel-china.org/docs/5.5/authentication
 http://laraveldaily.com/auth-login-with-username-instead-of-email/
 https://sujipthapa.co/blog/laravel-v55-login-register-with-username-or-email
 
 
 
+视图的变量传参
+(1)、在返回视图里传参，如：return view('xxx',$data);
+(2)、外部传参；如：return view('xxx')->with('_data', $data);
+
+1、在view方法里传参，具体场景：
+(1)、数据量大，不适合外部with方法链式操作的方法；
+(2)、代码量需求小的情况；
+
+在view外传参（即使用with()方法传参），具体场景：
+(1)、在数据量不大的场景；
+(2)、在只需完成功能无需规范和代码清晰的场景；
+
+
+多个视图共享数据的方法
+https://www.cnblogs.com/chenqionghe/p/4881467.html
+http://laravelacademy.org/post/697.html
+
+
+Laravel 5 服务的注册和使用
+https://www.cnblogs.com/chenqionghe/p/4882673.html
+
+Laravel数据库操作的三种方式
+http://blog.csdn.net/zls986992484/article/details/52824962
+
+软删除
+http://blog.csdn.net/sanbingyutuoniao123/article/details/51991545
+http://blog.csdn.net/xiaoshu611/article/details/52213959
