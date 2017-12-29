@@ -1,3 +1,7 @@
 
 Lumen如何生成APP_KEY
 http://www.fidding.me/article/37
+
+Lumen实现用户注册登录认证
+https://www.cnblogs.com/handongyu/p/6971568.html
+
