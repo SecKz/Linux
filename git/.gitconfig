@@ -29,6 +29,7 @@
 	dump = cat-file -p
 	puo = push -u origin master
 	puf = push -f origin master
+	
 
 [push]
 	default = current

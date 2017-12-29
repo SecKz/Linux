@@ -20,15 +20,20 @@ composer install  读取composer.json内容，解析依赖关系，安装依赖�
 composer update   更新最新的依赖关系到compsoer.lock文件，解析最新的依赖关系并且写入composer.lock文件
 composer search packagename 搜索包，packagename替换为你想查找的包名称
 composer require packagename 添加对packagename的依赖，packagename可修改为你想要的包名称
-composer show packagename
 composer self-update 更新 composer.phar文件自身
 composer dump-autoload --optimize 优化一下自动加载
 
 composer command --help 以上所有命令都可以添加 --help选项查看帮助信息
 
-http://www.cnblogs.com/bean-sprout/p/6377085.html
-http://www.zhihu.com/question/22885542
-http://docs.phpcomposer.com/04-schema.html	
+# 列出所有已经安装的包
+$ composer show
+
+# 可以通过通配符进行筛选
+$ composer show monolog/*
+
+# 显示具体某个包的信息
+$ composer show monolog/monolog
+
 
 linux下全局安装composer 
 # curl -sS https://getcomposer.org/installer | php  

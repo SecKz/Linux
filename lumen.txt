@@ -1,7 +1,21 @@
 
+在Lumen的routes/web.php写路由命令:
+注意：Lumen5.5中 $app 需要换成 $router。
+
 Lumen如何生成APP_KEY
 http://www.fidding.me/article/37
 
 Lumen实现用户注册登录认证
+https://www.cnblogs.com/duanweishi/p/6151721.html
 https://www.cnblogs.com/handongyu/p/6971568.html
+
+
+Lumen是基于Laravel框架，专注于后端微服务、无状态API开发的框架。
+
+文件bootstrap/app.php中所进行操作：
+启动Facades特性：$app->withFacades();,			Lumen默认是禁用了Facades特性，取消注释则启用。
+启用Eloquent特性：$app->withEloquent();,		Lumen默认禁用了Eloquent的ORM支持，作者说是给用户自行选择不同ORM的权利。
+
+http://fivezh.github.io/2016/07/31/Lumem-part2-lifecycle/
+
 
