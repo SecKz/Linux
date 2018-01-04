@@ -1,4 +1,7 @@
 
+echo bcrypt('123456'),'<br />';	 // laravel密码加密方式
+
+
 php artisan --version		查看 Laravel 的版本
 php artisan view:clear		清空laravel缓存
 php artisan route:list
@@ -35,15 +38,11 @@ location /quickstart/ {
 
 
 
-
-
 php artisan make:auth会生成以下文件，并在web.php添加了两行  ( 命令行下执行两次php artisan make:auth就可知道 ) 
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::auth();是什么用的？ 就是通过这个可以把认证路由加到我们的路由中。
-login和logout的路由都在Illuminate/Routing/Router.php的函数auth添加.
 
 auth/login.blade.php
 auth/register.blade.php
@@ -51,6 +50,10 @@ auth/passwords/email.blade.php
 auth/passwords/reset.blade.php
 layouts/app.blade.php
 home.blade.php
+
+Route::auth();是什么用的？ 就是通过这个可以把认证路由加到我们的路由中。
+login和logout的路由都在Illuminate/Routing/Router.php的函数auth添加.
+
 
 Laravel 自定义错误页面
 http://blog.csdn.net/hxx_yang/article/details/51911447

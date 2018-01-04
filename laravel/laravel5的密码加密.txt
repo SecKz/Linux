@@ -1,0 +1,23 @@
+
+$password = Hash::make('secret');	//对 A 密码使用Bcrypt 加密
+$password = bcrypt('secret');	//你也可直接使用 bcrypt 的 function
+
+
+//对加密的 A 密码进行验证
+if (Hash::check('secret', $hashedPassword))
+{
+    // The passwords match...
+}
+
+//检查 A 密码是否需要重新加密
+if (Hash::needsRehash($hashed))
+{
+    $hashed = Hash::make('secret');
+}
+
+lumen没有bcrypt函数，要用
+app('hash')->make('yourpassword');
+
+https://laracasts.com/discuss/channels/lumen/lumen-hashcheck
+https://laracasts.com/discuss/channels/lumen/hash-user-password-in-lumen?page=1
+
