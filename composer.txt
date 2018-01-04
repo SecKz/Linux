@@ -1,4 +1,6 @@
 
+# composer dump-autoload	自动加载功能
+
 # composer -V		查看版本
 # composer selfupdate	更新composer
 # composer diagnose  

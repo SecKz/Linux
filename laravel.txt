@@ -148,4 +148,4 @@ print_r(end($query));
 
 
 
-
+@if ($msg) <div class="alert alert-warning">{{$msg}}</div> @endif
