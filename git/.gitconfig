@@ -16,12 +16,12 @@
 	rhh = reset --hard HEAD^
 	ref = reflog -10
 	logs = log --oneline -10
+	loga = log -1
 	logp = log --pretty=oneline
-	loga = log --oneline
-	logl = log -1
+	log = log --oneline
 	latest = for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short) [%(committername)]'
-	ls = log --pretty=format:\"%C(yellow)%h %C(white)%ad %C(red)%d %C(reset)%s %C(green)[%cn]\" --decorate --date=short
-	hist = log --pretty=format:\"%C(yellow)%h %C(red)%d %C(reset)%s %C(green)[%an] %C(white)%ad\" --topo-order --graph --date=short
+	ls = log -30 --pretty=format:\"%C(yellow)%h %C(white)%ad %C(red)%d %C(reset)%s %C(green)[%cn]\" --decorate --date=short
+	hist = log -30 --pretty=format:\"%C(yellow)%h %C(red)%d %C(reset)%s %C(green)[%an] %C(white)%ad\" --topo-order --graph --date=short
 	puo = push -u origin master
 	puf = push -f origin master
 
