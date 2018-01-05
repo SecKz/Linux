@@ -1,0 +1,6 @@
+
+
+git reflog 记录reset, commit, pull, push操作	
+git logs 记录push的操作 即push到github的记录
+
+
