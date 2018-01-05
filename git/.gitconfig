@@ -24,6 +24,7 @@
 	hist = log -30 --pretty=format:\"%C(yellow)%h %C(red)%d %C(reset)%s %C(green)[%an] %C(white)%ad\" --topo-order --graph --date=short
 	puo = push -u origin master
 	puf = push -f origin master
+	conf = config -l
 
 [push]
 	default = current
