@@ -2,6 +2,7 @@
 echo bcrypt('123456'),'<br />';	 // laravel密码加密方式
 
 
+
 php artisan --version		查看 Laravel 的版本
 php artisan view:clear		清空laravel缓存
 php artisan route:list

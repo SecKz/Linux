@@ -1,6 +1,6 @@
 
 
-# composer dump-autoload	自动加载功能
+composer dump-autoload	自动加载功能
 
 composer install 
 把composer.json的require和require-dev依赖包都安装到vendor目录下,并在根目录生成一个composer.lock文件
