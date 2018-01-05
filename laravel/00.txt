@@ -1,0 +1,18 @@
+
+
+laravel资源路由，控制器中的接收方式
+
+定义了个资源路由Route::resource('article', 'ArticleController');。
+当我访问地址http://yourdomain/article，相当于访问控制器ArticleController的index方法。
+当我访问地址http://yourdomain/article/create，就会访问到create方法。
+当我通过POST提交数据至地址http://yourdomain/article，相当于由store方法处理。
+
+
+创建一个资源路由    Route::resource('admin/article','ArticleController');
+https://stackoverflow.com/questions/16661292/add-new-methods-to-a-resource-controller-in-laravel
+
+Route::get('foo/bar', 'FooController@bar');
+Route::resource('foo', 'FooController');
+
+
+
