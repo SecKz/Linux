@@ -1,6 +1,6 @@
 
 
-git reflog	 只记录本机用户的commit和pull操作
+git reflog	 只记录本机用户的commit、reset和pull操作
 git logs	 记录所有用户的commit
 
 git reflog
