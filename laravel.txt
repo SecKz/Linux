@@ -2,7 +2,6 @@
 echo bcrypt('123456'),'<br />';	 // laravel密码加密方式
 
 
-
 php artisan --version		查看 Laravel 的版本
 php artisan view:clear		清空laravel缓存
 php artisan route:list
@@ -22,11 +21,6 @@ laravel框架中使用model层
 laravel 在添加操作自动完成对时间保存修改timestamps 
 https://www.cnblogs.com/huangshoushi/p/6378288.html
 
-
-laravel 5.3之后就不存在routes.php文件了。而是改用routes文件夹中的web.php文件。
-
-
-
 nginx下的laravel在网站目录的二级目录下url重写的方法
 http://blog.csdn.net/cxwithyxy/article/details/50572434
 
@@ -36,8 +30,6 @@ location /quickstart/ {
 		rewrite  ^/quickstart/(.*)$  /quickstart/server.php?s=$1  last;
 	}
 }
-
-
 
 php artisan make:auth会生成以下文件，并在web.php添加了两行  ( 命令行下执行两次php artisan make:auth就可知道 ) 
 

@@ -1,0 +1,17 @@
+
+http://document.thinkphp.cn/manual_3_2.html#modules
+
+ThinkPHPURL访问规则
+http://serverName/index.php/模块/控制器/方法
+绑定模块后就变成
+http://serverName/home.php/Index/index
+
+如http://localhost/tp3/0az.php/test/conf访问的是Admin模块
+
+打开调试模式
+在 /application/common/conf
+'SHOW_PAGE_TRACE' =>FALSE, 
+
+
+
+

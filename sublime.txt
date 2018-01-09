@@ -1,0 +1,21 @@
+
+
+
+sublime安装
+http://blog.csdn.net/sinat_37044645/article/details/78853520
+
+
+sublime插件安装
+按下Ctrl+Shift+P调出命令面板
+输入install 调出 Install Package 选项并回车，然后在列表中选中要安装的插件 
+
+Sublime安装、删除插件
+安装 　按 Ctrl + Shift + P 　　输入Install Package 　　输入 要安装的插件名称，enter即可
+删除　按 Ctrl + Shift + P　　输入Remove Package　　选择要删除的插件即可
+
+
+https://www.cnblogs.com/purplefox2008/p/5369702.html
+
+
+
+

@@ -1,5 +1,6 @@
 
 
+composer remove vendor/package		删除包
 composer dump-autoload	自动加载功能
 
 composer install 
