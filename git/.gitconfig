@@ -1,6 +1,6 @@
 [user]
-	name = ericdd
-	email = 260741887@qq.com
+	name = anni
+	email = 986387040@qq.com
 [core]
 	autocrlf = false
 [gui]
@@ -20,11 +20,9 @@
 	logp = log --pretty=oneline
 	log = log --oneline
 	latest = for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short) [%(committername)]'
-	ls = log -30 --pretty=format:\"%C(yellow)%h %C(white)%ad %C(red)%d %C(reset)%s %C(green)[%cn]\" --decorate --date=short
+	ls = log -15 --pretty=format:\"%C(yellow)%h %C(white)%ad %C(green)%cn %C(red)%d %C(reset)%s\" --decorate  --date=format:'%Y-%m-%d %H:%M:%S'
 	hist = log -30 --pretty=format:\"%C(yellow)%h %C(red)%d %C(reset)%s %C(green)[%an] %C(white)%ad\" --topo-order --graph --date=short
 	puo = push -u origin master
 	puf = push -f origin master
-	conf = config -l
+	conf = config -l 
 
-[push]
-	default = current
