@@ -3,3 +3,14 @@ Phpstorm激活
 激活时选择License server 填入http://idea.higherbros.com 点击Active即可。
 http://www.imsxm.com/jetbrains-license-server.html
 
+
+phpstorm的自动补充功能live template
+setting-editor-live template
+
+foreach($END$ as $k => $v) {
+
+}
+
+导出live template    C:\Users\Administrator\.PhpStorm2017.2\config\templates
+erverything找到xml文件
+

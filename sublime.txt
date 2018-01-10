@@ -16,6 +16,17 @@ Sublime安装、删除插件
 
 https://www.cnblogs.com/purplefox2008/p/5369702.html
 
+CodeFormatter插件用来对代码进行格式化，使用方式，快捷键 ctrl+alt+f
+
+3.设置CodeFormatter
+
+    根据自己的编程环境需要，可通过”Preferences > package setttings > codeFormatter > settings-user“设置一些参数,如PHP的安装路径。
+
+4.使用CodeFormatter
+
+  打开需要格式化代码的文件，如这里的p020.php文件，再使用快捷键 "ctrl+alt+f" 即可。
+
+
 
 
 

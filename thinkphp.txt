@@ -1,15 +1,21 @@
 
-http://document.thinkphp.cn/manual_3_2.html#modules
 
-ThinkPHPURL访问规则
-http://serverName/index.php/模块/控制器/方法
+ThinkPHP URL访问规则
+http://serverName/index.php/模块/控制器/操作
+比如
+http://localhost/sports/login
+http://localhost/tp3/test/conf
+http://localhost/tp3/0az.php/news.html
+
+我们直接访问入口文件的话，由于URL中没有模块、控制器和操作，因此系统会访问默认模块（Home）下面的默认控制器（Index）的默认操作（index），
+http://document.thinkphp.cn/manual_3_2.html#url
+
 绑定模块后就变成
 http://serverName/home.php/Index/index
 
 如http://localhost/tp3/0az.php/test/conf访问的是Admin模块
 
-打开调试模式
-在 /application/common/conf
+打开调试模式 在 /application/common/conf
 'SHOW_PAGE_TRACE' =>FALSE, 
 
 
