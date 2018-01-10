@@ -8,7 +8,6 @@ http://localhost/tp3/test/conf
 http://localhost/tp3/0az.php/news.html
 
 我们直接访问入口文件的话，由于URL中没有模块、控制器和操作，因此系统会访问默认模块（Home）下面的默认控制器（Index）的默认操作（index），
-http://document.thinkphp.cn/manual_3_2.html#url
 
 绑定模块后就变成
 http://serverName/home.php/Index/index
@@ -19,5 +18,6 @@ http://serverName/home.php/Index/index
 'SHOW_PAGE_TRACE' =>FALSE, 
 
 
+http://document.thinkphp.cn/manual_3_2.html#url
 
 
