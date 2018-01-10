@@ -14,9 +14,10 @@ foreach($END$ as $k => $v) {
 导出live template    C:\Users\Administrator\.PhpStorm2017.2\config\templates
 erverything找到xml文件
 
+Ctrl + Q      快速文档查询
 CTRL+H        显 示类结构图
 F4   查找变量来源
-CIRL+B   找变量的来源，跳到变量申明处
+CIRL+B 找变量的来源，跳到变量申明处 (CTRL+ 鼠标单击 也可以)
 F3   查找下一个
 SHIFT+F3  查找上一个
 CTRL+G 定位行，跳转行
