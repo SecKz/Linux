@@ -1,0 +1,28 @@
+
+$connection = Yii::app()->db;
+$sql = "SELECT * FROM `project` ORDER BY id DESC";
+$command = $connection->createCommand($sql);
+$result = $command->queryAll();
+print_r($result);
+$connection = Yii::app()->db; //连接
+
+//查找
+$sql = “SELECT * FROM `tbl_user` ORDER BY id DESC”;
+$command = $connection->createCommand($sql);
+$result = $command->queryAll();
+print_r($result);
+
+//添加
+
+$sql = ” INSERT INTO `tbl_user` (`username`, `password`, `email`) VALUES (‘test’, ‘test’, ‘test@test.com’) “;
+$command=$connection->createCommand($sql);
+
+print_r($command->execute());
+（1）如果你执行的SQL语句有返回结果集: 例如SELECT。通常用query开头的系列函数：
+$dataReader=$command->query(); // 执行一个 SQL 查询
+$rows=$command->queryAll(); // 查询并返回结果中的所有行
+$row=$command->queryRow(); // 查询并返回结果中的第一行
+$column=$command->queryColumn(); // 查询并返回结果中的第一列
+$value=$command->queryScalar(); // 查询并返回结果中第一行的第一个字
+（2）你执行的SQL语句返回的不是结果集，只是状态值,例如：INSERT ，UPDATE，DELETE.则用execute()
+$this->command->execute();

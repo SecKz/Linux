@@ -1,0 +1,88 @@
+
+
+yii 多语言设置
+系统的缺省语言可以在protected/config/main.php 中设置：
+'language'=>'zh_cn', *** 不设置的话缺省为 en_us
+
+http://happymc.iteye.com/blog/2149498
+
+----------------------------------------------------------------------------------
+
+
+Controller.php的public $layout='//layouts/column1';
+设置了layout的默认页面为
+然后再view/layouts/中,column1再次调用main.php视图文件
+
+所以说yii在 $this->render('index') 一个页面的时候,使用 column1.php 包含 main.php，再由 main.php 包含 index.php,最后返回内容.(这是针对于继承Controller方式)。
+
+
+yii框架默认会渲染/protected/views/laytout/main.php布局文件，当然我们也可以自己设置控制器特有的布局文件，
+class PostController extends Controller
+{
+public $layout='column2';
+
+可以看到yii是先通过renderPartial来渲染视图模版，然后把模版渲染的结果放入content变量中通过renderFile去渲染布局文件
+
+视图文件调用顺序
+index.php -> laytout/column1.php -> laytout/main.php
+
+http://blog.csdn.net/clh604/article/details/10584363
+http://blog.sina.com.cn/s/blog_ba0fd7360101jra6.html
+
+----------------------------------------------------------------------------------
+yii 中获取controller和action名
+在控制器里 、在视图里
+$this->getId(); // controller
+$this->id; // controller
+Yii::app()->getController()->id;  // controller
+Yii::app()->controller->id; // controller
+
+$this->action->id; // action
+$this->getAction()->id; // action
+$this->getAction()->getId(); // action
+
+默认动作 $this->defaultAction
+模板文件  $this->layout
+
+----------------------------------------------------------------------------------
+
+yii框架配置默认controller和action示例
+
+在/protected/config/main.php添加配置
+代码如下:
+
+<?php
+return array(
+'name'=>'Auto',
+'defaultController'=>'auto',
+上述配置了默认的controller为AutoController.php
+
+设置默认action
+在AutoController.php中设置
+代码如下:
+
+class AutoController extends CController
+{
+public $defaultAction = 'test';
+public function actionTest()
+{
+...
+}
+
+----------------------------------------------------------------------------------
+
+控制器的继承关系
+PostController -> Controller -> CController
+
+
+----------------------------------------------------------------------------------
+
+动作过滤器
+过滤器是一段代码，可被配置在控制器动作执行之前或之后执行。例如， 访问控制过滤器将被执行以确保在执行请求的动作之前用户已通过身份验证；性能过滤器可用于测量控制器执行所用的时间。
+http://hudeyong926.iteye.com/blog/1396317
+http://www.yiiframework.com/doc/guide/1.1/zh_cn/basics.controller#filter
+http://my.oschina.net/moonshadow/blog/85845
+
+accessRules用法
+http://blog.csdn.net/wide288/article/details/35779141
+http://duchengjiu.iteye.com/blog/1797966

@@ -1,0 +1,9 @@
+
+
+array('content, author, email', 'required'),
+array('author, email, url', 'length', 'max'=>128),
+array('email','email'),
+array('url','url'),
+array('username', 'length', 'min'=>3, 'max'=>12),
+array('rememberMe', 'boolean'),
+array('password', 'authenticate'),

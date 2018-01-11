@@ -1,0 +1,26 @@
+
+yii验证码类文件
+D:\yii\framework\web\widgets\captcha\CCaptcha.php
+D:\yii\framework\validators\CCaptchaValidator.php
+
+验证码输入的是正确的，但是提示验证码错误
+http://www.yiichina.com/question/1160
+
+
+<?php $this->widget('CCaptcha', array(
+'clickableImage' => true,
+'showRefreshButton' => false,
+'imageOptions' => array(
+'alt' => '点击更换图片',
+'style' => 'cursor:pointer',
+'title' => '点击更换图片'
+)
+)); ?>
+
+session开启
+"d:\yii\framework\web\CHttpSession.php"(114,4):		@session_start();
+
+验证码显示在函数run()
+d:\yii\framework\web\widgets\captcha\CCaptchaAction.php
+访问生成的验证码
+http://localhost/yii/demos/blog/index.php/site/captcha

@@ -1,0 +1,49 @@
+
+
+return [
+// 若 "username" 和 "email" 为空，则设为 null
+[['username', 'email'], 'default'],
+
+// 若 "level" 为空，则设其为 1
+['level', 'default', 'value' => 1],
+];
+
+值在数据表中已存在
+['email', 'exist',
+'targetClass' => '\common\models\User',
+'filter' => ['status' => User::STATUS_ACTIVE],
+'message' => 'There is no user with such email.'],
+
+检查输入的两个值是否一致
+['passwordRepeat', 'required'] // 必须要加上这一句
+['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'operator' => '===']
+
+数值范围检查
+['age', 'compare', 'compareValue' => 30, 'operator' => '>=']
+1
+['level', 'in', 'range' => [1, 2, 3]]
+
+
+去除首尾空白字符
+['email', 'trim']
+或
+['email', 'filter', 'filter' => 'trim']
+
+字段必填
+['email', 'required']
+
+赋予默认值
+['age', 'default', 'value' => 18]
+
+字符串长度
+['email', 'string', 'min' => 3, 'max' => 20]
+或
+['email', 'string', 'length' => [3, 20]]
+
+
+
+
+http://blog.csdn.net/ljfrocky/article/details/46373691
+
+
+

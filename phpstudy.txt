@@ -1,0 +1,35 @@
+
+修改DocumentRoot后，apache不能启动
+点击【 端口常规设置 】，改为其他端口重启，在改回80端口重启
+
+apache添加基于localhost端口的访问地址在D:\phpStudy\PHPTutorial\Apache\conf\vhosts.conf中
+也可以点击【 站点域名管理 】设置
+
+
+启动phpStudy时提示系统缺失LIBPQ.DLL
+把php目录下的libpq.dll拷贝到C:\Windows\SysWOW64
+
+
+在nginx.conf的server段加上
+
+include /zcx/ng.htaccess;
+include /sports/ng.htaccess;
+include /tp3/ng.htaccess;
+include /codeigniter3/ng.htaccess;
+
+
+upstream的负载均衡，（以权重方式分发），weight是权重，可以根据机器配置定义权重。weigth参数表示权值，权值越高被分配到的几率越大。
+
+upstream www.123.com {
+	server 127.0.0.1:881 weight=2;
+	server 127.0.0.1:882 weight=3;
+	server 45.63.122.222 weight=3;
+}
+
+
+redis.dll
+https://pecl.php.net/package/redis/3.0.0/windows
+https://pecl.php.net/package/redis/2.2.7/windows
+
+memcache.dll
+https://pecl.php.net/package/memcache/3.0.8/windows

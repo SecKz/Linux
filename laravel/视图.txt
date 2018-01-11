@@ -4,6 +4,10 @@
 {{isset($name)?$name:''}} 三元条件判断
 
 
+引入子视图
+被引入的视图会继承父视图中的所有数据，同时也可以向引入的视图传递额外的数组数据：
+@include('student.common1',['message'=>'我是错误信息'])
+
 
 继承视图可以使用以下两种方式：
 
@@ -19,3 +23,7 @@
 使用 @section("flag-name")  继承 flag-name 标记位；
 使用 @parent  可以调用父视图对应标签中的内容；
 使用 @endsection  或  @stop  结束一个位置的继承，@endsection 和@stop 的不同是，@endsection 之后，当前文件还可以被其它文件继承，而@stop  则表示终止，不再被继承。
+
+
+https://d.laravel-china.org/docs/5.5/blade#including-sub-views
+
