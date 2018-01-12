@@ -1,6 +1,7 @@
 
 修改DocumentRoot后，apache不能启动
 点击【 端口常规设置 】，改为其他端口重启，在改回80端口重启
+或者把D:\改为D:/
 
 apache添加基于localhost端口的访问地址在D:\phpStudy\PHPTutorial\Apache\conf\vhosts.conf中
 也可以点击【 站点域名管理 】设置
