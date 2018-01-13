@@ -32,3 +32,8 @@ Shift+F6	批量重命名变量
 CTRL+/ 单行注释/取消注释
 
 CTRL+SHIFT+/ 块状注释/取消块状注释
+
+
+phpstorm+xdebug断点调试php
+http://blog.csdn.net/wzj0808/article/details/55223095
+
