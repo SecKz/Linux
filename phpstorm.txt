@@ -35,5 +35,19 @@ CTRL+SHIFT+/ 块状注释/取消块状注释
 
 
 phpstorm+xdebug断点调试php
+
+1 开启xdebug 
+2 Settings->Languages & frameworks->PHP->Server 新建一个 name为localhost  Host为localhost Port:80, Debugger:Xdebug
+3 Settings->Languages & frameworks->PHP->Debug->DBGp Proxy 新建一个 IDE key为phpStorm  Host为localhost, Port:80
+4 配置一个PHP Web Application
+5 在chome上安装扩展，下载JetBrains IDE Support扩展，安装
+
+https://www.cnblogs.com/shiwaitaoyuan/p/6404604.html
 http://blog.csdn.net/wzj0808/article/details/55223095
+
+phpstrom font配置
+edit -> font 
+font: consolas, size:18
+
+
 
