@@ -1,0 +1,19 @@
+
+ThinkPHP隐藏index.php出现No input file specified的解决方法
+因为在Fastcgi模式下，php不支持rewrite的目标网址的PATH_INFO的解析
+ThinkPHP运行在URL_MODEL=2时，会出现 No input file specified.的情况，
+这时可以修改网站目录的.htaccess文件：
+ 
+RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L] 
+改为 RewriteRule ^(.*)$ index.php?s=$1 [QSA,PT,L] 
+
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks
+  RewriteEngine On
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+  RewriteRule ^(.*)$ index.php?s=$1 [QSA,PT,L]
+</IfModule>
+

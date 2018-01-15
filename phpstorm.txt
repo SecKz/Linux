@@ -14,21 +14,37 @@ foreach($END$ as $k => $v) {
 导出live template    C:\Users\Administrator\.PhpStorm2017.2\config\templates
 erverything找到xml文件
 
-Ctrl + Q      快速文档查询
+
+ctrl+alt+l代码格式化
+
+CIRL+B 找变量的来源，跳到变量申明处 (CTRL+ 鼠标单击 也可以)
+
 CTRL+H        显 示类结构图
 F4   查找变量来源
-CIRL+B 找变量的来源，跳到变量申明处 (CTRL+ 鼠标单击 也可以)
+
 F3   查找下一个
 SHIFT+F3  查找上一个
-CTRL+G 定位行，跳转行
-Ctrl +F12      文件结构弹出
+
+
+Ctrl+F12	显示当前文件的全部类、函数、变量
 Ctrl+Shift+H  方法的层次结构
 CTRL+R 当前窗口替换文本
 CTRL+J 自动代码提示，自动补全
 CTRL+E 最近打开的文件
 CTRL+ [] 光标移动到{}[]开头或结尾位置
-Ctrl+F12	显示当前文件的全部类、函数、变量
-Shift+F6	批量重命名变量
-CTRL+/ 单行注释/取消注释
 
-CTRL+SHIFT+/ 块状注释/取消块状注释
+CTRL+G 定位行，跳转行
+Shift+F6	批量重命名变量
+
+Ctrl + Q      快速文档查询
+
+Ctrl + /，单行注释 
+Ctrl + Shift + /，多行注释,块注释 
+/** + Enter，自动生成注释
+
+
+启动的时候不打开工程文件
+Preferences->Appearance & Behavior ->System Settings 
+去掉 Reopen last project on startup.
+
+

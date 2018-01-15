@@ -32,7 +32,7 @@ if [ "$1" = 'un' ]; then
 	exit;
 fi
 
-issue='/etc/redhat-release'
+issue='/etc/issue.net'
 if [ ! -f "$issue" ]; then
 	red '${issue}不存在'
 	exit;

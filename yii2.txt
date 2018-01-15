@@ -18,18 +18,28 @@ yii2安装
 # yii migrate/create create_blog_table
 # yii migrate
 
-
-gii生成CRUD代码时，填写的路径要注意，比如是frontend
-Model Class: app\models\Country
-Search Model Class: app\models\CountrySearch
-Controller Class: frontend\controllers\CountryController
-
-
-gii生成的控制器提示 Unable to find BlogConditions.php Namespace missing?
-找到BlogConditions.php修改namespace app\controllers;为namespace frontend\controllers;
-
 使用 Gii 去自动生成 Web 站点常用功能的代码
 http://www.yiichina.com/doc/guide/2.0/start-gii
+
+gii生成的控制器提示 Unable to find BlogConditions.php Namespace missing?
+找到BlogConditions.php修改namespace app\controllers;
+为namespace frontend\controllers;
+
+
+
+Yii2 url地址美化与重写 backend\config\main.php的urlManager
+https://www.cnblogs.com/dcb3688/p/4607968.html
+
+再比如如果我们想要所有的controller/id映射到controller/view界面，我们可以这样配置
+
+'rules' => [
+    '/blogs' => '/blog/index',
+    // '/blogs/<id:\d+>' => '/blog/view',
+    '<controller:\w+>/<id:\d+>' => '<controller>/view',
+    "<controller:\w+>/<action:\w+>"=>"<controller>/<action>",
+],
+此时我们访问 /index.php/blog/1 会正常显示/blog/view?id=1这个界面。
+
 
 gii的访问路径
 http://hostname/index.php?r=gii

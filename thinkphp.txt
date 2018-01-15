@@ -15,7 +15,7 @@ http://serverName/home.php/Index/index
 如http://localhost/tp3/0az.php/test/conf访问的是Admin模块
 
 打开调试模式 在 /application/common/conf
-'SHOW_PAGE_TRACE' =>FALSE, 
+'SHOW_PAGE_TRACE' => TRUE, 
 
 
 http://document.thinkphp.cn/manual_3_2.html#url
