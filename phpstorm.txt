@@ -1,4 +1,11 @@
 
+关闭灯泡提示
+settings搜索bulb，找到show intention bulb关闭
+
+关闭拼写检查
+Status Bar右下角，右数第2个
+
+
 Phpstorm激活
 激活时选择License server 填入http://idea.higherbros.com 点击Active即可。
 http://www.imsxm.com/jetbrains-license-server.html
@@ -36,12 +43,11 @@ CTRL+ [] 光标移动到{}[]开头或结尾位置
 CTRL+G 定位行，跳转行
 Shift+F6	批量重命名变量
 
-<<<<<<< HEAD
 Ctrl + Q      快速文档查询
 
 Ctrl + /，单行注释 
 Ctrl + Shift + /，多行注释,块注释 
-/** + Enter，自动生成注释
+/加两个* + Enter，自动生成注释
 
 
 启动的时候不打开工程文件

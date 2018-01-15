@@ -1,8 +1,14 @@
 
 origin 是默认的远程版本库名称
 你可以在 .git/config 之中进行修改
- git push origin master 的意思是 git push origin master:master 将本地的 master 分支推送至远端的 master 分支，如果没有就新建一个
+git push origin master 的意思是 git push origin master:master 将本地的 master 分支推送至远端的 master 分支，如果没有就新建一个
 
 
+git强制pull
+# git fetch --all
 
+Then, you have two options:
+# git reset --hard origin/master
+OR If you are on some other branch:
+# git reset --hard origin/<branch_name>
 
