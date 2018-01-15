@@ -13,3 +13,17 @@ xdebug_start_trace();
 xdebug_stop_trace();
 
 
+
+http://blog.csdn.net/wzj0808/article/details/55223095
+xdebug的配置
+
+[XDebug]
+zend_extension=php_xdebug.dll  
+xdebug.remote_enable = On  
+xdebug.remote_handler = dbgp     
+xdebug.remote_host= localhost  
+xdebug.remote_port = 9000  
+xdebug.idekey = PHPSTORM  
+xdebug.profiler_append = 0
+xdebug.profiler_enable = 1
+
