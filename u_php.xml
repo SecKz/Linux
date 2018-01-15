@@ -1,360 +1,370 @@
 <templateSet group="u_php">
-  <template name="fore" value="foreach($END$ as $k =&gt; $v) {&#10;&#10;}&#10;" toReformat="false" toShortenFQNames="true">
+  <template name="fore" value="foreach($END$ as $k =&gt; $v) {&#10;&#10;}&#10;" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="sw" value="switch ($END$) {&#10;&#9;case &#10;&#9;code;&#10;&#9;break;&#10;&#9;default:&#10;&#9;code;&#10;}" toReformat="false" toShortenFQNames="true">
+  <template name="sw" value="switch ($END$) {&#10;&#9;case &#10;&#9;code;&#10;&#9;break;&#10;&#9;default:&#10;&#9;code;&#10;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="wh" value="while($END$) {&#10;&#10;}" toReformat="false" toShortenFQNames="true">
+  <template name="wh" value="while($END$) {&#10;&#10;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="jn" value=", ',', $END$&#10;" toReformat="false" toShortenFQNames="true">
+  <template name="jn" value=", ',', $END$&#10;" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="ifs" value="if($END$) {&#10;&#10;}" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="JAVA_SCRIPT" value="true" />
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="t" value="$this-&gt;" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="ra" value="rand()$END$" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="mr" value="mt_rand($END$)" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="fun" value="function $END$() {&#10;&#10;}" toReformat="false" toShortenFQNames="true">
+  <template name="ifs" value="if($END$) {&#10;&#10;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="JAVA_SCRIPT" value="true" />
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="cl" value="class $END$ {&#10;&#9;function __construct() {&#10;&#10;&#9;}&#10;&#10;}" toReformat="false" toShortenFQNames="true">
+  <template name="t" value="$this-&gt;" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="ext" value="extract($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="ra" value="rand()$END$" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="is" value="isset($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="mr" value="mt_rand($END$)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="em" value="empty($END$)" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="vd" value="var_dump($END$);" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="exp" value="explode($END$, str)" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="imp" value="implode($END$, array)" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="inc" value="include('$END$');" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="inco" value="include_once('$END$');" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="req" value="require('$END$');" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="reqo" value="require_once('$END$');" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="po" value="$_POST['$END$']" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="ge" value="$_GET['$END$']" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="se" value="$_SESSION['$END$']" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="co" value="$_COOKIE['$END$']" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="com" value="/**&#10;$END$&#10;*/" toReformat="false" toShortenFQNames="true">
+  <template name="fun" value="function $END$() {&#10;&#10;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="JAVA_SCRIPT" value="true" />
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="ss" value="session_start();" toReformat="false" toShortenFQNames="true">
+  <template name="cl" value="class $END$ {&#10;&#9;function __construct() {&#10;&#10;&#9;}&#10;&#10;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="sd" value="session_destroy();" toReformat="false" toShortenFQNames="true">
+  <template name="ext" value="extract($END$)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="ec" value="echo $END$" toReformat="false" toShortenFQNames="true">
+  <template name="is" value="isset($END$)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="pr" value="print_r($END$);" toReformat="false" toShortenFQNames="true">
+  <template name="em" value="empty($END$)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="pri" value="printr($END$);" toReformat="false" toShortenFQNames="true">
+  <template name="vd" value="var_dump($END$);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="prp" value="print_r($_POST);" toReformat="false" toShortenFQNames="true">
+  <template name="exp" value="explode($END$, str)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="prg" value="print_r($_GET);" toReformat="false" toShortenFQNames="true">
+  <template name="imp" value="implode($END$, array)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="prs" value="print_r($_SESSION);" toReformat="false" toShortenFQNames="true">
+  <template name="inc" value="include('$END$');" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="prc" value="print_r($_COOKIE);" toReformat="false" toShortenFQNames="true">
+  <template name="inco" value="include_once('$END$');" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="prf" value="print_r($_FILES);" toReformat="false" toShortenFQNames="true">
+  <template name="req" value="require('$END$');" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="prgl" value="print_r($_GLOBALS);" toReformat="false" toShortenFQNames="true">
+  <template name="reqo" value="require_once('$END$');" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="prse" value="print_r($_SERVER);" toReformat="false" toShortenFQNames="true">
+  <template name="po" value="$_POST['$END$']" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="prr" value="print_r($_REQUEST);" toReformat="false" toShortenFQNames="true">
+  <template name="ge" value="$_GET['$END$']" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="prfa" value="print_r(func_get_args());" toReformat="false" toShortenFQNames="true">
+  <template name="se" value="$_SESSION['$END$']" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="fgc" value="file_get_contents($END$);" toReformat="false" toShortenFQNames="true">
+  <template name="co" value="$_COOKIE['$END$']" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="fpc" value="file_put_contents($END$, str);" toReformat="false" toShortenFQNames="true">
+  <template name="com" value="/**&#10;$END$&#10;*/" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="ss" value="session_start();" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="join" value="join($END$, array);" toReformat="false" toShortenFQNames="true">
+  <template name="sd" value="session_destroy();" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="eb" value="'&lt;br /&gt;'" toReformat="false" toShortenFQNames="true">
+  <template name="ec" value="echo $END$" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="ecb" value="echo $END$,'&lt;br /&gt;';" toReformat="false" toShortenFQNames="true">
+  <template name="pr" value="print_r($END$);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="sc" value="setcookie($END$, value, time());" toReformat="false" toShortenFQNames="true">
+  <template name="pri" value="printr($END$);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="die" value="die(&quot;$END$&quot;);" toReformat="false" toShortenFQNames="true">
+  <template name="prp" value="print_r($_POST);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="exit" value="exit(&quot;$END$&quot;);" toReformat="false" toShortenFQNames="true">
+  <template name="prg" value="print_r($_GET);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="uns" value="unset($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="prs" value="print_r($_SESSION);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="ve" value="var_export($END$);" toReformat="false" toShortenFQNames="true">
+  <template name="prc" value="print_r($_COOKIE);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="iv" value="intval($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="prf" value="print_r($_FILES);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="def" value="define('$END$', )" toReformat="false" toShortenFQNames="true">
+  <template name="prgl" value="print_r($_GLOBALS);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="ina" value="in_array($END$, array)" toReformat="false" toShortenFQNames="true">
+  <template name="prse" value="print_r($_SERVER);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="isa" value="is_array($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="prr" value="print_r($_REQUEST);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="isr" value="is_readable($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="prfa" value="print_r(func_get_args());" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="isw" value="is_writable($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="fgc" value="file_get_contents($END$);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="hx" value="header(&quot;Location:$END$&quot;);&#10;exit();" toReformat="false" toShortenFQNames="true">
+  <template name="fpc" value="file_put_contents($END$, str);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="sr" value="str_replace($END$, replace, str)" toReformat="false" toShortenFQNames="true">
+  <template name="join" value="join($END$, array);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="je" value="json_encode($END$);" toReformat="false" toShortenFQNames="true">
+  <template name="eb" value="'&lt;br /&gt;'" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="jd" value="json_decode($END$, true);" toReformat="false" toShortenFQNames="true">
+  <template name="ecb" value="echo $END$,'&lt;br /&gt;';" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="dd" value="date('Y-m-d H:i:s',$END$);" toReformat="false" toShortenFQNames="true">
+  <template name="sc" value="setcookie($END$, value, time());" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="stl" value="strtolower($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="die" value="die(&quot;$END$&quot;);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="stu" value="strtoupper($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="exit" value="exit(&quot;$END$&quot;);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="stt" value="strtotime($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="uns" value="unset($END$)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="hsc" value="htmlspecialchars($END$);" toReformat="false" toShortenFQNames="true">
+  <template name="ve" value="var_export($END$);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="hsc1" value="htmlspecialchars($END$, ENT_QUOTES);" toReformat="false" toShortenFQNames="true">
+  <template name="iv" value="intval($END$)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="stag" value="strip_tags($END$)" toReformat="false" toShortenFQNames="true">
+  <template name="def" value="define('$END$', )" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="zpre" value="echo '&lt;pre&gt;';&#10;$END$&#10;echo '&lt;/pre&gt;';" toReformat="false" toShortenFQNames="true">
+  <template name="ina" value="in_array($END$, array)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="echr" value="echo '----------------------------------------&lt;br /&gt;';" toReformat="false" toShortenFQNames="true">
+  <template name="isa" value="is_array($END$)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="arrs" value="array(&#10;&#9;'key' =&gt; $atype,&#10;)" toReformat="false" toShortenFQNames="true">
+  <template name="isr" value="is_readable($END$)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="ser" value="$_SERVER['']" toReformat="false" toShortenFQNames="true">
+  <template name="isw" value="is_writable($END$)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="sleep" value="sleep($END$);" toReformat="false" toShortenFQNames="true">
+  <template name="hx" value="header(&quot;Location:$END$&quot;);&#10;exit();" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="sr" value="str_replace($END$, replace, str)" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="je" value="json_encode($END$);" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="jd" value="json_decode($END$, true);" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="dd" value="date('Y-m-d H:i:s',$END$);" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="stl" value="strtolower($END$)" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="stu" value="strtoupper($END$)" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="stt" value="strtotime($END$)" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="hsc" value="htmlspecialchars($END$);" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="hsc1" value="htmlspecialchars($END$, ENT_QUOTES);" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="stag" value="strip_tags($END$)" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="zpre" value="echo '&lt;pre&gt;';&#10;$END$&#10;echo '&lt;/pre&gt;';" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="echr" value="echo '----------------------------------------&lt;br /&gt;';" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="arrs" value="array(&#10;&#9;'key' =&gt; $atype,&#10;)" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="ser" value="$_SERVER['']" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="sleep" value="sleep($END$);" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="zjs" value="&lt;script type=&quot;text/javascript&quot;&gt;&#10;$END$&#10;&#10;&#10;&lt;/script&gt;" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="HTML" value="true" />
+    </context>
+  </template>
+  <template name="zcss" value="&lt;style type=&quot;text/css&quot;&gt;&#10;$END$&#10;&#10;&lt;/style&gt;" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="HTML" value="true" />
     </context>
   </template>
 </templateSet>
