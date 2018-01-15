@@ -5,6 +5,9 @@ settings搜索bulb，找到show intention bulb关闭
 关闭拼写检查
 Status Bar右下角，右数第2个
 
+设置当前光标所在行高亮颜色
+settings搜索caret row
+
 
 Phpstorm激活
 激活时选择License server 填入http://idea.higherbros.com 点击Active即可。
