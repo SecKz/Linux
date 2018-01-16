@@ -18,7 +18,7 @@ CTRL+E 最近打开的文件
 CTRL+ [] 光标移动到{}[]开头或结尾位置
 Ctrl + shift + m  html标签跳转
 
-ctrl+alt+l代码格式化
+ctrl+alt+L		代码格式化		设置代码样式：File -> Settings -> Code Style ->PHP
 Alt+Shift+Down        下移选中的行
 Alt+Shift+Up          上移选中的行
 Ctrl+Shift+J          合并选中的行

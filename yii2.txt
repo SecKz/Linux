@@ -1,4 +1,8 @@
 
+
+yii的默认路由
+http://localhost:94/index.php?r=site/index
+
 yii2安装
 # composer create-project  --prefer-dist yiisoft/yii2-app-advanced=2.0.13 yii2 
 # init.bat		进到yii2安装目录执行 前台：frontend 目录，后台：backend，官方下载的源码中是缺失配置文件和index.php，需要执行init.bat。
