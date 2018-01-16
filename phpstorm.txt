@@ -1,4 +1,43 @@
 
+Ctrl+Shift + left  回到上次编辑点
+Ctrl+D		复制当前行/选择块
+Shift+F6	批量重命名变量
+CIRL+B 找变量的来源，跳到变量申明处 (CTRL+ 鼠标单击 也可以)
+Ctrl+F12	显示当前文件的全部类、函数、变量
+CTRL+H        显 示类结构图
+
+F4   查找变量来源
+F3   查找下一个
+SHIFT+F3  查找上一个
+
+Ctrl+y		删除当前行
+Ctrl+Shift+H  方法的层次结构
+CTRL+R 当前窗口替换文本
+CTRL+J 自动代码提示，自动补全
+CTRL+E 最近打开的文件
+CTRL+ [] 光标移动到{}[]开头或结尾位置
+Ctrl + shift + m  html标签跳转
+
+ctrl+alt+l代码格式化
+Alt+Shift+Down        下移选中的行
+Alt+Shift+Up          上移选中的行
+Ctrl+Shift+J          合并选中的行
+
+
+CTRL+G 定位行，跳转行
+Ctrl + Q      快速文档查询
+
+Ctrl + /，单行注释 
+Ctrl + Shift + /，多行注释,块注释 
+/加两个* + Enter，自动生成注释
+
+给函数自动生成注释
+code->Generate->PHP Doc
+
+灰色＋波浪线: 变量未使用
+黄色波浪线: 变量未名单词拼写问题
+红色波浪线: 变量未定义
+
 关闭灯泡提示
 settings搜索bulb，找到show intention bulb关闭
 
@@ -25,41 +64,9 @@ foreach($END$ as $k => $v) {
 erverything找到xml文件
 
 
-ctrl+alt+l代码格式化
-
-CIRL+B 找变量的来源，跳到变量申明处 (CTRL+ 鼠标单击 也可以)
-
-CTRL+H        显 示类结构图
-F4   查找变量来源
-
-F3   查找下一个
-SHIFT+F3  查找上一个
-
-
-Ctrl+F12	显示当前文件的全部类、函数、变量
-Ctrl+Shift+H  方法的层次结构
-CTRL+R 当前窗口替换文本
-CTRL+J 自动代码提示，自动补全
-CTRL+E 最近打开的文件
-CTRL+ [] 光标移动到{}[]开头或结尾位置
-Ctrl + shift + m  html标签跳转
-
-CTRL+G 定位行，跳转行
-Shift+F6	批量重命名变量
-
-Ctrl + Q      快速文档查询
-
-Ctrl + /，单行注释 
-Ctrl + Shift + /，多行注释,块注释 
-/加两个* + Enter，自动生成注释
-
-
 启动的时候不打开工程文件
 Preferences->Appearance & Behavior ->System Settings 
 去掉 Reopen last project on startup.
-=======
-CTRL+SHIFT+/ 块状注释/取消块状注释
-
 
 phpstorm+xdebug断点调试php
 
