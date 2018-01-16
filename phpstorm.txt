@@ -22,7 +22,7 @@ ctrl+alt+L		代码格式化		设置代码样式：File -> Settings -> Code Style
 Alt+Shift+Down        下移选中的行
 Alt+Shift+Up          上移选中的行
 Ctrl+Shift+J          合并选中的行
-
+Ctrl + Alt + S		打开设置窗口
 
 CTRL+G 定位行，跳转行
 Ctrl + Q      快速文档查询
@@ -67,6 +67,9 @@ erverything找到xml文件
 启动的时候不打开工程文件
 Preferences->Appearance & Behavior ->System Settings 
 去掉 Reopen last project on startup.
+
+4. 取消勾选不常用的插件
+phpstorm 中可以集成很多插件，这些插件也会影响运行速度，有的插件你可能压根都没听过，更不会使用，可以取消勾选。
 
 phpstorm+xdebug断点调试php
 
