@@ -67,6 +67,7 @@ https://www.cnblogs.com/dcb3688/p/4607968.html
     '<controller:\w+>/<id:\d+>' => '<controller>/view',
     "<controller:\w+>/<action:\w+>"=>"<controller>/<action>",
 ],
+
 此时我们访问 /index.php/blog/1 会正常显示/blog/view?id=1这个界面。
 
 

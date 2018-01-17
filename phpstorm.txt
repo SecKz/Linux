@@ -40,6 +40,10 @@ Ctrl + Shift + /，多行注释,块注释
 给被选中的字符加上引号或括号
 Editor > General > Smart Keys: Surround selection on typing quote or brace
 
+给光标所在行或被选择块加tag
+Ctrl+Alt+J
+Ctrl+Alt+T
+
 关闭灯泡提示
 settings搜索bulb，找到show intention bulb关闭
 
