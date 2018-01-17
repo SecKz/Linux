@@ -1,4 +1,7 @@
 
+Ctrl+Shift+Delete	删除外围标签
+Ctrl+Alt+J			给光标所在行或被选择块加tag	Ctrl+Alt+T
+Ctrl + shift + m  html标签跳转
 
 Ctrl+Shift + left  回到上次编辑点
 Ctrl+D		复制当前行/选择块
@@ -17,7 +20,7 @@ CTRL+R 当前窗口替换文本
 CTRL+J 自动代码提示，自动补全
 CTRL+E 最近打开的文件
 CTRL+ [] 光标移动到{}[]开头或结尾位置
-Ctrl + shift + m  html标签跳转
+
 
 ctrl+alt+L		代码格式化		设置代码样式：Settings -> Code Style ->PHP
 Alt+Shift+Down        下移选中的行
@@ -39,10 +42,6 @@ Ctrl + Shift + /，多行注释,块注释
 
 给被选中的字符加上引号或括号
 Editor > General > Smart Keys: Surround selection on typing quote or brace
-
-给光标所在行或被选择块加tag
-Ctrl+Alt+J
-Ctrl+Alt+T
 
 css简写时关闭自动换行 Settings -> Code Style -> css
 settings搜索css, 勾选keep single-line blocks
