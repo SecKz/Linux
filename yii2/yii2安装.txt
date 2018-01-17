@@ -1,0 +1,24 @@
+
+yii2安装
+# composer create-project  --prefer-dist yiisoft/yii2-app-advanced=2.0.13 yii2 
+# init.bat		进到yii2安装目录执行 前台：frontend 目录，后台：backend，官方下载的源码中是缺失配置文件和index.php，需要执行init.bat。
+
+配置数据库
+在common\config\main-local.php
+
+http://www.yiichina.com/tutorial/692
+http://www.yiichina.com/doc/guide/2.0/start-installation
+
+
+生成测试数据表
+# yii.bat migrate		创建migrate和user表
+
+打开前台点击Signup，进行注册
+
+查看yii.bat常用命令
+# yii.bat
+
+通过gii生成一个简单博客管理系统  http://www.yiichina.com/tutorial/800
+# yii migrate/create create_blog_table
+# yii migrate
+

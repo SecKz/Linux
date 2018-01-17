@@ -6,7 +6,7 @@ http://localhost:94/index.php/debug			debug条的访问路径
 
 给控制器分类可以使用模块modules，也可以使用二级目录
 
-http://localhost:94/index.php/api/posts/find			访问二级目录的posts控制器
+http://localhost:94/index.php/api/posts/find			访问二级目录api的posts控制器
 http://localhost:94/index.php/admin/default/find		访问模块admin的default控制器
 
 
@@ -22,26 +22,6 @@ Module Class填 app\modules\admin\module	生成admin模块
 		'class' => 'app\modules\admin\Module',
 	],
 ],
-
-
-yii2安装
-# composer create-project  --prefer-dist yiisoft/yii2-app-advanced=2.0.13 yii2 
-# init.bat		进到yii2安装目录执行 前台：frontend 目录，后台：backend，官方下载的源码中是缺失配置文件和index.php，需要执行init.bat。
-
-配置数据库
-在common\config\main-local.php
-
-生成测试数据表
-# yii.bat migrate		创建migrate和user表
-
-打开前台点击Signup，进行注册
-
-查看yii.bat常用命令
-# yii.bat
-
-通过gii生成一个简单博客管理系统  http://www.yiichina.com/tutorial/800
-# yii migrate/create create_blog_table
-# yii migrate
 
 gii生成控制器
 Controller Class填 app\controllers\PostsController		生成controllers目录下的控制器
@@ -71,15 +51,9 @@ https://www.cnblogs.com/dcb3688/p/4607968.html
 此时我们访问 /index.php/blog/1 会正常显示/blog/view?id=1这个界面。
 
 
-
 Yii2 在视图中：获取模块名、控制器名、方法名
 模块名  $this->context->module->id
 控制器名 $this->context->id
 方法名 $this->context->action->id
 
 
-http://www.yiichina.com/tutorial/692
-http://www.yiichina.com/doc/guide/2.0/start-installation
-
-yii2教程
-http://www.yiichina.com/doc/internals/2.0
