@@ -40,7 +40,7 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="fun" value="function $END$() {&#10;&#10;}" description="" toReformat="false" toShortenFQNames="true">
+  <template name="fun" value="function $END$() &#10;{&#10;&#10;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="JAVA_SCRIPT" value="true" />
       <option name="PHP" value="true" />
@@ -212,7 +212,7 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="eb" value="'&lt;br /&gt;'" description="" toReformat="false" toShortenFQNames="true">
+  <template name="br" value="'&lt;br /&gt;'" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
@@ -357,12 +357,12 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="zjs" value="&lt;script type=&quot;text/javascript&quot;&gt;&#10;$END$&#10;&#10;&#10;&lt;/script&gt;" toReformat="false" toShortenFQNames="true">
+  <template name="zjs" value="&lt;script type=&quot;text/javascript&quot;&gt;&#10;$END$&#10;&#10;&#10;&lt;/script&gt;" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="HTML" value="true" />
     </context>
   </template>
-  <template name="zcss" value="&lt;style type=&quot;text/css&quot;&gt;&#10;$END$&#10;&#10;&lt;/style&gt;" toReformat="false" toShortenFQNames="true">
+  <template name="zcss" value="&lt;style type=&quot;text/css&quot;&gt;&#10;$END$&#10;&#10;&lt;/style&gt;" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="HTML" value="true" />
     </context>

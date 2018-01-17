@@ -1,4 +1,5 @@
 
+
 Ctrl+Shift + left  回到上次编辑点
 Ctrl+D		复制当前行/选择块
 Shift+F6	批量重命名变量
@@ -31,12 +32,13 @@ Ctrl + /，单行注释
 Ctrl + Shift + /，多行注释,块注释 
 /加两个* + Enter，自动生成注释
 
-给函数自动生成注释
-code->Generate->PHP Doc
-
 灰色＋波浪线: 变量未使用
 黄色波浪线: 变量未名单词拼写问题
 红色波浪线: 变量未定义
+
+
+给被选中的字符加上引号或括号
+Editor > General > Smart Keys: Surround selection on typing quote or brace
 
 关闭灯泡提示
 settings搜索bulb，找到show intention bulb关闭
@@ -48,6 +50,10 @@ Status Bar右下角，右数第2个
 settings搜索caret row
 
 
+给函数自动生成注释
+code->Generate->PHP Doc
+
+
 Phpstorm激活
 激活时选择License server 填入http://idea.higherbros.com 点击Active即可。
 http://www.imsxm.com/jetbrains-license-server.html
@@ -55,10 +61,6 @@ http://www.imsxm.com/jetbrains-license-server.html
 
 phpstorm的自动补充功能live template
 setting-editor-live template
-
-foreach($END$ as $k => $v) {
-
-}
 
 导出live template    C:\Users\Administrator\.PhpStorm2017.2\config\templates
 erverything找到xml文件
@@ -70,6 +72,7 @@ Preferences->Appearance & Behavior ->System Settings
 
 4. 取消勾选不常用的插件
 phpstorm 中可以集成很多插件，这些插件也会影响运行速度，有的插件你可能压根都没听过，更不会使用，可以取消勾选。
+
 
 phpstorm+xdebug断点调试php
 

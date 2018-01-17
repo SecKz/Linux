@@ -1,0 +1,7 @@
+<templateSet group="u_css">
+  <template name="w" value="width:$END$px;" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="CSS" value="true" />
+    </context>
+  </template>
+</templateSet>

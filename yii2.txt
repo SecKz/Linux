@@ -1,7 +1,28 @@
 
 
-yii的默认路由
-http://localhost:94/index.php?r=site/index
+http://localhost:94/index.php?r=site/index		yii的路由访问方式
+http://localhost:94/index.php?r=gii			gii的访问路径
+http://localhost:94/index.php/debug			debug条的访问路径
+
+给控制器分类可以使用模块modules，也可以使用二级目录
+
+http://localhost:94/index.php/api/posts/find			访问二级目录的posts控制器
+http://localhost:94/index.php/admin/default/find		访问模块admin的default控制器
+
+
+yii2也有类似于thinkphp的module的概念，前台一个模块，后台一个模块。
+假定应用使用一个名为 forum 模块， 路由forum/post/index 代表forum模块中post控制器的 index 操作
+
+module也可以通过gii生成，会在controllers同级目录生成一个modules目录 
+Module Class填 app\modules\admin\module	生成admin模块
+
+在main.php中添加
+'modules' => [
+	'admin' => [
+		'class' => 'app\modules\admin\Module',
+	],
+],
+
 
 yii2安装
 # composer create-project  --prefer-dist yiisoft/yii2-app-advanced=2.0.13 yii2 
@@ -22,6 +43,10 @@ yii2安装
 # yii migrate/create create_blog_table
 # yii migrate
 
+gii生成控制器
+Controller Class填 app\controllers\PostsController		生成controllers目录下的控制器
+Controller Class填 app\controllers\api\PostsController	生成controllers/api目录下的控制器
+
 使用 Gii 去自动生成 Web 站点常用功能的代码
 http://www.yiichina.com/doc/guide/2.0/start-gii
 
@@ -29,7 +54,8 @@ gii生成的控制器提示 Unable to find BlogConditions.php Namespace missing?
 找到BlogConditions.php修改namespace app\controllers;
 为namespace frontend\controllers;
 
-
+yii2安装redis扩展
+composer require --prefer-dist yiisoft/yii2-redis
 
 Yii2 url地址美化与重写 backend\config\main.php的urlManager
 https://www.cnblogs.com/dcb3688/p/4607968.html
@@ -38,15 +64,17 @@ https://www.cnblogs.com/dcb3688/p/4607968.html
 
 'rules' => [
     '/blogs' => '/blog/index',
-    // '/blogs/<id:\d+>' => '/blog/view',
     '<controller:\w+>/<id:\d+>' => '<controller>/view',
     "<controller:\w+>/<action:\w+>"=>"<controller>/<action>",
 ],
 此时我们访问 /index.php/blog/1 会正常显示/blog/view?id=1这个界面。
 
 
-gii的访问路径
-http://hostname/index.php?r=gii
+
+Yii2 在视图中：获取模块名、控制器名、方法名
+模块名  $this->context->module->id
+控制器名 $this->context->id
+方法名 $this->context->action->id
 
 
 http://www.yiichina.com/tutorial/692
