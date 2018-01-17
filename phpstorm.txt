@@ -19,7 +19,7 @@ CTRL+E 最近打开的文件
 CTRL+ [] 光标移动到{}[]开头或结尾位置
 Ctrl + shift + m  html标签跳转
 
-ctrl+alt+L		代码格式化		设置代码样式：File -> Settings -> Code Style ->PHP
+ctrl+alt+L		代码格式化		设置代码样式：Settings -> Code Style ->PHP
 Alt+Shift+Down        下移选中的行
 Alt+Shift+Up          上移选中的行
 Ctrl+Shift+J          合并选中的行
@@ -43,6 +43,9 @@ Editor > General > Smart Keys: Surround selection on typing quote or brace
 给光标所在行或被选择块加tag
 Ctrl+Alt+J
 Ctrl+Alt+T
+
+css简写时关闭自动换行 Settings -> Code Style -> css
+settings搜索css, 勾选keep single-line blocks
 
 关闭灯泡提示
 settings搜索bulb，找到show intention bulb关闭
