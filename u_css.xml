@@ -1,5 +1,10 @@
 <templateSet group="u_css">
-  <template name="w" value="width:$END$px;" toReformat="false" toShortenFQNames="true">
+  <template name="paz" value="position:absolute;z-index:$END$;" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="CSS" value="true" />
+    </context>
+  </template>
+  <template name="b" value="border:1px solid $END$" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="CSS" value="true" />
     </context>

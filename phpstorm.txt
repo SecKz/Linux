@@ -3,7 +3,9 @@ Ctrl+Shift+Delete	删除外围标签
 Ctrl+Alt+J			给光标所在行或被选择块加tag	Ctrl+Alt+T
 Ctrl + shift + m  html标签跳转
 
-Ctrl+Shift + left  回到上次编辑点
+Ctrl+Shift + left  回到上次编辑点 Ctrl+Shift + right 相反操作
+
+
 Ctrl+D		复制当前行/选择块
 Shift+F6	批量重命名变量
 CIRL+B 找变量的来源，跳到变量申明处 (CTRL+ 鼠标单击 也可以)
