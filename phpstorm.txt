@@ -8,9 +8,9 @@ Ctrl+Shift + left  回到上次编辑点 Ctrl+Shift + right 相反操作
 
 Ctrl+D		复制当前行/选择块
 Shift+F6	批量重命名变量
-CIRL+B 找变量的来源，跳到变量申明处 (CTRL+ 鼠标单击 也可以)
+CIRL+B		找变量的来源，跳到变量申明处 (CTRL+ 鼠标单击 也可以)
 Ctrl+F12	显示当前文件的全部类、函数、变量
-CTRL+H        显 示类结构图
+CTRL+H        显示类结构图
 
 F4   查找变量来源
 F3   查找下一个
@@ -40,6 +40,9 @@ Ctrl + Shift + /，多行注释,块注释
 灰色＋波浪线: 变量未使用
 黄色波浪线: 变量未名单词拼写问题
 红色波浪线: 变量未定义
+
+默认展开html中的style
+settings搜索folding, 勾选keep single-line blocks
 
 
 给被选中的字符加上引号或括号
