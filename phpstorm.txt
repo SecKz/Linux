@@ -2,6 +2,8 @@
 Ctrl+N					类查找  菜单Navigate
 Ctrl+Shift+N			文件查找
 
+Shift+F1		查看php.net函数文档
+
 Ctrl+Shift+Delete	删除外围标签
 Ctrl+Alt+J			给光标所在行或被选择块加tag	Ctrl+Alt+T
 Ctrl + shift + m  html标签跳转
