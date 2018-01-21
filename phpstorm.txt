@@ -1,4 +1,16 @@
 
+
+shift+enter     新的一行
+ctrl+j            插入活动代码提示
+ctrl+alt+t        当前位置插入环绕代码
+alt+insert        生成代码菜单
+ctrl+q            查看代码注释
+shift+F6          重命名
+ctrl+shift+u      字母大小写转换
+ctrl+f            查找
+ctrl+r            替换
+
+ctrl+alt+F12      跳转至当前文件在磁盘上的位置
 Ctrl+N					类查找  菜单Navigate
 Ctrl+Shift+N			文件查找
 
@@ -6,12 +18,11 @@ Shift+F1		查看php.net函数文档
 
 Ctrl+Shift+Delete	删除外围标签
 Ctrl+Alt+J			给光标所在行或被选择块加tag	Ctrl+Alt+T
-Ctrl + shift + m  html标签跳转
+Ctrl + shift + m	 html标签跳转
 
 Ctrl+Shift + left  回到上次编辑点 Ctrl+Shift + right 相反操作
 
-
-Ctrl+D		复制当前行/选择块
+Ctrl+D		复制当前行
 Shift+F6	批量重命名变量
 CIRL+B		找变量的来源，跳到变量申明处 (CTRL+ 鼠标单击 也可以)
 Ctrl+F12	显示当前文件的全部类、函数、变量
@@ -29,14 +40,14 @@ CTRL+E 最近打开的文件
 CTRL+ [] 光标移动到{}[]开头或结尾位置
 
 
-ctrl+alt+L		代码格式化		设置代码样式：Settings -> Code Style ->PHP
+ctrl+alt+L			代码格式化		设置代码样式：Settings -> Code Style ->PHP
 Alt+Shift+Down        下移选中的行
 Alt+Shift+Up          上移选中的行
 Ctrl+Shift+J          合并选中的行
 Ctrl + Alt + S		打开设置窗口
 
 CTRL+G 定位行，跳转行
-Ctrl + Q      快速文档查询
+
 
 Ctrl + /，单行注释 
 Ctrl + Shift + /，多行注释,块注释 
