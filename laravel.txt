@@ -143,5 +143,8 @@ print_r($query);
 print_r(end($query));		
 
 
-
 @if ($msg) <div class="alert alert-warning">{{$msg}}</div> @endif
+
+Laravel 5 框架性能优化技巧
+http://www.cnblogs.com/johnson108178/p/7803729.html
+
