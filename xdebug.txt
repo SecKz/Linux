@@ -3,7 +3,7 @@ Xdebug的var_dump重载
 在安装xdebug之后，php原来的var_dump方法会被改变，显示效果变得更加友好。
 
 相关参数
-1.xdebug.overload_var_dump = 1
+xdebug.overload_var_dump = 1
 参数类型Boolean，默认值为1
 当设置1，则重载var_dump()。即启用xdebug的var_dump()
 
