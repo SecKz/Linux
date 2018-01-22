@@ -46,12 +46,18 @@ Ctrl + Shift + /，多行注释,块注释
 黄色波浪线: 变量未名单词拼写问题
 红色波浪线: 变量未定义
 
+关闭自动完成大小写敏感
+Preferences -> Editor -> Code Completion
+
+
 关闭phpstorm的拼写检查
 settings ---> inspections ---> spelling ---> Typo的勾去掉
 
 默认展开html中的style
 settings搜索folding, 勾选keep single-line blocks
 
+自动换行
+勾选Use soft wrap in editor
 
 给被选中的字符加上引号或括号
 Editor > General > Smart Keys: Surround selection on typing quote or brace
