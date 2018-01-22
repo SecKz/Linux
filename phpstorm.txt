@@ -71,6 +71,9 @@ settings搜索folding, 勾选keep single-line blocks
 自动换行
 勾选Use soft wrap in editor
 
+code style中html格式化时属性不换行
+Wrap attributes选择do not wrap
+
 给被选中的字符加上引号或括号
 Editor > General > Smart Keys: Surround selection on typing quote or brace
 
@@ -126,6 +129,6 @@ phpstrom font配置
 edit -> font 
 font: consolas, size:18
 
-
-
+PhpStorm 添加jQuery自动提示，自动补全，提示文档
+http://blog.csdn.net/arex_efan/article/details/45363829
 
