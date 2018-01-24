@@ -36,3 +36,4 @@ pip3 install gevent
 pip3 install virtualenv
 pip3 install pillow
 pip3 install pymysql
+pip3 install pandas

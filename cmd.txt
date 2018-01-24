@@ -1,31 +1,32 @@
 
-使用 /d 开关，除了改变驱动器的当前目录之外，还可改变当前驱动器。没有/d， cmd进入指定路径分两部，先进入盘符，在cd在指定目录
+使用 /d 开关，除了改变驱动器的当前目录之外，还可改变当前驱动器。
+没有/d， cmd进入指定路径分两部，先进入盘符，在cd在指定目录
+
+> cd \						返回盘符
+> cd d:/
 > cd /d e:/mp3				
 > d:							进入d盘	
 > cd php					进入php目录
 > cd ..						返回上层目录
-> cd \						返回盘符
 
 > dir /o/d						目录优先列出文件，已列表形式展示
 > dir							列出文件
 > dir /d							文件是按栏分类列出
 > dir /w
 > dir /d/o:g
-> dir /d/o:gn		目录优先，按名称
+> dir /d/o:gn				目录优先，按名称
 
-> PATH 					显示或设置可执行文件的搜索路径。
-
-> tree					树形显示当前目录结构，不包含文件
-> tree /f					树形显示当前文件目录结构
+> move a.txt a.php				移动、重命名文件
+> xcopy js js2 /e/h/i			复制目录
+> rename aa bb					重命名
+> move aa dir					把aa移动到dir中
 
 复制文件
 > copy /?					查看copy命令的帮助
 > copy a.txt b.txt				复制文件
 > copy left.php e:\left.php	
 
-> xcopy js js2 /e/h/i				复制目录
-> rename aa bb					重命名
-> move aa dir					把aa移动到dir中
+
 
 删除
 > del "d:\linux\windows\新建 文本文档.txt"				文件及目录路径：若存在空格，应使用双引号将路径引起来
@@ -36,6 +37,10 @@
 
 > start 0.txt			打开文件
 > dir /?						查看帮助
+
+> PATH 					显示或设置可执行文件的搜索路径。
+> tree					树形显示当前目录结构，不包含文件
+> tree /f					树形显示当前文件目录结构
 
 
 cmd 支持gbk中文

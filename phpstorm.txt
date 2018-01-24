@@ -113,6 +113,7 @@ Preferences->Appearance & Behavior ->System Settings
 4. 取消勾选不常用的插件
 phpstorm 中可以集成很多插件，这些插件也会影响运行速度，有的插件你可能压根都没听过，更不会使用，可以取消勾选。
 
+安装EditorConfig
 
 phpstorm+xdebug断点调试php
 
