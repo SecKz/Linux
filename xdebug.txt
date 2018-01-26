@@ -26,4 +26,4 @@ xdebug.remote_port = 9000
 xdebug.idekey = PHPSTORM  
 xdebug.profiler_append = 0
 xdebug.profiler_enable = 1
-
+xdebug.overload_var_dump = 0

@@ -16,3 +16,8 @@ OR If you are on some other branch:
 
 1、在每次执行 git add . 或者 git commit -m "修改信息" 前，都执行git status 查看当前本地文件的状态
 2、每次commit后执行git pull origin master,以获取最新远程代码，尽早解决冲突
+
+
+单独clone远程分支
+git clone -b <branch> <remote_repo>
+git clone -b my-branch git@github.com:user/myproject.git
