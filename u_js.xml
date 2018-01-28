@@ -106,7 +106,7 @@
       <option name="JAVA_SCRIPT" value="true" />
     </context>
   </template>
-  <template name="cn" value="className" description="" toReformat="false" toShortenFQNames="true">
+  <template name="cn" value="className" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
     <context>
       <option name="JAVA_SCRIPT" value="true" />
     </context>
@@ -146,7 +146,7 @@
       <option name="JAVA_SCRIPT" value="true" />
     </context>
   </template>
-  <template name="ct" value="clearTimeout($END$);" description="" toReformat="false" toShortenFQNames="true">
+  <template name="ct" value="clearTimeout($END$);" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
     <context>
       <option name="JAVA_SCRIPT" value="true" />
     </context>
@@ -156,17 +156,12 @@
       <option name="JAVA_SCRIPT" value="true" />
     </context>
   </template>
-  <template name="ci" value="clearInterval($END$);" description="" toReformat="false" toShortenFQNames="true">
+  <template name="ci" value="clearInterval($END$);" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
     <context>
       <option name="JAVA_SCRIPT" value="true" />
     </context>
   </template>
   <template name="gtn" value="getElementsByTagName(&quot;$END$&quot;);" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="JAVA_SCRIPT" value="true" />
-    </context>
-  </template>
-  <template name="ty" value="typeof $END$" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="JAVA_SCRIPT" value="true" />
     </context>
@@ -232,6 +227,26 @@
     </context>
   </template>
   <template name="dwb" value="document.write($END$ + &quot;&lt;br /&gt;&quot;);" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="al" value="alert($END$);" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="ih" value="innerHTML" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="gid" value="function z(id) { return document.getElementById(id)}" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="jn" value="+ ', ' +" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="JAVA_SCRIPT" value="true" />
     </context>

@@ -9,7 +9,7 @@
       <option name="HTML" value="true" />
     </context>
   </template>
-  <template name="zinput" value="&lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; maxlength=&quot;&quot;/&gt;" description="" toReformat="false" toShortenFQNames="true">
+  <template name="zinput" value="&lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; maxlength=&quot;&quot;/&gt;" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
     <context>
       <option name="HTML" value="true" />
     </context>
@@ -19,37 +19,17 @@
       <option name="HTML" value="true" />
     </context>
   </template>
-  <template name="cl" value="class=&quot;$END$&quot;" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="HTML" value="true" />
-    </context>
-  </template>
   <template name="tb" value="target=&quot;_blank&quot;" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="HTML" value="true" />
     </context>
   </template>
-  <template name="dc" value="&lt;div class=&quot;$END$&quot;&gt;&lt;/div&gt;" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="HTML" value="true" />
-    </context>
-  </template>
-  <template name="di" value="&lt;div id=&quot;$END$&quot;&gt;&lt;/div&gt;" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="HTML" value="true" />
-    </context>
-  </template>
-  <template name="pre" value="&lt;pre&gt;&#10;$END$&#10;&lt;/pre&gt;" description="" toReformat="false" toShortenFQNames="true">
+  <template name="pre" value="&lt;pre&gt;&#10;$END$&#10;&lt;/pre&gt;" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
     <context>
       <option name="HTML" value="true" />
     </context>
   </template>
   <template name="zlink" value="&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;$END$.css&quot;/&gt;" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="HTML" value="true" />
-    </context>
-  </template>
-  <template name="st" value="style=&quot;$END$&quot;" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="HTML" value="true" />
     </context>
@@ -60,11 +40,6 @@
     </context>
   </template>
   <template name="php" value="&lt;?php $END$ ?&gt;" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="HTML" value="true" />
-    </context>
-  </template>
-  <template name="id" value="id=&quot;$END$&quot;" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="HTML" value="true" />
     </context>
@@ -80,6 +55,11 @@
     </context>
   </template>
   <template name="ifps" value="&lt;?php if(^!) { ?&gt;&#10;$END$&#10;&lt;?php } else { ?&gt;&#10;&#10;&lt;?php } ?&gt;" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="HTML" value="true" />
+    </context>
+  </template>
+  <template name="zcss" value="&lt;style type=&quot;text/css&quot;&gt;&#10;$END$&#10;&#10;&lt;/style&gt;" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="HTML" value="true" />
     </context>

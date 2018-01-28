@@ -56,11 +56,6 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="is" value="isset($END$)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
   <template name="em" value="empty($END$)" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
@@ -72,31 +67,6 @@
     </context>
   </template>
   <template name="exp" value="explode($END$, str)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="imp" value="implode($END$, array)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="inc" value="include('$END$');" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="inco" value="include_once('$END$');" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="req" value="require('$END$');" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="reqo" value="require_once('$END$');" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
@@ -133,11 +103,6 @@
     </context>
   </template>
   <template name="sd" value="session_destroy();" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="ec" value="echo $END$" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
@@ -207,11 +172,6 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="join" value="join($END$, array);" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
   <template name="br" value="'&lt;br /&gt;'" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
@@ -237,11 +197,6 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="uns" value="unset($END$)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
   <template name="ve" value="var_export($END$);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
@@ -257,26 +212,6 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="ina" value="in_array($END$, array)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="isa" value="is_array($END$)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="isr" value="is_readable($END$)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="isw" value="is_writable($END$)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
   <template name="hx" value="header(&quot;Location:$END$&quot;);&#10;exit();" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
@@ -287,42 +222,7 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="je" value="json_encode($END$);" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="jd" value="json_decode($END$, true);" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
   <template name="dd" value="date('Y-m-d H:i:s',$END$);" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="stl" value="strtolower($END$)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="stu" value="strtoupper($END$)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="stt" value="strtotime($END$)" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="hsc" value="htmlspecialchars($END$);" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="hsc1" value="htmlspecialchars($END$, ENT_QUOTES);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
@@ -347,7 +247,7 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="ser" value="$_SERVER['']" description="" toReformat="false" toShortenFQNames="true">
+  <template name="ser" value="$_SERVER['$END$']" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
@@ -355,16 +255,6 @@
   <template name="sleep" value="sleep($END$);" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="zjs" value="&lt;script type=&quot;text/javascript&quot;&gt;&#10;$END$&#10;&#10;&#10;&lt;/script&gt;" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="HTML" value="true" />
-    </context>
-  </template>
-  <template name="zcss" value="&lt;style type=&quot;text/css&quot;&gt;&#10;$END$&#10;&#10;&lt;/style&gt;" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="HTML" value="true" />
     </context>
   </template>
   <template name="h1" value="&lt;h1&gt;$END$&lt;/h1&gt;" description="" toReformat="false" toShortenFQNames="true">
@@ -403,11 +293,6 @@
     </context>
   </template>
   <template name="p" value="&lt;p&gt;$END$&lt;/p&gt;" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="i" value="&lt;i&gt;$END$&lt;/i&gt;" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
