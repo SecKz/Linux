@@ -1,0 +1,41 @@
+
+
+Linux下产生随机数方法
+# date +%s | md5sum
+# cat /dev/urandom | head -1 | md5sum | head -c 8
+# echo $(</dev/urandom tr -dc A-Za-z0-9 | head -c20)		输出一个20位的随机数
+# date +%s
+# date +%s | sha256sum
+# date +%s | sha256sum | base64
+# date +%s | sha256sum | base64 | head -c20
+# < /dev/urandom tr -dc A-Za-z0-9 | head -c20
+
+固定范围的随机数
+# php -r 'echo rand(1,99);'
+# echo $((( RANDOM % (20 - 7 )) + 7 )); 		echo $((( RANDOM % ($2 - $1 +1)) + $1 ));
+
+生成复杂密码
+# </dev/urandom tr -dc 'a-zA-Z1-9_=%*<>(|)~!:+-' | head -c32
+
+
+
+
+Linux 产生随机数的两种方式
+/dev/random和/dev/urandom是unix系统提供的产生随机数的设备
+
+上述两种方式都可以产生随机数，但是有区别
+dev/urandom  和dev/random
+都是产生用不为空的随机字符流，区别是
+/dev/random设备会封锁，直到系统产生的随机字符流已经充分够用，所以耗用时间较长
+/dev/urandom设备不会封锁，数据的随机程度不高，但是一般情况已经够用
+
+If you want random data in a Linux/Unix type OS, the standard way to do so is to use /dev/random or /dev/urandom. These devices are special files. 
+They can be read like normal files and the read data is generated via multiple sources of entropy in the system which provide the randomness.
+
+/dev/random will block after the entropy pool is exhausted. It will remain blocked until additional data has been collected from the sources of entropy that are available. 
+This can slow down random data generation.
+/dev/urandom will not block. Instead it will reuse the internal pool to produce more pseudo-random bits.
+
+
+
+

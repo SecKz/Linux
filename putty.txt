@@ -1,0 +1,14 @@
+
+备份 PuTTY 的设置
+用 PuTTY 最不爽的就是，它把所有的设置都保存到注册表了，本来这不是什么问题。但是难免会重装一下机器，用下面的命令可以备份 PuTTY 的所有设置
+打开注册表，打到HKEY_CURRENT_USER\Software\SimonTatham\PuTTY，导出成文件PuTTY.config.reg
+
+
+默认的 Action of mouse buttons （鼠标按键的功能）的选项是 Compromise，这种方式下选中有两种方式，一是直接用鼠标左键拖拉选中就可以了，二是用鼠标中键单击选中区域的开头，用滚动条拖拉到期望选中区域的末尾，再用鼠标中键单击，就可以选中了。
+选中以后，单击鼠标左键就把选中部分复制到剪贴板了。粘贴也很简单，单击鼠标右键。
+Action of mouse buttons 的第一个选项是 Windows （Windows 方式的），鼠标中键的操作跟前面提到的一样。右键不是粘贴了，而是打开了右键菜单。
+
+解决[windows/putty]用vi远程终端小键盘不能输入数字的方法
+是putty的话 选项Terminal->Features里，找到Disable application keypad mode，选上
+在Xshell中类似：属性->终端->VT模式->起始数字小键盘模式(DECNKM)->设置为常规
+
