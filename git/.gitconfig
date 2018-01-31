@@ -22,6 +22,7 @@
 	latest = for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short) [%(committername)]'
 	ls = log -15 --pretty=format:\"%C(yellow)%h %C(white)%ad %C(green)%cn %C(red)%d %C(reset)%s\" --decorate  --date=format:'%Y-%m-%d %H:%M:%S'
 	hist = log -30 --pretty=format:\"%C(yellow)%h %C(red)%d %C(reset)%s %C(green)[%an] %C(white)%ad\" --topo-order --graph --date=short
+	pu = push origin master
 	puo = push -u origin master
 	puf = push -f origin master
 	conf = config -l 
