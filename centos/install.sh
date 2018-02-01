@@ -145,7 +145,7 @@ if [ ! -d /home/html ]; then
 	unzip /root/centos/phpmyadmin.zip -d . > /dev/null
 	mv phpmyadmin pan113
 	chown -R www.www /home/html
-	find /home/html -type f | xargs -i chmod 644 {}
+	find /home/html -type f -exec chmod 644 {} \;
 	mkdir 0aa
 	cd 0aa
 	cp ../01pinfo.php .
@@ -344,8 +344,7 @@ if [ "$nginxyn" = 'y' -o "$nginxyn" = 'Y' ]; then
 			sed -ri 's/rotate [0-9]+$/rotate 4/' /etc/logrotate.d/nginx
 			mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf1
 			cp -a /root/centos/block_ip_ngx.conf /etc/nginx/
-			[ -d "/var/lib/nginx/" ] && find /var/lib/nginx/ -type d | xargs -i chmod 755 {}
-
+			[ -d "/var/lib/nginx/" ] && find /var/lib/nginx/ -type d -exec chmod 755 {} \;
 			nginx;
 			chkconfig nginx on;
 		fi
