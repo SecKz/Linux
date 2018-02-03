@@ -62,6 +62,10 @@ ctrl+shift+/      块注释
 Preferences -> Editor -> Code Completion
 
 
+Turn off background color for SQL strings
+搜索Injected language fragment
+Click 'Injected language fragment' and simply untick the Background checkbox.
+
 关闭phpstorm的拼写检查
 settings ---> inspections ---> spelling ---> Typo的勾去掉
 

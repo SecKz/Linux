@@ -1,4 +1,10 @@
 
+创建与合并分支
+https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375840038939c291467cc7c747b1810aab2fb8863508000
+
+$ git merge dev				把dev分支的工作成果合并到当前所在分支上
+
+
 origin 是默认的远程版本库名称
 你可以在 .git/config 之中进行修改
 git push origin master 的意思是 git push origin master:master 将本地的 master 分支推送至远端的 master 分支，如果没有就新建一个
