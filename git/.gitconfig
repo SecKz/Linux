@@ -26,4 +26,6 @@
 	puo = push -u origin master
 	puf = push -f origin master
 	conf = config -l 
-
+[mergetool]
+    prompt = true
+    keepBackup = false
