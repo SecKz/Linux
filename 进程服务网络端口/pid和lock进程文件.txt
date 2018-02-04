@@ -1,0 +1,28 @@
+
+kill掉一个进程.对应会删除/var/run/, /var/lock/subsys文件和/proc/pid/目录
+
+
+# service --status-all|egrep 'locked|锁|已死' 	查看locked的服务
+# locate /var/*/*.pid		查看var下全部pid文件
+
+有时候查看某项服务的状态，有如下提示
+<service_name> dead but subsys locked” mean?
+<service_name> 已死，但 pid 文件仍存
+
+服务启动时会在/var/run/和/var/lock/subsys生成对应的服务名文件，用于标记该服务已经启动。
+当停止服务时，标记文件也会删除
+若服务已经停止，但标记文件仍存在，就会出现上述提示
+
+解决方法是删除 /var/run/*.pid和/var/lock/subsys/对应的服务名文件。
+
+his means the service was running at one time, but has crashed.
+When you start a service, it creates a "lock" file to indicate that the service is running. 
+This helps avoid multiple instances of the service. When you stop a service, this lock file is removed.
+When a running service crashes, the lock file exists but the process no longer exists. Thus, the message.
+Look at the two areas /var/run/*.pid and /var/lock/subsys/*. These are expected to agree with each other. 
+That is, if the (emtpy file) lockfile /var/lock/subsys/crond exists, 
+then the first line of the file /var/run/crond.pid is expected to contain the PID of the process running for this service. 
+If no such process is running, then something is wrong.
+If a process is indeed running (as you see) but it is not that PID, then something is probably confused.
+
+

@@ -1,0 +1,40 @@
+
+
+
+# ps -up
+# pstree -uph
+# pstree --h
+
+
+查看进程树命令：pstree
+pstree命令格式
+# pstree [-A|U] [-up] 
+-A或者a：各进程间连接用ASCII字符连接 
+-U：该进程之间连接用utf8字符连接 
+-p：同时显示PID 
+-u：同时列出每个进程的所属账号名称
+# pstree –Aup
+  init(1)-+-acpid(2738) 
+          |-atd(2912) 
+          |-auditd(2399)-+-audispd(2401)---{audispd}(2409) 
+          |              `-{auditd}(2400) 
+          |-automount(2714)-+-{automount}(2715) 
+          |                 |-{automount}(2716) 
+          |                 |-{automount}(2719) 
+          |                 `-{automount}(2722) 
+          |-avahi-daemon(2942,avahi)---avahi-daemon(2943) 
+          |-crond(2856) 
+          |-cupsd(2792) 
+          |-dbus-daemon(2582,dbus)---{dbus-daemon}(2583) 
+          |-dhclient(2342) 
+          |-events/0(5) 
+          |-gam_server(3016) 
+  ...（部分省略）... 
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,63 @@
+
+
+
+# ps aux | grep 21494			根据进程号找进程名
+# pstree -up | grep 25391			根据进程号找进程名
+# pgrep -lo nginx				再根据上行找到的进程名,找到即父进程的PID
+
+
+
+# pgrep -o httpd		只查看httpd的最早打开的进程，一般是主进程
+# pgrep -n httpd		只查看httpd最新打开的进程
+# pgrep -lo httpd		先用pgrep查看httpd的主进程ID，再lsof –p 查看httpd打开的文件或文件数
+# lsof -p 2743
+# lsof -p 2743 | wc –l	查看httpd打开文件数
+
+# pgrep -lo httpd					查看httpdy主进程ID, 即父进程
+# pgrep -lo mysql		
+# pgrep mysql					查看mysql的进程ID
+# pgrep httpd					查看httpd的进程ID, 可由pstree -up|grep httpd 验证
+# pgrep -l httpd					查看httpd全部进程
+# pgrep -l http 					pgrep的进程名可以不用写全
+# pgrep sshd 
+# pgrep -l mysql 				列出进程命令有ba的全部进程
+
+pgrep命令可以根据程序名称显示对应的进程pid，一般是用来判断程序是否正在运行。
+look up processes based on name and other
+ -l  列出程序名和进程ID；
+-o  最早打开的进程ID；
+-n  最新打开的进程ID；
+
+
+
+pidof用于找出正在运行的程序的进程PID（find the process ID of a running program.），功能与pgrep相同
+
+# pidof httpd	
+# pidof -s httpd				只列出一个进程pid，不般是主进程
+# pidof -x update.sh 			找出shell脚本update.sh的进程PID，值等于$0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

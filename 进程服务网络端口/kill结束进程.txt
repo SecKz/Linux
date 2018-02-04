@@ -1,0 +1,71 @@
+
+
+# kill 456			kill没有指定信号，默认是kill -15 456，相当于 kill -TERM 456
+# kill -9 456			停掉456进程 -9表示强迫进程立即停止
+# kill -HUP 456  	reload 456进程，相当于kill -1 456
+# kill -15 456		停掉456进程，相当于 kill -TERM 456
+
+# kill -0 pid			kill -0不会向进程发送任何信号，但是会进行错误检查。如果进程存在，命令返回0，如果不存在返回1 性能比ps -ef | grep xx好
+# echo $?
+# kill -0 2614 && date		kill -0不会真的kill掉进程
+# kill -0 268814 && date
+# kill -l				列出kill的全部信号
+
+ctrl+c是终止当前在终端窗口中运行的命令或脚本，
+kill -9 pid，是不顾后果的强制终止(如果的你的速度够快，有时候是和ctrl＋c是一样的)
+kill -15 pid，是先关闭和其有关的程序，再将其关闭
+
+在 Linux中有时会发生这样一种情况：一个程序崩溃，并且处于死锁的状态。只需要中止(或者说是关闭)这个有问题的程序即可。
+首先用ps命令查找该程序的 PID，然后使用kill命令停止这个程序
+
+-s (signal) : 其中可用的讯号有 HUP (1), KILL (9), TERM (15), 分别代表著重跑, 砍掉, 结束;
+-p : 印出 pid , 并不送出信号
+-l (signal) : 列出所有可用的信号名称
+
+
+格式：kill <pid>
+格式：kill -TERM <pid>
+发送SIGTERM信号到指定进程，如果进程没有捕获该信号，则进程终止（If no signal is specified, the TERM signal is sent.  The TERM signal will kill processes which do not catch this signal.）
+ 
+格式：kill -l
+列出所有信号名称（Print a list of signal names.  These are found in /usr/include/linux/signal.h）。只有第9种信号(SIGKILL)才可以无条件终止进程，其他信号进程都有权利忽略。下面是常用的信号：
+HUP     1    终端断线
+INT       2    中断（同 Ctrl + C）
+QUIT    3    退出（同 Ctrl + \）
+TERM    15    终止
+KILL      9    强制终止
+CONT   18    继续（与STOP相反， fg/bg命令）
+STOP    19    暂停（同 Ctrl + Z）
+格式：kill -l <signame>
+
+
+
+使用命令回收内存
+
+我们知道内存对于系统是非常重要的，回收内存可以提高系统资源。kill命令可以及时地中止一些"越轨"的程序或很长时间没有相应的程序。
+例如，使用top命令发现一个无用 (Zombie) 的进程，此时可以使用下面命令：
+#kill -9 XXX
+其中，XXX是无用的进程标识号。
+然后使用下面命令：
+#free
+
+此时会发现可用内存容量增加了。
+
+在linux中杀死进程最安全的方法是使用kill命令。
+首先使用ps -ef命令确定要杀死进程的PID或PPID
+# ps -ef | grep httpd
+杀死进程的方法:
+# kill -pid
+注意: kill可以终止有问题的进程，并把进程的资源释放给系统。然而，如果进程启动了子进程，只杀死父进程，子进程仍在运行，因此仍消耗资源。为了防止这些所谓的“僵尸进程”，应确保在杀死父进程之前，先杀死其所有的子进程。
+# kill -l PID
+加入 -l 选项时，kill命令也试图杀死所留下的子进程。但这个命令也不是总能成功。有时需要先手工杀死子进程，然后再杀死父进程。
+# kill -TERM PPID
+给父进程发送一个TERM信号，试图杀死它和它的子进程。
+
+
+
+
+
+
+
+

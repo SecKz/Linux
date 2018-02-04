@@ -1,0 +1,37 @@
+
+如果你没有设置@dnsserver，那么dig就会依次使用/etc/resolv.conf里的地址作为上连DNS服务器。
+# dig baidu.com @8.8.8.8 				用google-DNS来查baidu.com的A记录
+
+# dig baidu.com @8.8.8.8 +short
+
+
+# dig mx jiaz.cc
+# dig ns 5200tv.com
+# dig jiaz.cc +nssearch 				查询dns的解析时间　　
+# dig xxzhinan.com
+# dig -t mx cnblogs.com				查询cnblogs.com这个域的邮件记录
+# dig -t a www.google.com				查看域名的IPv4地址
+
+
+dig，和nslookup作用有些类似，都是DNS查询工具。
+dig，其实是一个缩写，即Domain Information Groper。
+一些专业的DNS管理员在追查DNS问题时，都乐于使用dig命令，是看中了dig设置灵活、输出清晰、功能强大的特点。
+
+# yum install bind-utils		dig安装
+
+
+现今为止使用的最多最广泛的DNS服务器软件还是BIND
+BIND的服务名是 named，因为BIND提供的是DNS服务，而DNS默认的协议是TCP与UDP协议，所以BIND服务在启动以后会占用53(Domain), 953(mdc)这两个端口号
+
+
+# service named status					查看DNS的启动状态
+# rpm -qi bind									查询是否安装了bind
+# yum install bind bind-chroot bind-utils
+# named-checkconf								查看BIND的主配置文件的错误
+# named-checkzone 								可以查看zone配置文件的错误
+
+
+
+
+
+

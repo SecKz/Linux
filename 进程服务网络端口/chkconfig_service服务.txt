@@ -1,0 +1,82 @@
+
+
+
+# service --status-all								查看所有服务的状态
+# service --status-all|egrep 'locked|锁|已死' 			查看locked的服务
+# chkconfig --list           							列出所有的系统服务
+# chkconfig --list httpd
+# chkconfig --add mysqld        					增加mysqld服务
+# chkconfig --del mysqld        	 				删除mysqld服务
+# chkconfig --level 2345 mysqld on    				设置mysqld在运行级别为2345的情况下都是on（开启）的状态
+# chkconfig mysqld on           					设定mysqld在各等级为on，“各等级”包括2、3、4、5等级
+
+
+
+chkconfig与service的区别
+1. 重启系统生效 
+开启： chkconfig mysqld on 	#等同于chkconfig --level mysqld 2345 on, 会在rc2.d, rc3.d rc4.d rc5.d 中生成一个以S开关的含有mysqld的文件
+关闭： chkconfig mysqld off 	#会在rc2.d, rc3.d rc4.d rc5.d 中生成一个以K开关的含有mysqld的文件,通过 find /etc/rc.d -name *mysqld*
+
+chkconfig --del mysqld 会删除rc0-6.d文件夹中的全部mysqld的文件
+chkconfig --add mysqld 会在rc0-6.d文件夹中添加含有mysqld字符的文件
+chkconfig mysqld on会在rc2.d, rc3.d rc4.d rc5.d 中生成或改变一个以S开关的含有mysqld的文件
+
+如果需要自启动某些服务，只需使用chkconfig 服务名 on即可，若想关闭，将on改为off
+在默认情况下，chkconfig会自启动2345这四个级别，如果想自定义可以加上--level选项
+
+chkconfig 开启、关闭、添加，删除服务的前提是，在/etc/init.d中有对应的服务文件名.
+报错：error reading information on service mysqld: No such file or directory
+比如/etc/init.d中没有mysql文件，就无法chkconfig mysql on或chkconfig mysql off、或chkconfig --add mysql，chkconfig --del mysql
+
+service httpd 等价 /etc/rc.d/init.d/httpd
+service httpd start 等价 /etc/rc.d/init.d/httpd  start
+
+
+
+参数用法：
+--add 　增加所指定的系统服务，让chkconfig指令得以管理它，并同时在系统启动的叙述文件内增加相关数据。
+--del 　删除所指定的系统服务，不再由chkconfig指令管理，并同时在系统启动的叙述文件内删除相关数据。
+--level<等级代号> 　指定读系统服务要在哪一个执行等级中开启或关毕。
+等级0表示：表示关机
+等级1表示：单用户模式
+等级2表示：无网络连接的多用户命令行模式
+等级3表示：有网络连接的多用户命令行模式
+等级4表示：不可用
+等级5表示：带图形界面的多用户模式
+等级6表示：重新启动
+需要说明的是，level选项可以指定要查看的运行级而不一定是当前运行级。对于每个运行级，只能有一个启动脚本或者停止脚本。
+当切换运行级时，init不会重新启动已经启动的服务，也不会再次去停止已经停止的服务。
+
+K15httpd -> ../init.d/httpd　　　　S55sshd -> ../init.d/sshd
+第一个部分是第一个字母K或者S，表示该服务是不是是不是开机自动启动，K表示开机不启动，S表示开机就启动
+第二个部分是一个数字，这个数字代表的是该服务的启动顺序，服务启动的顺序非常的重要，例如我们的网络服务需要在邮件服务之前启动
+第三个部分就是对应服务的名字，该链接文件其实都是指向的是 init.d 这个目录下的System V脚本文件
+
+
+
+运行级文件：
+每个被chkconfig管理的服务需要在对应的init.d下的脚本加上两行或者更多行的注释。第一行告诉chkconfig缺省启动的运行级以及启动和停止的优先级。如果某服务缺省不在任何运行级启动，那么使用 - 代替运行级。第二行对服务进行描述，可以用\ 跨行注释。
+例如，random.init包含三行：
+# chkconfig: 2345 20 80
+# description: Saves and restores system entropy pool for \
+# higher quality random number generation.
+
+
+ssh支持中文，但是在查询service sshd status时候出现乱码 
+# vim /etc/sysconfig/i18n  
+把  
+LANG="zh_CN"  
+SUPPORTED="zh_CN.UTF-8:zh_CN:zh:en_US.UTF-8:en_US:en"  
+SYSFONT="latarcyrheb-sun16"  
+修改成  
+LANG="zh_CN.UTF-8"   
+SUPPORTED="zh_CN.UTF-8:zh_CN:zh"         
+SYSFONT="latarcyrheb-sun16"  
+                      
+# source . /etc/sysconfig/i18n  
+
+
+
+
+
+

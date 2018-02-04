@@ -1,0 +1,65 @@
+
+
+
+ping: unknown host, wget出现Unable to resolve host address 返回的错误很明显，就是DNS无法解析，修改/etc/resolv.conf文件即可。
+# cat /etc/resolv.conf		查看dns设置
+改成有效的DNS,　如google的一组解析服务器即可：
+nameserver 8.8.8.8     //首选DNS服务器
+nameserver 8.8.4.4     //备用DNS服务器
+
+# curl -o /dev/null -s -w %{time_namelookup} www.baidu.com		查看本机DNS解析速度
+# service network restart		重启网络
+# ping -c1 www.baidu.com		简单的使用ping来测试,发现DNS解析是OK
+
+或者在/etc/sysconfig/network-scripts/ifcfg-lo添加对应的DNS
+DEVICE="eth0"
+BOOTPROTO=none
+TYPE=Ethernet
+DEFROUTE=yes
+ONBOOT="yes"
+IPADDR0=210.209.76.223
+NETMASK0=255.255.255.0
+GATEWAY=210.209.76.1
+DNS1=114.114.114.114
+DNS2=8.8.8.8
+
+重启network后自动更改DNS到/etc/resolv.conf文件中
+
+重启一下network都不能解析了。发现/etc/resolv.conf又恢复到原来的状态，里面什么都没有了。手动加入nameserver也不行。
+直接修改/etc/resolv.conf这个文件是没用的，网络服务重启以后会根据/etc/sysconfig/network-scripts/ifcfg-eth0来重载配置，
+如果ifcfg-eth0没有配置DNS，那么重启network后resolv.conf会被冲掉，使/etc/resolv.conf恢复到原来的状态
+
+
+接口和命名规则
+eth[0-9]　　 以太网接口
+wlan[0-9]　  无线网卡接口
+lo　　　　　　本地回环接口
+
+linux常规网络配置文件
+1. /etc/hosts　　　　　　主机文件
+2. /etc/resolv.conf  　　  DNS文件
+3. /etc/sysconfig/network-scripts/ifcfg-eth0　　网卡配置文件
+
+
+无法修改resolv.conf的问题
+http://blog.163.com/lin305_gf/blog/static/969524402011111001317135
+http://blog.sina.com.cn/s/blog_695d0b3001016vc3.html
+关闭NetworkManager服务
+/etc/init.d/NetworkManager stop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

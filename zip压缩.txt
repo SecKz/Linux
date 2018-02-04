@@ -13,12 +13,12 @@
 # zip -rm aa *.php									把php文件移动到压缩包，即删除了原来的php文件
 
 解压
-# unzip text.zip										将压缩文件text.zip在当前目录下解压缩。
-# unzip aa.zip -d aa									解压到aa目录
-# unzip -v text.zip									查看压缩文件目录，但不解压。
-# unzip -o test.zip 									覆盖原文件
-# unzip -n text.zip -d /tmp	  							将压缩文件text.zip在指定目录/tmp下解压缩，如果已有相同的文件存在，要求unzip命令不覆盖原先的文件。
-# unzip -l foo.zip										列出包里的文件
+# unzip text.zip					将压缩文件text.zip在当前目录下解压缩。
+# unzip aa.zip -d aa				解压到aa目录
+# unzip -v text.zip					查看压缩文件目录，但不解压。
+# unzip -o test.zip 				覆盖原文件
+# unzip -n text.zip -d /tmp	  		将压缩文件text.zip在指定目录/tmp下解压缩，如果已有相同的文件存在，要求unzip命令不覆盖原先的文件。
+# unzip -l foo.zip					列出包里的文件
 # uznip -hh				帮助
 
 linux 解压 zip 文件，文件名中文乱码的问题  

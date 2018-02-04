@@ -1,0 +1,43 @@
+
+查看网关　
+# netstat -r
+# cat /etc/sysconfig/network
+# cat /etc/sysconfig/network-scripts/ifcfg-eth0
+# route
+
+修改ip地址
+即时生效:
+# ifconfig eth0 192.168.0.20 netmask 255.255.255.0
+启动生效:
+修改/etc/sysconfig/network-scripts/ifcfg-eth0
+
+修改default gateway
+即时生效:
+# route add default gw 192.168.0.254
+启动生效:
+修改/etc/sysconfig/network-scripts/ifcfg-eth0，添加或修改网关
+GATEWAY=210.209.76.1
+
+
+修改dns
+修改/etc/resolv.conf
+修改后可即时生效，启动同样有效
+修改host name
+即时生效:
+# hostname fc2
+启动生效:
+修改/etc/sysconfig/network
+
+重启网络服务
+/etc/rc.d/init.d/network restrart
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,141 @@
+
+取IP地址
+# ifconfig eth0 |grep "inet addr:" |awk '{print $2}'|cut -c 6-
+# ifconfig | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}' 
+
+# lspci | grep Ethernet	查看网卡数量
+# ifconfig -a | grep Ethernet
+
+# ifdown lo				停用网卡，等同于ifconfig lo down
+# ifup lo					启用网卡， 等同于ifconfig lo up
+
+# ifconfig -a		查看全部网卡，包括停用的
+# ifconfig			查看已启用的网卡
+# ifconfig eth0 down	将网卡禁用	，慎用。http、ftp、ssh、网站都不能连接
+# ifconfig eth0 arp		 开启网卡eth0 的arp协议；
+# ifconfig eth0 -arp		 关闭网卡eth0 的arp协议；
+# ifconfig eth0 192.168.120.56 			给eth0网卡配置IP地：192.168.120.56
+# ifconfig eth0 192.168.120.56 netmask 255.255.255.0 		给eth0网卡配置IP地址：192.168.120.56 ，并加上子掩码：255.255.255.0
+# ifconfig eth0 192.168.120.56 netmask 255.255.255.0 broadcast 192.168.120.255		给eth0网卡配置IP地址：192.168.120.56，加上子掩码：255.255.255.0，加上个广播地址： 192.168.120.255
+# ifdown eth0 停止第一块网卡ifdown - take a network interface down
+# ifup eth1 启用第二块网卡ifup - bring a network interface up
+
+接口和命名规则
+eth[0-9]　　 以太网接口
+wlan[0-9]　  无线网卡接口
+lo　　　　　　本地回环接口
+
+Linux下网卡命名规律：eth0，eth1。第一块以太网卡，第二块。lo为环回接口，它的IP地址固定为127.0.0.1，掩码8位。它代表你的机器本身。
+fconfig命令配置的网卡信息，在网卡重启后机器重启后，配置就不存在。要想将上述的配置信息永远的存的电脑里，那就要修改网卡的配置文件/etc/sysconfig/network-scripts/ifcfg-网卡名
+
+linux常规网络配置文件
+1. /etc/hosts　　　　　　主机文件
+2. /etc/resolv.conf  　　  DNS文件
+3. etc/sysconfig/network-scripts/ifcfg-eth0　　网卡配置文件
+
+BOOTPROTO=static 		配置静态IP
+BOOTPROTO=dhcp		表明是自动ip地址分配。
+ONBOOT=yes			开机自动联网
+ONBOOT=no  			 禁用网卡
+
+
+
+ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:15:5D:7E:DC:09
+          inet addr:119.147.143.30  Bcast:119.147.143.255  Mask:255.255.255.0
+          inet6 addr: fe80::215:5dff:fe7e:dc09/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:132779398 errors:0 dropped:5986 overruns:0 frame:1
+          TX packets:88621977 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:2000890311 (1.8 GiB)  TX bytes:3090085108 (2.8 GiB)
+          Interrupt:9
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:252 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:252 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:15808 (15.4 KiB)  TX bytes:15808 (15.4 KiB)
+
+说明：
+eth0 表示第一块网卡， 其中 HWaddr 表示网卡的物理地址，可以看到目前这个网卡的物理地址(MAC地址）是 00:50:56:BF:26:20
+inet addr 用来表示网卡的IP地址，此网卡的 IP地址是 192.168.120.204，广播地址， Bcast:192.168.120.255，掩码地址Mask:255.255.255.0
+lo 是表示主机的回坏地址，这个一般是用来测试一个网络程序，但又不想让局域网或外网的用户能够查看，只能在此台主机上运行和查看所用的网络接口。
+比如把 HTTPD服务器的指定到回坏地址，在浏览器输入 127.0.0.1 就能看到你所架WEB网站了。但只是您能看得到，局域网的其它主机或用户无从知道。
+第一行：连接类型：Ethernet（以太网）HWaddr（硬件mac地址）
+第二行：网卡的IP地址、子网、掩码
+第三行：UP（代表网卡开启状态）RUNNING（代表网卡的网线被接上）MULTICAST（支持组播）MTU:1500（最大传输单元）：1500字节
+第四、五行：接收、发送数据包情况统计 ，以位bit为单位，转换成字节byte需除以8
+第七行：接收、发送数据字节数统计信息。
+
+1 kB	103 = 1000 bytes
+1 megabyte	1 MB	106 = 1000000 bytes
+1 gigabyte	1 GB	109 = 1000000000 bytes
+1 kibybyte	1 KiB	210 = 1024 bytes
+1 mebibyte	1 MiB	220 = 1048576 bytes
+1 gibibyte	1 GiB	230 = 1073741824 bytes
+
+接收数据包:8735 错误:0 丢弃:0 过载:0 帧数:0  
+发送数据包:5234 错误:0 丢弃:0 过载:0 载波:0   
+碰撞:0 发送队列长度:100  
+接收字节:3897818 (3.7 MB)  发送字节:1225779 (1.1 MB)  
+
+
+DEVICE=eth0        设备名称
+BOOTPROTO=none
+ONBOOT=yes
+TYPE=Ethernet
+HWADDR=00:15:5d:7e:dc:09          	  物理地址
+IPADDR=119.147.143.30    				 ip地址
+GATEWAY=119.147.143.1     				 网关
+NETMASK=255.255.255.0  			 掩码
+
+# ifconfig eth0 mtu 1500		设置最大传输单元
+# ifconfig eth0 add 33ffe:3240:800:1005::2/64 为网卡eth0配置IPv6地址；
+# ifconfig eth0 add 33ffe:3240:800:1005::2/64 为网卡eth0删除IPv6地址；
+练习的时候，ssh登陆linux服务器操作要小心，关闭了就不能开启了，除非你有多网卡。
+3．命令参数：
+up 启动指定网络设备/网卡。
+down 关闭指定网络设备/网卡。该参数可以有效地阻止通过指定接口的IP信息流，如果想永久地关闭一个接口，我们还需要从核心路由表中将该接口的路由信息全部删除。
+arp 设置指定网卡是否支持ARP协议。
+-promisc 设置是否支持网卡的promiscuous模式，如果选择此参数，网卡将接收网络中发给它所有的数据包
+-allmulti 设置是否支持多播模式，如果选择此参数，网卡将接收网络中所有的多播数据包
+-a 显示全部接口信息
+-s 显示摘要信息（类似于 netstat -i）
+add 给指定网卡配置IPv6地址
+del 删除指定网卡的IPv6地址
+<硬件地址> 配置网卡最大的传输单元
+mtu<字节数> 设置网卡的最大传输单元 (bytes)
+netmask<子网掩码> 设置网卡的子网掩码。掩码可以是有前缀0x的32位十六进制数，也可以是用点分开的4个十进制数。如果不打算将网络分成子网，可以不管这一选项；如果要使用子网，那么请记住，网络中每一个系统必须有相同子网掩码。
+tunel 建立隧道
+dstaddr 设定一个远端地址，建立点对点通信
+-broadcast<地址> 为指定网卡设置广播协议
+-pointtopoint<地址> 为网卡设置点对点通讯协议
+multicast 为网卡设置组播标志
+address 为网卡设置IPv4地址
+txqueuelen<长度> 为网卡设置传输列队的长度
+
+
+由于一般服务器有多个网卡，系统默认自动激活的是eth0，假如想激活别的网卡,执行
+# vi /etc/rc.local 
+在最下行加入 
+ifup eth1 
+route add -net 192.168.1.200/24 gw 192.168.1.1 dev eth1 
+其中192.168.1.200为服务器静态IP，192.168.1.1为网关。 
+假如有多个，往下加就是了。
+
+
+
+
+
+
+
+
+
+
+
+
+

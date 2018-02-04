@@ -1,0 +1,79 @@
+
+
+# nmap -v -f 127.0.0.1
+
+# nmap -sUT localhost				扫描本机的udp和tcp端口
+# nmap 119.147.143.30 扫描IP有多少端口打开和关闭
+# nmap localhost ：扫描本机
+# nmap -A 2345.com
+# nmap -p 1024-65535 localhost ：扫描本机的一部分端口
+# nmap -PT 192.168.1.171-177 ：已ping方式扫描数台主机
+# nmap -sO 192.168.1.19	确定目标机支持哪些IP协议 (TCP，ICMP，IGMP等):
+# nmap -O 192.168.1.19	探测目标主机的操作系统：
+# nmap -v scanme.nmap.org 	nmap -A 192.168.1.19
+
+检测远程端口是否打开
+# netstat -tunlp | grep ':21'
+# telnet localhost 2333
+# nmap localhost -p 22
+# nmap 203.124.15.248 -p 22
+
+# nmap 119.147.143.30
+Starting Nmap 4.11 ( http://www.insecure.org/nmap/ ) at 2013-02-23 07:24 CST
+Interesting ports on 119.147.143.30:
+Not shown: 1672 closed ports
+PORT     STATE SERVICE
+21/tcp   open  ftp
+22/tcp   open  ssh
+25/tcp   open  smtp
+53/tcp   open  domain
+80/tcp   open  http
+111/tcp  open  rpcbind
+727/tcp  open  unknown
+3306/tcp open  mysql
+
+
+一般在本机上查看端口时，最好使用netstat，因为它安全又可靠，如果找不到端口，或不知道端口的作用是什么，尤其在/etc/services中没有提到的端口对应的服务，就可以使用nmap命令。这个命令是系统管理员用来管理系统安全性的工具，可以通过它了解我们主机端口到底有什么作用。
+语法：
+nmap <扫描类型> <扫描参数>
+扫描类型：主要有以下几种。
+-sT：扫描TCP数据包以建立的连接connect（）
+-sS：扫描TCP数据包带有SYN数据的标记
+-sP：以ping方式进行扫描
+-sU：以UDP数据包格式进行扫描
+-sO：以IP协议进行主机扫描
+扫描参数：主要有以下几种。
+-PT：使用TCP的ping方式进行扫描，可以获取当前已经启动几台计算机
+-PI：使用实际的ping（带有ICMP数据包）进行扫描
+-p：这个是端口范围，如：1024~，80~1023，30000~60000
+IP地址与范围：有以下几种类型：
+192.168.0.100：直接写入IP，仅检查一台主机
+192.168.0.0/24：为C Class的网段
+192.168.*.*：以B Class的网段，扫描范围更广
+192.168.0.0~50，60~100，103，200：变形的主机范围
+
+
+iptables 防nmap 扫描 
+vi  /etc/sysconfig/iptables
+-A INPUT -j REJECT --reject-with icmp-host-prohibited 
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

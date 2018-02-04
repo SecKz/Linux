@@ -1,0 +1,114 @@
+
+# curl -A 'useragent' http://www.faxianguilin.com/							可以测试nginx是否禁用了某些user-agent		
+# curl -A 'apa3chebench' -o /dev/null -s -w %{http_code} www.baidu.com			
+# curl -A "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)" http://www.jiaz.cc			指定useragent
+# curl -I -H "Accept-Encoding: gzip,deflate" https://www.baidu.com/			
+
+# curl -D h.txt http://www.baidu.com			 #将http header保存到h.txt
+# curl -c cookie.txt www.baidu.com			 #将cookie放入cookie.txt中	
+# curl -L http://116.204.15.42/tg7/0am3/tg.php		如果tg.php有跳转，则跟随到跳转后的页面
+
+CURL POST数据
+# curl -d "user=nickwolfe&password=test" http://192.168.0.159/curl.php
+# curl -F "name=黄靖" -F “AA==BB” http://192.168.0.159/curl.php
+# curl -A "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)" -e "http://www.baidu.com" -d "arr[]=105&arr[name]=eric&arr[love]=girl&pid=2880&poll=投票" http://192.168.0.159/curl.php
+
+-e 是refer是页面；
+-d后面的参数都是将用post方式提交到服务器去的
+-F是post数据，一次只能一个，-d可以批量
+-D 把http的response里面的cookie信息存到一个文件中去
+
+
+# curl http://192.168.10.234/ -H "X-Forwarded-For: 1.1.1.1"    X-Forwarded-For后面的IP，代表客户端的IP地址。
+
+
+curl实现下载
+
+# curl -o page.html www.linuxidc.com					http://www.linuxidc.com > page.html			将html保存到page.htm
+# curl -o /root/00a.jpg https://www.baidu.com/img/bdlogo.png			用curl下载远程图片到本机
+# curl -O https://www.baidu.com/img/bdlogo.png						下载，保持原来文件名
+# curl -O http://www.linux.com/dodo[1-5].JPG				批量下载
+# curl -# -O https://www.baidu.com/img/bdlogo.png					显示下载进度条
+
+# curl -c -O https://www.baidu.com/img/bdlogo.png			断线续传
+
+# curl --limit-rate 1000B -O http://www.gnu.org/software/gettext/manual/gettext.html　　 specify the maximum transfer rate 
+# curl -z 21-Dec-11 http://www.example.com/yy.html					download the yy.html only if it is modified later than the given date and time
+# curl -z -21-Dec-11 http://www.example.com/yy.html					download the yy.html, if it is modified before than the given date and time
+# curl -u username:password URL										 Pass HTTP Authentication in cURL
+
+FTP
+# curl -u ftpuser:ftppass -O ftp://ftp_server/public_html/   list all the files and directories under the given URL
+# curl -u ftpuser:ftppass -O ftp://ftp_server/public_html/xss.php			download the xss.php file from the ftp server and save it in the local directory
+
+上传文件
+# curl -T dodo1.JPG -u 用户名:密码 ftp://www.linux.com/img/
+
+http://www.linuxdiyf.com/linux/2800.html
+http://www.cnblogs.com/-clq/archive/2012/01/29/2330827.html
+
+
+Curl模拟登录
+# curl -c cookie.txt -L -d "s_name=黄靖&password=123741b"  http://192.168.0.159/cad/index.php 		  将cookie放入cookie.txt中	
+# curl -b cookie.txt http://192.168.0.159/cad/info.php 													 -b cookie表示请求的时候将cookie文件中的信息带上
+或者
+# curl -D cookie.txt -L -d "s_name=黄靖&password=123741b"  http://192.168.0.159/cad/index.php 		  将header放入cookie.txt中	
+# curl -b cookie.txt http://192.168.0.159/cad/info.php 												      也可以用 -D 
+http://zhan.renren.com/linuxfunc?gid=3602888498030214256&checked=true
+
+
+curl  查看服务器提供HTTP服务的相关信息显示出服务器的HTTP是什么程序，哪个版本如：
+# curl -I 119.147.143.30
+# curl -I www.baidu.com
+# curl httpd://baidu.com | iconv -fgb2312  		取gbk文档时乱码，转码
+# curl http://open.baidu.com/special/time/ | iconv -f gb2312 -t utf-8     等同上行
+# curl http://www.linuxidc.com						输出网页的html
+
+使用curl时，有两个超时时间：一个是连接超时时间，另一个是数据传输的最大允许时间。
+连接超时时间用 --connect-timeout 参数来指定，数据传输的最大允许时间用 -m 参数来指定。
+# curl --connect-timeout 10 -m 20 "www.baidu.com"
+
+# curl ifconfig.me			在内网下查看公网ip
+
+
+返回网站各种状态码
+# curl -o /dev/null -s -w %{http_code} www.baidu.com
+# curl -o /dev/null -s -w %{time_total} www.baidu.com
+# curl -o /dev/null -s -w %{time_connect} www.baidu.com
+# curl -o /dev/null -s -w %{time_namelookup} www.baidu.com
+# curl -o /dev/null -s -w %{time_total} www.baidu.com
+# curl -o /dev/null -s -w %{size_download} www.baidu.com
+
+-o /dev/null ：把curl 返回的html、js 写到垃圾回收站[ /dev/null] 
+-w 指定格式化文件或字符串
+-o 请求重定向到
+-s 静默，不现实进度
+
+ -w：按照后面的格式写出rt
+time_namelookup	：		dns解析域名的时间 
+time_connect：			连接时间,从开始到建立TCP连接完成所用时间,包括前边DNS解析时间
+time_starttransfer：		从client发出请求；到web的server 响应第一个字节的时间，包括了time_namelookup和time_connect
+time_total：				client发出请求；到web的server发送会所有的相应数据的时间，包括了time_namelookup和time_connect
+speed_download：		下在速度  单位 byte/s
+
+
+-x  ip:port 指定使用的http代理
+curl -x 192.168.1.1:8080 www.jbxue.com
+-d <key=value>  向服务器POST表单数据 例如：
+curl -d "order=111&count=2" http://www.jbxue.com/buy
+
+
+http://www.cnblogs.com/-clq/archive/2012/01/29/2330827.html
+
+
+
+
+
+
+
+
+
+
+
+
+

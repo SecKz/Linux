@@ -1,0 +1,37 @@
+
+# yum install psmisc		安装killall命令
+
+# killall httpd 	删除httpd的全部进程
+# killall mysqld 	删除mysqld的全部进程
+# killall -9 java	删除java的全部进程
+# killall -l	列出支持的信号。
+# killall -9 bash  此bash也被·卡掉了，所以连接丢失了。现在重新连接并登录。
+# killall -TERM vi
+
+killall命令用于杀死指定名字的进程（kill processes by name）。我们可以使用kill命令杀死指定进程PID的进程，如果要找到我们需要杀死的进程，我们还需要在之前使用ps等命令再配合grep来查找进程，
+而killall把这两个过程合二为一，这真是一个太好用的命令了。
+
+# pkill -u eric		删除用户开启的程序
+# pkill -kill -t pts/2	把用户踢出终端  用w查看用户所处终端
+
+killall和pkill是相似的,不过如果给出的进程名不完整，killall会报错。pkill或者pgrep只要给出进程名的一部分就可以终止进程。
+pkill＝pgrep+kill	通过进程名停止进程，与killall相似。pkill之前，可以用pgrep -l httpd查看进程
+# pgrep -l httpd 也可以是pgrep -l http pgrep的进程名可以不用写全
+# pkill httpd
+# pkill -9 java
+说明："-9" 即发送的信号是9，pkill与kill在这点的差别是：pkill无须 “ｓ”，终止信号等级直接跟在 “-“ 后面。之前我一直以为是 "-s 9"，结果每次运行都无法终止进程。
+
+HUP     1    终端断线
+INT       2    中断（同 Ctrl + C）
+QUIT    3    退出（同 Ctrl + \）
+TERM    15    终止
+KILL      9    强制终止
+CONT   18    继续（与STOP相反， fg/bg命令）
+STOP    19    暂停（同 Ctrl + Z）
+
+# kill -HUP 123 - 这会让旧的nginx主进程重新生成子进程继续服务
+# kill -QUIT 321 - 关闭新的nginx进程
+# kill -TERM 321 -强制退出nginx进程
+
+
+

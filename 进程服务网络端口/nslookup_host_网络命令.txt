@@ -1,0 +1,41 @@
+
+# host -t mx 126.com	查看mx记录
+# host -a domain.com 	#显示NS、a记录、mx记录
+# host domain.com		#显示主机IP和mail记录
+# nslookup 2345.com	查看A记录
+# nslookup -query=mx 2345.com	查看域名mx记录和dns记录
+# nslookup -type=ns 2345.com	查看域名dns记录
+# dig redhat.com mx	查看域名mx记录
+Server:		192.168.19.2
+Address:	192.168.19.2#53
+
+
+Non-authoritative answer:
+redhat.com	mail exchanger = 10 mx2.redhat.com.
+redhat.com	mail exchanger = 5 mx1.redhat.com.
+
+Authoritative answers can be found from:
+mx2.redhat.com	internet address = 66.187.233.33
+mx1.redhat.com	internet address = 209.132.183.28
+
+In the above example, we have 2 MX records for the domain “redhat.com”. The number ( 5, 10 ), associated with the MX records tells the preference of mail server. Lower the number, higher the preference. So when a mail is sent to “@redhat.com”, first preference will be “mx1.redhat.com”, then “mx2.redhat.com”.
+
+或者
+# nslooup
+>set type=mx
+>2345.com
+
+Authoritative Answer vs Non-Authoritative Answer
+You may also noticed the keyword “Authoritative Answer” and “Non-Authoritative Answer” in the above output.
+Any answer that originates from the DNS Server which has the complete zone file information available for the domain is said to be authoritative answer.
+In many cases, DNS servers will not have the complete zone file information available for a given domain. Instead, it maintains a cache file which has the results of all queries performed in the past for which it has gotten authoritative response. When a DNS query is given, it searches the cache file, and return the information available as “Non-Authoritative Answer”.
+
+http://www.thegeekstuff.com/2012/07/nslookup-examples/
+# service netword restart
+
+
+
+
+
+
+

@@ -1,0 +1,77 @@
+
+
+守护进程daemon主要分为两类
+stand alone			此daemon可以自行单独启动服务
+super daemon		统一由xinetd管理
+当没有客户端的请求时，各项服务都是未启动的情况，等到有来自客户端的请求时，super daemon 才唤醒对应的服务。当客户端的请求结束后，被唤醒的这个服务也会关闭并释放系统资源。
+这两类 daemon 可以同时存在于内存中。
+
+关闭的xinetd服务，基于xinetd的服务也一起关闭了
+
+
+daemon主要分为两类stand alone(服务可单独启动)和super daemon(通过xinetd统一管理的服务)。
+stand alone daemon启动的脚本放置在/etc/init.d/这个目录中
+特点：daemon常驻内存，响应快，无服务启动时间。
+
+super daemon的配置文件/etc/xinetd.conf,个别daemon配置文件则放在/etc/xinetd.d/*
+特点：由super daemon统一管理，仅当客户请求时，super daemon才唤醒相应的服务
+
+# yum install xinetd
+# grep -i 'disable' /etc/xinetd.d/*			#查看super daemon所管理的服务有哪些启动
+# grep 'rsync' /etc/services				#查看rsync占用的端口号
+
+http://suo.iteye.com/blog/1119546
+
+
+
+执行chkconfig --list可以看到两种服务
+One portion is termed as “Standard” service and other one as “xinetd” (Extended Inetd) based services. 
+Linux下的服务一般有Standard services和Xinetd based services两种类型
+
+Standard services	Xinetd based services
+Will be started/stopped based on the run level	Doesn’t depend on run levels
+Once turned on, it will continue to run till it stopped	The dameon ‘xinetd’ controls starting and stopping the service as and when it requires. The xinetd dameon listens for requests coming for particular port and starts the relevant service pertaining to it. For example, when telnet is turned on, it listens for request on port 23 and start the telnet service when there is a telnet connection request.
+Service should be continuously running regardless of its usage. For example, in the below output, cups service is continuously though it isn't required for many servers. This can be turned off.	Xinetd dameon performs the job of continuously monitoring the service request under its control and activate it only when it is required.
+
+
+xinetd服务的配置文件/etc/xinetd.conf
+基于xinetd的服务都在/etc/xinetd.d/
+# ll /etc/xinetd.d/
+
+其实对于上面通过 S有stem V来管理的一些服务都属于Linux系统的常驻运行的服务，其实在Linux系统中还有许多不常驻的一些服务，例如 telnet、rsync服务，这些服务则是通过 xinetd 这个服务来进行管理的。
+xinetd 控制的就是那些不常驻的服务，功能较为简单的服务
+xinetd其实自己本身就是作为一个系统的常驻的服务运行在后台，而xinetd所控制的服务在没有连接请求的时候是不运行的，所有xinetd控制的服务的连接请求都会提交给xinetd来进行代理
+xinetd在收到一个请求后，会根据请求的协议及服务启动相应的服务进程，进程处理完后请求就会结束
+xinetd本身就是一个系统服务，通过 System V来对其进行管理，在CentOS6/RHEL6中，xinetd服务默认是没有安装的，我们若要使用该服务，首先需要安装它
+
+# chkconfig --list 		查看基于xinetd的服务
+xinetd based services:
+    chargen-dgram:     off
+    chargen-stream:    off
+    daytime-dgram:     off
+    daytime-stream:    off
+    discard-dgram:     off
+    discard-stream:    off
+    echo-dgram:        off
+    echo-stream:       off
+    rsync:             off
+    tcpmux-server:     off
+    time-dgram:        off
+time-stream:       off
+
+我们看到，在安装了xinetd服务以后，其下面出现了一些其他的服务选项，例如rsync，chargen-dgram等这些服务，这些服务都是系统的一些不常驻服务，
+都是通过xinetd这个服务来对其进行管理的xinetd服务的配置文件是 /etc/xinetd.conf
+对于由xinetd控制的那些不常驻服务，它们的配置文件是存放在 /etc/xinetd.d/ 这个目录下与该服务名字相同的文件
+
+http://blog.chinaunix.net/uid-28216282-id-3377969.html
+
+
+
+
+
+
+
+
+
+
+

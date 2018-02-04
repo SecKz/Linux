@@ -1,0 +1,116 @@
+
+# cat /proc/net/ip_tables_matches				查看iptables加载的模块
+# iptables -L -n --line-numbers					输出规则号
+# iptables -D INPUT 8							删除INPUT里序号为8的规则，规则号可以从 iptables -L -n --line-numbers得知
+# iptables -L										查看进程名显示规则 等同于iptables --list
+# iptables -nL									以端口号显示规则
+# iptables -vL									查看对应的进程名端口
+# iptables -v										查看版本
+
+http://jodies.de/ipcalc
+
+iptables规则无法保存！ 
+修改完/etc/sysconfig/iptables直接service iptables restart重启
+不要service iptables save
+
+
+屏蔽单个IP 
+# iptables -I INPUT -s 123.45.6.7 -j DROP	
+
+屏蔽IP段
+iptables -I INPUT -s 25.55.55.0/24 -j DROP 	(for a class C - that's X.X.X.(0-255) )
+iptables -I INPUT -s 25.55.0.0/16 -j DROP 	(for a class B - that's X.X.(0-255).(0-255) )
+
+屏蔽流出
+iptables -I OUTPUT -s 58.221.43.205 -j DROP
+iptables -I OUTPUT -s 198.148.92.0/24 -j DROP
+
+# iptables -A INPUT -s 65.55.44.10 -j ACCEPT								允许指定IP
+# iptables -A INPUT -p tcp -s 65.55.44.10 --dport 80 -j ACCEPT			允许指定ip访问指定端口
+# iptables -A INPUT -p tcp -s 65.55.44.10 --dport 80 -j DROP				禁止指定ip访问指定端口		
+
+解除对IP的屏蔽
+# iptables -D INPUT -s 65.55.44.100 -j DROP
+# iptables -D fail2ban-SSH -s 119.147.143.50 -j DROP			从规则链fail2ban-SSH中删除对某个IP的屏敝
+# service iptables save
+
+开放端口
+# iptables -I INPUT -p tcp --dport 123 -j ACCEPT 			在前面添加
+# iptables -A INPUT -p tcp --dport 123 -j ACCEPT 			在后面追加
+# iptables -A OUTPUT -p tcp -m tcp --dport 30000:50000 -j ACCEPT
+# iptables -A FORWARD -p tcp -m tcp --dport 30000:50000 -j ACCEPT		开放端口范围
+# iptables -I INPUT -i eth1 -s 11.11.11.11 -j DROP		  	-i指定数据包从哪个网络接口进入
+
+开放特定IP访问特定端口
+# iptables -A INPUT -s 116.1.90.137 -p tcp --dport 3306 -j ACCEPT
+
+
+关闭端口
+# iptables -A INPUT -p tcp --dport 123 -j DROP
+# iptables -A OUTPUT -p tcp --dpor 123 -j DROP
+# iptables -I INPUT -i eth0 -p tcp --dport 80 -j DROP
+
+开放指定的端口
+# iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT	允许本地回环接口（即运行本机访问本机）
+# iptables -A INPUT -m state --state ESTABLISHED，RELATED -j ACCEPT	允许已建立的或相关连的通行
+# iptables -A OUTPUT -j ACCEPT	允许所有本机向外的访问
+
+禁止其他未允许的规则访问
+iptables -A INPUT -j REJECT
+iptables -A FORWARD -j REJECT
+
+
+
+iptables的配置和其他用命令配置IP一样,重起就会失去作用，可以用如下两种方式进行保存。
+# service iptables save	实际是将规则写进/etc/sysconfig/iptables文件
+# iptables-save > /etc/sysconfig/iptables
+
+/etc/sysconfig/iptables 是默认的保存位置。 在/etc/sysconfig 目录下还有一个iptables的配置文件：etc/sysconfig/iptables-config
+ 注意：一般不建议用户手工修改这个文件的内容，这个文件只用于保存启动iptables时，需要自动应用的防火墙规则。
+ 保存之后，把防火墙重启一下，才会生效。
+# service iptables restart
+
+
+清除已有iptables规则
+iptables -F
+iptables -X
+iptables -Z
+
+
+Iptables的命令选项
+-A    --append  链名>         在规则列表的最后增加1条规则
+-I    --insert  链名>         在指定的位置插入1条规则
+-P    --policy  链名>         定义默认策略
+-L    --list  链名>           查看iptables规则列表
+-D 删除链下的条目 如:删除input链下第一条规则: iptables -D INPUT 1
+-R    --replace  链名>        替换规则列表中的某条规则
+-F    --flush  链名>          删除表中所有规则
+-Z    --zero  链名>           将表中数据包计数器和流量计数器归零
+-X    --delete-chain  链名>   删除自定义链
+-v    --verbose  链名>        与-L他命令一起使用显示更多更详细的信息
+-D 删除链下的条目 如:删除input链下第一条规则: iptables -D INPUT 1
+
+
+匹配规则	
+-s 匹配来源ip
+-d 匹配目的ip
+-i 匹配进入网卡接口 eth+表示所有Ethernet接口
+-o 匹配出于网卡接口
+-f 匹配片段
+--sport 匹配来源端口
+--dport 匹配目标端口
+-i     --in-interface  网络接口名>       指定数据包从哪个网络接口进入，如iptables -I INPUT -i eth1 -s "$i" -j DROP
+-o    --out-interface  网络接口名>       指定数据包从哪个网络接口输出
+-p    ---proto协议类型                   指定数据包匹配的协议，如TCP、UDP和ICMP等
+-m  --match 匹配的模块                   指定数据包规则所使用的过滤模块
+-m match匹配.
+-j jump指定目标.
+
+
+
+
+
+
+
+
+
