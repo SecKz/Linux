@@ -1,0 +1,7 @@
+
+notepad++常用插件
+jstool				js集成工具：js格式化，压缩，json格式化
+compare				文档比较
+php autocompletion
+Light Explorer 轻量级资源管理器
+
