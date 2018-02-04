@@ -1,0 +1,82 @@
+
+
+
+# echo -e "line1\nline2" | awk 'BEGIN { print "now start" }' 
+# echo -e "line1\nline2" | awk 'BEGIN { print "now start" }' passwd
+# echo -e "line1\nline2" | awk '{ print "now start" }' passwd
+
+# awk 'BEGIN { i=0 } {i++} END { print i }' passwd
+# echo -e "line1\nline2" | awk 'BEGIN { print "now start" } { print } END { print "this is end" }'
+# echo -e "line1\nline2" | awk '{ print }' 				同样可以将BEGIN和END都去掉
+
+
+
+一个awk脚本通常分为３部分：BEGIN 语句块、END语句块和能够使用模式匹配的通用语句块。
+这三个部分是可选的，它们中的任何一个部分都可以不出现在脚本中。脚本通常包含在单引号或者双引号里
+awk 'BEGIN { statements } { statements }  END { end statements }'  filename 
+awk的工作原理：
+（１）、执行BEGIN　{ commands }语句块中的语句。
+（２）、从文件或stdin中读取一行，然后执行pattern　{ commands }。重复这个过程，直到文件全部被读取完毕。
+（３）、当读至输入流(input stream)末尾时，执行END　{ commands } 语句块。
+BEGIN语句块在awk开始从输入流中读取行之前被执行。这是一个可选的语句块。
+END语句块在awk从输入流中读取完所有的行之后即被执行。这个同样是可选的。
+最重要的部分就是pattern语句块中的通用命令。这个同样是可选的。
+如果不提供该语句块，则默认执行的是{ print },即打印每一个读取到的行。awk对于读取到的每一行，都会执行这个语句块.
+# echo -e "line1\nline2" | awk 'BEGIN { print "now start" } { print } END { print "this is end" }'
+# echo -e "line1\nline2" | awk '{ print }' 				同样可以将BEGIN和END都去掉
+
+
+
+# awk 'BEGIN{print 3/2}'
+# awk 'BEGIN{printf "%.2f", 9/2 }'			保留2位小数
+# awk 'BEGIN{x=9;y=4; printf "%.2f", x/y }'
+
+# awk  'BEGIN{for (i in ENVIRON) {print i}}'			打印所有环境变量名
+# awk  'BEGIN{for (i in ENVIRON) {print i"="ENVIRON[i];}}'			打印所有环境变量
+
+# lastb -11 | grep 'ssh' |awk 'BEGIN{a=6}{a++;print a;}'		用begin初始化a为6
+# cat /etc/passwd | awk 'BEGIN {FS=":"} $3<5 {print $1 "\t" $3}'		从/etc/passwd中找出第三列小于5的数据
+
+其中有问题，第一行的数据未正常显示，因为第一行时FS变量尚未被正常设置，这时要用begin
+# cat /etc/passwd | awk '{FS=":"} $3<5 {print $1 "\t" $3}'	
+用-F代替FS可以不用到BEGIN
+cat /etc/passwd | awk -F: '$3<5 {print $1 "\t" $3}'	
+
+
+
+# lastb -11 | grep 'ssh' |awk '{a++;print a;}'		输出1到11
+# awk -F: '{ sum += $4 } END { printf "%.2f\n", sum }' passwd			统计某列的值
+# lastb | grep 'ssh' | awk '{a[$3]++;}END{for(i in a){print a[i], i;}}' | sort -nr  统计每个IP登录失败的次数
+# lastb | grep 'ssh' | awk '{a[$1" "$3]++;}END{for(i in a){print a[i], i;}}' | sort -nr  统计每个IP，每个用户名登录失败的次数
+
+
+
+
+next
+# awk 'NR%2==1{next}{print NR,$0;}' passwd			当记录行号除以2余 1，就跳过当前行。下面的print NR,$0也不会执行
+# awk '/^(a|r|b|g|n)/{next}{print $0}' passwd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

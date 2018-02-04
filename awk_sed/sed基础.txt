@@ -1,0 +1,162 @@
+
+
+输出行号
+# sed '=' passwd
+# sed -n '/root/=' passwd		输出含有root的行号
+
+# sed -n '/disable\t=/p' rsync 		\t表示tab
+
+# echo $PATH | sed 's/:/\n/g'
+# sed '$d' ab  			 删除最后一行
+# sed -n '$p' ab         	显示最后一行
+# nl /etc/passwd | sed -n '5,7p'		打印5,7行
+# nl /etc/passwd | sed -n '35,$p'|sed -n 's/home/家/p'
+# nl /etc/passwd | sed '2i drink tea'
+# sed '/host/a\eric' 1.txt				在所有有host的行后面都加一行eric
+# sed '/host/i\eric' 1.txt				在所有有host的行前面都加一行eric
+# nl /etc/passwd | sed -n '/root/{s/bash/blueshell/;p}'	找到有root的行，并把该行的bash替换为blueshell
+
+文本的打印: n和p
+# sed -n '/bash/p' passwd
+# sed -n '/^root/p' passwd
+# sed -n 's/root//p' /etc/passwd				替换root为空并打印
+# sed -n '3p' passwd		只打印第三行
+# sed -n '1,3p' passwd
+
+S替换
+# sed -n 's/www/9999/p' passwd			替换每行的第一个www
+# sed -n 's/www/9999/gp' passwd 		替换每行的全部www
+# sed -n '3s/bin/9999/gp' passwd			把第三行的bin全部替换	
+# sed -n '1,3s/bin/9999/p' passwd			把第１到3行的第一个bin替换
+# sed -i '1,3s/bin/9999/' passwd			把第１到3行的第一个bin替换，并写入文件	
+# sed -n ':a;N;$!ba;s/bash/9999/p' passwd			bash只替换一次
+
+# nl /etc/passwd | sed '3,$d'
+# nl /etc/passwd | sed '2,5d'		显示的数据就没有 2-5 行
+# sed '/root/d' passwd	删除有root的行，再输出
+# sed /^$/d passwd		删除空行
+
+写入文件参数w，表示将匹配的行写入到指定的文件file
+# sed '/bash/w pwd' passwd		将文件中passwd中有root的行都写入到pwd文件中
+
+参数-i，表示直接操作修改文件，不输出
+# sed -i '1,10d' a.txt
+# sed -i 's/root/nolan/' passwd		把pwd文件中的每一个root都替换为nolan
+# sed -i 's/6/localhost/g' 1.txt			不输出到屏幕，写入文件		等同于sed 's/被替换的内容/要替换成的内容/g' file > file.out
+
+打印匹配行的下一行
+# sed -n '/eric/{n;p}' /etc/passwd						打印含有eric行的下一行
+# sed -n '/nolan/{n;s/cc/zz/p}' /etc/passwd				找到含有nolan行的下一行，再替换该行的cc为zz	
+
+y命令	y/abc/ABC/将把所有小写的a转换成A，小写的b转换成B，小写的c转换成C。
+# nl /etc/passwd | sed -n '1,20p' | sed 'y/abcd/ABCD/'
+
+d删除
+# sed -ri '/^Port\s+[0-9]+/d' sshd_config							删除以Port开头，后面跟空格或tab加数字的行，ri改成ir会失效
+# sed -i '1,10d' passwd				真正删除文件的前10行
+# nl /etc/passwd | sed '/nologin/d'		删除含有nologin的行
+# lastb -10|sed '/^$/d'					删除空行
+# lastb -10|sed '/./!d' 					等同上句
+# nl /etc/passwd | sed 1d				删除第一行
+# nl /etc/passwd | sed -r '/nologin|news/d'			删除含有nologin或news的行
+# nl /etc/passwd | sed -r '/[0-9]{2,4}/d'				删除含有2到4位数字的行
+
+
+
+字符‘/’在sed命令中扮演着定界符的作用，'|'和':'的作用和'/'一样，可以做为定界符使用
+当定界符出现在样式内部中，可以使用前缀\对它进行转义
+# sed 's#home#家#g' /etc/passwd
+# sed -n '1,20s/^s/Z/gp' /etc/passwd		将1-20行中以S开头的行都替换为Z
+# echo "test1 test2 test3 test4 " | sed "s:test:TEST:g"
+
+
+
+
+数据的搜寻并执行命令
+搜索/etc/passwd,找到root对应的行，执行后面花括号中的一组命令，每个命令之间用分号分隔，这里把bash替换为blueshell，再输出这行：
+# nl /etc/passwd | sed -n '/root/{s/bash/blueshell/;p}' 相当于nl /etc/passwd | sed -n '/root/p' | sed 's/bash/blue/'
+# nl /etc/passwd | sed -n '/bash/{s/bash/blueshell/;p;q}'   如果只替换/etc/passwd的第一个bash关键字为blueshell，就退出
+
+http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856901.html
+
+
+
+# last -11|sed 's/\s/-/g' | sed 's/-\+$//g'				将空格替换为-，再删除行尾的- ,匹配多个用+		元字符+需要转义
+# last -11|sed 's/\s/-/g' | sed -r 's/-+$//g'				sed通过 -r 选项使用扩展正则表达式。元字符+不需要转义
+
+
+
+命令的复用 使用;号把命令隔开
+# sed 's/host/& w2/g; /1/i\words' 1.txt
+# sed '2q' passwd			在打印完第2行后，就直接退出sed。参数q，表示退出
+
+-e即edit的意思，编辑命令，用于sed执行多个编辑任务的情况下。
+# sed -e 's/root/管理员/; s/bin/小明/' passwd
+# sed -e '1,2d' -e 's/sbin/...../g' passwd    删除1到2行后，再替换
+
+i它是在匹配行的前面插入一行
+# sed '/bash/i\you are beautiful' passwd
+a它是在匹配行的后面插入一行
+# sed '/bash/a\you are beautiful' passwd
+c\命令将匹配行修改成我们设定的内容
+# sed '/bash/c\you are beautiful' passwd
+
+正则
+# sed 's/[0-9]\+/&z/g' passwd			数字后面加z
+# sed 's/[0-9]\{2\}/&z/g' passwd
+
+# sed '/./s/$/ Viidiot/g' passwd			行尾加文字
+# sed '/./s/^/ Viidiot/g' passwd			行首加文字
+
+
+
+
+常用选项：
+-n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。
+-e∶直接在指令列模式上进行 sed 的动作编辑；
+-f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；
+-r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)
+-i∶直接修改读取的档案内容，而不是由萤幕输出。       
+常用命令：
+a   ∶新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
+c   ∶取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
+d   ∶删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
+i   ∶插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；
+p  ∶列印，亦即将某个选择的资料印出。通常 p 会与参数 sed -n 一起运作～
+s  ∶取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！
+
+
+
+元字符集
+^	 锚定行的开始如：/^sed/匹配所有以sed 开头的行。
+$ 	锚定行的结束如：/sed$/匹配所有以sed 结尾的行。
+.	匹配一个非换行符的字符如：/s.d/匹配s 后接一个任意字符，然后是d。
+*	匹配零或多个字符如：/*sed/匹配所有模板是一个或多个空格后紧跟sed 的行。
+[]	匹配一个指定范围内的字符，如/[Ss]ed/匹配sed 和Sed。
+[^]	匹配一个不在指定范围内的字符，如：/[^A-RT-Z]ed/匹配不包含A-R 和T-Z 的一个字母开头，紧跟ed 的行。
+\(..\)		保存匹配的字符，如s/\(love\)able/\1rs，loveable 被替换成lovers。
+&	保存搜索字符用来替换其他字符，如s/love/**&**/，love 这成**love**。
+\	锚定单词的结束，如/love\>/匹配包含以love 结尾的单词的行。
+x\{m\}	重复字符x，m 次，如：/0\{5\}/匹配包含5 个o 的行。
+x\{m,\}	重复字符x,至少m 次，如：/o\{5,\}/匹配至少有5 个o 的行。
+x\{m,n\}	重复字符x，至少m 次，不多于n 次，如：/o\{5,10\}/匹配5--10 个o 的行。
+
+
+http://blog.csdn.net/holandstone/article/details/8488434
+http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856901.html
+http://www.cnblogs.com/BeWater/archive/2013/04/24/3039832.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

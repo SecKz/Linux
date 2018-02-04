@@ -1,0 +1,130 @@
+
+
+ " ~ " 用来在记录或者域内匹配正则表达式。!~取反
+
+# awk '$1 ~/root/{print $0}' /etc/passwd
+# awk -F: '$1 ~/root/{print $0}' /etc/passwd
+# awk '$1 ~/a.*e/{print $0}' /etc/passwd
+# awk '$1 !~/a.*e/{print $0}' /etc/passwd		取反
+
+# awk -F/ '$NF ~ /b.*h/ {print $0}' /etc/passwd			//打印最后一列是bash的行
+
+# awk -F: '/v/ {print $0}' /etc/passwd			找出整行中含有v的行
+# awk -F: '$1 ~ /v/ {print $0}' /etc/passwd		找出第一段含有v的行
+# awk -F: '$1 !~ /v/ {print $0}' /etc/passwd		找出第一段中不含有v的行
+# awk '$1 + $2 < 100' test		如果第一和第二个域相加大于100，则打印这些行
+
+# awk -F: '$1 ~ /[a-zA-Z]n/' /etc/passwd 
+# awk -F: '$1 ~ /[a-zA-Z]n$/' /etc/passwd 	第1段以n结尾的行	
+# awk -F: '$1 ~ /[a-zA-Z]n$/ {print $1} ' /etc/passwd 	第1段以n结尾的用户
+# awk -F: '$1 ~ /^s/ {print $1} ' /etc/passwd 	第1段s开头的用户	
+
+# awk -F: '$3 > 50 && $1 ~/a/ {print}' /etc/passwd			 正则与运算符&&组合使用
+# awk -F: '$3 > 50 && $1 ~/a/ {print $1, $3}' /etc/passwd			 正则与运算符&&组合使用
+# awk '/^a/,/^p/ {print $1}' /etc/passwd
+
+# awk -F: '$3 > 100 {print $1}' /etc/passwd				打印uid大于100的用户名
+# last -22 | awk '$4 ~/Wed/ {print $0}'					找出有Wed的行
+# last -22 | awk 'tolower($4) ~/wed/ {print $0}'			不区分大小，找出有wed的行	，也可以用大写函数toupper
+# last -22 | awk 'BEGIN {IGNORECASE = 1} $4 ~/wed/ {print $0}'		等同上句，不区分大小写
+
+# awk '/^root/,/^mysql/' /etc/passwd		
+# awk '/tuku.5200tv.com/ && /server_name/,/root/ {print $0}' nginx.conf
+# awk '/server_name.+tuku.5200tv.com/,/root/ {print $0}' nginx.conf
+
+# awk '/^mail/,/^games/' passwd
+# awk '/mail/,/games/' passwd
+# cat /etc/passwd|awk '/^a/'		打印a开头的行
+# ls -ltc | awk '/^d/'
+# awk '/^root/' /etc/passwd										打印以root开头的行
+# awk '/^(no|so)/' /etc/passwd									打印所有以模式no或so开头的行。
+# awk '/^[ns]/{print $1}' /etc/passwd								如果记录以n或s开头，就打印这个记录。
+# awk '$1 ~/[0-9][0-9]$/(print $1}' /etc/passwd						如果第一个域以两个数字结束就打印这个记录。
+# awk '$1 == 100 || $2 < 50' /etc/passwd							如果第一个或等于100或者第二个域小于50，则打印该行。
+# awk '$1 != 10' /etc/passwd										如果第一个域不等于10就打印该行。
+# awk '/test/{print $1 + 10}' /etc/passwd							如果记录包含正则表达式则第一个域加10并打印出来。
+# awk '{print ($1 > 5 ? "ok "$1: "error"$1)}' /etc/passwd			如果第一个域大于5则打印问号后面的表达式值，否则打印冒号后面的表达式值。
+
+# cat /etc/httpd/conf/httpd.conf |grep log|egrep -v ^#				查看apache日志
+# cat /etc/httpd/conf/httpd.conf |awk '$0 ~/log/ && $0 !~/^#/'			等同上句
+
+
+
+http://www.cnblogs.com/chengmo/archive/2010/10/11/1847772.html
+
+字符	功能
++	指定如果一个或多个字符或扩展正则表达式的具体值（在 +（加号）前）在这个字符串中，则字符串匹配。命令行：
+awk '/smith+ern/' testfile
+将包含字符 smit，后跟一个或多个 h 字符，并以字符 ern 结束的字符串的任何记录打印至标准输出。此示例中的输出是：
+smithern, harry smithhern, anne
+?	指定如果零个或一个字符或扩展正则表达式的具体值（在 ?（问号）之前）在字符串中，则字符串匹配。命令行：
+awk '/smith?/' testfile
+将包含字符 smit，后跟零个或一个 h 字符的实例的所有记录打印至标准输出。此示例中的输出是：
+smith, alan smithern, harry smithhern, anne smitters, alexis
+|	指定如果以 |（垂直线）隔开的字符串的任何一个在字符串中，则字符串匹配。命令行：
+awk '/allen | alan /' testfile
+将包含字符串 allen 或 alan 的所有记录打印至标准输出。此示例中的输出是：
+smiley, allen smith, alan
+( )	在正则表达式中将字符串组合在一起。命令行：
+awk '/a(ll)?(nn)?e/' testfile
+将具有字符串 ae 或 alle 或 anne 或 allnne 的所有记录打印至标准输出。此示例中的输出是：
+smiley, allen smithhern, anne
+{m}	指定如果正好有 m 个模式的具体值位于字符串中，则字符串匹配。命令行：
+awk '/l{2}/' testfile
+打印至标准输出
+smiley, allen
+{m,}	指定如果至少 m 个模式的具体值在字符串中，则字符串匹配。命令行：
+awk '/t{2,}/' testfile
+打印至标准输出：
+smitters, alexis
+{m, n}	指定如果 m 和 n 之间（包含的 m 和 n）个模式的具体值在字符串中（其中m<= n），则字符串匹配。命令行：
+awk '/er{1, 2}/' testfile
+打印至标准输出：
+smithern, harry smithern, anne smitters, alexis
+[String]	指定正则表达式与方括号内 String 变量指定的任何字符匹配。命令行：
+awk '/sm[a-h]/' testfile
+将具有 sm 后跟以字母顺序从 a 到 h 排列的任何字符的所有记录打印至标准输出。此示例的输出是：
+smawley, andy
+[^ String]	在 [ ]（方括号）和在指定字符串开头的 ^ (插入记号) 指明正则表达式与方括号内的任何字符不匹配。这样，命令行：
+awk '/sm[^a-h]/' testfile
+打印至标准输出：
+smiley, allen smith, alan smithern, harry smithhern, anne smitters, alexis
+~,!~	表示指定变量与正则表达式匹配（代字号）或不匹配（代字号、感叹号）的条件语句。命令行：
+awk '$1 ~ /n/' testfile
+将第一个字段包含字符 n 的所有记录打印至标准输出。此示例中的输出是：
+smithern, harry smithhern, anne
+^	指定字段或记录的开头。命令行：
+awk '$2 ~ /^h/' testfile
+将把字符 h 作为第二个字段的第一个字符的所有记录打印至标准输出。此示例中的输出是：
+smithern, harry
+$	指定字段或记录的末尾。命令行：
+awk '$2 ~ /y$/' testfile
+将把字符 y 作为第二个字段的最后一个字符的所有记录打印至标准输出。此示例中的输出是：
+smawley, andy smithern, harry
+. （句号）	表示除了在空白末尾的终端换行字符以外的任何一个字符。命令行：
+awk '/a..e/' testfile
+将具有以两个字符隔开的字符 a 和 e 的所有记录打印至标准输出。此示例中的输出是：
+smawley, andy smiley, allen smithhern, anne
+*（星号）	表示零个或更多的任意字符。命令行：
+awk '/a.*e/' testfile
+将具有以零个或更多字符隔开的字符 a 和 e 的所有记录打印至标准输出。此示例中的输出是：
+smawley, andy smiley, allen smithhern, anne smitters, alexis
+\ (反斜杠)	转义字符。当位于在扩展正则表达式中具有特殊含义的任何字符之前时，转义字符除去该字符的任何特殊含义。例如，命令行：
+/a\/\//
+将与模式 a // 匹配，因为反斜杠否定斜杠作为正则表达式定界符的通常含义。要将反斜杠本身指定为字符，则使用双反斜杠。有关反斜杠及其使用的更多信息，请参阅以下关于转义序列的内容。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+
+# echo $PATH |awk -F: '{print $0}'			打印整行
+# echo $PATH |awk -F: '{print $4}'			获取第4段的值
+# echo $PATH |awk -F: '{print $NF}'		获取最后一段的值
+# echo $PATH |awk -F: '{print NF}'			获取段数
+
+# cat /etc/passwd |awk -F: '{print $3}'		获取用户ID号
+# free -t | grep "buffers/cache" | awk '{print $4/($3+$4) * 100}'		查看内存剩余率
+
+获取id小于5的用户
+# cat /etc/passwd | awk -F: '$3<5 {print $0}'
+# awk -F: '$3<5 {print $0}' /etc/passwd
+# cat /etc/passwd | awk 'BEGIN {FS=":"} $3<5 {print $1 "\t" $3}'
+
+# awk -F: '$1 = "root" {print}' /etc/passwd
+# awk -F: '$1 != "root" {print}' /etc/passwd
+# awk -F: '$1 == "root" {print}' /etc/passwd								指定某个域的取值精确匹配	{print}等同{print $0}
+# awk -F: '$1 == "root" { $3 = "Christian"; print}' /etc/passwd  			某个域的取值,并赋值指定的域	
+
+# awk -F: '$3>5 && $3<20 {print $0}' /etc/passwd  获取id 大于5小于20的用户
+# awk -F: '$3<5 || $3>1000 {print $0}' /etc/passwd
+# awk -F: '$3<5 || $3==25 {print $0}' /etc/passwd
+
+# awk -F: '$3 > 50 && $1 ~/a/ {print $1, $3}' /etc/passwd			 正则与运算符&&组合使用
+# awk -F: '$1 ~ /^g/{print $3 + 1000}' /etc/passwd 
+# awk -F: 'NR <= 7 {print ($3>3 ? "high "$3 :" low "$3) }' /etc/passwd
+# awk -F: 'NR <= 7 {print $1,($3>3 ? "high "$3 : "low "$3) }' /etc/passwd
+
+
+
+
+ awk操作符
+运算符	描述
+= += -= *= /= %= ^= **=	赋值
+?:	C条件表达式
+||	逻辑或
+&&	逻辑与
+~ ~!	匹配正则表达式和不匹配正则表达式
+< <= > >= != ==	关系运算符
+空格	连接
++ -	加，减
+* / &	乘，除与求余
++ - !	一元加，减和逻辑非
+^ ***	求幂
+++ --	增加或减少，作为前缀或后缀
+$	字段引用
+in	数组成员
+ 
+
+http://www.cnblogs.com/stephen-liu74/archive/2011/11/21/2248750.html
+
+
+
+
+
+

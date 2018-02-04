@@ -1,0 +1,151 @@
+
+
+正则 -r∶sed 的动作支援的是延伸型正规表示法的语法
+
+# sed -nr '/[^0-9][0-9]{3}[^0-9]/p' passwd		只查找含有3位数的行
+# sed -n '/^s/p' passwd			打印以s开头的行
+# sed -n '/50[0-4]/p' passwd
+
+# find . -type f -iname aa.doc | sed 's/aa.doc$//' 		查找含有aa.doc文件的文件夹
+# find . -type f -iname aa.doc | sed 's/aa.doc$//' | xargs -ti rm -r {} 		查找含有aa.doc文件的文件夹并删除
+# sed 's/^...//' passwd			删除开头的3个 支付
+# sed 's/...$//' passwd 			删除每行的最后3个字符
+	
+# ll | sed -r 's/.{13}//'			去掉每行的头13字符		等同 ll | cut -c 13-			
+# ll | sed -r 's/\s+//g'			去掉全部空格
+# ll | sed -nr '/in|my/p'		输出有in或my的行	sed通过 -r 选项使用扩展正则表达式
+# echo "43243251134" | sed -r 's/(.*[0-9])([0-9]{3})/\1,\2/'
+
+# sed -nr 's/^\s+//gp' nginx.conf
+
+# sed -nr '/^Port\s+[0-9]+/p' sshd_config
+# sed -nr '/[0-9]{3}/p' passwd
+# sed -rn 's/[0-9]{3,4}/GGG/p' passwd
+# nl /etc/passwd | sed -rn '1,20s/[0-9]{3,4}/GGG/p'
+# sed -nr '/root|www/p' passwd
+
+# echo abcde123456 | sed -nr 's/a|b|1/z/gp'
+# echo abcde123456 | sed -nr 's/.a|.b|.1/z/gp'
+# echo abcde123456 | sed -nr 's/\.a|\.b|\.1//gp'
+# echo a.bcde.123.456 | sed -nr 's/\.a|\.b|\.1//gp'
+# echo a.bcde.123.4.56 | sed -nr 's/\.b|\.4\.//gp'
+
+
+# sed -i 's/(2345\.com|nrcgirl.com)/2345.org/g' a.txt		不能这样多重替换，只能通过-e实现多重替换
+
+	
+取反
+# sed -nr '/root|www/!p' passwd
+
+反向引用
+# sed -n 's/\(bash\)/\1en/gp' passwd
+# sed -rn 's/(bash)/\1en/gp' passwd			等同上行，使用r不用转义()
+# sed -n 's#home#家#pg' passwd				自定义分隔符
+# echo "12346789" | sed -r 's/(.*[0-9])([0-9]{3})/\1,\2/'		反向引用\1 \2
+
+
+替换命令s表示替换，g表示作用范围整个行，如果没有g标志则只有每行第一个被替换
+# sed 's/root/zzzz/' passwd
+# sed 's/root/zzzz/g' passwd
+# sed -n 's/root/zzzz/gp' passwd	-n和p标志一起使用表示只打印那些发生替换的行。
+
+# sed 's/被替换的内容/要替换成的内容/g' file > file.out
+# sed -i "s/zhangsan/lisi/g" `grep zhangsan -rl /modules` 要将目录/modules下面所有文件中的zhangsan都修改成lisi
+
+
+查找
+# find . -type f | xargs -i fgrep -l 'aaaa' {}
+# find . -type f | egrep '\.(html|htm|php)$' | xargs -i fgrep -l '116.204.15.42/tg7' {}		找出文件有116.204.15.42/tg7的php和html文件
+# find . -iname '*.js' | xargs -i fgrep -li 'window.open' {}
+# find . -type f | egrep '\.xml$' | xargs -i fgrep -l '5200tv.com' {}		找出中含有5200tv.com的xml文件
+
+替换
+# find . -type f | egrep '\.(css|js|html|htm|php|txt|inc|xml)$' | xargs -i sed -i 's/5200tv.com/nrclady.com/g' {}		
+# find . -type f | xargs -ti sed -i 's/2/zzz/g' {}																	把当前目录下所有文件中的2都替换为zzzz
+# find . -type f | egrep -vi '\.(jpg|gif|png|bmp)$' | xargs -i sed -i 's/5200tv.com/nrclady.com/g' {}
+
+# find . -type f | xargs -ti sed -i 's/5200tv.com/nrclady.com/g' {}			批量替换
+# sed -i "s/5200tv.com/nrclady.com/g" `grep -rl 5200tv.com .`			等同上句	
+
+多重替换
+sed -i -e 's/aaa/111/g' -e 's/bbb/222/g' new_5200tv-20131104.sql
+# find . -type f | egrep -vi '\.(jpg|gif|png|bmp)$' | xargs -ti sed -i -e 's/mugua\.legoomall\.com/mugua.sheng-cheng.com/g' -e 's/p57\.legoomall\.com/p57.sheng-cheng.com/g' {}
+如果替换的字符有点号.，要转义
+	
+	
+# sed -i 's/aaaa/bbbb/g' *.html
+
+# sed -n 's/^root.*/zzzz/gp' passwd			以root开头的整行全部替换为zzzz
+# sed -n 's/^root/zzzz/gp' passwd				以root开头的行root全部替换为zzzz
+
+# sed 's/6/localhost/' 1.txt				将每行的第一个6替换为localhost
+# sed 's/6/localhost/g' 1.txt			6替换为localhost输出，没有写入1.txt
+# last -11|sed 's/\s/-/g'				替换空格为-
+# la|sed -n '/bak$/p'					查找以bak结尾的文件 等同于ls *bak
+# la|sed -n '/bak$/Ip'					不区分大小写，查找以bak结尾的文件
+# la | sed -n '/^re/p'					查找以re开头的文件。等同于 ls re*
+# ls|sed -n 's/\.bak$//p'				不要字符.bak的输出 点需要转义
+# la|sed -n 's/var/&eric/p'		  	    文件名含有var的后面都加上eric输出		&符号表示替要查找的部份
+# la|sed -n 's/var/eric&/p'		   	   文件名含有var的前面都加上eric输出
+# la|sed -n 's/^var/eric&/p'	
+
+# la | sed 's/.*/\L&/g'			全部小写输出
+# la | sed 's/.*/\U&/'  			全部大写输出
+
+# ls | sed -n '/var/!p'					输出没有var的行，!为取反
+# ls | sed -n '/var/I!p'					I不区分大小写，大写的i	
+
+# sed 's/^a/8/' /etc/passwd		把以a的开头的行替换为8并输出，不写入文件
+# sed 's/a/8/g' /etc/passwd	   把每行的a全部都替换为8并输出，不写入文件
+# sed -i "s/aa/bb/g" ss.txt			把ss.txt中的aa全部替换为bb
+# sed 's/^a/&7/' example			把a替换为a7	&符号表示替要查找的部份	
+# sed -n 's/^a/&3/p' passwd		(-n)选项和p标志一起使用表示只打印那些发生替换的行。
+
+# sed '1!G;h;$!d' myfile.txt		逆序输出文件内容
+# sed -n '5,10p' filename 这样你就可以只查看文件的第5行到第10行。
+# cat filename | sed '1d'		从第2行开始显示
+# sed -n '2,$p'				从第2行开始显示
+
+
+
+# sed -i 's/d6feel.cn/abc.com/g' file.conf		把文件file.conf中的d6feel.cn全部替换为abc.com, 不是输出到终端, 而是写入文件
+# sed -i  "s/zhangsan/lisi/g" `grep zhangsan -rl /modules`
+# grep zhangsan -rl /modules| sed -i  "s/zhangsan/lisi/g"
+
+删除：d命令       
+# sed '2d' example			删除example文件的第二行。
+# sed '2,$d' example			删除example文件的第二行到末尾所有行。
+# sed '$d' example			删除example文件的最后一行。
+# sed '/test/d' example		删除example文件所有包含test的行。
+# sed -e '/xx/!d' file			删除不含有xx的行
+
+-e:执行命令行中的指令，例如：sed -e 'command' file(s)
+-f:执行一个sed脚本文件中的指令，例如： sed -f  scriptfile file(s)
+-i:与-e的区别在于：当使用-e时，sed执行指令并不会修改原输入文件的内容，只会显示在bash中，而使用-i选项时，sed执行的指令会直接修改原输入文件。
+-n:读取下一行到pattern space
+-i 表示inplace edit，就地修改文件
+-r 表示搜索子目录
+-l 表示输出匹配的文件名
+
+
+sed正则
+http://hi.baidu.com/myjavawork/item/fa4d4d1a34dcdc06e75c3654
+
+sed用于整行处理，awk倾向于把一行的数据分成“字段”来处理,默认的分隔符是空格和tab
+http://bbs.linuxtone.org/thread-1731-1-1.html
+http://www.cnblogs.com/fgds/archive/2012/02/14/2350839.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

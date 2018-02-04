@@ -1,0 +1,109 @@
+
+
+sed用于整行处理，awk倾向于把一行的数据分成“字段”来处理,默认的分隔符是空格和tab
+
+# echo $PATH | awk -F: '{$NF="";print $0}'		打印除最后一段的其它段
+# echo $PATH | awk -F: '{$NF="";$1="";print $0}'	去掉前后一段	
+# find . -maxdepth 1 -type d|awk 'NR>1'		从第2行开始
+# echo $PATH |awk -F: '{print $0}'			打印整行
+# echo $PATH |awk -F: '{print $4}'			获取第4段的值
+# echo $PATH |awk -F: '{print $NF}'		获取最后一段的值
+# echo $PATH |awk -F: '{print NF}'			获取段的个数
+# lastb -3 |awk '{print NR}'				输出每行的行号
+# lastb -3 |awk -Foo '{print FS}'			输出当前的分隔符
+
+	
+
+# cat passwd |awk -F: '{print NR}'
+# cat passwd |awk -F: '{print NR "\t" NF}'
+# cat passwd |awk -F: '{print NR "\t" $NF}'
+
+
+在awk 的print语句中，双引号是被当做拼接操作符的(concatenation operator) ,所以模式匹配最外层尽量使用单引号.
+# echo | awk ' { var1="v1";var2="v2"; print var1,var2 } '			逗号进行分隔时，参数打印时则以空格作为定界符
+# echo | awk ' { var1="v1";var2="v2"; print var1 var2 } '
+# echo | awk ' { var1="v1";var2="v2"; print var1"+" var2 } '
+
+# awk -F: 'END{print $0}' passwd 			打印最后一行
+# awk 'NR==10{print $0}' passwd	打印第10行		
+# cat /etc/passwd | awk 'NR==2'		只输出第2行cat /etc/passwd |awk 'NR==2{print $0}'	
+# cat /etc/passwd | awk 'NR>4'		从第5行开始输出
+# cat /etc/passwd | awk 'NR<4'		输入前面3行
+# awk 'NR==10,NR==15{print}' file	要显示文件的第10行至第15行
+
+# last -4|awk '{print $1 "\t" $3}'		第1字段和第3字段用tab键间隔输出
+# last -4|awk '{print $1}'				$0 $1 $2 $3分别代表整行，一行中的第1段，第2段，第3段
+# ps aux|grep -v grep|awk '/httpd/{sum+=$6;n++};END{print sum/n}'		计算httpd占用内存的平均数
+# last -4|awk '{print $1 "\t 行数：" NR "\t 字段数：" NF}'	NR当前行,NF第一行的字段数
+
+# echo ' aaa|bbb|ccc|ddd ' | awk -F'|' '{print NR}'		输出1
+# echo 'aaa|bbb|ccc|ddd' | awk -F'|' '{print $NR}'		输出aaa
+# last -4 |awk '{print NR,$0}'	每条信息前加上行号 awk每读取一条记录，NR的值便加一
+# last -4|awk '{print NF}'		打印每行的字段数，字段间默认是以tab或空格为分隔符
+# last -4|awk '{print F}'		打印每行的字段数，字段间默认是以tab或空格为分隔符
+
+# awk 'BEGIN{FS=":"; OFS="\t"; print "NF\tNR\tusername\tshell"}{print NF,NR,$1,$7}END{print FILENAME}' /etc/passwd
+
+FILENAME常量
+# awk '{print FILENAME}' .bashrc
+# awk '{print FILENAME,"NR=" NR, "FNR=" FNR, "$"NF "=" $NF}' .cshrc .bash_logout
+
+
+内置变量：
+FILENAME：用于保存输入文件的文件名称。
+NF：用于保存当前正在处理的记录的域个数。
+NR：因此默认的就是读取的数据行数。
+FNR：用于保存当前读取的记录数。当输入的文件有多个时，读取新文件时，awk会重置这个变量。
+OFS：用于设置输出分隔字段的字符，默认为空格。
+FS：用于设置字段分隔符。
+ORS：用于设置输出记录分隔符，默认为新的一行。
+RS：用于设置记录分隔符，默认为新行。
+OFMT：数字的输出格式。
+ENVIRON：读取环境变量。
+
+NR	表示从awk开始执行后，按照记录分隔符读取的数据次数，默认的记录分隔符为换行符，因此默认的就是读取的数据行数，NR可以理解为Number of Record的缩写。
+在awk处理多个输入文件的时候，在处理完第一个文件后，NR并不会从1开始，而是继续累加，因此就出现了FNR，每当处理一个新文件的时候，FNR就从1开始计数，FNR可以理解为File Number of Record。
+NF	表示目前的记录被分割的字段的数目，NF可以理解为Number of Field。
+FS	当前的分隔符，默认空格和tab
+
+http://www.cnblogs.com/nufangrensheng/p/3463892.html
+http://www.cnblogs.com/spring3mvc/archive/2011/03/25/2414656.html
+http://bbs.chinaunix.net/thread-448687-1-1.html
+
+
+
+
+支持的元字符
+元字符	说明 
+^	匹配行首
+$	匹配行尾
+.	匹配任意单个字符
+*	匹配零个或多个前导字符
++	匹配一个或多个前导字符
+?	匹配零个或一个前导字符 
+[ABC]	匹配指定字符组，这里表示A,B,C中任一个 
+[^ABC]	匹配任何一个不再指定字符组中的字符 
+[A-Z]	匹配 A 到 Z 之间的任一个字符 
+A|B	匹配A 或 B
+(AB)+	匹配一个或多个 AB 的组合，如 AB, ABAB,ABABAB
+\*	匹配星号本身
+&	用在替代串中，代表查找串中匹配到的内容
+
+不支持的元字符
+元字符	说明 
+\<>/	单词定位 
+\(\)	向前引用 
+\{\}	重复 
+
+
+
+
+
+
+
+
+
+
+
+
+

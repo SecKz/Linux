@@ -1,0 +1,46 @@
+
+Awk不区分space和tab，即默认分隔符可以是space和tab
+cut区分space和tab.默认的是tab
+
+
+php-fpm -i|grep -i 'session.save_path' | awk -F';|=>' '{print $NF}'		已;或=>为分隔符
+
+# echo "111|222|333"|awk 'BEGIN{FS="|"}{print $2}'
+# echo "111|222|333"|awk -F'|' '{print $2}'
+# echo "111|222|333"|awk -F'|' '{print $NF}'
+
+awk分隔符指定
+# awk 'END {print}' passwd		获取文件的最后一列
+# php -i|grep -i 'session.save_path' | awk -F'[;]' '{print $NF}'		获取php session的存放位置
+# cat te | awk -F"[:/]" '{print $7}'		命令行选项 -F"[:/]"  告诉awk / 和 : 都是字段分隔符
+# nl passwd | awk -F'[:]' '{print $NF}'	
+# last -4|awk -F'pt' '{print $2}'		以pt为分隔符，打印第2列
+# last -4|awk -F'[pt]' '{print $2}'		以p或t为分隔符，打印第2列
+
+awk默认就是空格和TAB，如果要指定用TAB可以用
+awk -F '\t'
+如果要指定多个TAB当作一个处理，可以用
+awk -F '\t+'
+
+以元字符作为分隔符时
+# awk -F"|" '{print $3}' tmp.log	以 | 为分隔符
+# awk -F"\\|\\|" '{print $3}' tmp.log	以 || 为分隔符，等同awk -F'[|]+' '{print $3}' tmp.log\本身是元字符
+\\   => \
+\\|  => \|
+ls|awk -F'.' '{print $1FS$2}'		FS为分隔符，这行是.
+
+# cat /etc/passwd|grep tu|awk -F':' '{print $1}'|awk 'NR>1'		以冒号为分隔符从第二行开始，打印每行的第一列
+
+
+
+
+
+
+
+
+
+
+
+
+
+

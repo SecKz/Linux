@@ -1,0 +1,67 @@
+
+
+# awk 'BEGIN{array["a"]="aaa"; array["b"]="bbb"; for(k in array){print k, array[k];}}'
+# awk 'BEGIN{array["a"]="aaa"; array["b"]="bbb"; if("c" in array){print "found";}else{print "not found"}; for(k in array){print k, array[k];}}'
+
+# awk 'BEGIN{array["a"]="aaa"; array["b"]="bbb"; delete array["a"]; for(k in array){print k, array[k];}}'   删除键值
+
+# echo $PATH | awk -F: '{ i = 1; while ( i <= NF ) { print NF,$i; i++}}'
+# echo $PATH | awk -F: '{ i = 1; while ( i <= NF ) { print i,$i; i++}}'
+# awk 'BEGIN{test = 100;total=0;while(i<=test){total+=i;i++;}{print  total;}}'		计算1加到100的值
+
+
+
+awk 流程控制语句（if,for,while,do)详细介绍
+http://www.cnblogs.com/chengmo/archive/2010/10/04/1842073.html
+awk获得外部变量（变量传值）简介
+http://www.cnblogs.com/chengmo/archive/2010/10/03/1841753.html
+
+
+将外部变量值传递给awk,-v参数
+# var=$RANDOM; echo | awk -v vr=$var '{ print vr }'
+# var=$RANDOM; echo | awk '{ print vr }' vr=$var		没有使用-v参数，只是将y1=$v1传值放到后面去了,其实就是将y1=$v1 y2=$v2 当成file了 类似　awk '{print }' file
+
+BEGIN程序块中变量
+# test='awk code'; echo | awk -v var="$test" 'BEGIN{print var}'
+格式如：awk –v 变量名=变量值 [–v 变量2=值2 …] 'BEGIN{action}’  注意：用-v 传入变量可以在3中类型的action 中都可以获得到，但顺序在  action前面。
+
+获得环境变量
+# awk  'BEGIN{for (i in ENVIRON) {print i"="ENVIRON[i];}}'
+只需要调用：awk内置变量 ENVIRON,就可以直接获得环境变量。它是一个字典数组。环境变量名 就是它的键值。
+
+
+
+
+# echo "Stand-by" | awk '{print length($0)}'
+# awk '{print substr('123456789', 1, 5)}'
+
+将字符串转为大写
+# awk ' { print toupper("yes") }' 		
+# awk -F: '{print toupper($1),$NF}' passwd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
