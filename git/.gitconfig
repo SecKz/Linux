@@ -14,7 +14,7 @@
 	rhe = reset HEAD
 	rh = reset --hard
 	rhh = reset --hard HEAD^
-	ref = reflog -10
+	ref = reflog -20 --pretty=format:\"%C(yellow)%h %C(white)%ad %C(green)%cn %C(red)%d %C(reset)%s\" --decorate  --date=format:'%Y-%m-%d %H:%M:%S'
 	logs = log --oneline -10 --pretty=format:\"%C(yellow)%h %C(green)%cn %C(red)%d %C(reset)%s\" --decorate 
 	loga = log -1
 	logp = log --pretty=oneline
