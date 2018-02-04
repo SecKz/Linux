@@ -1,0 +1,72 @@
+
+
+PHP 5.5+版本以上的，可以使用PHP自带的opcache开启性能加速（默认是关闭的）。对于PHP 5.5以下版本的，需要使用APC加速
+
+OpCache 通过对 opcode 的缓存和优化来提升 PHP 执行速度。在 PHP 5.5、5.6 版本中 OpCache 已内建，编译安装时使用 --enable-opcache 即可。PHP 5.2 - 5.4 也可手动安装。
+# yum install php-pecl-zendopcache
+# php -v					查看是否安装了OpCache
+
+https://segmentfault.com/a/1190000002523558
+
+APC在PHP5.4及以下版本是性能最好的代码缓存。不过PHP升级到5.5及以上后，APC不再有效。需要使用Zend的OpCache扩展。
+APC：Alternative PHP Cache（APC）是 PHP 的一个免费公开的优化代码缓存。它用来提供免费，公开并且强健的架构来缓存和优化 PHP 的中间代码。
+下载地址：http://pecl.php.net/package/APC
+配置文件：http://www.php.net/manual/zh/apc.configuration.php
+
+
+如果php是5.4以下的版本直接用yum安装apc
+# yun search apc
+# yum install php-pecl-apc
+
+
+php5.3已经不再支持zendOptimizer，所以不能安装．可以用zend-guard取代
+# yum search zend
+# yum info php-zend-guard-loader.i386
+# yum install php-zend-guard-loader.i386
+
+
+
+Zend Guard Loader 是加速php的，能提高30%—40%速度。
+PHP 5.3.X 开始 Zend Optimizer 正式被 Zend Guard Loader 取代。
+在PHP 5.5.X 中已经集成OPCACHE，不用再安装Zend Guard Loader。
+
+这些加速器统称Opcode Cache，全部都支持opcode cache功能，性能差距也不大
+除opcode cache外，人们也经常用他们的变量缓存功能（与memcached不一样，apc/eac/xcache他们是存在本地内存里的，免去了网络开销，更快）。
+xcache几乎跟apc功能一样。
+ 
+APC：Alternative PHP Cache（APC）是 PHP 的一个免费公开的优化代码缓存。它用来提供免费，公开并且强健的架构来缓存和优化 PHP 的中间代码。
+下载地址：http://pecl.php.net/package/APC
+配置文件：http://www.php.net/manual/zh/apc.configuration.php
+
+使用 Zend Opcode
+现在已经可以使用 Zend Opcache 替代 APC 作为 PHP 优化加速工具了。目前的 Zend Opcode 兼容 PHP 5.2.*、5.3.*、5.4.* 和 PHP-5.5 开发版。不过，将来会取消对 PHP 5.2 的支持。
+注意：Zend Opcache 与 eaccelerator 相冲突。要安装 Zend Opcache，可能需要先卸载 eaccelerator —— 如果你用了这个加速模块的话。
+安装 Zend Opcache（pecl 版本）：
+yum install php-pecl-zendopcache
+
+
+一、PHP加速器介绍
+PHP加速器是一个为了提高PHP执行效率，从而缓存起PHP的操作码，这样PHP后面执行就不用解析转换了，可以直接调用PHP操作码，这样速度上就提 高了不少。
+Apache中使用mod_php的请求、响应执行流程：
+1、Apache接收请求。
+2、Apache传递请求给mod_php。
+3、mod_php定位磁盘文件，并加载到内存中。
+4、 mod_php编译源代码成为opcode树。
+5、mod_php执行opcode树。
+
+PHP加速器相应的就是第四步，它的目的就是防止PHP每次请求都重复编译PHP代码，因为在高访问量的网站上，大量的编译往往没有执行速度快呢？
+所以这 里面有个瓶颈就是PHP的重复编译既影响了速度又加载了服务器负载，为了解决此问题，PHP加速器就这样诞生了。
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+
+
+关键的错误信息是：ERROR: module is read only
+解决方法：在rsync.conf文件中加入read only=no。
+
+@ERROR: access denied to www from unknown (192.168.1.123)
+rsync: connection unexpectedly closed (0 bytes received so far) [receiver]
+rsync error: error in rsync protocol data stream (code 12) at io.c(359)
+说明：此问题很明显，是配置选项host allow的问题，初学者喜欢一个允许段做成一个配置，然后模块又是同一个，致使导致
+
+@ERROR: auth failed on module xxxxx 
+rsync: connection unexpectedly closed (90 bytes read so far) 
+rsync error: error in rsync protocol data stream (code 12) at io.c(150) 
+说明：这是因为密码设置错了，无法登入成功，检查一下rsync.pwd，看客服是否匹配。还有服务器端没启动rsync 
+发送文件的一方/etc/rsync.pwd的格式必须为Username:password, 且权限为root的600
+
+
+rsync: failed to connect to X.X.X.X: No route to host (113)
+故障原因：对方没开机、防火墙阻挡、通过的网络上有防火墙阻挡，都有可能。
+解决方法：关闭防火墙，或者把防火墙的tcp udp 的873端口打开，允许rsync通过。
+
+
+http://blog.csdn.net/xiaolang85/article/details/8733184
+
+
+
+
+
+
+
+

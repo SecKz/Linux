@@ -1,0 +1,121 @@
+
+常用rewrite写法
+
+www.domain.com/aaa或 /aaabb都跳到百度
+# rewrite  ^/aaa		http://www.baidu.com/		last;			
+# rewrite  ^/aaa$		http://www.baidu.com/		last;			 域名/aaa跳到baidu
+
+# rewrite  ^/html/51\.html$		http://www.baidu.com/		last;
+# rewrite  ^/html/51.html$		http://www.baidu.com/		last;		html/51.html和html/51ahtml都会跳	  
+# rewrite  ^/html/51.+html$		http://www.baidu.com/		last;		html/51.html和html/51ahtml，html/51a999html都会跳	
+# rewrite  ^/html/51.+html?333$		http://www.baidu.com/		last;  	 l?表示l可有可无
+
+# rewrite  http://www.ddhszz.cn/html/62851.html		http://www.baidu.com/		last;			不会跳转
+# rewrite  ^/html/62851.html		http://www.baidu.com/		last;								会跳转
+
+
+rewrite 的正则是不匹配 query string的 默认情况下，query string 会自动追加到rewrite 后的地址上。
+rewrite ^/read.php$ /api.php		访问 read.php?id=123 会 rewrite到api.php?id=123 上了
+
+而不想自动追加 query string，则在 rewrite 地址的末尾添加 ?
+rewrite ^/read.php$ /api.php?				访问ead.php?id=123会rewrite到api.php, 而不带?id=123
+
+# rewrite  ^/html/62851.html?aaa		http://www.baidu.com/		last;		不会跳转
+# rewrite  ^/html/62851.html\?aaa		http://www.baidu.com/		last;		不会跳转
+
+if ($query_string ~ "id=(.*)") {													if ($query_string ~ "id=([^&]+)") {	
+set  $id  $1;
+rewrite  ^/html/62851.html		http://www.baidu.com/		last;		 /html/62851.html?id=aaa跳到baidu.com/?id=aa	
+#rewrite  ^/html/62851.html		http://www.baidu.com/?		last;		/html/62851.html?id=aaa跳到baidu.com
+#rewrite  ^/html/62851.html		http://www.baidu.com/$id?		last;		/html/62851.html?id=aaa跳到baidu.com/aaa
+}
+
+错误写法，前面要加/，后面的.号和?号不要加\
+rewrite ^publish\.html$	zxtg\.php\?act=1 last;
+正确写法
+rewrite ^/publish\.html$	/zxtg.php?act=1 last;
+
+个性二级域名的配置 
+
+server {
+	listen       80;
+	server_name  *.qksjk.com;
+	index	index.html index.htm index.php;
+	root   /home/www/qksjk.com/;
+	include	g.conf;
+
+	if ($http_host ~ "([0-9]+).qksjk.com$") {
+	set $sub_domain $1;
+	rewrite ^/		/tg.php?id=$sub_domain break;
+	}
+}
+
+
+
+
+常用rewrite例子
+如果没有找到目标文件，就跳到hao123
+if (!-e $request_filename) {
+rewrite ^/(.*)$ http://www.hao123.com?$1 last;
+break;
+}
+网站所有url都跳到2345
+rewrite ^/(.*)$ http://www.2345.com?$1 last;
+
+网站目录dir中的url都跳到2345
+location /dir {
+rewrite ^/(.*)$ http://www.2345.com?$1 last;
+}
+
+访问http://www.xxx.com/search/mp3.html，浏览器url重定向为http://www.xxx.com/search.action?keywords=mp3
+rewrite ^/serach/(.*).html  http://www.xxx.com/search.action?keywords=$1 last;
+
+
+if (-f $document_root$supercache_file) {
+rewrite ^(.*)$ $supercache_file break;
+}
+
+
+
+
+
+* ~ 为区分大小写匹配
+* ~* 为不区分大小写匹配
+* !~和!~*分别为区分大小写不匹配及不区分大小写不匹配
+文件及目录匹配，其中：
+* -f和!-f用来判断是否存在文件
+* -d和!-d用来判断是否存在目录
+* -e和!-e用来判断是否存在文件或目录
+* -x和!-x用来判断文件是否可执行
+flag标记有：
+* last 相当于Apache里的[L]标记，表示完成rewrite
+* break 终止匹配, 不再匹配后面的规则
+* redirect 返回302临时重定向 地址栏会显示跳转后的地址
+* permanent 返回301永久重定向 地址栏会显示跳转后的地址
+
+if (-f "/home/www/qksjk/.htaccess") { 		if和(要有空格
+}
+
+
+http://www.cnblogs.com/wangjiafang/archive/2013/02/22/2921825.html
+http://www.jb51.net/article/50899.htm
+
+if ($http_user_agent ~ MSIE) { 
+rewrite ^(.*)$ /nginx-ie/$1 break; 
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

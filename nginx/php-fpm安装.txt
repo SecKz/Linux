@@ -1,0 +1,78 @@
+
+/usr/local/php/sbin/php-fpm   启动php-fpm
+
+ps aux | grep php-fpm和php-fpm -t都可以查看php-fpm配置文件的路径
+
+# php-fpm -t				检查php-fpm配置文件，也可以查看php-fpm配置文件的路径
+# php-fpm -v
+# php-fpm -i | grep sessi
+# service php-fpm reload
+
+# yum install gcc gcc-c++ glibc automake autoconf libtool make curl curl-devel ibmcrypt-devel mhash-devel libxslt-devel zlib zlib-devel glibc glibc-devel openssl openssl-devel
+# yum install php php-fpm php-gd php-xml php-mbstring php-ldap php-mcrypt php-pear php-xmlrpc php-mysql php-mcrypt php-devel php-pecl-apc
+# ps aux | grep -c php-fpm		查看php-fpm进程数
+
+使用php-fpm来发现执行慢的php文件
+PHP 5.3.3 之前版本设置如下：
+<value name="request_terminate_timeout">5s</value>
+5.3.3 之后版本设置如下：
+request_slowlog_timeout = 5s   			 默认值为0，表示不开启slowlog
+slowlog = /var/log/php-fpm/www-slow.log
+
+request_terminate_timeout 将执行时间太长的进程直接终止
+request_slowlog_timeout 将执行过慢的文件写入日志
+
+php-fpm 启动参数及重要配置详解
+http://levi.cg.am/?p=3127
+
+
+下面5个参数的意思分别为：
+pm = dynamic
+pm.max_children：静态方式下开启的php-fpm进程数量。
+pm.start_servers：动态方式下的起始php-fpm进程数量。
+pm.min_spare_servers：动态方式下的最小php-fpm进程数量。
+pm.max_spare_servers：动态方式下的最大php-fpm进程数量。
+
+如果dm设置为static，那么其实只有pm.max_children这个参数生效。系统会开启设置数量的php-fpm进程。
+如果dm设置为 dynamic，那么pm.max_children参数失效，后面3个参数生效。 
+系统会在php-fpm运行开始 的时候启动pm.start_servers个php-fpm进程，
+然后根据系统的需求动态在pm.min_spare_servers和 pm.max_spare_servers之间调整php-fpm进程数。
+
+
+http://www.cnblogs.com/xinyuyuanm/archive/2013/03/25/2980852.html
+http://www.cnblogs.com/simon-sun/articles/3333647.html
+
+nginx本身不能处理PHP，它只是个web服务器，当接收到请求后，如果是php请求，则发给php解释器处理，并把结果返回给客户端。
+nginx一般是把请求发fastcgi管理进程处理，fascgi管理进程选择cgi子进程处理结果并返回被nginx
+
+PHP-FPM是一个PHP FastCGI管理器，是只用于PHP的,可以在 http://php-fpm.org/download下载得到.
+PHP-FPM其实是PHP源代码的一个补丁，旨在将FastCGI进程管理整合进PHP包中。必须将它patch到你的PHP源代码中，在编译安装PHP后才可以使用。
+新版PHP已经集成php-fpm了，不再是第三方的包了，推荐使用。PHP-FPM提供了更好的PHP进程管理方式，可以有效控制内存和进程、可以平滑重载PHP配置，比spawn-fcgi具有更多有点，所以被PHP官方收录了。
+在./configure的时候带 –enable-fpm参数即可开启PHP-FPM，其它参数都是配置php的。
+
+
+Nginx+PHP-fpm下浏览器打开任何php页面都是file not found
+类似下面的
+location ~\.php$ {
+include /etc/nginx/fastcgi_params;
+fastcgi_pass 127.0.0.1:9000;
+fastcgi_index index.php;
+fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+换成
+fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+或
+fastcgi_param  SCRIPT_FILENAME  /home/www$fastcgi_script_name;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

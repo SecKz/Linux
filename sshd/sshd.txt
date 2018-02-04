@@ -1,0 +1,83 @@
+
+ssh_config和sshd_config都是ssh服务器的配置文件，二者区别在于，前者是针对客户端的配置文件，后者则是针对服务端的配置文件。
+
+# ssh 218.241.10.158 -p14322 pwd
+# ssh user@server bash < /path/to/local/script.sh 						在远程机器上运行一段脚本。这条命令最大的好处就是不用把脚本拷到远程机器上。
+# ssh user@host cat /path/to/remotefile | diff /path/to/localfile -  		比较一个远程文件和一个本地文件
+
+# ssh localhost														连接本机
+# ssh 203.124.15.248													如果本地用户名与远程用户名一致，登录时可以省略用户名。
+# ssh -p 2222 210.209.76.223											指定端口连接
+# ssh root@119.147.143.30 'ps aux|grep httpd'							查看远程主机是否运行进程 httpd
+# ssh root@203.124.15.248											 SSH主要用于远程登录。假定你要以用户名user，登录远程主机host 
+# ssh 1.2.3.4 -l eric													等同ssh eric@1.2.3.4
+# service sshd start  												启动ssh服务，sftp服务
+
+# netstat -anp | grep sshd	ssh也是一种网络服务，所以其必然也绑定了一个端口号，ssh服务绑定的端口号是 21 
+
+
+# ssh 58.64.177.224 free -m			在58.64.177.224执行命令
+
+CentOS下解决SSH自动断开办法
+echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config
+echo "ClientAliveCountMax 1" >> /etc/ssh/sshd_config 
+重启SSH服务 service sshd restart
+
+http://blog.csdn.net/haijiaoqihao20160106/article/details/50623431
+
+
+解决SSH连接慢问题
+1、关闭DNS反向解析
+在linux中，默认就是开启了SSH的反向DNS解析,这个会消耗大量时间，因此需要关闭。
+# vi /etc/ssh/sshd_config
+UseDNS=no
+# service sshd restart
+
+Too many authentication failures for root
+调大MaxAuthTries=1的值或者注释
+
+允许root登陆
+# cat /etc/ssh/sshd_config
+PermitRootLogin yes
+# /etc/rc.d/init.d/sshd start
+
+
+用ssh链接linux主机时，可能出现“Host key verification failed.“的提示，ssh连接不成功
+Ssh stores the host keys of the remote hosts in ~/.ssh/known_hosts. You can either edit that text file manually and remove the old key (you can see the line number in the error message),
+或者使用
+# ssh-keygen -R 203.124.15.248			清除指定host keygen文件
+# ssh 203.124.15.248						重新连接
+
+
+
+SSH是一种安全协议，Secure Shell的缩写
+SSH 为建立在应用层和传输层基础上的安全协议。SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。
+咱们传统的远程网络服务如ftp、telnet等在本质上都是不安全的，因为它们在网络上用明文传送口令和数据。
+ssh协议目前有SSH1和SSH2，SSH2协议兼容SSH1。
+简单说，SSH是一种网络协议，用于计算机之间的加密登录。
+
+绑定本地端口
+既然 SSH 可以传送数据，那么我们可以让那些不加密的网络连接，全部改走 SSH 连接，从而提高安全性。
+假定我们要让 8080 端口的数据，都通过 SSH 传向远程主机，命令就这样写：
+# ssh -D 8080 user@host
+SSH 会建立一个 socket，去监听本地的 8080 端口。一旦有数据传向那个端口，就自动把它转移到 SSH 连接上面，发往远程主机。
+可以想象，如果 8080 端口原来是一个不加密端口，现在将变成一个加密端口。
+
+http://news.cnblogs.com/n/126504/
+
+telnet命令通常用来远程登录。telnet程序是基于TELNET协议的远程登录客户端程序。Telnet协议是TCP/IP协议族中的一员，是Internet远程登陆服务的标准协议和主要方式。
+它为用户提供了在本地计算机上完成远程主机工作的 能力。在终端使用者的电脑上使用telnet程序，用它连接到服务器。
+终端使用者可以在telnet程序中输入命令，这些命令会在服务器上运行，就像直接在服务器的控制台上输入一样。可以在本地就能控制服务器。要开始一个 telnet会话，必须输入用户名和密码来登录服务器。Telnet是常用的远程控制Web服务器的方法。
+但是，telnet因为采用明文传送报文，安全性不好，很多Linux服务器都不开放telnet服务，而改用更安全的ssh方式了。但仍然有很多别的系统可能采用了telnet方式来提供远程登录，因此弄清楚telnet客户端的使用方式仍是很有必要的。
+
+
+
+
+
+
+
+
+
+
+
+

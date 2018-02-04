@@ -1,0 +1,126 @@
+
+# rsync 127.0.0.1::
+# rsync 119.147.143.30::														查看服务端可用的模块列表，服务端需要开启873端口
+# rsync backer@119.147.143.30::www											查看服务端 www 模块中的目录及文件列表
+# rsync --password-file=/etc/rsyncd.pass backer@119.147.143.30::phpmyadmin   查看服务端 文件列表
+
+从服务端取数据在本地
+rsync -avzP --delete --password-file=/etc/rsyncd.pass backer@113.98.255.42::home/mysql_data/zclwfbcn/ /home
+
+向服务端发数据 把本地的/home下文件发到远程的web_bak模块指定的目录
+rsync -avz --delete --password-file=/etc/rsyncd.pass /home backer@192.168.1.100::web_bak  
+
+--delete：把备份机器上的文件，删除该文件在主服务器上却没有的文件；
+
+发送文件的一方/etc/rsync.pass的格式必须为Username:password, 且权限为root的600
+接收文件的一方/etc/rsync.pass的格式必须为password, 且权限为root的600
+
+
+# rsync --version
+# cat /etc/services | grep rsync			查看rsync的端口
+# lsof -i :873								检查rsync是否启动
+rsync服务端启动的两种方法
+# rsync --daemon --config=/etc/rsyncd.conf		启动
+# rsync --daemon		启动rsync服务端（独立启动）
+# /etc/init.d/xinetd reload		启动rsync服务端 （有xinetd超级进程启动）
+
+
+用ssh传输c
+rsync -avzhe ssh backup.tar root@192.168.0.100:/backups/
+rsync -avzhe ssh root@192.168.0.100:/root/install.log /tmp/
+
+use chroot = no # 不使用chroot
+max connections = 4 # 最大连接数为4
+pid file = /var/run/rsyncd.pid #进程ID文件
+lock file = /var/run/rsync.lock
+log file = /var/log/rsyncd.log # 日志记录文件
+secrets file = /etc/rsyncd.pwd # 认证文件名,主要保存用户密码，权限建议设为600，所有者root
+[module] # 这里是认证的模块名，在client端需要指定
+path = /var/mail # 需要做镜像的目录
+comment = backup xxxx # 注释
+ignore errors # 可以忽略一些无关的IO错误
+read only = yes # 只读
+list = no # 不允许列文件
+auth users = postfix # 认证的用户名，如果没有这行，则表明是匿名
+[other]
+path = /path/to...
+comment = xxxxx
+
+本地模式
+# rsync -rv /etc/passwd . 								拷贝passwd 到当前目录 
+# rsync -avzP /etc/yum.repos.d/ yum					同步yum.repos.d目录到yum目录
+# rsync -avzP --delete /etc/yum.repos.d/ yum			同步目录，删除本地目录中多余的文件
+
+远程shell模式
+# rsync -rv /etc/passwd 172.16.1.3:/tmp 				把passwd拷贝到远程主机上 
+
+列表模式	
+rsync -r 172.16.1.3:/tmp 								查看远程目录下的文件 
+
+rsync是Linux系统下文件同步可数据传输的工具，采用rsync算法使客户机与服务器，主服务器与备份服务器数据同步。rsync也能实现中断后恢复传输。rsync支持增量备份。
+rsync有4种模式
+1.本地模式。   2.远程shell模式   3.查询模式   4.C/S模式
+
+rsync --help 查看选项
+-a以archive模式操作，复制目录、符号连接
+u只进行更新，防止本地新文件被重写，注意两者机器的时钟的同时
+-v, --verbose               ##详细模式
+-r, --recursive             ##递归
+-u, --update                ##更新
+-t, --times                 ##保持时间
+-z, --compress              ##启用压缩
+-o, --owner                 ##保持属主
+-g, --group                 ##保持属组
+-p, --perms                 ##保持权限
+--delete                    ##以前边目录为准，同步
+--progress                  ##显示传输过程
+--exclude=PATTERN           ##不同步模式匹配的文件
+--password-file=FILE        ##密码文件位置
+--inplace               update destination files in-place
+
+http://www.tecmint.com/rsync-local-remote-file-synchronization-commands/
+
+http://www.cnblogs.com/linuxnotes/p/3455054.html
+http://chinaapp.sinaapp.com/thread-57-1-1.html
+
+
+忽略一些文件
+# rsync -avz source/ destination/ --exclude 'dir1'			忽略文件夹source/dir1
+# rsync -avz  source/ destination/ --exclude 'dir*'			忽略source目录下已dir开头的目录
+# rsync -avz source/ destination/ --exclude '*.txt'
+# rsync -avz source/ destination/ --exclude file1.txt --exclude dir3/file4.txt
+文件结构
+source
+- file1.txt
+- file2.txt
+- dir1
+  - dir2
+    - file3.txt
+- dir3
+  - file4.txt
+
+http://www.thegeekstuff.com/2011/01/rsync-exclude-files-and-folders/
+
+
+使用rsync -aP --exclude=upload 只能排除upload文件/目录。
+如果要排除多个文件/目录，怎么办？
+那只能建一个exclude.list，里面填写要排除的目录（一行一个文件/目录），然后rsync -aP --exclude-from=“exclude.list“
+如：rsync -aP  --exclude-from=/root/exclude.list 192.168.113.118::web_bak/www/ /data/server/www/    (从118同步数据到本机)
+补充
+--exclude=PATTERN       exclude files matching PATTERN
+--exclude-from=FILE     read exclude patterns from FILE
+--include=PATTERN       don't exclude files matching PATTERN
+--include-from=FILE     read include patterns from FILE
+
+
+
+
+
+
+
+
+
+
+
+
+

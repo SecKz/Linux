@@ -1,0 +1,83 @@
+
+
+# php - i | fgrep 'php.ini'					查看php的配置文件路径
+# php -i | grep ‘extension_dir’				查看模块的放置目录
+# php --ini								显示配置文件
+# php -i |grep configure					查看php的编译参数 
+php -i|grep Thread						查看php的线程安全   window在CMD中是php -i|findstr "Thread"		
+
+
+linux命令行直接运行php的方法
+# php -a 	进入php模式，提示符变为 > 
+> echo rand();				ctrl+C退出
+
+# php -f 文件名				命令行中执行php文件
+# php -r 'php代码'			命令行中执行php代码
+# php -r 'echo time();'
+# php -r 'echo rand(1,99);'
+# php -r 'phpinfo();'|grep session
+
+在bash中运行php文件的方法
+# which php     首先找到php程序路径
+/usr/local/bin/php
+# /usr/local/bin/php a.php    运行php文件
+a.php文件为
+<?php
+echo rand)();
+?>
+
+
+# php -me
+# php -v   查看php版本
+# php -m  查看php加载的模块
+# php -i|grep -n session		查看session相关
+# php -i|grep -n magic_
+# php -i|grep -ni global
+# php -i|grep -ni timezone	 		查看时区
+# php -i |grep configure		 		查看php的编译参数
+# php -i | grep -i safe_mode			查看php相关safe_mode
+
+查看php模块module的存放目录方法, 或者phpinfo找到extension_dir
+# php -i | grep -in extension_dir
+# php -i | grep php.ini	查看PHP的配置文件具体位置
+# php -r 'phpinfo();' |grep php.ini
+
+date.timezone = Asia/Shanghai		设置php时区 或者Asia/Chongqing
+
+出现Notice:  Undefined index:  
+修改php.ini文件　error_reporting  =  E_ALL & ~E_NOTICE
+
+
+php5.3已经不再支持zendOptimizer，所以不能安装．可以用zend-guard取代
+Zend dropped support for 5.3, they have a new project now called zend guard. I believe it requires a key to use
+# yum search zend
+# yum info php-zend-guard-loader.i386
+# yum install php-zend-guard-loader.i386
+
+php5.2以下安装ZendOptimizer
+# wget http://downloads.zend.com/optimizer/3.3.3/ZendOptimizer-3.3.3-linux-glibc23-i386.tar.gz
+# tar -xzvf ZendOptimizer-3.3.3-linux-glibc23-i386.tar.gz
+# ./ZendOptimizer-3.3.3-linux-glibc23-i386/install.sh
+基本上一路回车就可以了，安装会自动检测php.ini和apache的路径。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;---

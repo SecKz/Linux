@@ -1,0 +1,33 @@
+# service sshd start  启动ssh服务，sftp服务
+ssh, sftp的端口是22，ftp是21
+
+sftp是Secure File Transfer Protocol的缩写，安全文件传送协议。可以为传输文件提供一种安全的加密方法。
+sftp 与 ftp 有着几乎一样的语法和功能。
+sFTP 为 SSH的一部份，其实在SSH软件包中，已经包含了一个叫作SFTP(Secure File Transfer Protocol的安全文件传输子系统，SFTP本身没有单独的守护进程，
+它必须使用sshd守护进程（端口号默认是22）来完成相应的连接操作，所以从某种意义上来说，SFTP并不像一个服务器程序，而更像是一个客户端程序。
+SFTP同样是使用加密传输认证信息和传输的数据，所以，使用SFTP是非常安全的。但是，由于这种传输方式使用了加密/解密技术，所以传输效率比普通的FTP要低得多，
+如果您对网络安全性要求更高时，可以使用SFTP代替FTP。
+只要是可以登录系统的账号，就可以使用SFTP。
+如果创建用户时使用了-s /sbin/nologin 不允许用户登录，则可以使用
+usermod -s /bin/bash eric
+把eric这个用户更改为可以登录系统。
+
+查看sftp是否开启
+# ps aux|grep sftp
+或者
+#netstat -tunlp
+tcp    0      0 :::22      :::*     LISTEN      11439/sshd
+看到上面这一行输出说明ssh-server已经在运行了。
+
+1 命令行登录
+# ssh -l root 203.124.15.248
+SSH主要用于远程登录。假定你要以用户名user，登录远程主机host，只要一条简单命令就可以了。
+# ssh root@203.124.15.248	 
+如果本地用户名与远程用户名一致，登录时可以省略用户名。
+# ssh 203.124.15.248
+
+2.传统的ftp软件
+FileZilla在创建站点时，协议选择 SFTP - SSH File Transfer Protocol，正常的FTP是使用FTP - File Transfer Protocol。
+
+    
+

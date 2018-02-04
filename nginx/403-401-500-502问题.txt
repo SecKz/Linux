@@ -1,0 +1,46 @@
+
+
+首先查看是不是PHP的执行错误或者语法错误
+
+500问题
+Php文件语法错误
+
+遇到502问题，可以优先考虑按照以下两个步骤去解决。
+
+检查php-fpm是否启动了
+Php-fpm start
+
+2.FastCGI worker进程数是否不够
+运行 netstat -anpo | grep "php-fpm" | wc -l判断是否接近FastCGI进程，接近配置文件中设置的数值，表明worker进程数设置太少
+
+3.FastCGI执行时间过长
+根据实际情况调高以下参数值
+fastcgi_connect_timeout 300;
+fastcgi_send_timeout 300;
+fastcgi_read_timeout 300;
+4.FastCGI Buffer不够
+
+nginx和apache一样，有前端缓冲限制，可以调整缓冲参数
+fastcgi_buffer_size 32k;
+fastcgi_buffers 8 32k;
+
+http://www.server110.com/nginx/201312/4409.html
+http://os.51cto.com/art/201011/233698.htm
+
+403问题
+
+1、缺少index.html或者index.php文件 
+server {  
+  listen       80;  
+  server_name  localhost;  
+  index  index.php index.html;  
+  root  /var/www;
+}
+如果在/var/www下面没有index.php,index.html的时候，直接访问域名，找不到文件，会报403 forbidden。 
+
+2、权限问题 
+重新把文件chown一遍
+chown -R www.www .
+修改完配置别忘了重启nginx服务：
+nginx -s reload
+

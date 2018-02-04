@@ -1,0 +1,50 @@
+
+Bit 是binary digit
+Byte是Binary Term
+Bit意为"位"或"比特"，是计算机运算的基础；
+Byte意为"字节"，是计算机文件大小的基本计算单位；
+1Byte=8bit
+1bit 就是1位二进制数.
+1Byte就是1个字节.
+1个字节是由8个二进制位组成的.
+
+计算机中各种存储容量的单位都是用字节（Byte简为B）来表示
+有KB, MB中的B指的是字节
+
+
+位是计算机数据中最小单元。位的值只会是0或1。虽然计算机也提供对位的判断和操作，但是计算机指令一般以字节为单位。
+在大多数的计算机系统中，八位是一个字节。一位的值通常以存储电容是否带电来衡量。
+一个比特就是一个二进制数的最小单元，就像我们说我们能够拥有的最小金额的钱就是一分一样
+现在，如果你将八个0或者1组合在一起，例如01101010，你就可以说它们是八个比特或者说一个字节。
+
+具体的差别是MB等单位以10为底数的指数，MiB是以2为底数的指数，
+1KB=10^3=1000
+1KiB=2^10=1024
+相比较而言，1KiB要比1KB多出24位，其它同级比较同理
+
+    十进制单位                     	  二进制单位
+名字	缩写	次方	 名字	缩写	次方
+kilobyte	KB	10^3	kibibyte	KiB	2^10
+megabyte	MB	10^6	mebibyte	MiB	2^20
+gigabyte	GB	10^9	gibibyte	GiB	2^30
+terabyte	TB	10^12	tebibyte	TiB	2^40
+petabyte	PB	10^15	pebibyte	PiB	2^50
+exabyte	EB	10^18	exbibyte	EiB	2^60
+zettabyte	ZB	10^21	zebibyte	ZiB	2^70
+yottabyte	YB	10^24	yobibyte	YiB	2^80
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

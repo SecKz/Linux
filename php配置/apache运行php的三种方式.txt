@@ -1,0 +1,56 @@
+
+
+
+apache运行php的三种方式
+
+apache2handler
+PHP作为Apache模块，Apache服务器在系统启动后，预先生成多个进程副本驻留在内存中，
+一旦有请求出现，就立即使用这些空余的子进程进行处理，这样就不存在生成子进程造成的延迟了。
+这些服务器副本在处理完一次HTTP请求之后并不立即退出，而是停留在计算机中等待下次请求。
+对于客户浏览器的请求反应更快，性能较高。
+
+FastCGI
+FastCGI像是一个常驻(long-live)型的CGI，它可以一直执行着，只要激活后，不会每次都要花费时间去fork一次。
+PHP使用PHP-FPM(FastCGI Process Manager)，全称PHP FastCGI进程管理器进行管理。
+FastCGI的工作原理
+1、Web Server启动时载入FastCGI进程管理器(IIS ISAPI或Apache Module)
+2、FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可见多个php-cgi)并等待来自Web Server的连接。
+3、当客户端请求到达Web Server时，FastCGI进程管理器选择并连接到一个CGI解释器。Web server将CGI环境变量和标准输入发送到FastCGI子进程php-cgi。
+4、FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时，请求便告处理完成。
+FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。 在CGI模式中，php-cgi在此便退出了。
+
+CGI(很少用)
+cgi方式遇到连接请求先要创建cgi的子进程，然后处理请求，处理完后结束这个子进程。这就是fork-and-execute模式。
+所以用cgi方式的服务器有多少连接请求就会有多少cgi子进程。子进程反复加载是cgi性能低下的主要原因。
+
+
+
+PHP-FPM是一个PHP FastCGI管理器，是只用于PHP的。
+PHP-FPM其实是PHP源代码的一个补丁，旨在将FastCGI进程管理整合进PHP包中。必须将它patch到你的PHP源代码中，在编译安装PHP后才可以使用。
+现在我们可以在最新的PHP 5.3.2的源码树里下载得到直接整合了PHP-FPM的分支，据说下个版本会融合进PHP的主分支去。
+相对Spawn-FCGI，PHP-FPM在CPU和内存方面的控制都更胜一筹，而且前者很容易崩溃，必须用crontab进行监控，而PHP-FPM则没有这种烦恼。
+
+PHP5.3.3已经集成php-fpm了，不再是第三方的包了。
+PHP-FPM提供了更好的PHP进程管理方式，可以有效控制内存和进程、可以平滑重载PHP配置，比spawn-fcgi具有更多优点，所以被PHP官方收录了。
+在./configure的时候带 –enable-fpm参数即可开启PHP-FPM。
+使用PHP-FPM来控制PHP-CGI的FastCGI进程
+
+http://syre.blogbus.com/logs/20092011.html
+
+
+php的几种安装方式
+Server API	Apache 2.0 Handler
+Server API	CGI/FastCGI
+Server API	FPM/FastCGI
+
+
+
+
+
+
+
+
+
+
+
+

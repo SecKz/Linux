@@ -1,0 +1,90 @@
+
+
+验证postfix是否能收发信
+# telnet localhost smtp			等同于telnet localhost 25
+Trying 127.0.0.1…
+Connected to localhost.localdomain (127.0.0.1).
+Escape character is ‘^]’.
+220 host.domain.com ESMTP Postfix
+> ehlo host
+250-host.domain.com
+250-PIPELINING
+250-SIZE 10240000
+250-VRFY
+250-ETRN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250 DSN
+> mail from: cc
+250 2.1.0 Ok
+> rcpt to: root
+250 2.1.5 Ok
+> data
+354 End data with <CR><LF>.<CR><LF>
+> test
+> .
+250 2.0.0 Ok: queued as 1869B10145
+> quit
+221 2.0.0 Bye
+Connection closed by foreign host.
+
+
+# telnet 119.147.143.30 smtp
+
+退出telnet
+ctrl + ] 回车
+Dovecot ready.
+^]
+telnet> quit
+
+
+
+
+验证dovecot
+# telnet localhost pop3			# 换成telnet 119.147.143.30 pop3
+Trying 127.0.0.1…
+Connected to localhost.localdomain (127.0.0.1).
+Escape character is ‘^]’.
++OK Dovecot ready.
+> user mnguyen
++OK
+> pass password
++OK Logged in.
+> list
++OK 1 messages:
+1 488
+.> retr 1
++OK 488 octets
+Return-Path: <mnguyen@host.domain.com>
+X-Original-To: mnguyen
+Delivered-To: mnguyen@host.domain.com
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+by host.domain.com (Postfix) with SMTP id 1869B10145
+for <mnguyen>; Thu, 9 Oct 2008 14:12:03 -0400 (EDT)
+Message-Id: <20081009181211.1869B10145@host.domain.com>
+Date: Thu, 9 Oct 2008 14:12:03 -0400 (EDT)
+From: mnguyen@host.domain.com
+To: undisclosed-recipients:;
+test
+.> quit
++OK Logging out.
+Connection closed by foreign host.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

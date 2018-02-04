@@ -1,0 +1,19 @@
+网络访问速度变慢,原来是DNS设置的缘故
+8.8.8.8 8.8.4.4这两个DNS是谷歌提供的。不建议国内的服务器使用 不过经常会遇到抽风的情况(中国你懂得)，所以这玩意就不适合在生产环境服务器上使用。
+若服务器使用该DNS抽风情况下，在PHP中使用，file_get_contents , CURL 等远程获取内容时，解析DNS耗费时间非常长！
+时不时还会出现错误:  name lookup timeout   解决方案当然是修改DNS
+通过ping比较DNS的解析速度, 再把速度快的DNS作为首选DNS
+# ping 8.8.8.8
+# ping 114.114.114.114
+# ping 223.5.5.5
+或者
+# curl -o /dev/null -s -w %{time_namelookup} www.baidu.com		查看本机DNS解析速度
+
+修改系统DNS后，php-fpm/php-cgi 进程必须重启，否则还会继续使用原DNS进行请求
+# service network restart
+# service php-fpm restart
+国内免费DNS:
+阿里：223.5.5.5  223.6.6.6
+114： 114.114.114.114
+http://wudi.in/archives/327.html
+

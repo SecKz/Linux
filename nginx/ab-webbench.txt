@@ -1,0 +1,41 @@
+
+# yum install httpd-tools
+
+# ab -n10000 -c100 http://ecs.huanlegoo.cn/
+
+参数很多，一般我们用 -c 和 -n 参数就可以了。-n后面的4000代表总共发出4000个请求；-c后面的1000表示采用1000个并发（模拟1000个人同时访问）
+
+通俗点说就是当以-c 10的并发下完成-n 1001个请求时，比完成-n1000个请求多花的时间。
+你可以适当调节-c 和-n大小来测试服务器性能，借助htop指令来直观的查看机器的负载情况。
+
+http://onlyzq.blog.51cto.com/1228/516916
+
+ab的参数详细解释
+普通的测试，使用-c -n参数配合就可以完成任务
+格式： ./ab [options] [http://]hostname[:port]/path
+参数：
+-n 测试的总请求数。默认时，仅执行一个请求
+-c 一次并发请求个数。默认是一次一个。
+-H 添加请求头，例如 ‘Accept-Encoding: gzip’，以gzip方式请求。
+-t 测试所进行的最大秒数。其内部隐含值是-n 50000。它可以使对服务器的测试限制在一个固定的总时间以内。默认时，没有时间限制。
+-p 包含了需要POST的数据的文件.
+-T POST数据所使用的Content-type头信息。
+-v 设置显示信息的详细程度 – 4或更大值会显示头信息， 3或更大值可以显示响应代码(404, 200等), 2或更大值可以显示警告和其他信息。 -V 显示版本号并退出。
+-w 以HTML表的格式输出结果。默认时，它是白色背景的两列宽度的一张表。
+-i 执行HEAD请求，而不是GET。
+-C -C cookie-name=value 对请求附加一个Cookie:行。 其典型形式是name=value的一个参数对。此参数可以重复。
+
+
+# yum install ctags
+# webbench -help
+# webbench -c 3000 -t 30 http://ecs.huanlegoo.cn/			
+-c表示并发数，-t表示时间(秒)
+
+# yum install gcc ctags
+# wget http://dl.gaingreat.com/webbench-1.5.tar.gz
+# tar zxvf webbench-1.5.tar.gz
+# cd webbench-1.5
+# make && make install
+
+http://www.zntec.cn/archives/webbench-iptables.html
+http://www.cnblogs.com/xiaocen/p/3704192.html

@@ -1,0 +1,71 @@
+
+
+ps aux | grep nginx和nginx -t都可以查看nginx配置文件的路径
+# nginx -V		查看编译参数
+
+# useradd -s /sbin/nologin www			给nginx分配用户www
+# yum install nginx
+
+安装特定版本的nginx
+# yum --showduplicates list nginx	
+# yum install nginx-1.4.7-20.el6.art
+
+# ngin					启动nginx
+# nginx -h				查看帮助  /usr/local/nginx/sbin/nginx -h
+# nginx -t				检查配置文件得语法，得到配置文件得路径
+# nginx -V				查看版本及编译时的参数
+# nginx -v				 查看版本/usr/local/nginx/sbin/nginx -v
+# nginx -s reload			重启
+# nginx -c /usr/local/nginx/conf/nginx.conf 			-c参数指定了要加载的nginx配置文件路径
+
+# ps aux | grep nginx |awk '{print $2 , $6}'							打印nginx的pid，内存
+# ps aux | grep nginx |awk '{sum+=$6};END{print sum/1024}'		计算nginx占用内存
+# ./configure --help | less
+
+http://nginx.org/en/linux_packages.html
+
+
+
+
+设定查看Nginx状态的地址
+   location /nginx_status {
+        # Turn on nginx stats
+        stub_status on;
+        # I do not need logs for stats
+        access_log   off;
+        # Security: Only allow access from 192.168.1.100 IP #
+        allow 192.168.1.100;
+        # Send rest of the world to /dev/null #
+        deny all;
+   }
+http://my.oschina.net/gorillaz/blog/107878
+Active connections: 对后端发起的活动连接数.
+Server accepts handled requests: Nginx总共处理了38810620个连接,成功创建38810620次握手(证明中间没有失败的),总共处理了298655730个请求.
+Reading: Nginx 读取到客户端的Header信息数.
+Writing: Nginx 返回给客户端的Header信息数.
+Waiting: 开启keep-alive的情况下,这个值等于 active – (reading + writing),意思就是Nginx已经处理完成,正在等候下一次请求指令的驻留连接.
+所以,在访问效率高,请求很快被处理完毕的情况下,Waiting数比较多是正常的.如果reading +writing数较多,则说明并发访问量非常大,正在处理过程中.
+
+
+
+
+Nginx模块
+http://wiki.nginx.org/Modules
+
+这是nginx的官方源
+# http://nginx.org/packages/centos/5/x86_64/RPMS/
+# http://nginx.org/packages/centos/6/x86_64/RPMS/
+# rpm -Uhv http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+# goaccess -f access.log
+# goaccess -f access.log -a 
+# goaccess -f /var/log/nginx/access.log -a > report.html   生成 HTML 报告
+# zcat -f /var/log/nginx/access.log* | goaccess -a > report.html
+# zcat access.log.1.gz | goaccess

@@ -1,0 +1,31 @@
+
+
+# yum install inotify-tools
+# rpm -ql inotify-tools
+
+http://www.cnblogs.com/captain_jack/archive/2010/09/29/1838493.html
+http://www.cnblogs.com/jackluo/p/4097274.html
+http://www.cnblogs.com/davidwang456/p/3684945.html
+
+inotify 是一种强大的、细粒度的、异步的文件系统事件监控机制，linux内核从2.6.13版本起，加入了对inotify的支持。通过inotify可以监控 文件系统中添加、删除、修改、移动等各种细微事件，
+利用这个内核接口，第三方软件可以监控文件系统下文件的各种变化情况，inotify-tools就是 这样的一个第三方软件。
+
+-r|--recursive   Watch directories recursively. #递归查询目录
+-q|--quiet      Print less (only print events). #打印监控事件的信息
+-m|--monitor   Keep listening for events forever.  Without this option, inotifywait will exit after one  event is received.        #始终保持事件监听状态
+--excludei <pattern>  Like --exclude but case insensitive.    #排除文件或目录时，不区分大小写。
+--timefmt <fmt> strftime-compatible format string for use with %T in --format string. #指定时间输出的格式
+--format <fmt>  Print using a specified printf-like format string; read the man page for more details.   #打印使用指定的输出类似格式字符串
+-e|--event <event1> [ -e|--event <event2> ... ] Listen for specific event(s).  If omitted, all events are  listened for.   #通过此参数可以指定需要监控的事件，如下所示:
+Events：
+access           file or directory contents were read       #文件或目录被读取。
+modify           file or directory contents were written    #文件或目录内容被修改。
+attrib            file or directory attributes changed      #文件或目录属性被改变。
+close            file or directory closed, regardless of read/write mode    #文件或目录封闭，无论读/写模式。
+open            file or directory opened                    #文件或目录被打开。
+moved_to        file or directory moved to watched directory    #文件或目录被移动至另外一个目录。
+move            file or directory moved to or from watched directory    #文件或目录被移动另一个目录或从另一个目录移动至当前目录。
+create           file or directory created within watched directory     #文件或目录被创建在当前目录
+delete           file or directory deleted within watched directory     #文件或目录被删除
+unmount         file system containing file or directory unmounted  #文件系统被卸载
+

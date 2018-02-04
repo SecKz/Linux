@@ -1,0 +1,126 @@
+
+
+# sendmail -bp				显示正在发送队列中的mail，可用于查看mail是否有已发送出去
+# mailq						查看邮件列表,postfix用法，等同sendmail -bp
+# postqueue -p			显示正在发送队列中的mail，可用于查看mail是否有已发送出去
+
+未发出去的邮件在
+sendmail是 /var/spool/mqueue/ 
+exim是/var/spool/exim/input/
+
+# yum install mailx			mail命令包
+# sendmail -q				刷新邮件对列。mta是sendmail的时候用
+
+# postfix -f					等同postfix flush
+# postsuper -d ALL			删除所有邮件
+# postsuper -d mailID
+# postsuper -h ALL			暂停发送全部队列中的邮件
+
+## postsuper -d 3C2C11FBE7			删除上行查出的邮件队列ID
+
+
+mail操作
+# echo $MAIL		查看收件箱的位置
+# mail				进入收件箱读取邮件，此时提示符为"&"
+& file				显示系统邮件所在的文件，以及邮件总数等信息
+# z					邮件列表翻页,20封翻一页
+# header			显示当前的邮件列表, z翻页的位置
+& 5					阅读第5封，按crtl+f翻页 阅读时，按空格键就是翻页，按回车键就是下移一行
+& d 5  				删除第5邮件	d 1-600删除1到600的邮件
+& t   				阅读当前指针所在的邮件
+& $					打开最后一封邮件
+& top				显示当前指针所在的邮件的邮件头
+& p					显示当前邮件
+& v					当前邮件进入纯文本编辑模式
+# from				
+& q 				退出收件箱,保存之前的操作，比如删除已用d删除的邮件，已阅读邮件会转存到当前用户家目
+& x 				退出收件箱，并不保存之前的操作，比如删除邮件
+
+http://www.cnblogs.com/JemBai/archive/2012/01/24/2329136.html
+系统收到邮件都会保存在文件 /var/spool/mail/用户名 。
+
+查看邮件的两种方法
+# tail /var/spool/mail/用户名		直接查看文件
+# mail
+
+
+此时命令提示符为"&"
+unread 标记为未读邮件
+n|next|{什么都不填} num 阅读某一封邮件
+h|headers 显示当前的邮件列表
+l|list 显示当前支持的命令列表
+?|help 显示多个查看邮件列表的命令参数用法
+d 删除当前邮件，指针并下移。 d 1-100 删除第1到100封邮件
+f|from 只显示当前邮件的简易信息。 f num 显示某一个邮件的简易信息
+f|from num 指针移动到某一封邮件
+z 显示刚进行收件箱时的后面二十封邮件列表
+more|p|page 阅读当前指针所在的邮件内容 阅读时，按空格键就是翻页，按回车键就是下移一行
+t|type|more|p|page num 阅读某一封邮件
+n|next|{什么都不填} 阅读当前指针所在的下一封邮件内容
+v|visual 当前邮件进入纯文本编辑模式
+top 显示当前指针所在的邮件的邮件头
+file|folder 显示系统邮件所在的文件，以及邮件总数等信息
+x 退出mail命令平台，并不保存之前的操作，比如删除邮件
+q 退出mail命令平台,保存之前的操作，比如删除已用d删除的邮件，已阅读邮件会转存到当前用户家目录下的mbox文件中。如果在mbox中删除文件才会彻底删除。
+
+r 已读过的信
+u 未读过的信
+p 一次显示多封信
+t 显示某封信的前若干行
+si 显示信件字符数
+h 显示信件标题
+
+在linux文本命令平台输入 mail -f mbox，就可以看到当前目录下的mbox中的邮件了。
+cd 改变当前所在文件夹的位置
+写信时，连按两次Ctrl+C键则中断工作，不送此信件。
+读信时，按一次Ctrl+C，退出阅读状态。
+
+
+
+# mail nolan			传送电子邮件给本系统用户
+# mail 260741887@qq.com		传送电子邮件至外地用户
+# sendmail.postfix -bp     		或sendmail -bp		查看刚才写的邮件是否发送成功 若屏幕显示为“Mail queue is empty” 的信息，表示mail 已送出。
+
+使用Linux的mail命令发送邮件的3种方法1 -s后面是邮件的主题，主题后面是目标邮件地址
+# mail -s 'hi, 好久不见' 260741887@qq.com
+这里输入信的正文
+按下Ctrl+D 键或. 键结束正文。
+连按两次Ctrl+C键则中断工作，不送此信件。
+Cc( Carbon copy) : 复制一份正文，给其他的收信人
+
+2. 使用管道发送邮件
+echo后面的是邮件正文
+# echo 'This is a test mail!' | mail -s 'text' 260741887@qq.com		无换行的发送
+# echo "Hi Tomas,					有换行的发送
+> Thank you for you help!
+> Regards,
+> Daniel" | mail -s "Thank you mail" xlapn@126.com
+
+3. 以文件的形式发送邮件正文
+这种形式适合比较长的邮件正文编写，将邮件正文写入到文件mail.body，然后通过<定位到目标邮件
+# mail -s "Thanks mail" 260741887@qq.com < /etc/passwd
+
+4 发送带有附件的邮件要发送带有附件的邮件，需要安装uuencode软件包
+uuencode后面跟了两个参数，第一个参数”/root/batch.file“是附件全路径，第二个参数”batch“是附件在邮件中显示的名字
+# yum install sharutils		
+# uuencode /root/batch.file batch | mail -s "Batch file" 260741887@126.com < mail.body
+
+http://www.cnblogs.com/wise-man/archive/2012/08/05/2624322.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

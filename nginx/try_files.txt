@@ -1,0 +1,23 @@
+
+try_files指令是按顺序检测文件的存在性,并且返回第一个找到文件的内容,如果第一个找不到就会自动找第二个,依次查找.其实现的是内部跳转.以下举例说明:
+
+ location /abc {
+       try_files /4.html /5.html @qwe;      --检测文件4.html和5.html,如果存在正常显示,不存在就去查找@qwe值
+  }
+
+   location @qwe  {
+      rewrite ^/(.*)$   http://www.baidu.com;     --跳转到百度页面
+   }
+
+
+
+try_files最核心的功能是可以替代rewrite。
+try_files
+语法: try_files file ... uri 或 try_files file ... = code
+默认值: 无
+作用域: server location
+Checks for the existence of files in order, and returns the first file that is found. A trailing slash indicates a directory 
+In the event that no file is found, an internal redirect to the last parameter is invoked. Do note that only the last parameter causes an internal redirect,
+former ones just sets the internal URI pointer. The last parameter is the fallback URI and must exist, or else an internal error will be raised. 
+Named locations can be used. Unlike with rewrite, $args are not automatically preserved if the fallback is not a named location. 
+If you need args preserved, you must do so explicitly:
