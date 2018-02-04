@@ -1,0 +1,25 @@
+
+对于一些难以删除的文件，如文件名乱码或含有特殊字符。可通过查找文件的inode结点来删除
+# ls -i 	查看文件的inode结点	
+# find . -inum 2818094 | xargs -ti rm {}		或rm -rf *失效，用这个
+# find ./ -inum 268475 -print -exec rm {} -rf \		find ./ -inum 268475 | xargs rm -rf有时不能删除
+
+# rm {a..z}			连续删除a到z文件
+# rm {a,b,c}
+
+# rm -f '.*' 	删除以点.开头的文件，rm -rf *会失效
+# find . * |xargs rm -rf		或rm -rf *失效，用这个
+-d      --directory    删除可能仍有数据的目录 (只限超级用户)
+-f      --force          略过不存在的文件，不显示任何信息
+-i      --interactive 进行任何删除操作前必须先确认
+-r/R --recursive    同时删除该目录下的所有目录层
+-v      --verbose     详细显示进行的步骤
+--help            显示此帮助信息并离开
+
+Linux下删除大量文件
+http://www.cnblogs.com/linxiyue/p/3536925.html
+
+rm误删重要数据怎么办？安装数据恢复软件
+extundelete 
+TestDisk 	http://www.cgsecurity.org/wiki/TestDisk_CN
+http://www.cnblogs.com/Javame/p/4449480.html

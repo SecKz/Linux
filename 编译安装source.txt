@@ -1,0 +1,67 @@
+
+
+# ./configure --help			查看安装帮助,configure文件所在目录
+
+一般安装源代码的程序你得要看它的README，一般在它的目录下都有的。
+安装原码程序时，都要执行三步：
+1./configure 
+2 make 
+3 make install
+
+make clean	清理临时文件的命令如下：
+make uninstall	如果要卸载，则执行如下的命令。
+
+环境准备工作:
+yum -y install gcc gcc-c++ autoconf automake make  
+yum -y install zlib zlib-devel openssl openssl--devel pcre pcre-devel  
+
+正常编译安装/卸载：
+源码的安装一般由3个步骤组成：配置(configure)、编译(make)、安装(make install)。 
+configure文件是一个可执行的脚本文件，它有很多选项，在待安装的源码目录下使用命令./configure –help可以输出详细的选项列表。 
+其中--prefix选项是配置安装目录，如果不配置该选项，安装后可执行文件默认放在/usr /local/bin，库文件默认放在/usr/local/lib，配置文件默认放在/usr/local/etc，其它的资源文件放在/usr /local/share，比较凌乱。
+ 如果配置了--prefix，如：
+$ ./configure --prefix=/usr/local/test 
+安装后的所有资源文件都会被放在/usr/local/test目录中，不会分散到其他目录。
+ 
+使用--prefix选项的另一个好处是方便卸载软件或移植软件；当某个安装的软件不再需要时，只须简单的删除该安装目录，就可以把软件卸载得干干净净；而移植软件只需拷贝整个目录到另外一个机器即可（相同的操作系统下）。 
+也可以在原来的make目录下用一次make uninstall，但前提是Makefile文件有uninstall命令
+
+ # make uninstall
+另外，当你不再使用该程序时，能使用软件所带的卸载功能，一般程序都会具有此功能。转换至源文件的主目录下，执行以下命令即可： 
+# make uninstall
+
+多数情况下，利用上面介绍的方法安装的程式，都位于/usr/local下面，编译安装源码包还有一个特点就是我们可以自己指定安装位置，
+这需要在配置时指定安装文件夹下，通常我们会装在/opt下,命令如下:
+#  ./configure --prefix = /opt/
+
+注：当然有时候也有例外，有些程序根本就不理会你指定的文件夹，它会自己指定文件夹进行安装。　
+
+编译安装时遇到错误: configure: error: no acceptable C compiler found in $PATH
+解决：安装GCC编译器
+# yum install -y gcc
+
+gcc是拿来编译各种源代码的软件 所谓GCC包，就相当于安装GCC的安装包啦，类似WIN下的setup.exe
+不过TAR包里都是源代码，你得自己编译才能装，所以一定要装GCC，不然无法装
+# rpm -qa gcc	查看是否安装gcc
+
+编译安装时出现：pam headers not found，安装pam-delvel
+# yum install pam-devel pam
+
+编译安装时出现：configure: error: libpq library not found ，安装postgresql-devel
+# yum install postgresql
+
+make test出现ERROR: Cannot run tests without CLI sapi
+编译时在最后加上./configure 中间各种参数　--enable-cli
+
+
+linux绝大多数开源软件都以源代码形式发布，一般打包成tar.gz。
+源代码需编译为二进制形式后才能够动行使用；
+基本编译流程：
+./configure 检查编译环境、相关库文件及配置参数并生成makefile;
+make 对源代码进行编译，生成可执行文件；
+make install 将生成的可执行文件安装到当前计算机中
+
+
+
+
+

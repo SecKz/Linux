@@ -1,0 +1,27 @@
+
+LINUX 二进制安装 VS 源代码安装
+如果你不是很熟悉源代码和二进制的区别, 想像一下你订了一个pizza饼. "二进制"形式的pizza饼送来了立刻就能吃, 
+而"源代码"pizza饼就像全部制作pizza的材料, 面粉, 发酵粉, 干酪, 沙司还有浇头调料, 以及烹饪pizza的指导, 
+你必须自己作pizza. 虽然有点费劲, 不过如果你仔细的按照指导来作, 结果是一样的, 甚至更好.
+
+RPM 是其实就是二进制的， RPM的作用就是把这些文件复制到设定好的文件夹中；
+RPM 你也可以自己制作 ；  用rpmbuild ,  只是有一个SPEC文件需要改改； 
+你可以参考源码包里support-file/mysql_version.spec 
+
+
+二进制分发版（*.rpm形式的二进制软件包、*.tar.gz/*.tgz、*.bz2形式的二进制软件包）
+（一）、*.rpm形式的二进制软件包
+安装:rpm –ivh packagename.rpm
+卸载：rpm -e packagename
+
+源码分发版
+（一）*.src.rpm形式的源代码软件包
+以.src.rpm结尾的，这类软件包是包含了源代码的rpm包，在安装时需要进行编译。 
+这种包是源代码rpm包,如果直接用rpm -ivh来安装的话,会在/usr/src/redhat/SOURCES目录下找到一个tar.gz打包的源代码包.
+也就是说需要你自己手工解包编译安装.但是可以直接用:rpmbuild --rebuild xxxxx.src.rpm，来直接把源代码rpm包编译成普通的二进制rpm包.执行上述命令后,可以到/usr/src/redhat/RPMS /i386目录下找到可用的二进制rpm包.这类软件包有以下几种安装
+
+http://blog.21ic.com/user1/8453/archives/2012/90545.html
+
+
+RHEL/CentOS/Fedora各种源(EPEL、Remi、RPMForge、RPMFusion)配置
+http://blog.51osos.com/linux/rhel-centos-fedora-epel-remi-rpmforge-rpmfusion/

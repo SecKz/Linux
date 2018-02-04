@@ -1,0 +1,19 @@
+
+# la | iconv -f gb2312 -t utf-8					查看中文乱码的文件名
+# find . -inum 3735617 | xargs -ti mv {} newname.txt		找到中文乱码的文件重命名
+
+# ls -li
+# find ./ -inum 268475 | xargs -ti rm -rf {} 			
+# find ./ -inum 268475 -print -exec rm {} -rf \;	
+
+# iconv -l 	列出支持的字符编码
+# iconv -l|grep -i gb	支持哪些中文格式	
+# iconv -f GBK -t UTF-8 file1 -o file2
+
+# curl http://www.baidu.com | iconv -fgb2312  								取gbk文档时乱码，转码
+# curl http://open.baidu.com/special/time/ | iconv -f gb2312 -t utf-8  		换取gbk文档时乱码，转码
+# curl -s http://codingstandards.iteye.com/ | iconv -f utf8 -t gb18030			gbk是gb18030的子集，gb18030包含更多的字符
+
+
+当文件名为乱码的时候，无法通过键盘输入文件名，所以在终端下就不能直接利用rm，mv等命令管理文件了。
+每个文件都有一个inode节点号，通过ls命令的-i选项获得得,也可以通过ll -i 来获得。

@@ -1,0 +1,114 @@
+
+
+# tar -zxvf lnmp1.0.tar.gz -C /home/html		   将压缩包解压到指定目录
+
+# tar -zcvf /tmp/etc.tar.gz  /etc	 					以 gzip 压缩打包
+# tar -zxvf /tmp/etc.tar.gz 	 						解压一个包到当前文件夹
+
+# tar -zcvf a.tar.gz test --exclude test/00 
+# tar -tf 包名	 								查看包里有什么文件 -p 的属性是保留文件的属性
+
+# tar -cvf /tmp/etc.tar  /etc							打包，不压缩！
+# tar -pzcvf /tmp/etc.tar.gz  /etc	 				以 gzip 压缩打包，并且保留原来属性
+# tar -ztvf	 tarfile									来查阅 tarfile 内的文件名，如果单只要一个文件，
+
+# tar xjvf filename.tar.bz2		解压tar.bz2的文件
+
+# tar -cvf /tmp/etc.tar /etc			仅打包，不压缩！ 
+# tar -zcvf /tmp/etc.tar.gz /etc		打包后，以 gzip 压缩 
+# tar -jcvf /tmp/etc.tar.bz2 /etc	打包后，以 bzip2 压缩 
+
+
+参数： 
+-c ：建立一个压缩文件的参数指令(create 的意思)；
+-x ：解开一个压缩文件的参数指令！ 
+-t ：查看 tarfile 里面的文件！ 
+-z ：是否同时具有 gzip 的属性？亦即是否需要用 gzip 压缩？
+-v ：压缩的过程中显示文件！这个常用，但不建议用在背景执行过程！
+-f ：使用档名，请留意，在 f 之后要立即接档名喔！不要再加参数！ 
+-j ：是否同时具有 bzip2 的属性？亦即是否需要用 bzip2 压缩？ 
+特别注意，在参数的下达中， c/x/t 仅能存在一个！不可同时存在！
+-p ：小写p，使用原文件的原来属性（属性不会依据使用者而变） 
+-P ：大写P，可以使用绝对路径来压缩！
+-N ：比后面接的日期(yyyy/mm/dd)还要新的才会被打包进新建的文件中！
+--exclude FILE：在压缩的过程中，不要将 FILE 打包！ 
+
+范例四：在 /tmp 底下，我只想要将 /tmp/etc.tar.gz 内的 etc/passwd 解开而已 
+# tar -zxvf /tmp/etc.tar.gz etc/passwd 
+通过tar -ztvf 来查阅 tarfile 内的文件名称，如果单只要一个文件， 
+
+就可以透过这个方式来下达！注意到！ etc.tar.gz 内的根目录 / 是被拿掉了！
+tar -zxvpf /tmp/etc.tar.gz /etc 	将 /etc/ 内的所有文件备份下来，并且保存其权限！ 
+这个 -p 的属性是很重要的，尤其是当您要保留原本文件的属性时！
+
+# tar -N "2005/06/01" -zcvf home.tar.gz /home		在 /home 当中，比 2005/06/01 新的文件才备份
+# tar --exclude /home/dmtsai -zcvf myfile.tar.gz /home/* /etc备份 /home, /etc ，但不要 /home/dmtsai 
+
+
+*.Z         compress 程序压缩的文件；　　//在当前的Linux主流版本中都已经默认没有支持该压缩命令了，因为gzip命令已经取代了compress命令了 
+*.gz        gzip 程序压缩的文件；
+*.bz2       bzip2 程序压缩的文件；
+*.tar       tar 程序打包的数据，并没有压缩过；
+*.tar.gz    tar 程序打包的文件，其中并且经过 gzip 的压缩
+*.tar.bz2   tar 程序打包的文件，其中并且经过 bzip2 的压缩
+
+
+7Z
+# 7za a file.7z dir				打包压缩
+# 7za l file.7z 				列出文件
+# 7za a -tzip shell shell		打包成zip格式
+# yum install p7zip			安装7z 
+# 7za x aa.7z		解压
+
+.tar 
+解包：tar xvf FileName.tar
+打包：tar cvf FileName.tar DirName
+（注：tar是打包，不是压缩！）
+
+.gz 只能压缩单个文件，不能压缩目录。参数-r不是用于压缩目录，是遍历目录里的每个文件，不要用
+解压1：gunzip FileName.gz
+解压2：gzip -d FileName.gz
+压缩：gzip FileName
+
+# gzip -r faxianguilin.com	压缩一个文件夹	
+
+.bz2
+解压1：bzip2 -d FileName.bz2
+解压2：bunzip2 FileName.bz2
+压缩： bzip2 -z FileName
+.tar.bz2
+解压：tar jxvf FileName.tar.bz2
+压缩：tar jcvf FileName.tar.bz2 DirName
+
+.bz
+解压1：bzip2 -d FileName.bz
+解压2：bunzip2 FileName.bz
+压缩：未知
+.tar.bz
+解压：tar jxvf FileName.tar.bz
+压缩：未知
+
+.Z
+解压：uncompress FileName.Z
+压缩：compress FileName
+.tar.Z
+解压：tar Zxvf FileName.tar.Z
+压缩：tar Zcvf FileName.tar.Z DirName
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

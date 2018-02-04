@@ -1,0 +1,51 @@
+
+
+# egrep -o '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' /root/.ssh/known_hosts			查看本机可连接哪些服务器 可以看到公钥会写入到known_hosts文件
+# ssh-keygen -F 211.22.125.59				Search for the specified hostname in a known_hosts file
+# ssh-keygen -R 211.22.125.59				Removes all keys belonging to hostname from a known_hosts file
+
+A服务器：10.1.11.82
+B服务器：10.1.11.210
+让A服务器能无密码的访问B服务器
+
+在A操作
+# ssh-keygen												生成.ssh文件夹. 等同于ssh-keygen -t rsa 然后一直按回车键，就会按照默认的选项将生成的密钥保存在.ssh/id_rsa文件中。
+# cd .ssh										
+# cat id_rsa.pub >> authorized_keys							将id_rsa.pub加到授权的key里面去
+# chmod 600 ~/.ssh/authorized_keys							修改authorized_keys的权限为600 修改authorized_keys的权限
+# ssh localhost												查看本机是否可以SSH无需密码登录：如果执行执行完这条命令，没有要求输入密码，证明配置正确。
+# scp /root/.ssh/authorized_keys root@211.22.125.59:/root/.ssh/			把authorized_keys传到B服务器
+
+在B操作
+# mkdir /root/.ssh;
+# chmod 700 /root/.ssh;
+# chmod 600 /root/.ssh/authorized_keys
+
+证书保存的位置在/root/.ssh，这里保存了主机的证书。证书分为dsa和rsa两种，ssh-keygen默认选择rsa证书。
+打开/root/.ssh文件夹可以看到有id_rsa和id_rsa.pub两个文件，这是证书的公钥和私钥，公钥有一个.pub的后缀。
+
+有几点需要注意：
+SSH的配置文件一定要修改，而且修改后要重启
+authorized_keys文件的权限一定要修改为600
+ssh的文件如果是手动创建的话权限一定要修改为700
+
+SSH无密码验证的原理
+Master作为客户端，要实现无密码公钥认证，连接到服务器Salve上时，需要在Master上生成一个密钥对，包括一个公钥和一个私钥，而后将公钥复制到所有的Salve上。
+当Master通过SSH链接到Salve上时，Salve会生成一个随机数并用Master的公钥对随机数进行加密，并发送给Master。Master收到加密数之后再用私钥解密，并将解密数回传给Salve，Salve确认解密数无误之后就允许Master进行连接了。
+这就是一个公钥认证过程，期间不需要手工输入密码，重要的过程是将Master上产生的公钥复制到Salve上。
+
+ ssh-keygen支持RSA和DSA两种认证密钥
+ -b：指定密钥长度；
+ -e：读取openssh的私钥或者公钥文件；
+ -C：添加注释； -f：指定用来保存密钥的文件名；
+ -i：读取未加密的ssh-v2兼容的私钥/公钥文件，然后在标准输出设备上显示openssh兼容的私钥/公钥；
+ -l：显示公钥文件的指纹数据；
+ -N：提供一个新密语；
+ -P：提供（旧）密语；
+ -q：静默模式； -t：指定要创建的密钥类型。
+
+http://www.cnblogs.com/databig/p/4113142.html
+
+
+
+

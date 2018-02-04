@@ -1,0 +1,22 @@
+
+通过rpmforge源安装
+# yum install unrar		
+# unrar x file.rar			解压到当前目录
+# unrar l file.rar			列出不解压
+
+
+# yum install rar	
+# rar x file.rar 			解压，保留原有目录结构。
+# rar e file.rar 			将全部文件解压到当前同一个目录，会造成覆盖。不要用
+# rar l file.rar			列出包里文件
+# rar a file.rar /etc		将/etc 目录压缩为file.rar 
+# rar r file.rar			修复包
+# rar a -x0am3/66 aa 0am3	打包除66以外的文件
+
+
+源码包安装
+# wget http://www.rarlab.com/rar/rarlinux-3.8.0.tar.gz
+# tar zxvf rarlinux-3.8.0.tar.gz
+# cd rar
+# make
+# make install 

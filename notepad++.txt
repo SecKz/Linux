@@ -5,3 +5,7 @@ compare				文档比较
 php autocompletion
 Light Explorer 轻量级资源管理器
 
+
+regedit打开注册表 搜索 Open with Notepad++ 删除右键菜单
+
+

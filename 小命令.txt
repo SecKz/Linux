@@ -1,0 +1,48 @@
+
+
+
+# dd if=/dev/zero of=bigfile bs=1M count=100			在当前目录生成一个100M的文件bigfile 
+# echo "6+9" | bc
+# echo "3 * 4" | bc
+# echo "$RANDOM % 56 + 1" | bc
+# watch ifconfig			查看网卡流量
+# (cd /tmp && ls)			跳到某个目录执行命令，再跳回来，其实不是在当前shell执行命令，而是打开一个子shell执行。
+# pgrep -lo nginx			找到即父进程的PID
+# basename /etc/sysconfig/network		获取最后的文件名。　
+# basename include/stdio.h .h			去掉.h
+# dirname /etc/sysconfig/network		获取文件的路径
+# date > outfile         通过date命令生成文件outfile。
+# ls > outfile 
+
+http://www.commandlinefu.com/
+
+
+读取标准输入的数据，并将其内容输出成文件。
+# date | tee -a a.txt
+# date | tee -a a.txt
+
+# echo 12345 | tee - 
+# echo 12345 | tee - - 
+# echo -n 12345 | tee - - - - 
+
+-a或--append 　附加到既有文件的后面，而非覆盖它．
+-i-i或--ignore-interrupts 　忽略中断信号。
+- 表示重复输出
+
+# mkdir –p tmp/a/b/c  创建目录树，使用mkdir的-p选项可以级联创建子目录
+# cd tmp/a/b/c && tar xvf ~/archive.tar  使用 &&  连接两个命令时，只有第一个命令执行成功，才会继续执行第二个命令
+# rename .html .php *.html  批量重命名，上述命令将当前文件夹下的所有以html结尾的文件重命名为以php结尾的文件
+# find . -inum 1412216 根据文件的inode查找文件 ls –il查看或stat
+# < /dev/urandom tr -dc A-Za-z0-9_ | head -c8  输出一个8位随机密码
+
+# strings /bin/ls
+# strings /bin/ls|grep -ni help	用strings读取二进制文本
+strings打印文件中的可打印字符串（print the strings of printable characters in files）。常用来在二进制文件中查找字符串，与grep配合使用
+
+# echo “ls -l” | at midnight 在某个时间运行某个命令。
+
+# net rpc shutdown -I ipAddressOfWindowsPC -U username%password	远程关闭一台Windows的机器
+
+
+
+
