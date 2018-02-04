@@ -1,0 +1,123 @@
+
+
+# SELINUX=disabled
+# yum install gcc glibc glibc-common gd gd-devel xinetd openssl-devel
+# yum install nagios nagios-plugins-all nagios-plugins-nrpe nrpe
+
+# chown -R www.www /etc/nagios 						把nagios目录及其文件都改成与httpd对应的用户
+# chown -R www.www /usr/share/nagios/
+# chown -R www.www /var/log/nagios			
+# find / -user nagios 										查看用户为nagios的文件			
+
+# service nagios start
+# nagios -v /etc/nagios/nagios.cfg				检查配置文件
+# htpasswd -c /etc/nagios/passwd eric	重新生成密码文件
+
+修改/usr/local/nagios/etc/cgi.cfg文件 再将之前创建的账号，如eric添加到cgi.cfg文件中的权限配置文件中去，一般包括如下的几个项目:
+authorized_for_system_information=nagiosadmin
+authorized_for_configuration_information=nagiosadmin
+authorized_for_system_commands=nagiosadmin
+authorized_for_all_services=nagiosadmin
+authorized_for_all_hosts=nagiosadmin
+authorized_for_all_service_commands=nagiosadmin
+authorized_for_all_host_commands=nagiosadmin
+直接在nagiosadmin后面加逗号和账户名即可。
+如authorized_for_configuration_information=nagiosadmin,eric
+
+为了方便使用check系列命令，以链接形式加到path中
+# ln -sv /usr/local/nagios/libexec/* /bin
+# check_nrpe -H 119.147.143.30			测试check_nrpe  加上延时check_nrpe -H 119.147.143.30 -t 30
+# check_nrpe -H 127.0.0.1
+# check_nrpe -H 59.42.249.45 -c check_users				远程执行
+
+
+
+被监制端安装
+# yum install nagios-nrpe nagios-plugins-all
+# chkconfig nrpe on
+
+
+插件地址
+https://www.nagios-plugins.org/download.html
+
+# ln -svf /usr/local/nagios/bin/* /bin				要用绝对路径，相对路径不能正确指向
+
+查看命令帮助，以check_ssh为例
+# libexec/check_ssh -h	
+# libexec/check_ssh -p 2222 localhost
+
+# nrpe -c /usr/local/nagios/etc/nrpe.cfg -d			启动nrpe
+
+nrpe.cfg配置
+allowed_hosts=210.209.76.223
+dont_blame_nrpe=1
+command[check_users]=/usr/lib/nagios/plugins/check_users -w 5 -c 10
+command[check_load]=/usr/lib/nagios/plugins/check_load -w 15,10,5 -c 30,25,20
+command[check_hda1]=/usr/lib/nagios/plugins/check_disk -w 20% -c 10% -p /dev/hda1
+command[check_zombie_procs]=/usr/lib/nagios/plugins/check_procs -w 5 -c 10 -s Z
+command[check_total_procs]=/usr/lib/nagios/plugins/check_procs -w 150 -c 200
+command[check_swap]=/usr/lib/nagios/plugins/check_swap -w 20 -c 10
+
+# The following examples allow user-supplied arguments and can
+# only be used if the NRPE daemon was compiled with support for
+# command arguments *AND* the dont_blame_nrpe directive in this
+# config file is set to '1'.  This poses a potential security risk, so
+# make sure you read the SECURITY file before doing this.
+
+command[check_users]=/usr/lib/nagios/plugins/check_users -w $ARG1$ -c $ARG2$
+command[check_load]=/usr/lib/nagios/plugins/check_load -w $ARG1$ -c $ARG2$
+command[check_disk]=/usr/lib/nagios/plugins/check_disk -w $ARG1$ -c $ARG2$ -p $ARG3$
+command[check_procs]=/usr/lib/nagios/plugins/check_procs -w $ARG1$ -c $ARG2$ -s $ARG3$
+
+
+
+
+nagios不能登录
+文件/etc/nagios/passwd与AuthUserFile指定的路径文件名一致
+# htpasswd -c /etc/nagios/passwd eric	重新生成密码文件
+
+出现错误Nagios PROCS WARNING: 307 processes with STATE = RSZDT，修改localhost.cfg 
+check_command                   check_local_procs!550!800!RSZDT 
+
+监控页面出现It appears as though you do not have permission to view information for any of the hosts you requested... 
+修改/usr/local/nagios/etc 目录中cgi.cfg文件的use_authentication=1（默认）
+修改/usr/local/nagios/etc/cgi.cfg文件 再将之前创建的账号，如eric添加到cgi.cfg文件中的权限配置文件中去，
+修改authorized_for_开关的配置项成
+如authorized_for_configuration_information=nagiosadmin,eric
+
+错误CHECK_NRPE: Error - Could not complete SSL handshake.
+allowed_hosts=127.0.0.1, 210.209.76.223
+iptables -I INPUT -p tcp --dport 5666 -j ACCEPT			开放端口
+
+CHECK_NRPE: Socket timeout after 10 seconds.
+开放端口iptables -I INPUT -p tcp --dport 5666 -j ACCEPT
+
+
+service nagios start出现错误Starting nagios:This account is currently not available.
+# usermod -s /bin/bash nagios
+
+
+安装
+https://www.digitalocean.com/community/articles/how-to-install-nagios-on-centos-6
+http://koda.iteye.com/blog/1064921
+
+http://www.cnblogs.com/Richardzhu/p/3340638.html
+http://bbs.chinaunix.net/thread-3628207-1-1.html
+http://www.cnblogs.com/taskiller/archive/2012/04/02/2429950.html
+nrpe的安装配置
+http://blog.51yip.com/server/1394.html
+http://www.centos.bz/2012/08/monitor-remote-linux-host-with-nagios-nrpe/
+nagios 命令
+http://hi.baidu.com/haigang/item/488865b71191f775254b09a5
+Nagios学习实践系列——产品介绍篇
+http://www.cnblogs.com/kerrycode/p/3273629.html
+
+
+
+
+
+
+
+
+
+
