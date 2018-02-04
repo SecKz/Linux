@@ -1,0 +1,58 @@
+# yum install ntp
+# service ntpd start
+# chkconfig ntpd on
+
+# ntpstat					查看ntp是否已经同步时间
+# ntpdate -u 218.75.4.130
+# ntpq -p					查时间服务器同步的状态
+# lsof -i:123
+# watch ntpq -p
+# iptables -I INPUT -p tcp --dport 123 -j ACCEPT 		开放ntp所需的123端口
+
+# rdate -s remote_server		等同于ntpdate 218.75.4.130
+
+
+NTP一般只会同步system clock。但是如果我们也要同步RTC的话那么只需要把下面的选项打开就可以了
+# vi /etc/sysconfig/ntpd
+SYNC_HWCLOCK=yes
+
+
+1. 配置文件位置为 /etc/ntp.conf
+2. 修改配置允许局域网内机器与该服务器进行时间同步。
+将下面语句::
+restrict default kod nomodify notrap nopeer noquery
+修改为:: 
+restrict default nomodify
+3. 修改上一层的时间服务器。
+ ntp.org现在提供NTP POOL PROJECT，即ntp 服务器池项目。在中国区域，配置如下即可::
+server 0.cn.pool.ntp.org 
+server 0.asia.pool.ntp.org 
+server 2.asia.pool.ntp.org
+其中0.cn 是中国服务器池，后面两个是亚洲的服务器池。 
+直接用域名有时有问题，可以先Ping出他们的IP，然后用IP地址同步）
+
+
+ntpdate 218.75.4.130时，linux同步时间提示“the NTP socket is in use”
+先关闭ntp，再ntpdate 218.75.4.130，或者ntpdate -u
+http://www.kwx.gd/CentOSApp/CentOS-Ntp-use.html
+
+
+
+ntp配置详解 (Network Time Protocol)
+http://www.cnblogs.com/greenerycn/archive/2011/03/13/linux_ntp_server.html
+http://blog.csdn.net/iloli/article/details/6431757	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

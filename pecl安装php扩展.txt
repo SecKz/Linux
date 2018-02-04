@@ -1,0 +1,22 @@
+
+
+# pecl channel-update pecl.php.net
+# pecl install redis
+	
+# pecl list-files swoole					列出包swoole的文件						
+# pecl list							查看已安装的模块
+# pecl info redis							查看已安装的redis的信息
+# pecl list-files redis						查看已安装的redis的文件	
+# pecl remote-info redis				查看远程redis的信息 
+# pecl search redis apc memcache	
+# pecl search redis memcache
+# pecl uninstall redis				删除模块
+# pecl download redis		
+
+# pecl help
+
+
+
+http://php.net/manual/zh/install.pecl.intro.php
+pecl install extname 命令会自动下载扩展代码， 所以在这种情况下不需要再次下载。
+PECL 是通过 PEAR 打包系统来的 PHP 扩展库仓库，本章内容示范了怎样取得并安装 PECL 扩展。
