@@ -1,0 +1,17 @@
+
+
+lvdisplay出现错误Couldn't find device with uuid WWeM0m-MLX2-o0da-tf7q-fJJu-eiGl-e7UmM3
+方法1
+# vgreduce --removemissing --force vg_srvlinux
+方法二
+# cat /etc/lvm/backup/VGxxx
+# pvcreate --uuid R5zG2s-g4yi-ytEO-8Xvk-2B0s-S36G-9nWhXP /dev/xvdb1
+# pvcreate -ff --uuid HH9vpY-AGRG-Z4uu-Mqv0-T8Hk-iY6w-YW69FK --restorefile /etc/lvm/backup/vg_have /dev/xvdb1
+
+第二层，是的，我们不小心把分区给删了，这不就破坏了吗 
+这是你用pvs看下这个分区是否还在pv中，不在的话很可能是已经破坏了。 
+查看/etc/lvm/backup/VGxxx，这个文件记录了vg所使用的pv，以及pv对于的物理分区。 
+http://blog.csdn.net/fishriver/article/details/20471993
+
+LVM从VG中删除PV及删除未知PV
+http://www.haiyun.me/archives/lvm-vg-reduce-pv.html

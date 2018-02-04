@@ -1,0 +1,43 @@
+
+
+切换用户
+# su		切换到root，工作目录不变
+# su - 	切换到root，工作目录切换到家目录
+# su nolan 切换到nolan，工作目录不变
+# su - nolan	切换到用户nolan，工作目录切换到nolan家目录
+su             注：用户切换工具
+sudo         注：sudo 是通过另一个用户来执行命令（execute a command as another user），
+su 是用来切换用户，然后通过切换到的用户来完成相应的任务，但sudo 能后面直接执行命令，比如sudo 不需要root 密码就可以执行root 赋与的执行只有root才能执行相应的命令；
+但得通过visudo 来编辑/etc/sudoers来实现；
+
+
+
+在centos中为普通用户增加sudo权限的简单方法
+1，修改/etc/sudoers文件，
+# visudo -f /etc/sudoers 
+像root    ALL=(ALL)   ALL 这样增加你所需要的用户 
+xxx  ALL=(ALL)  ALL
+
+2，然后用xxx用户登录，测试时会发现 
+#sudo ifconfig 
+sudo: ifconfig: command not found
+解决方法：
+修改普通用户的.bash_profile文件，在PATH变量中增加： 
+/sbin:/usr/sbin:/usr/local/sbin:/usr/kerberos/sbin 
+# source .bash_profile
+
+visudo      注：visodo 是编辑 /etc/sudoers 的命令；也可以不用这个命令，直接用vi 来编辑 /etc/sudoers 的效果是一样的；
+sudoedit  注：和sudo 功能差不多；
+
+
+
+
+
+
+
+
+
+
+
+
+

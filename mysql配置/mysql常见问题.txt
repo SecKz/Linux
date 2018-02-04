@@ -1,0 +1,61 @@
+
+MySQL 5.6内存占用过高解决方案
+performance_schema_max_table_instances=1400
+table_definition_cache=400
+table_open_cache=256
+
+mysql的root密码忘记解决方法
+打开my.cnf，在[mysqld]下加 skip-grant-tables 重新启动mysqld 
+# mysql
+mysql> select user,host,password from mysql.user;　
+mysql> update mysql.user set password=password('123') where User='root';
+mysql> flush privileges;
+# service mysql reload
+将第一步my.conf修改回来 删除skip-grant-tables
+
+或者
+# service mysqld stop			先停掉mysql服务
+# mysqld_safe --user=mysql --skip-grant-tables --skip-networking &  执行此命令后，按enter直接退出，此时mysql_safe在后台作业，通过jobs查看
+# mysql	
+
+Warning: mysqli::mysqli(): (HY000/2002): No such file or directory in
+cd /tmp
+ln -s /var/mysql/mysql.sock mysql.sock
+或者连接mysql用127.0.0.1不用localhost
+
+
+开启innodb的方法
+修改my.cnf 停止mysql服务，
+default-storage-engine=INNODB
+找到mysql的数据目录下的ib_logfile文件，删除，然后重启mysql。
+
+mysql dead but subsys locked 
+# service mysqld stop 
+# rm -f /var/lock/subsys/mysqld 
+# killall mysqld 
+# service mysqld start
+
+
+Mysql不能启动，查看错误日记：Can't create test file /var/lib/mysql/localhost.lower-test
+关闭selinux服务
+# getenforce		查看当前SELinux的工作状态
+# setenforce 0		不需要重启Linux，但重启后失效
+
+或者用safe启动
+mysqld_safe &
+
+
+连接数据库出现Access denied for user 'SYSTEM'@'localhost'
+修改php.ini中的sql.safe_mode = Off
+
+Starting MySQL......Manager of pid-file quit without update
+# rm -rf /var/lock/subsys/mysql
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,77 @@
+
+
+导出用mysqldump,导入用mysql或source，帮助mysqldump --help
+
+# mysqldump -uzs -pzs123 zs > zs.sql												导出数据库zs到当前路径
+# mysqldump -uroot -p123 database table > /home/zs.sql							导出单个表的结构和数据
+# mysqldump -uroot -p123 glhyzscom news msg user > dump.sql					导出多个表的数据和结构
+# mysqldump -uroot -p123 -B pureftpd glhyzscom > aa.sql			导出多个数据库到aa.sql，用参数B
+# mysqldump -uroot -p123 -t pureftpd  > aa.sql						只导出数据，不导出结构
+# mysqldump -uroot -p123 -A  > aa.sql								导出全部数据库
+
+# mysqldump -uroot -p123456 -d database > dump.sql								导出整个数据库结构
+# mysqldump -uroot -p123456 -d database table > dump.sql						导出单个表的结构
+# mysqldump -uroot -p123 -d glhyzscom news msg user > dump.sql				导出多个表的结构
+
+若可以远程连接，则远程备份
+# mysqldump -h203.124.15.248 -uroot -p123 database table > /home/zs.sql		
+
+导入用mysql，帮助mysql --help	
+# mysql -uzs -p123 zs < zs.sql													导入zs.sql文件到数据库zs
+# mysql -uroot --p123 -e'drop database bb'											命令行直接执行mysql语句
+# mysql -hhostname -uusername -p dbname -e'select * from tbname limit 1'
+
+如果导出导入有乱码，需指定编码
+# mysqldump --default-character-set=latin1 -uroot -p123 database table > /home/zs.sql
+# mysql -uglhs -p123 huanlegoo --default-character-set=gbk < /root/huanle.sql
+
+一行命令快速备份并压缩
+# mysqldump -uroot -p123 glhyzscom | gzip > glhyzscom-$(date +%Y%m%d).sql.gz
+# mysqldump -uroot -p123 zs | gzip > zs.sql.gz						导出并压缩
+
+
+使用source方法导入sql文件，source只能用于导入
+# mysql -uroot -p
+> use zs;						选择要导入的数据库
+> source /home/zs.sql			比用phpmysqdmin导入快
+
+以上语句可合并为以下一句
+# mysql -uroot -p123 zcx < /root/zs.sql	导入zs.sql文件到数据库zs
+
+> select * from table into outfile 'd:/aa.sql';		把表table的数据导出到aa.sql
+
+
+备份数据库两个主要方法是用mysqldump程序或直接拷贝数据库文件
+如果数据库引擎是innodb,切记还需拷贝ibdata1文件
+如类型是myisam, 数据文件则以table.frm,table.myd,table.myi三个文件存储于databasename/目录中.
+如类型是innodb, 数据文件则存储在ibdata1文件中(一般情况)，结构文件存在于table_name.frm中.
+
+在数据库引擎类型为InnoDB时，拷贝数据文件的同时还需要拷贝ibdata1，于是把ibdata1也拷贝过去覆盖
+ibdata 为innodb引擎的存储数据与索引的数据文件
+ib_logfile0与ib_logfile1为innodb引擎使用的日志文件...
+
+
+如果使用普通普通账号备份遇到mysqldump: Got error: 1044: Access denied for user 错误，加上--skip-lock-tables即可
+# mysqldump -uezml520com -pgfds65D56HFJkjktYuW ezml520com --skip-lock-tables > ezml520com.sql
+
+# mysqldump  -uroot -p123 db --force > db.sql				导出过程中忽略出现的SQL错误
+# mysqldump  -uroot -p123 db --force -X > db.sql				导出XML格式
+
+
+导出表中遇到Table is marked as crashed and should be repaired ,进到mysql控制台修复表
+repair table `tablename`;
+
+
+http://www.cnblogs.com/minimal/p/3235188.html
+
+
+
+
+
+
+
+
+
+
+
+

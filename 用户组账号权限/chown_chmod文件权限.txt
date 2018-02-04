@@ -1,0 +1,77 @@
+
+
+# chmod 0 file		无任何权限
+# find . -type f|xargs chmod 644		把当前所有文件权限都改为644，chmod不要加-R
+# find . -type d|xargs chmod 755 	把当前所有文件夹权限都改为755，chmod不要加-R
+
+# chmod -Rc +x a.php		显示更改信息
+# chown -R john:build /tmp/src	冒号也可以点.，如chown root.mysql file
+# chown -R john:build /tmp/src
+# chgrp www file					更改组
+# chgrp -R www file			递归式地改变指定目录及其下的所有子目录和文件的属组。
+
+
+-c : 若该档案权限确实已经更改，才显示其更改动作 
+-f : 若该档案权限无法被更改也不要显示错误讯息 
+-v : 显示权限变更的详细资料 
+-R : 对目前目录下的所有档案与子目录进行相同的权限变更(即以递回的方式逐个变更) 
+--help : 显示辅助说明 
+--version : 显示版本
+
+若文件夹没有x执行权限，则其内文件(夹)都不可读，写、执行，即不可访问，进入.
+若文件夹有x权限，没有r读权限，则对其内文件(夹)无影响，在FTP中，可进入文件夹，但不能列出其文件 
+
+# chmod a=rwx file	 和 chmod 777 file 效果相同 
+# chmod ug=rwx,o=x file 	和 chmod 771 file 效果相同 
+# chmod u-r,g+r,o-w file
+
+chmod ugo+r file1.txt 
+将档案 file1.txt 设为所有人皆可读取 : 
+chmod a+r file1.txt 
+将档案 file1.txt 与 file2.txt 设为该档案拥有者，与其所属同一个群体者可写入，但其他以外的
+人则不可写入 : 
+chmod ug+w,o-w file1.txt file2.txt
+
+
++ 添加某个权限。
+- 取消某个权限。
+= 赋予给定权限并取消其他所有权限（如果有的话）。
+u 表示“用户（user）”，即文件或目录的所有者。
+g 表示“同组（group）用户”，即与文件属主有相同组ID的所有用户。
+o 表示“其他（others）用户”。
+a 表示“所有（all）用户”。它是系统默认值。
+
+umask指定的是“该默认值需要减掉的权限”。
+如：umask值为022，则默认目录权限为755(777-022)，默认文件权限为644(666-022)。
+# umask
+设置umask，直接在umask后面输入002。
+# umask 002
+
+新建文件的默认权限为666，再减去umask值，就是最终权限值
+新建文件夹的默认权限为777，再减去umask值，就是最终权限值
+
+因为r、w、x分别是4、2、1，所以。也就是说，当要去掉能写的权限，就是输入2，而如果要去掉能读的权限，也就是4，那么要去掉读与写的权限，也就是6，而要去掉执行与写入的权限，也就是3。请问，5是什么？就是读与执行的权限。如果以上面的例子来说明的话，因为umask为022，所以user并没有被去掉属性，不过group与others的属性被去掉了2（也就是w这个属性），那么当用户：
+建立文件时：(-rw-rw-rw-) – (-----w--w-) ==> -rw-r--r—
+建立目录时：(drwxrwxrwx) – (d----w--w-) ==> drwxr-xr-x
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

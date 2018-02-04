@@ -1,0 +1,51 @@
+
+# yum install mysql-server mysql mysql-devel 			根据需要，安装mysql扩展
+
+查询mysql包的信息
+# rpm -qi mysql-server 	#包名要先用rpm -qa先查出
+查看mysql包的配置文件；
+# rpm -qc mysql
+# rpm -qc mysql-server
+# rpm -ql mysql			查看mysql安装详细
+
+# cat /usr/local/mysql/bin/mysqlbug|grep configure		查看mysql编译参数
+
+MySQL在刚刚被安装的时候，它的root用户是没有被设置密码的。首先来设置MySQL的root密码。
+# mysql  	由于初始没有密码，第一次进入时只需输入mysql即可。
+mysql> select user,host,password from mysql.user;　
+mysql> update mysql.user set password=password('123') where User='root';
+mysql> flush privileges;
+mysql> delete from mysql.user where user='';　 删除匿名用户
+
+或
+mysql>set password for root@localhost=password(' root密码');　 设置root密码
+mysql> quit ;		快捷键Ctrl+d
+
+将mysql加入到service命令项，把mysql的脚本文件拷到系统的启动目录下
+# cp mysql安装目录/share/mysql/mysql.server /etc/init.d/mysql
+或者
+# cp mysql安装目录/share/mysql/sql.server /etc/rc.d/init.d/mysql
+# chkconfig --add mysql #将mysql加到启动服务列表里
+# chkconfig mysql on #让系统启动时自动打开mysql服务
+
+一、启动方式
+1、使用 service 启动：service mysqld start    
+2、使用 mysqld 脚本启动：/etc/init.d/mysqld start
+3、使用 safe_mysqld 启动：safe_mysqld&
+
+二、停止
+1、使用 service 启动：service mysqld stop
+2、使用 mysqld 脚本启动：/etc/init.d/mysqld stop
+3、mysqladmin shutdown
+
+
+
+
+
+
+
+
+
+
+
+

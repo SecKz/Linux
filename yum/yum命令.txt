@@ -1,0 +1,112 @@
+
+
+# tail /var/log/yum.log						查看yum安装的日志
+# rpm -qi php								可以查看比yum info php更详细的信息
+# yum --showduplicates list php				列出所有可安装的版本
+# yum install nginx --enablerepo=epel			指定源安装
+# yum search nginx --disablerepo=epel
+# yum install redis --enablerepo=remi,remi-test 
+
+# rpm -qf `which updatedb`					查看命令属于哪个rpm包，用于无该命令时，查找要要安装的包
+# rpm -qi mlocate							根据上句查找包名，再查看某个命令包的详细
+
+# service yum-updatesd stop				关闭yum update服务 开启该服务会影响yum下载速度
+# chkconfig yum-updatesd off
+
+# rpm -qa --last|grep -i mysql 				查询mysql相关包的安装时间。
+# rpm -qa --last mysql
+# rpm -qi mysql-server 					查询一个已安装软件包的信息，包名要先用rpm –qa先查出
+# rpm -qc mysql-server					查看一下已安装软件的配置文件；
+# yum search mysq  						列出所有含有mysq字符的包，比list好用
+# yum list mysql* 						列出所有含有mysql字符的包
+# yum info installed |grep -i mysql 			 查找已经安装的特定包，相当于rpm -qa|grep -i mysql 
+
+# yum -C info php							直接从cache读取，不更新metadata
+# yum info mysql 						等同于rpm -qi mysql, 不过rpm只能查看已经安装的包
+# yum info mysql php 					 	 查看多个包的信息
+
+查看包的依赖关系
+# repoquery --requires --resolve nginx
+# yum deplist nginx
+# rpm -qR nginx
+
+
+1 查找和显示
+yum search all 				列出所有可用软件包
+yum search zend			查找zend有关的包
+yum list mysql*				列出所指定的软件包的所有版本
+yum list installed 			 列出所有已安装的包 
+yum list extras 				列出所有已安装但不在 Yum Repository 內的软件包
+yum info php				使用YUM获取软件包信息
+yum info					列出所有软件包的信息
+yum info updates			列出所有可更新的软件包信息
+yum info installed			列出所有已安裝的软件包信息
+yum list installed yum 		列出已经安装的yum包
+yum info extras				列出所有已安裝但不在 Yum Repository 內的软件包信息
+yum provides httpd			列出软件包提供哪些文件
+yum list recent 				列出最近添加到仓库中的软件包。 
+
+2 安装	
+yum -y install samba 			加入-y参数，如遇询问自动选择y，全自动选择yes
+yum reinstall yum				重新安装
+yum install httpd				使用yum查找软件包
+yum install package  			 安装指定的安装包package
+yum groupinsall group 			安装程序组group
+yum install pure-ftpd --nogpgcheck			不验证安装
+
+3 更新和升级 
+yum update    											全部更新      
+yum update package  									更新指定程序包package
+yum check-update    									检查可更新的程序
+yum list updates											检查可更新的程序
+yum info updates										列出所有可更新的软件包与详细信息
+yum upgrade package									升级指定程序包package更新php
+yum -y update php
+yum downgrade pure-ftpd –y 							退回旧版本的pure-ftpd
+yum --exclude=firefox --exclude=kernel update			更新除了firefox,kernel外的其它包
+yum --exclude=php53 update php							更新php，除了5.3的版本	
+yum --skip-broken install mysql-devel
+
+4.删除
+yum remove <package_name> 		用yum删除软件包
+yum groupremove group				 删除程序组group
+
+# yum clean all
+# yum makecache 		将服务器上的软件包信息缓存到本地,以提高搜索安装软件的速度
+# yum install yum-fastestmirror
+# yum install yum-priorities
+
+YUM缓存
+# yum makecache
+yum 会把下载的软件包和header存储在cache中，而不会自动删除。如果我们觉得它们占用了磁盘空间. 
+yum clean packages    清除缓存目录下的软件包
+yum clean headers     清除缓存目录下的 headers
+yum clean oldheaders  清除缓存目录下旧的 headers
+yum clean all         清除yum缓存，清除缓存目录下的软件包及旧的headers 
+
+yum clean packages  	从系统中删除任何缓存的软件包。我们需要注意的是当我们下载软件包之后，软件包并不会被自动地删除。 
+yum clean headers 		删除所有的头文件，这些头文件用于yum解决软件的以来关系。
+yum clean metadata 		删除yum用于确定软件包可用的一些文件（元数据文件）。使用这个选项会强制让yum下次运行的时候下载所有的元数据。 
+yum clean dbcache 		删除sqlite缓存，这个缓存用来以很快的速度访问原数据。使用这个选项将会使得yum在下次运行的时候重新创建缓存文件。 
+
+
+
+yum 提供二种安装软件的方式
+1，yum install 它安装单个软件，以及这个软件的依赖关系
+2，yum groupinstall 它安装一个安装包，这个安装包包涵了很多单个软件，以及单个软件的依赖关系。
+
+
+Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，
+可以自动处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装。
+可供Yum下载的软件全部是由Linux社区维护的，并且基本是自由软件。所有的包都有一个独立的GPG签名，主要是为了系统安全。
+安装的命令是，yum install xxx，yum会查询数据库，有无这一软件包，如果有，则检查其依赖冲突关系，如果没有依赖冲突，那么最好，下载安装;
+如果有，则会给出提示，询问是否要同时安装依赖，或删除冲突的包，你可以自己作出判断
+删除的命令是，yum remove xxx，同安装一样，yum也会查询数据库，给出解决依赖关系的提示。
+使用yum安装和卸载软件，有个前提是yum安装的软件包都是rpm格式的。
+
+
+http://www.cnblogs.com/chuncn/archive/2010/10/17/1853915.html
+
+
+
+

@@ -1,0 +1,133 @@
+
+
+创建超级用户root
+grant all privileges on *.* to user@'localhost' identified by 'passwd' with grant option
+flush privileges;
+添加用户eric到数据库test
+grant all privileges on test.* to 'eric'@'localhost' identified by '123456';
+
+修改用户名密码
+update mysql.user set password=password('123456') where User='root';
+
+添加新用户常用的方法有
+grant all privileges on dbname.* to 'user'@'localhost' identified by '123456';
+grant select,insert,update,delete on mydb.* to 'eric'@localhost identified by 'passwd';
+grant update,delete on mydb.TestTable to 'eric'@localhost identified by 'passwd';
+flush privileges;
+
+删除一个用户
+drop user eric@localhost;
+
+取消授权用户的权限
+revoke all on dbname.* from 'username'@'116.1.0.179';
+revoke all on *.* from 'xxzhinancom'@'localhost';
+
+添加一个用户，并授权
+create user 'xxzhinancom'@'localhost' identified by '123';
+grant all privileges on xxzhinancom.* to 'xxzhinancom'@localhost;
+grant select on db2.invoice to 'jeffrey'@'localhost';
+可合并为
+grant all privileges on xxzhinancom.* to 'xxzhinancom'@'localhost' identified by '123';
+grant select,insert,update,delete on xxzhinancom.* to 'xxzhinancom'@localhost identified by '123';
+
+查看当前的用户的权限，使用以下语句之一：
+show grants;
+show grants for current_user;
+show grants for current_user();
+show grants for 'root'@localhost;
+
+Mysql控制台乱码
+原以为my.ini里的设置编码全为utf8不够彻底导致控制台显示中文会乱码，今天才发现发现原来要将客户端的字符集设为GBk才可以解决mysql的中文乱码问题......
+mysql> show variables LIKE 'character_set%';
+mysql> set character_set_results='gbk';					将编码改为gbk，控制台就可以显示中文了
+
+# nl /etc/my.cnf|grep -i datadir		查看数据存放路径
+show variables like '%datadir%';		查看数据存放路径
+show variables like 'have_ %';		查看mysql是否开启的innodb支持 出现have_innodb YES， 说明开启了innodb
+show variables like '%colla%'		查看MySQL默认编码
+show variables like '%char%';		查看MySQL默认编码
+
+让mysql默认存储引擎为MyISAM
+修改/etc/my.cnf
+[mysqld]
+default_storage_enginie=MyISAM
+
+show engines; 								查看mysql支持的表engine;
+show variables like '%storage_engine%';  	查看MySQL当前默认的存储引擎
+
+查看当前登录用户
+select user();
+查看mysql所有用户
+select host, user, password from mysql.user;
+
+查看mysql passwrod函数和md5函数的不同
+select password('ghbHGFGr583B3dM'),md5('ghbHGFGr583B3dM')
+
+允许远程连接,%要加引号
+grant all on jiazcc.* to 'jiazcc'@'%' identified by '123';
+
+
+添加索引
+alter table `ad_source` add index ( `as_day` ) 
+alter table `ad_source` add unique (`date`)
+alter table table_name add primary key (column_list)
+
+删除索引
+alter table `ad_source` drop index `date`
+drop index day on ad_source;	
+
+查看索引	
+show index from ad_source		
+
+显示表的结构
+show create table aa		
+desc aa
+
+
+show databases;		显示所有数据库
+show databases like '%t';
+
+use mysql; 			进入数据库
+show tables			显示数据库所有的表
+desc mysql.user;		查看表字段结构，等同describe user和show columns from user from mysql;
+show index from mysql.user;	查看表的索引，若已进入数据库，可以不要前缀mysql.
+mysql>drop table mytable;	 删除表
+mysql>delete from mytable;		清空表
+show table status mysql;		显示数据库的名表的状态，show table status [from db_name];	
+create database 库名;	 建库：
+use 库名； 
+create table 	表名 (字段设定列表)；	建表
+drop database 库名; 				删库和删表:
+drop table 表名；
+delete from 表名;				将表中记录清空： 
+
+show full columns from tablename;				查看表的详细信息，字段，字符
+show create table tablename				查看表的详细信息
+show create database dbname;				查看数据库编码
+
+
+show status;		提供服务器的状态信息
+show variables;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

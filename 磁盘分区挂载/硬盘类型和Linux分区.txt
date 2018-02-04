@@ -1,0 +1,34 @@
+
+sda1、sda2代表分区（Partition）
+sd表示是SATA硬盘 a表示第一个硬盘 后面的数字是表示硬盘里的分区
+
+硬盘分区的表示
+在Linux 是通过hd*x 或 sd*x 表示的
+其中 * 表示的是a、b、c …… …… 
+x表示的数字 1、2、3 …… …… 
+hd大多是IDE硬盘；sd大多是SCSI或移动存储；
+
+hda3表示为第1个ide硬盘上的第3个主分区或扩展分区,hdb2表示为第2个ide硬盘上的第2个主分区或扩展分区
+
+IDE，SATA，SCSI是硬盘的三个大类
+IDE硬盘为hdx（x为从a—d）因为IDE硬盘最多四个
+对于SCSI，SATA硬盘，则设备名依次为/dev/sda，/dev/sdb，/dev/sdc等
+可以通过fdisk -l命令来查看系统的磁盘情况
+
+http://www.liusuping.com/ubuntu-linux/linux-disk-basic.html
+http://blog.csdn.net/zollty/article/details/7001950
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

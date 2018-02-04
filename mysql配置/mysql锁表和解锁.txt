@@ -1,0 +1,36 @@
+
+mysql> flush tables with read lock
+这个命令是全局读锁定，执行了命令之后所有库所有表都被锁定只读。一般都是用在数据库联机备份，这个时候数据库的写操作将被阻塞，读操作顺利进行。
+mysql> lock tables tbl_name [as alias] {read [local] | [low_priority] write}
+这个命令是表级别的锁定，可以定制锁定某一个表。例如： lock  tables test read; 不影响其他表的写操作。
+mysql> unlock tables		解锁
+这两个语句在执行的时候都需要注意个特点，就是 隐式提交的语句。如果要让表锁定生效就必须一直保持对话。
+
+
+show processlist;
+SHOW PROCESSLIST显示哪些线程正在运行。您也可以使用mysqladmin processlist语句得到此信息。如果您有SUPER权限，您可以看到所有线程。否则，您只能看到您自己的线程（也就是，与您正在使用的MySQL账户相关的线程）。如果有线程在update或者insert 某个表，此时进程的status为updating 或者 sending data。
+如果您得到“too many connections”错误信息，并且想要了解正在发生的情况，本语句是非常有用的。MySQL保留一个额外的连接，让拥有SUPER权限的账户使用，以确保管理员能够随时连接和检查系统（假设您没有把此权限给予所有的用户）。
+如果想全列出请使用show full processlist;
+
+show open tables;
+show open tables from database;
+这条命令能够查看当前有那些表是打开的。In_use列表示有多少线程正在使用某张表，Name_locked表示表名是否被锁，这一般发生在Drop或Rename命令操作这张表时。所以这条命令不能帮助解答我们常见的问题：当前某张表是否有死锁，谁拥有表上的这个锁等。
+ 
+
+
+http://blog.csdn.net/dc_726/article/details/8576151
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

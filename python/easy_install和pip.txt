@@ -1,0 +1,78 @@
+
+Python中第三方的库的安装方法
+# pip search aa					在pypi搜索包
+# pip help
+
+# pip3 install setuptools --upgrade		升级包
+# pip3 show you-get				显示包的信息
+# python -m pip install --upgrade pip		升级pip
+# pip -V
+# pip3 -V
+# pip install -t /etc/python2.7/site-packages/ xlrd	为指定版本的python安装包
+# pip install robotframework==2.8.7		安装指定版本的包
+# pip install aa		
+# pip uninstall aa
+# pip freeze or pip list				列出已安装的包
+# pip install --upgrade simplejson          升级Python包
+# pip download numpy				下载包
+
+# pip list 					 #列出所有安装的库
+# pip list --outdated 			#列出所有过期的库
+
+
+pip和easy_install安装方法
+python -m ensurepip
+python -m pip install --upgrade pip
+pip install --upgrade setuptools
+
+easy_install 方式  
+# easy_install  package
+# easy_install  package.egg
+
+下载源码，手动运行setup.py install去安装
+下载对应的源码，往往都是.tar.gz，.zip的压缩包，解压后，打开windows的cmd，切换到对应目录，运行 python setup.py install即可去安装。
+# python setup.py install
+
+利用第三方安装工具（如pip，easy_install，distribute等）去自动化安装
+利用的目前常见的一些自动化安装工具，比如pip，easy_install，distribute等，自动帮你下载源码，并安装。
+而且很多时候，由于要安装的包，还要依赖一些其他的别的包，而这类自动化安装工具，会自动帮你解决依赖关系，自动帮你下载并安装所缺少的那些包，所以相对来说，就省去了你的麻烦了。
+
+Python中的内置的模块和第三方的模块
+内置模块：内置模块，也被称为Python的标准库。Python中，安装好了Python后，本身就带有的库，就叫做Python的内置的库。
+第三方库：而非Python本身自带的库，就是所谓的第三方的库；
+2.模块==库 模块，module，也常被叫做 库，Lib，Library。
+
+# yum install python-pip							安装pip
+# yum install python-setuptools					安装easy_install
+
+python 安装easy_install和pip
+easy_install和pip都是用来下载安装Python一个公共资源库PyPI的相关资源包的
+首先安装easy_install 下载地址  https://pypi.python.org/pypi/ez_setup
+解压,安装.
+# python ez_setup.py
+ 
+安装好easy_install 之后 再安装pip 下载地址  https://pypi.python.org/pypi/pip
+解压,安装.
+# python setup.py install
+
+pakage官网
+https://pypi.python.org/pypi
+
+setuptools 是一个为了增强 distutils 而开发的集合，2004年发布。它包含了 easy_install 这个工具。
+ez_setup.py 是 setuptools 的安装工具。ez 就是 easy 的缩写。
+简单的说，setuptools 是一个项目的名称，是基础组件。而 easy_install 是这个项目中提供的工具，它依赖基础组件工作。
+# easy_install SQLObject		从 PyPI 上安装一个包
+
+Eggs
+Eggs 格式是 setuptools 引入的一种文件格式，它使用 .egg 扩展名，用于 Python 模块的安装。
+
+wheel 本质上是一个 zip 包格式，它使用 .whl 扩展名，用于 python 模块的安装，它的出现是为了替代 Eggs。
+wheel 还提供了一个 bdist_wheel 作为 setuptools 的扩展命令，这个命令可以用来生成 wheel 包。
+pip 提供了一个 wheel 子命令来安装 wheel 包。当然，需要先安装 wheel 模块。
+# pip install whell
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+
+# mysql -uroot -p -e"show processlist;"|awk '{print $3}'|awk -F":" '{print $1}'|sort|uniq -c
+# watch -n 1 mysqladmin -uroot -p6GXCcko96D8  processlist
+
+# rpm -qc mysql	查看mysql包的配置文件；
+# rpm -qc mysql-server	查看mysql日志文件
+
+windows和linux下导出全部数据库
+mysqldump -uroot -p123 --all-databases  > db.sql
+
+mysql升级
+# mysql_upgrade -uroot -p123
+
+
+# mysqladmin -u root password 123    给新安装的mysql设置密码
+# mysqladmin -uroot -p123456 password 'xyz123'			 重设mysql密码
+# mysqladmin -uroot -p6GXCcko96D8 ping				 mysql是否在运行
+# mysqladmin -uroot -p6GXCcko96D8 version
+# mysqladmin -uroot -p6GXCcko96D8 status				mysql运行状态
+# mysqladmin -uroot -p6GXCcko96D8 variables
+# mysqladmin -uroot -p123 reload
+# mysqladmin -uroot -p123 refresh
+# mysqladmin -uroot -p123 shutdown
+
+
+# mysqladmin -uroot -p6GXCcko96D8 create databasename				创建数据库
+# mysqladmin -uroot -p6GXCcko96D8 drop databasename				删除数据库
+
+以上命令均要加上 -hIP 来管理查看运程数据库
+# mysqladmin  -h172.16.25.126 -u root -p
+
+# mysql -uroot -p6GXCcko96D8 -BNe "select host,count(host) from processlist group by host;" 
+# mysql -uroot -p6GXCcko96D8 -BNe "select host,count(host) from processlist group by host;" information_schema
+# mysql -uroot -p6GXCcko96D8 -NBe 'show global status like "Threads_connected";' | cut -f2
+# mysql -uroot -p6GXCcko96D8 -NBe “show global status like 'connections';”
+
+> status 		查看mysql服务器运行状态
+
+查看Linux下mysql版本号命令
+# mysql -V	
+# mysql --version
+# rpm -ql mysql|grep bin/
+# rpm -qi mysql
+进入mysql控制台
+# select version();		
+
+
+在my.cnf加入
+lower_case_table_names=1
+这样mysql将在创建与查找时将所有的表名自动转换为小写字符, 即mysql数据库名和表名不区分大小写。
+
+
+
+
+
+
+
+

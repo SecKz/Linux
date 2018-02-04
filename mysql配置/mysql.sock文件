@@ -1,0 +1,41 @@
+
+
+
+localhost连接方式不同导致
+当主机填写为localhost时mysql会采用 unix domain socket连接
+当主机填写为127.0.0.1时mysql会采用tcp方式连接
+
+
+mysql的mysql.sock文件作用
+MySQL有两种连接方式：
+（1）TCP/IP  （2）sock
+对mysql.sock来说，当程序与mysql数据库处于同一台机器(或者用mysql自带的客户端连接本机的mysql数据库)，发起本地连接时可用。
+例如你无须定义连接host的具体IP得，只要为空或localhost就可以。使用unix domain socket做为通讯协议的载体，它比tcp快。
+在此种情况下，即使你改变mysql的外部port也是一样可能正常连接。
+因为你在my.ini中或my.cnf中改变端口后，mysql.sock是随每一次 mysql server启动生成的。
+已经根据你在更改完my.cnf后重启mysql时重新生成了一次，信息已跟着变更。
+那么对于外部连接，必须是要变更port才能连接的。
+
+linux下安装mysql连接的时候经常回提示说找不到mysql.sock文件，解决办法很简单： 
+如果是新安装的mysql，提示找不到文件，就搜索下，指定正确的位置。 
+如果mysql.sock文件误删的话，就需要重启mysql服务，如果重启成功的话会在datadir目录下面生成mysql.sock 到时候指定即可。
+
+Warning: mysqli::mysqli(): (HY000/2002): No such file or directory in
+没有指定mysql.socket位置
+cd /tmp
+ln -s /var/mysql/mysql.sock mysql.sock
+或者连接mysql用127.0.0.1不用localhost
+
+
+
+
+
+
+
+
+
+
+
+
+
+

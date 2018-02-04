@@ -1,0 +1,13 @@
+# mysqlslap --help
+
+测试同时不同的存储引擎的性能进行对比：
+# mysqlslap -a --concurrency=50,100 --number-of-queries 1000 --iterations=5 --engine=myisam,innodb --debug-info -uroot -p123456
+
+执行一次测试，分别50和100个并发，执行1000次总查询：
+# mysqlslap -a --concurrency=50,100 --number-of-queries 1000 --debug-info -uroot -p123456
+
+50和100个并发分别得到一次测试结果(Benchmark)，并发数越多，执行完所有查询的时间越长。为了准确起见，可以多迭代测试几次:
+# mysqlslap -a --concurrency=50,100 --number-of-queries 1000 --iterations=5 --debug-info -uroot -p123456
+
+mysqlslap是从5.1.4版开始的一个MySQL官方提供的压力测试工具。通过模拟多个并发客户端访问MySQL来执行压力测试，同时详细的提供了“高负荷攻击MySQL”的数据性能报告。
+并且能很好的对比多个存储引擎在相同环境下的并发压力性能差别。

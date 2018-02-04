@@ -1,0 +1,68 @@
+
+# echo $HOME							查看家目录					
+# git config -l							查看配置
+# git config --global alias.ci commit		设置别名
+# git config -l | grep alias
+# git config --global push.default "current"		设置当前分支为默认push分支
+# git config --global -e							打开配置文件
+
+windows下git的配置文件C:\Users\Administrator\.gitconfig
+每个仓库的Git配置文件都放在.git/config
+因此，在.git/config中的值覆盖了在~/gitconfig中的同一个值
+
+创建SSH Key
+本地Git仓库和GitHub仓库之间的传输是通过SSH加密
+在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件
+把id_rsa.pub文件的内容添加到github
+# ssh-keygen -t rsa -C "260741887@qq.com"       	填写email地址，然后一直“回车”ok
+# ssh -T git@github.com           					 测试连接是否成功
+# ssh -T -p 443 git@ssh.github.com  					To test if SSH over the HTTPS port is possible
+
+
+每次push的时候，都要输入用户名和密码，原因是使用了https方式 push
+在termail里边 输入  git remote -v 
+可以看到形如一下的返回结果
+origin https://github.com/yuquan0821/demo.git (fetch)
+origin https://github.com/yuquan0821/demo.git (push)
+下面把它换成ssh方式的。
+1. git remote rm origin
+2. git remote add origin git@github.com:yuquan0821/demo.git
+3. git push origin 
+
+http://blog.csdn.net/yuquan0821/article/details/8210944
+https://help.github.com/articles/using-ssh-over-the-https-port/
+
+windows使用git时出现：warning: LF will be replaced by CRLF
+windows中的换行符为 CRLF， 而在linux下的换行符为LF，所以在执行add . 时出现提示，解决办法：
+$ rm -rf .git  									删除.git
+$ git config --global core.autocrlf false  			禁用自动转换
+然后重新执行：
+$ git init
+$ git add .
+
+别名设置
+# git config --global alias.co checkout
+# git config --global alias.ci commit
+# git config --global alias.line "log --oneline"
+# git config --global alias.co checkout
+linux在etc/bash.bashrc中加入
+alias la='ls -A'
+alias ll='ls -Al'
+alias lt='ls -tAl'
+alias st='git status'
+
+git教程
+http://www.cnblogs.com/tugenhua0707/p/4050072.html
+http://www.cnblogs.com/angeldevil/p/3238470.html
+http://www.ruanyifeng.com/blog/2014/06/git_remote.html
+
+让你的Git水平更上一层楼的10个小贴士
+http://blog.jobbole.com/75348/
+
+git学习资料
+https://www.zhihu.com/question/20070065
+
+我所记录的git命令（非常实用）
+http://www.cnblogs.com/fanfan259/p/4810517.html
+
+

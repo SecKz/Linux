@@ -1,0 +1,66 @@
+
+# passwd -S root		查看用户的密码状态
+# passwd -uf eric  		强制解锁用户eric 
+# passwd -u eric		解锁用户eric
+# passwd -l eric			锁定用户eric
+# chage -l eric			列出帐号eric相关的密码信息
+
+
+# passwd
+# passwd nolan		超级用户，可以用下列形式指定任何用户的口令
+# passwd -d nolan		此命令将用户eric的口令删除，这样用户nolan下一次登录时，系统就不再询问口令。
+# passwd –l eric		锁定用户，使其不能登录
+# grep "bash$" /etc/passwd	查找以bash结尾的行，即可以的登录的用户
+# grep "bash" /etc/passwd
+
+-l 锁定口令，即禁用账号。
+-u 口令解锁。
+-d 使账号无口令。
+-f 强迫用户下次登录时修改口令。
+
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+nolan:x:500:500::/home/nolan:/bin/bash
+eric:x:501:501::/home/eric:/bin/bash
+
+Passwd文件由许多条记录组成，每条记录占一行，记录了一个用户帐号的所有信息。每条记录由7个字段组成，字段间用冒号“：”隔开，其格式如下：
+username:password:User ID:Group ID:comment:home directory:shell
+
+“口令”一些系统中，存放着加密后的用户口令字。虽然这个字段存放的只是用户口令的加密串，不是明文，但是由于/etc/passwd文件对所有用户都可读，所以这仍是一个安全隐患。
+因此，现在许多Linux系统（如SVR4）都使用了shadow技术，把真正的加密后的用户口令字存放到/etc/shadow文件中，而在/etc/passwd文件的口令字段中只存放一个特殊的字符，例如“x”或者“*”。
+
+通常用户标识号的取值范围是0～65535。0是超级用户root的标识号，1～99由系统保留，作为管理账号，普通用户的标识号从100开始。在Linux系统中，这个界限是500。
+
+User ID 用户识别码，简称UID。Linux系统内部使用UID来标识用户，而不是用户名。UID是一个整数，用户的UID互不相同。
+Group ID 用户组识别码，简称GID。不同的用户可以属于同一个用户组，享有该用户组共有的权限。与UID类似，GID唯一地标识了一个用户组。
+comment 这是给用户帐号做的注解。它一般是用户真实姓名、电话号码、住址等，当然也可以是空的。
+home directory 主目录。这个目录属于该帐号，当用户登录后，它就会被置于此目录中，就像回到家一样。一般来说，root帐号的主目录是/root，其他帐号的家目录都在/home目录下，并且和用户名同名。
+login command 用户登录后执行的命令。一般来说，这个命令将启动一个shell程序。例如，用bbs帐号登录后，会直接进入bbs系统，这是因为bbs帐号的login command指向的是bbs程序，等系统登录到bbs时就自动运行这些命令。
+系统帐号：系统中还有一些默认的帐号，如daemon、bin等。这些帐号有着特殊的用途，一般用于进行系统管理。这些帐号的口令大部分用（x）号表示。
+
+2，shadow文件
+为了增强系统的安全性，Linux系统还可以为用户提供MD5和Shadow安全密码服务。如果在安装 Linux 时在相关配置的选项上选中了MD5和Shadow服务，那么将看到的/etc/passwd文件里的passwd项上无论是什么用户，都是一个“x”，这就表示这些用户都登录不了；系统其实是把真正的密码数据放在了/etc/shadow文件里。
+/etc/shadow文件只能以root身份来浏览。为什么要这样做呢，原因其实很简单，在系统设计的时候，/etc/passwd文件是任何人都可以读的，那么那些心有所图的人就可以利用这个文件，使用各种各样的工具按照Linux密码加密的方法把用户甚至root的密码试出来，这样整个系统就会被他所控制，严重危害系统的安全和用户数据的保密性。
+3，有关命令
+pwconv
+根据/etc/passwd文件生成/etc/shadow。它把所有口令从/etc/passwd移到/etc/shadow中。
+pwunconv
+将/etc/shadow中的信息尽可能地恢复到/etc/passwd。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+
+SUID (Set UID)
+会创建出 s 与 t 的权限，是为了让一般用户在执行某些程序的时候， 能够暂时的具有该程序拥有者的权限。 
+举例来说，我们知道账号与密码的存放档案其实是 /etc/passwd 与 /etc/shadow 。 而 /etc/shadow 这个文件的权限是什么呢？
+# ls -l /etc/shadow
+----------. 1 root root 1407 4月   6 14:05 /etc/shadow
+是『----------』。且他的拥有者是 root ！在这个权限中，仅有 root 可以强制储存，其他人是连看都没有办法看！
+
+但是偏偏我们使用 xiaoluo 这个一般身份用户去更新自己的密码时，使用的就是 /usr/bin/passwd 这个程序， 却是可以更新自己的密码的，也就是说， xiaoluo 这个一般身份使用者可以存取 /etc/shadow 这个密码文件！
+ 但是我们也可以看到，明明 /etc/shadow 就是没有 xiaoluo 可以存取的权限！所以这就是 s 这个权限的用处了！
+ 当 s 这个权限在 user 的 x 时，也就是类似上表的 -r-s--x--x ，称为 Set UID ，简称为 SUID ， 这个 UID 代表的是 User 的 ID ，而 User 代表的则是这个程序 (/usr/bin/passwd) 的拥有者 (当然就是root了 ！)。 
+那么由上面的定义中，我们知道了，当 xiaoluo 这个使用者执行 /usr/bin/passwd 时，他就会 暂时 的得到文件拥有人 root 的权限。
+
+SUID 仅可用在【二进制制档案(binary file)】上， SUID 因为是程序在执行的过程中拥有文件拥有者的权限，因此，他仅可用于 binary file ， 不能够用在批处理文件 (shell script) 上面的！
+这是因为 shell script 只是将很多的 binary 执行档叫进来执行而已！所以 SUID 的权限部分，还是得要看 shell script 呼叫进来的程序的设定， 而不是 shell script 本身。
+当然，SUID 对于目录也是无效的，这点要特别留意。所以总结一点：SUID是只能作用在文件上的，不能作用在目录上。
+
+
+
+
+linux中除了常见的读（r）、写（w）、执行（x）权限以外，还有3个特殊的权限，分别是setuid、setgid和stick bit
+
+将三个特殊位的用八进制数值表示，放于 u/g/o 位之前。其中 suid :4 sgid:2  sticky:1
+例: 对某个目录：
+#chmod  4551  file  // 权限： r-sr-x—x，s占去了原来u的x的位置，减去s则为chmod 0551 file，或chmod u-s file
+#chmod  2551  file  // 权限： r-xr-s—x，s占去了原来g的x的位置，减去s则为chmod 0551 file，或chmod g-s file
+#chmod  1551  file  // 权限： r-xr-x—t，t占去了原来o的x的位置，减去t则为chmod 0551 file，或chmod -t file
+#chmod –t file
+#chmod a+s file
+
+3、如何设置以上特殊权限
+setuid：chmod u+s file
+setgid: chmod g+s file
+stick bit : chmod o+t file
+
+SUID:对一个可执行文件，不是以发起者身份来获取资源，而是以可执行文件的属主身份来执行。
+SGID对一个可执行文件，不是以发起者身份来获取资源，而是以可执行文件的属组身份来执行。
+STICKY：粘滞位，通常对目录而言。通常对于全局可写目录（other也可写）来说，让该目录具有sticky后，删除只对属于自己的文件有效（但是仍能编辑修改别人的文件，除了root的）。不能根据安全上下文获取对别人的文件的写权限。
+
+SUID：置于 u 的 x 位，原位置有执行权限，就置为 s，没有了为 S .
+SGID：置于 g 的 x 位，原位置有执行权限，就置为 s，没有了为 S .
+STICKY：粘滞位，置于 o 的 x 位，原位置有执行权限，就置为 t ，否则为T .
+
+setuid就是：让普通用户拥有可以执行“只有root权限才能执行”的特殊权限，setgid同理指”组“
+作为普通用户是没有权限修改/etc/passwd文件的，但给/usr/bin/passwd以setuid权限后，普通用户就可以通过执行passwd命令，临时的拥有root权限，去修改/etc/passwd文件了
+
+stick bit （粘贴位）
+
+再看个实例，查看/tmp目录的权限
+# ls -dl /tmp
+drwxrwxrwt 6 root root 4096 08-22 11:37 /tmp
+
+tmp目录是所有用户共有的临时文件夹，所有用户都拥有读写权限，这就必然出现一个问题，A用户在/tmp里创建了文件a.file，此时B用户看了不爽，在/tmp里把它给删了（因为拥有读写权限），那肯定是不行的。实际上是不会发生这种情况，因为有特殊权限stick bit（粘贴位）权限，正如drwxrwxrwt中的最后一个t
+
+stick bit (粘贴位)就是：除非目录的属主和root用户有权限删除它，除此之外其它用户不能删除和修改这个目录。
+也就是说，在/tmp目录中，只有文件的拥有者和root才能对其进行修改和删除，其他用户则不行，避免了上面所说的问题产生。
+用途一般是把一个文件夹的的权限都打开，然后来共享文件，象/tmp目录一样。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

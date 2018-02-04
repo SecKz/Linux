@@ -1,0 +1,63 @@
+
+
+# yum repolist all				列出所有yum源
+# yum repolist enabled
+# yum repolist disabled       	查看禁用YUM源  
+# yum-config-manager --disable mysql-connectors-community         	禁用YUM源 
+# sudo yum-config-manager --enable mysql57-community-dmr				启用YUM源
+# yum -v repolist
+
+https://wiki.centos.org/zh/AdditionalResources/Repositories
+
+vi /etc/yum.conf
+keepcache=0
+默认值为0，不保留本地cache。改成1就保留
+
+1.repo文件
+repo文件是Linux中yum源（软件仓库）的配置文件，通常一个repo文件定义了一个或者多个软件仓库的细节内容，
+例如我们将从哪里下载需要安装或者升级的软件包，repo文件中的设置内容将被yum读取和应用！
+2.配置repository服务器
+所有服务器设置都应该遵循如下格式：
+[serverid] 
+name=name $releasever – $basearch    
+mirrorlist 根据网上提供的镜像站点列表，寻找合适的repository，和baseurl两者仅用一个选项即可
+#baseurl 当mirrorlist注释掉后，这个选项就是服务设置中最重要的部分，只有设置正确，才能从上面获取软件
+#serverid 用于指定一个仓库，用于区别各个不同的repository，必须有一个独一无二的名称。
+
+#mirrorlist 			指定一个镜像服务器的地址列表 
+#enable 			用于指定是否使用本仓库，默认值为1，即可用
+#gpgcheck=1 		这个选项表示这个repo中下载的rpm将进行gpg的校验，已确定rpm包的来源是有效和安全的
+#gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$basearch	 定义用于校验的gpg密钥
+
+http://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html
+
+导入密钥
+# rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY*
+# rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5 
+# rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-beta
+
+
+
+yum源的优先级
+priority=1
+这个base源中将其优先级定为1，即priority=1。数字越大，表示优先级越低。通过优先级，可以将重要的yum源排在前面，即在安装包时，优先从优先级高的源中安装。
+但在不同优先级的源中都含有同一个包时，它的行为可能就不是我们所需要的。例如，在base源中有个包：abc-2.2.0.x86_64.rpm，base是最高优先级。在其他的优先级中也有许多abc包，如果你想安装abc-2.1.0-x86_64.rpm，通过命令
+sudo yum install abc-2.1.0
+就会出现下面的提示
+xx packages excluded due to repository priority protections
+并且找不到所需要的包，这是因为在高优先级源中存在的包，会将其他低优先级中的包屏蔽掉，因此无法从低优先级的源中安装所需要的包。
+解决办法
+优先级的管理是通过
+priorities
+插件来管理的，可以将这个插件禁用来解决这个问题。
+编辑文件/etc/yum/pluginconf.d/priorities.conf，设置enabled = 0，这样就可以禁用priorities插件。从而能够安装任意源上的包。
+
+
+
+
+
+
+
+
+
+

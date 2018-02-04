@@ -1,0 +1,40 @@
+
+
+错误提示： Warning: RPMDB altered outside of yum
+解决办法： 删除yum的历史记录
+rm -rf /var/lib/yum/history/*.sqlite 
+
+用yum时，出现以下情况：another app is currently holding the yum lock;waiting for it to exit...
+因为开启的yum update,所以关闭yum update即可． 
+# la /etc/init.d		查看是否有yum update服务
+# service yum-updatesd stop		关闭yum update服务
+# chkconfig yum-updatesd off
+# pstree -up|grep yum		找到yum update的pid
+# kill 14564
+# rm -f /var/run/yum.pid	 kill无效。强制删除pid文件
+
+Package pure-ftpd-1.0.21-15.el5.kb.i386.rpm is not signed
+其错误是该包没有经过官方验证：解决方案
+方法一（永久性的）更改 /etc/yum.conf 下的 gpgcheck=1 为 gpgcheck=0；
+方法二（临时性的）在安装包时加参数--nogpgcheck即可。
+# yum install pure-ftpd --nogpgcheck
+
+wget出现Unable to resolve host address 返回的错误很明显，就是DNS无法解析，出现这个问题与nameserver有关，修改/etc/resolv.conf文件即可。
+# cat /etc/resolv.conf		查看dns设置
+nameserver 205.185.112.68
+nameserver 205.185.112.69
+改成有效的DNS,　如google的一组解析服务器即可：
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+
+# service network restart		重启网络
+
+
+
+
+
+
+
+
+
+

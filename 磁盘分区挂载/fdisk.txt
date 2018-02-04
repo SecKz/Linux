@@ -1,0 +1,88 @@
+
+# cat /proc/partitions		查看硬盘分区
+
+通常来说分为ext3 ext4 swap等类型，前两个相当于ntfs这类的文件类型，swap是类似虚拟内存的一个分区！
+# fdisk -l | grep Disk 			查看有多少块数据盘
+# fdisk -l 					列出已挂载和未挂载的全部分区
+# fdisk -S 56 /dev/sdb		指定每个磁道拥有的扇区数为56
+
+
+Fdisk分区完还要格式化才能用
+# mkfs.ext4 /dev/sdb1          格式化分区类型为ext4
+
+创建挂载目录并挂载
+# mkdir /data1
+# mount /dev/sdb1 /data1			
+
+以标准的树状输出硬盘和分区分布
+# lsblk			
+# lsblk -f
+
+作为挂载点的目录理论上应该是空目录
+如果目录不是空的，那么挂载文件系统后目录下东西会暂时消失，直到所挂载设备卸载后原内容才会显示出来
+
+
+
+要给磁盘分区，则在命令行素如fdisk disk，以下是fdisk分区时内置命令的解释
+m 显示所有命令列示。
+l  列出分区类型
+p 显示硬盘分割情形。
+a 设定硬盘启动区。
+n 设定新的硬盘分割区。
+e 硬盘为[延伸]分割区(extend)。
+p 硬盘为[主要]分割区(primary)。
+t 改变硬盘分割区属性。
+d 删除硬盘分割区属性。
+q 结束不存入硬盘分割区属性。
+w 结束并写入硬盘分割区属性
+fdisk的退出，q不保存退出，w保存退出。
+
++2G 输入要添加分区的大小+200M，+1G这样的都能识别
+Last cylinder or +size or +sizeM or +sizeK (51-125, default 125): +200M 注：这个是定义分区大小的，+200M 就是大小为200M ；
+当然您也可以根据p提示的单位cylinder的大小来算，然后来指定End的数值。
+回头看看是怎么算的；还是用+200M这个办法来添加，这样能直观一点。如果您想添加一个10G左右大小的分区，请输入 +10000M ；
+
+http://www.liusuping.com/ubuntu-linux/linux-fdisk-disk.html
+http://blog.csdn.net/wuweilong/article/details/7538634
+http://linux008.blog.51cto.com/2837805/548711
+
+对分区进行格式化的命令如下等，mkfs后面所接的代表的是将要格式化成的文件系统类型：
+mkfs.bfs
+mkfs.ext2
+mkfs.ext3
+mkfs.jfs
+mkfs.msdos
+mkfs.vfat
+mkfs.cramfs
+mkfs.minix
+mkfs.reiserfs
+mkfs.xfs
+
+
+想查看单个硬盘情况，可以通过 fdisk -l /dev/sda 
+Disk /dev/sda: 8589 MB, 8589934592 bytes
+255 heads, 63 sectors/track, 1044 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+这个硬盘有8589MB的容量，有255个磁面；63个扇区；1044个磁柱；每个 cylinder（磁柱）的容量是512字节。
+
+估算一个存储设备是否被完全划分
+我们估算一个硬盘是否完全被划分，我们只要看 fdisk -l 输出的内容中的 cylinders（柱体） 上一个分区的End 和 下一个分区的Start是不是一个连续的数字，另外要看一下每个硬盘设备的fdisk -l 的开头部份，看一下他的 cylinders（柱体）的值；
+比如sda设备，我们看到的是1044cylinders ；
+我们通过sda的分区表可以看到上一个分区的End的值+1 就是下一个分区的Start 的值；
+比如 sda2的Start的值是sda1 的End 的值+1，这证明sda1 和sda2中间没有空白分区，是连续的；
+在sda2，我们看到 End 的值是1044 ，而在fdisk -l头部信息中也有1044 cylinders，证明这个硬盘已经完全划分；
+# fdisk -l /dev/sda
+Disk /dev/sda: 8589 MB, 8589934592 bytes
+255 heads, 63 sectors/track, 1044 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+ Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *       1          13      104391   83  Linux
+/dev/sda2           14        1044     8281507+  8e  Linux LVM
+
+
+
+
+
+
+
+

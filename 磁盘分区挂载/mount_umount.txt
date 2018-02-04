@@ -1,0 +1,62 @@
+
+
+如果/home之前存在，mount /dev/sdb1 /home之后，该目录里的文件会消失，不能被访问，umount该目录后，原来的文件又可以访问了。
+所以一般mount分区都是到一个空目录。
+
+# ls /sbin/mkfs.*					用于列出本地系统上创建文件系统的程序
+# mkfs.ext4 	/dev/sdb1			分区格式化为ext4格式分区
+
+# mount /dev/sdb1 /home	
+# mount -t ext4 /dev/sdb1 /home		
+
+为了在每次系统启动时自动挂载新分区，需要修改（vi /etc/fstab）文件来进行自动挂载。在文件的末位加入如下一行
+/dev/sdb1               /home                   ext4    defaults        0 2
+
+umount 分区或挂载点
+# umount /dev/sda1  相当于umount /mnt
+
+umount /data/如果出现device is busy报错，则表示该文件系统正在被使用：
+# fuser -m -v /data/			查看有其他进程正在占用此目录
+# kill -9 2798 1259
+
+ 
+
+mkfs格式化磁盘，在设备上创建文件系统 
+mkfs -t 文件系统  存储设备
+# mfks -t ext3 /dev/sda6   		将sda6分区格式化为ext3格式
+# mkfs -V -t vfat /dev/sdb1		创建文件系统，并显示信息，此处-V必须放在-t前面	等同于mkfs.vfat -v /dev/sdb1
+
+
+常用参数：
+直接mount命令显示所有已挂载的文件系统；
+-t：指定文件系统的类型
+-o：挂载选项
+ro, rw ：以只读或读写形式挂载，默认为rw；
+sync：代表不使用缓存，
+async：代表使用缓存，默认async
+noatime：每次访问文件时不更新文件的访问时间；
+atime：代表每次访问文件时更新文件的访问时间；
+remount：重新挂载文件系统
+ 
+
+linux之fstab文件详解
+一个简单的 /etc/fstab，使用内核名称标识磁盘:
+/etc/fstab
+# <file system>        <dir>         <type>    <options>             <dump> <pass>
+tmpfs                  /tmp          tmpfs     nodev,nosuid          0      0
+/dev/sda1              /             ext4      defaults,noatime      0      1
+/dev/sda2              none          swap      defaults              0      0
+/dev/sda3              /home         ext4      defaults,noatime      0      2
+<dump> dump 工具通过它决定何时作备份. dump 会检查其内容，并用数字来决定是否对这个文件系统进行备份。 允许的数字是 0 和 1 。0 表示忽略， 1 则进行备份。大部分的用户是没有安装 dump 的 ，对他们而言 <dump> 应设为 0。
+<pass> 的数值来决定需要检查的文件系统的检查顺序。允许的数字是0, 1, 和2。 根目录应当获得最高的优先权 1, 其它所有需要被检查的设备设置为 2. 0 表示设备不会被 fsck 所检查。
+
+fstab文件详解
+http://blog.csdn.net/richerg85/article/details/17917129
+
+
+
+
+
+
+
+
