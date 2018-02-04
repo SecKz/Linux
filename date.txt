@@ -1,0 +1,158 @@
+
+# date -R		查看当前时区  -0800表示西八区，是美国旧金山所在的时区，下面表示我们国家的东八区（+0800）
+# ln -svf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime	设置为中国时区
+
+# /usr/sbin/ntpdate -u pool.ntp.org && /sbin/hwclock -w		同步时间
+
+# date -d '-1 day' +%Y-%m-%d-%H-%M			格式化昨天日期
+# date +%j										%j表示今天是今年的第几天(1-366)，比如今天350天
+# date -u +%j  								    -u 代表utc，即显示utc的时间
+# date +%Y%m%d
+# date +%Y%m%d%H
+# date +%Y%m%d%H%M%S
+# date +%T%n%D
+# date +%B%d 			显示月份与日数 
+
+# date 11062112      格式 mmddHHMM，即 月日时分 
+2010年 11月 06日 星期六 21:12:00 CST
+
+# date -s "2012-12-4 17:26" 	
+# date +%s					当前日期的时间戳
+
+# clock -w			防止重启无效  等同于hwclock -w
+# date  -s  10:12:13		 date  -s  hh:mm:ss
+# date  -d  10/17/2012		 date  -d  mm/dd/yy
+
+date不能修改时间: 用date -s 命令修改的时候，出现提示date: cannot set date: Operation not permitted
+有如下办法可以解决.
+# ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime 
+然后再用date 查看下命令,是不是和北京时间一样了.
+
+http://www.cnblogs.com/kerrycode/p/4217995.html
+
+linux时间快8小时解决办法
+/etc/sysconfig/clock文件，将里面的UTC=true 改为 UTC=false （告诉Linux硬件设置的是当地时间）
+输入date查看当前是否为 CST时间（CST表示当地时间，如我们设置的Shanghai  ）
+# date
+2013年 08月 08日 星期四 08:55:04 CST				有CST说明是当地时间
+
+或者在/etc/crontab添加
+0 */2 * * * root /usr/sbin/ntpdate -u pool.ntp.org && /sbin/hwclock -w
+
+关于时间格式的解释
+UTC  (Universal Time Coordinated,UTC)世界协调时间
+CST  CST是Chinese Standard Time,也就是我们通常所说的北京时间了
+GMT  (Greenwich Mean Time)格林威治标准时间：
+
+Linux时钟分为系统时钟System Clock和硬件Real Time Clock，简称RTC时钟。系统时钟是指当前Linux Kernel中的时钟而硬件时钟则是主板上由电池供电的时钟这个硬件时钟可以在BIOS中进行设置。当Linux启动时硬件时钟会去读取系统时钟的设置然后系统时钟就会独立于硬件运作。
+所有Linux相关指令与函数都是读取系统时钟的设定。根据不同参数设置，hwclock命令既可以将硬件时钟同步到系统时钟，也可以将系统时钟同步到硬件时钟。
+系统时钟与硬件时钟的关系是：当Linux启动时，系统时钟会去读取硬件时钟的设定，之后系统时钟即独立运作。
+
+如果使用date命令修改了系统时间，并不会自动去修改硬件时钟，因此，当系统下次重启时，系统时钟还会从硬件时钟去取，date设置的时间就无效了。
+clock和hwclock用法相近，只用一个就行，只不过clock命令除了支持x86硬件体系外，还支持Alpha硬件体系。
+
+-r, --show         读取并打印硬件时钟（read hardware clock and print result ）
+-s, --hctosys      将硬件时钟同步到系统时钟（set the system time from the hardware clock ）
+-w, --systohc     将系统时钟同步到硬件时钟（set the hardware clock to the current system time ）
+
+# hwclock -w 		将系统时钟同步到硬件时钟
+# hwclock 		或clock 	查看Linux硬件时间	或hwclock --show 	clock --show	
+# hwclock --systohc	让硬件时钟与系统时间同步	或clock --systohc		根据系统时间设置硬件时间
+# hwclock --hctosys	让系统时间与硬件时钟同步	或clock --hctosys
+# hwclock --localtime	/etc/sysconfig/clock中的UTC=false是为系统时间
+
+若时间还是不准备，走快或走慢。安装ntp同步时间
+ntp配置详解 (Network Time Protocol)
+http://www.cnblogs.com/greenerycn/archive/2011/03/13/linux_ntp_server.html
+http://blog.csdn.net/iloli/article/details/6431757	
+
+CentOS的时区配置文件是：/etc/sysconfig/clock 。 
+这个配置文件里面支持UTC，ARC，SRM，ZONE这几个配置选项，关于这几个配置选项详解如下：
+
+UTC – 指定BIOS中保存的时间是否是GMT/UTC时间，true表示BIOS里面保存的时间是UTC时间，false表示BIOS里面保存的时间是本地时间。
+ZONE – 指定时区，ZONE的值是一个文件的相对路径名，这个文件是相对 /usr/share/zoneinfo 目录下的一个时区文件。比如ZONE的值可以是：“Asia/Shanghai”, “US/Pacific”, “UTC” 等
+ARC – 这个选项一般配置false，在一些特殊硬件（Alpha）下才配置该选项为true。
+SRM – 同ARC，该选项一般配置false，在一下特殊硬件下才配置该选项为false。
+这个配置文件里面的参数和 hwclock 命令关系很大，系统在启动的时候读取 /etc/sysconfig/clock 文件的内容，根据这些内容调用 hwclock 命令。
+
+
+查看前一天
+# date -d '-1 day'
+# date -d '-1 day' +%Y-%m-%d
+# date -d@1234567890	时间截转日期
+# date > a.txt         通过date命令生成文件a.txt
+# date >> a.txt 
+
+date可以显示当前的时间，修改系统时间，或者显示指定的时间。取到当前时间，当然可以反算回去，但又要判断是否是一个月的最后一天，一年的最后一天，还有闰年需要判断，写出的脚本不是10几行能解决的。其实date本身就有一个方法可以计算时间，昨天，无非是往后减一天。而这个方法是man和help里没有说明的。很简单，就是-d参数，取昨天的日期就是：
+
+date -d '-1 day' +%Y-%m-%d     ， 简单吧。 如果是要计算月就用month，计算年就用year。
+
+在实际操作中，一些脚本中会调用明天，或者昨天，或更多天前的日期，本文将叙述讲述用date命令实现时间的显示。在Linux系统中用man date -d 查询的参数说的比较模糊，以下举例进一步说明：
+# man date
+-d, --date=STRING
+display time described by STRING, not ‘now’
+查看明天日期
+# date -d next-day +%Y%m%d
+# date -d tomorrow +%Y%m%d
+查看昨天日期
+# date -d last-day +%Y%m%d
+# date -d yesterday +%Y%m%d
+查看上个月日期
+# date -d last-month +%Y%m
+查看下个月日期
+date -d next-month +%Y%m
+查看明年日期
+# date -d next-year +%Y
+
+
+需要特别说明的是，只有超级用户才能用date命令设置时间，一般用户只能用date命令显示时间。
+例1：用指定的格式显示时间。
+$ date ‘+This date now is =>%x ，time is now =>%X ，thank you !'
+This date now is =>11/12/99 ，time is now =>17:53:01 ，thank you !
+
+当你不希望出现无意义的 0 时(比如说 1999/03/07)，则可以在标记中插入 - 符号，比如说 date+%-H:%-M:%-S会把时分秒中无意义的 0 给去掉，像是原本的 08:09:04 会变为 8:9:4。
+另外，只有取得权限者(比如说root)才能设定系统时间。
+
+当你以 root 身分更改了系统时间之后，请记得以 clock -w 来将系统时间写入 CMOS 中，这样下次重新开机时系统时间才会持续抱持最新的正确值。
+
+date命令
+-d datestr, --date datestr 显示由datestr描述的日期
+-s datestr, --set datestr 设置datestr 描述的日期
+-u, --universal 显示或设置通用时间
+时间域
+% H 小时（00..23）
+% I 小时（01..12）
+% k 小时（0..23）
+% l 小时（1..12）
+% M 分（00..59）
+% p 显示出AM或PM
+% r 时间（hh：mm：ss AM或PM），12小时
+% s 从1970年1月1日00：00：00到目前经历的秒数
+% S 秒（00..59）
+% T 时间（24小时制）（hh:mm:ss）
+% X 显示时间的格式（％H:％M:％S）
+% Z 时区 日期域
+% a 星期几的简称（ Sun..Sat）
+% A 星期几的全称（ Sunday..Saturday）
+% b 月的简称（Jan..Dec）
+% B 月的全称（January..December）
+% c 日期和时间（ Mon Nov 8 14：12：46 CST 1999）
+% d 一个月的第几天（01..31）
+% D 日期（mm／dd／yy）
+% h 和%b选项相同
+% j 一年的第几天（001..366）
+% m 月（01..12）
+% w 一个星期的第几天（0代表星期天）
+% W 一年的第几个星期（00..53，星期一为第一天）
+% x 显示日期的格式（mm/dd/yy）
+% y 年的最后两个数字（ 1999则是99）
+% Y 年（例如：1970，1996等）
+
+
+
+
+
+
+
+
+

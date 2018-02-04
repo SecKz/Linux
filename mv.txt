@@ -1,0 +1,25 @@
+
+# mv * ../		移动当前文件夹下的所有文件到上一级目录
+# mv dir/* dir1		把dir下的全部文件移动到dir1
+# mv test3/*.txt test5		把当前目录的txt文件移动到另一个子目录里
+# mv -f a.php b.php		
+# alias mv		查看mv的别名
+alias mv='mv -i'	
+# alias	 			查看全部别名
+
+# mv -f xhbeifen/* xhbeifen1
+当mv用了-f还是会提示不能移动，如以下提示, cp -f 同理
+mv: cannot move `xhbeifen/a' to a subdirectory of itself, `xhbeifen1/a'
+因为mv有别名的缘故，执行mv或者 mv -f，实际执行的是mv -i
+可以修改.bashrc中mv别名，或者\cp来消除别名的影响
+# \mv xhbeifen/* xhbeifen1
+# \cp -af xhbeifen/* xhbeifen1/
+
+
+-b ：若需覆盖文件，则覆盖前先行备份。 
+-f ：force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖；
+-i ：若目标文件 (destination) 已经存在时，就会询问是否覆盖！
+-u ：若目标文件已经存在，且 source 比较新，才会更新(update)
+
+
+# rename .html .php *.html  批量重命名，上述命令将当前文件夹下的所有以html结尾的文件重命名为以php结尾的文件

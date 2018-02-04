@@ -1,0 +1,121 @@
+
+按文件名过滤
+# find . -type f | egrep -i '\.(js|php)$'	
+	
+按文件内容过滤
+# find . -iname '*.js' | xargs -i fgrep -li 'window.open' {}
+# find . -type f | egrep '\.xml$' | xargs -i fgrep -l '5200tv.com' {}		找出xml中含有5200tv.com的文件
+# find . -type f | xargs -i egrep -l 'config\.ini' {}
+# find . -type f | xargs -i egrep -l '\.(js|php)$' {}	
+
+匹配空格或tab开头的root行
+# grep -P '^[\s\t]*root[\s\t]+' nginx.conf
+# grep -P '^[\s\t]*server_name[\s\t]+' nginx.conf
+
+# echo helloworld | grep -o 'w.'
+# echo helloworld | grep -o 'w\.'	匹配点号要转义
+
+# grep -c 'bash' passwd						查看passwd中有bash的行数，不是bash个数
+# grep -o 'bash' passwd | wc -l				查看passwd中bash的出现次数
+# echo afoobarfoobar | grep -o foo
+# echo afoobarfoobar | grep -o foo | wc -l
+
+# grep -rl 'You have to add a DNS' /home			在home目录中查看含有You have to add a DNS字样的文件
+# grep -irls '/home/admin/xxzhinan.cn/' /home
+# grep -nri jason /etc/yum.repos.d/				在/etc/yum.repos.d/文件夹找到有jason文字的文件
+# grep -in 'loadscript' g.js						在g.js中找有有loadscript的那一行并列出行号
+# grep -rL 'drag' .								在当前文件夹列出不含有drag的文件
+# <gg.js grep -n print_r						 将文件名置于命令开头，方便修改搜索字符串进行搜索 命令开头的 < 是重定向的意思（将标准输入重定向为文件输入）
+
+高亮显示匹配
+# grep --color=always 'bash' passwd
+# grep --color=auto 'bash' passwd
+# egrep --color -i 'bash|WWW' /etc/passwd
+# egrep --color=auto 'bash|www' passwd
+# egrep --color=auto -i 'bash|WWW' passwd
+
+
+grep显示多行信息
+# grep -A1 -B3 '^www' passwd
+# grep -C3 '^www' passwd
+# grep -A3 '^www' passwd
+# grep -B3 '^www' passwd
+
+多行匹配
+grep -oPz '(?s)mail.+games' passwd
+grep -aoPz '(?s)mail.*?games' passwd
+
+grep -aoPz '(?s)server_name\s+tuku\.5200tv\.com.*?root' nginx.conf
+grep -aoPz '(?s)server_name\s+tuku\.5200tv\.com.*?root.*?;' nginx.conf
+awk '/tuku.5200tv.com/ && /server_name/,/root/ {print $0}' nginx.conf
+
+-a参数则可将二进制档案视为文本文件搜寻
+P activate perl-regexp for grep (a powerful extension of regular extensions)
+-z suppress newline at the end of line, subtituting it for null character. That is, grep knows where end of line is, but sees the input as one big line.
+-o print only matching. Because we're using -z, the whole file is like a single big line, so if there is a match, the entire file would be printed; 
+(?s) activate PCRE_DOTALL, which means that . finds any character or newline
+.*? find . in nongreedy mode, that is, stops as soon as possible.
+
+
+
+
+# cat /etc/httpd/conf/httpd.conf |grep log|egrep -v ^#
+# ifconfig -a | grep -ni inet		查看特定行
+# grep -v "^$" 	过滤空行
+# grep -v "^#" /etc/inittab | grep -v "^$"		查看这个文件时过滤掉注释行和空行
+# grep "bash$" /etc/passwd					查找以bash结尾的行，即可以的登录的用户
+# grep "bash" /etc/passwd
+# grep -F ':/sbin/shutdown' /etc/passwd 		作为普通字符串查找，比作为正则查找快得多, grep -F相当于grep -F
+
+
+
+grep -w 仅匹配整个词
+# grep -w bin /etc/passwd			只列出含有bin的行，不包含sbin	
+# grep -l pattern files			只列出匹配的文件名，
+# grep -L pattern files			列出不匹配的文件名，
+# grep -E 'root|sshd' /etc/passwd		试不要-E，等同于grep -E '(root|sshd)' /etc/passwd
+# grep -E '^[f-z]{5,8}' /etc/passwd
+
+# grep 'root|sshd' /etc/passwd			无结果
+# grep -E 'root|sshd' /etc/passwd 		有结果，grep -E等同于egrep
+
+
+
+几个模式：
+-G 基本正则表达式模式：默认模式！： ^、$、.、*、[]、[^]、\w、\W、\<、\>、\(\)、x\{m\}、x\{m,\}、x\{m,n\}、\b..\b
+-E 扩展模式：支持： +、？、｜｜、（｜）、x{m}、x{m,}、x{m,n} 扩展模式
+-F 固定命名字符串模式：
+-P perl扩展模式：
+-i或--ignore-case   忽略字符大小写的差别。
+-l或--file-with-matches   列出文件内容符合指定的范本样式的文件名称。
+-L或--files-without-match   列出文件内容不符合指定的范本样式的文件名称。
+-q或--quiet或--silent   静默模式, 不输出任何结果(stderr 除外. 常用以获取 return value, 符合为 true, 否则为 false .)
+-d<进行动作>或--directories=<进行动作>   当指定要查找的是目录而非文件时，必须使用这项参数，否则grep指令将回报信息并停止动作。
+-r或--recursive   此参数的效果和指定“-d recurse”参数相同。
+-s或--no-messages   不显示错误信息。
+c ：计算找到 '搜寻字符串' 的行数
+-n ：顺便输出行号
+-v ：反向选择，亦即显示出没有 '搜寻字符串' 内容的那一行!
+-s：不显示不存在或无匹配文本的错误信息。
+-V或--version   显示版本信息。
+-E: 切换为 egrep .
+
+
+grep的规则表达式:
+^  #锚定行的开始 如：'^grep'匹配所有以grep开头的行。    
+$  #锚定行的结束 如：'grep$'匹配所有以grep结尾的行。    
+.  #匹配一个非换行符的字符 如：'gr.p'匹配gr后接一个任意字符，然后是p。    
+*  #匹配零个或多个先前字符 如：'*grep'匹配所有一个或多个空格后紧跟grep的行。    
+.*   #一起用代表任意字符。   
+[]   #匹配一个指定范围内的字符，如'[Gg]rep'匹配Grep和grep。    
+[^]  #匹配一个不在指定范围内的字符，如：'[^A-FH-Z]rep'匹配不包含A-R和T-Z的一个字母开头，紧跟rep的行。    
+
+
+
+
+
+
+
+
+
+

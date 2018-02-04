@@ -1,0 +1,28 @@
+
+快速定位js函数在哪个js文件
+console 中输入函数名，不要()会出来代码，双击结果会定位到所在文件
+
+一、快速查找文件
+1、F12打开你的Chrome调试器；
+2、按下Ctrl+P（Mac上Cmd + P）;
+
+二、在源代码中搜索
+1、F12打开你的Chrome调试器；
+2、按下Ctrl+Shift+F（Mac上Cmd+Opt+F）;
+3、在输入框中输入你想查询的源代码，回车，就OK啦。
+注：该搜索也支持正则表达式。
+
+十三、选中下一个匹配项
+当你选中一个匹配项后，利用Ctrl+D（Mac上Cmd+D），就会将下一个相同的匹配项也选中，该功能可以帮助你同时编辑它们。
+
+
+对network请求进行筛选
+domain：筛选出指定域名的请求，不仅支持自动补全，还支持*匹配。
+has-response-header：筛选出包含指定响应头的请求。
+is：通过is:running找出WebSocket请求。
+larger-than：筛选出请求大于指定字节大小的请求，其中1000表示1k。
+method：筛选出指定HTTP方法的请求，比如GET请求、POST请求等。
+mime-type：筛选出指定文件类型的请求。
+
+
+http://www.cnblogs.com/liyunhua/p/4544738.html#_label5

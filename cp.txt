@@ -1,0 +1,41 @@
+
+
+# cp -a /var/log/wtmp wtmp_2
+在不加任何参数的情况下，档案的所属者会改变，连权限也跟着改变了～
+如果您想要将档案的所有特性都一起复制过来，可以加上 -a 喔！
+
+# cp -r /etc/ /tmp
+如果是目录，不能直接复制，要加上 -r 的参数
+-r 是可以复制目录，但是，档案与目录的权限会被改变～
+所以，可以利用 cp -a /etc /tmp 
+复制 /etc/ 这个目录下的所有内容到 /tmp 底下
+
+
+因为cp有别名的缘故，执行cp或者 cp -f，实际执行的是cp -i
+可以修改.bashrc中cp别名，或者\cp来消除别名的影响
+# alias	 			查看全部别名
+# alias cp		查看cp的别名
+# \cp -af xhbeifen/* xhbeifen1/
+
+
+# cp [-adfilprsu] 来源档(source) 目的档(destination)
+# cp [options] source1 source2 source3 …. directory
+参数：
+-a ：相当于 -pdr 的意思；
+-d ：若来源文件为连结文件的属性(link file)，则复制连结文件属性而非档案本身；
+-f ：为强制 (force) 的意思，若有重复或其它疑问时，不会询问使用者，而强制复制；
+-i ：若目的档(destination)已经存在时，在覆盖时会先询问是否真的动作！
+-l ：进行硬式连结 (hard link) 的连结档建立，而非复制档案本身；
+-p ：连同档案的属性一起复制过去，而非使用预设属性；
+-r ：递归持续复制，用于目录的复制行为；
+-s ：复制成为符号连结文件 (symbolic link)，亦即『快捷方式』档案；
+-u ：若 destination 比 source 旧才更新 destination ！
+最后需要注意的，如果来源档有两个以上，则最后一个目的文件一定要是『目录』才行！
+
+
+
+
+
+
+
+

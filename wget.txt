@@ -1,0 +1,132 @@
+
+
+# wget -P /home/aaa http://soft.vpser.net/lnmp/lnmp1.0.tar.gz						将文件下载到指定目录
+# wget -c http://www.linuxsense.org/xxxx/xxx.tar.gz 								-c参数,可以断点续传, 如果不小心终止了, 可以继续使用命令接着下载
+# wget --limit-rate=300k http://www.minjieren.com/wordpress-3.1-zh_CN.zip			–limit -rate限速下载
+# wget -O baidu.txt http://www.baidu.com/											把网页内容保存到文件
+# wget -b http://www.minjieren.com/wordpress-3.1-zh_CN.zip						-b后台下载
+# wget --spider URL			–spider测试下载链接
+# wget --tries=40 URL		–tries增加重试次数
+# wget --reject=gif url			–reject过滤指定格式下载
+
+使用wget -i下载多个文件
+# wget -i filelist.txt
+# cat > filelist.txt	首先，保存一份下载链接文件
+url1
+url2
+url3
+url4
+接着使用这个文件和参数-i下载
+
+有些网站能通过根据判断代理名称不是浏览器而拒绝你的下载请求。不过你可以通过–user-agent参数伪装。
+# wget --user-agent="Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.204 Safari/534.16" http://www.minjieren.com/wordpress-3.1-zh_CN.zip
+
+
+# wget -c -r -nd -np -k -L -p -A c,h www.xxx.org/pub/path/
+-c   断点续传
+-r   递归下载，下载指定网页某一目录下（包括子目录）的所有文件
+-nd 递归下载时不创建一层一层的目录，把所有的文件下载到当前目录
+-np 递归下载时不搜索上层目录，如wget -c -r www.xxx.org/pub/path/
+没有加参数-np，就会同时下载path的上一级目录pub下的其它文件
+-k   将绝对链接转为相对链接，下载整个站点后脱机浏览网页，最好加上这个参数
+-L   递归时不进入其它主机，如wget -c -r www.xxx.org/ 如果网站内有一个这样的链接：
+www.yyy.org，不加参数-L，就会像大火烧山一样，会递归下载www.yyy.org网站
+-p   下载网页所需的所有文件，如图片等
+-A   指定要下载的文件样式列表，多个样式用逗号分隔
+-i   后面跟一个文件，文件内指明要下载的URL
+
+Wget是一个十分常用命令行下载工具，多数Linux发行版本都默认包含这个工具。如果没有安装可在 http: //www.gnu.org/software/wget/wget.html 下载最新版本，并使用如下命令编译安装：
+# tar zxvf wget-1.9.1.tar.gz
+# cd wget-1.9.1
+# ./configure
+# make
+# make install
+
+
+wget [参数列表] [目标软件、网页的网址]
+-V 版本信息
+-h 帮助信息
+-b 后台执行Wget
+-o filename 把记录放在文件filename
+-a filename 把记录附加在文件filename
+-d 显示调试信息
+-q 无输出下载方式
+-v 详细的屏幕输出（默认）
+-nv 简单的屏幕输出
+-i inputfiles 从文本文件内读取地址列表
+-F forcehtml 从html文件内读取地址列表
+-t number number次重试下载（0时为无限次）
+-O output document file 写文件到文件
+-nc 不覆盖已有的文件
+-c 断点下传
+-N 时间时间戳。该参数指定wget只下载更新的文件，也就是说，与本地目录中的对应文件的长度和最后修改日期一样的文件将不被下载。
+-S 显示服务器响应
+-T timeout 超时时间设置（单位秒）
+-w time 重试延时（单位秒）
+-Y proxy=on/off 是否打开代理
+-Q quota=number 重试次数
+目录：
+-nd –no-directories 不建立目录。
+-x, –force-directories 强制进行目录建立的工作。
+-nH, –no-host-directories 不建立主机的目录。
+-P, –directory-prefix=PREFIX 把档案存到 PREFIX/…
+–cut-dirs=NUMBER 忽略 NUMBER 个远端的目录元件。
+HTTP 选项：
+–http-user=USER 设 http 使用者为 USER.
+–http0passwd=PASS 设 http 使用者的密码为 PASS.
+-C, –cache=on/off 提供/关闭快取伺服器资料 （正常情况为提供）.
+–ignore-length 忽略 `Content-Length’ 标头栏位。
+–proxy-user=USER 设 USER 为 Proxy 使用者名称。
+–proxy-passwd=PASS 设 PASS 为 Proxy 密码。
+-s, –save-headers 储存 HTTP 标头成为档案。
+-U, –user-agent=AGENT 使用 AGENT 取代 Wget/VERSION 作为识别代号。
+FTP 选项：
+–retr-symlinks 取回 FTP 的象徵连结。
+-g, –glob=on/off turn file name globbing on ot off.
+–passive-ftp 使用 “passive” 传输模式。
+使用递回方式的取回：
+-r, –recursive 像是吸入 web 的取回 — 请小心使用！.
+-l, –level=NUMBER 递回层次的最大值 （0 不限制）.
+–delete-after 删除下载完毕的档案。
+-k, –convert-links 改变没有关连的连结成为有关连。
+-m, –mirror 开启适合用来映射的选项。
+-nr, –dont-remove-listing 不要移除 `.listing’ 档。
+递回式作业的允许与拒绝选项：
+-A, –accept=LIST 允许的扩充项目的列表
+. -R, –reject=LIST 拒绝的扩充项目的列表。
+-D, –domains=LIST 允许的网域列表。
+–exclude-domains=LIST 拒绝的网域列表 （使用逗号来分隔）.
+-L, –relative 只跟随关联连结前进。
+–follow-ftp 跟随 HTML 文件里面的 FTP 连结。
+-H, –span-hosts 当开始递回时便到外面的主机。
+-I, –include-directories=LIST 允许的目录列表。
+-X, –exclude-directories=LIST 排除的目录列表。
+-nh, –no-host-lookup 不透过 DNS 查寻主机。
+-np, –no-parent 不追朔到起源目录。
+
+
+wget出现Unable to resolve host address 返回的错误很明显，就是DNS无法解析，出现这个问题与nameserver有关，修改/etc/resolv.conf文件即可。
+# cat /etc/resolv.conf		查看dns设置
+nameserver 205.185.112.68
+nameserver 205.185.112.69
+改成有效的DNS,　如google的一组解析服务器即可：
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+
+# service network restart		重启网络
+
+推荐DNS
+Google Public DNS: 8.8.8.8; 8.8.4.4.
+Norton DNS: 198.153.192.1; 198.153.194.1.
+OpenDNS: 208.67.222.222; 208.67.220.220.
+
+
+
+
+
+
+
+
+
+
+

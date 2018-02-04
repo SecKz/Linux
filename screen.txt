@@ -1,0 +1,73 @@
+
+# screen -S name     				 新建名为name的session
+# screen -r yourname  				 回到yourname这个session
+# screen -d yourname				detach某个session
+# screen -d -r yourname				结束当前session并回到yourname这个session
+# screen -ls  						列出所有screen会话
+
+# screen -r 26307 或screen -r abc均可		重新连接会话
+ctrl +ad 	按住ctrl +a和d，可暂时退出当前会话。
+ctrl+d		退出screen的shell, 相当于exit该screen
+exit 	进入指定会话后执行exit即可关闭该会话。
+
+# screen vi a.txt		创建一个执行vi a.txt的单窗口会话，退出vi将退出该窗口/会话。
+# screen 	立即创建并进入一个会话。
+# screen -dmS {name}	建立一个处于断开模式下的会话，并根据我们的需要指定其会话名称。
+
+1．直接在命令行键入screen命令
+# screen
+Screen将创建一个执行shell的全屏窗口。你可以执行任意shell程序，就像在ssh窗口中那样。
+在该窗口中键入exit退出该窗口，如果这是该screen会话的唯一窗口，该screen会话退出，否则screen自动切换到前一个窗口。
+每新建一个screen, 实质是打一个新shell，可以用pstree –up查看
+
+2．Screen命令后跟你要执行的程序。
+# screen vi a.txt
+Screen创建一个执行vi test.c的单窗口会话，退出vi将退出该窗口/会话。
+
+以上两种方式都创建新的screen会话。
+我们还可以在一个已有screen会话中创建新的窗口。
+在当前screen窗口中键入C-a c，即Ctrl键+a键，之后再按下c键，screen 在该会话内生成一个新的窗口并切换到该窗口。
+screen还有更高级的功能。你可以不中断screen窗口中程序的运行而暂时断开（detach）screen会话，并在随后时间重新连接（attach）该会话，重新控制各窗口中运行的程序。
+
+screen是建立一个新的全屏虚拟会话终端，这个会话只有在手动输入exit的时候才会退出，在这个会话里执行的命令不用担心HUP信号会对我们的进程造成影响，
+因此也不用给每个命令前都加上“nohup”或“setsid”了，非常适合我们有规划的执行大量的后台任务，可以非常方便的让我们对这些后台任务进行管理。
+
+
+在每个screen session 下，所有命令都以 ctrl+a(C-a) 开始。
+C-a	显示所有键绑定信息
+C-a w	显示所有窗口列表
+C-a C-a	切换到之前显示的窗口
+C-a c	创建一个新的运行shell的窗口并切换到该窗口
+C-a n	切换到下一个窗口
+C-a p	切换到前一个窗口(与C-a n相对)
+C-a 0..9	切换到窗口0..9
+C-a a	发送 C-a到当前窗口
+C-a d	暂时断开screen会话
+C-a k	杀掉当前窗口
+
+http://www.ibm.com/developerworks/cn/linux/l-cn-screen/
+http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html
+
+安装screen
+# rpm -qa|grep screen
+# yum install screen
+
+清除dead 会话
+如果由于某种原因其中一个会话死掉了（例如人为杀掉该会话），这时screen -list会显示该会话为dead状态。使用screen -wipe命令清除该会话：
+# screen -wipe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

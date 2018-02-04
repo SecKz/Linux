@@ -1,0 +1,59 @@
+
+
+# yum serach fail
+# yum install fail2ban.noarch
+# fail2ban-client -h			查看是否安装成功
+# chkconfig --add fail2ban
+# chkconfig fail2ban on		开机启动
+
+# fail2ban-client status ssh-iptables
+# fail2ban-client reload		重新读取配置
+# iptables -L -n		查看被屏蔽的IP 
+# iptables -L -n --line-numbers					输出规则号，查看现有规则
+
+解锁某个IP
+# fail2ban-client set ssh-iptables unbanip 119.147.143.50			  fail2ban-client set JAIL unbanip MYIP   JAil可以是ssh-iptables或其它jail name
+# iptables -D fail2ban-SSH -s 119.147.143.50 -j DROP	
+	
+# fail2ban-regex /var/log/secure /etc/fail2ban/filter.d/sshd.conf		检查某个服务的过滤规则是否可以匹配某个日志文件
+# fail2ban-regex /var/log/secure /etc/fail2ban/filter.d/vsftpd.conf			过滤检查语法测试
+
+
+测试fail2ban
+# ssh 192.168.64.98
+root@192.168.64.98's password: 
+Permission denied, please try again.
+root@192.168.64.98's password: 
+Permission denied, please try again.
+root@192.168.64.98's password: 
+6次失败登录以后
+# iptables -L INPUT -v -n	
+
+如果重起iptables 记的一定还要重起fail2ban，不然他就不能生效，fail2ban的过滤表是在iptables 启动后在加入的。
+
+
+http://www.cnblogs.com/mchina/archive/2012/06/01/2530953.html
+
+# tar -xjvf fail2ban-0.8.4.tar.bz2
+# cd fail2ban-0.8.4
+# python setup.py install
+ 
+# 安装为服务
+# cp files/redhat-initd /etc/init.d/fail2ban
+# chkconfig --add fail2ban
+# chkconfig fail2ban on
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

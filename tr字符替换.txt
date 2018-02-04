@@ -1,0 +1,90 @@
+
+# echo 'hello, JACKie,123++' | tr -d A-Za-z			删除全部字母
+# echo 'hello, JACKie,123++' | tr -dc A-Za-z		删除字母以外的字符
+
+# echo 'hello, JACKie,123' | tr -d A-Za-z0-9
+# echo 'hello, JACKie,123' | tr -dc A-Za-z0-9
+
+生成复杂密码
+# </dev/urandom tr -dc 'a-zA-Z1-9_=%*(|)~!:+-' | head -c32
+
+
+由于tr命令不能直接从文本中读取并转换文本，因此通常都使用重定向输入或管道传递的方法。例如需要将文本文件test中的字符执行大小写转换：
+# tr -s "[a-z]" "[A-Z]" <passwd
+# tr -s ":" "\t" < /etc/passwd
+
+http://www.cnblogs.com/nufangrensheng/p/3463954.html
+
+tr命令在处理替换和删除时，采用逐字符查询处理的方法。
+# echo "My name is Jhon." | tr -d "msn"
+
+# cat b.txt | tr -d '\n'				删除换行
+# cat b.txt|tr -s "\n"			移除所有的空白行
+
+# cat /etc/passwd|tr -d '\n\t'						不要\t\n输出
+# cat /etc/passwd|tr -d '\n\t' > a.txt
+# find . | tr -d './'		不要开头的./
+# find . | xargs -n1 basename | egrep '^.sh'
+# find . | tr -d './' | egrep '^.sh'	先用tr去掉开头的./，再用egrep过滤
+# find test | tr -d 'test/'	去掉前面的目录
+# find test | tr -d 'test/' | grep -v '^$'		不要空行
+
+
+
+
+# echo $PATH | tr -s ":"  "\n"					冒号转成换成换行
+# echo $PATH|tr a-z A-Z			大小写转换
+# cat .bash_profile|tr -s '\n'						删除空行
+
+# echo 1710.5342135 | tr 1 a		把1全部替换为a
+# echo 1710.5342135 | tr 12 a		把1和2全部替换为a
+# echo "hello world" | tr "a-z" "A-Z"
+# echo "hello world,root,2012" | tr -c '0-9' '*'
+# echo "hello world,root,2012" | tr '0-9' '*'
+# echo "hello world" | tr "a-l" "A-Z" 
+
+
+去除重复字符 所用的选项是-s
+# echo "hello world,root" | tr -s 'o'			无变化，因为只有一个h
+# echo "hello world,root" | tr -s 'h'			无变化，因为只有一个h
+# echo "hello world,root" | tr -s "lo" 		将输入字符串中的包含在"lo"字符集中的重复字符去掉，只留一个
+# echo "hello world,root" | tr -s "lo"			将hello和root两个字符都压缩了
+# echo "hello world,root" | tr -s "a-z"		将a-z中的除复字符都去掉。
+# tr -s "\n" < /etc/resolv.conf		去掉空格
+# tr "a-z" "A-Z" < /etc/passwd		全部字母大写
+
+删除字符 -d选项和-s选项类似，只不过-d选项会删除所有出现的字符。
+# echo "hello world,root" | tr -d "a-h"  
+# echo "hello world,root,2012" | tr -d "a-z"  
+# echo "hello world,root,2012" | tr -d "0-9"  
+
+tr [option] ["string1"] ["string2"] < file  
+常用的选项有：
+默认选项。就是没有任何选项的时候，tr默认为替换操作，就是将string1在文件中出现的字符替换为string2中的字符，这里要注意的是替换关系。
+-c选项，用string1中字符的补集替换string1，这里的字符集为ASCII。
+-d选项，删除文件中所有在string1中出现的字符。
+-s选项，删除文件中重复并且在string1中出现的字符，只保留一个。
+-c选项在使用时，只是将string1替换为现在的补集，如在使用
+
+
+
+可以把tr看作为一个简化的sed工具，tr表示为：translate。tr命令主要用于实现以下两个功能
+替换操作的字符串转换。
+删除操作的字符串转换，可以很容易的删除一些控制字符或者是空行。
+tr命令能够实现的功能，都能够用sed命令来实现。但就具体的替换功能来说，tr用起来更容易，也比较简单。
+
+
+http://www.cnblogs.com/fukajg/archive/2012/09/28/2706575.html
+
+
+
+
+
+
+
+
+
+
+
+
+

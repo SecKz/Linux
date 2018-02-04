@@ -1,0 +1,107 @@
+
+
+运行一些耗时的任务时，如果因为网络中断，这些任务也会就此中断，应此需要这些任务不受终端断开而影响
+
+ 以下有几种方法避免此种情况发生：
+一、使用nohup：
+在网络断开和logout时，终端会收到hup信息，因此会关闭其所有子进程，nohup正是针对此情况：
+#nohup ping localhost > /dev/null & 
+#logout   然后断开终端，可以看到：
+断开终端之后，父进程ID变为1，即被init所接管的孤儿进程，因为其原来的父进程30999已经退出,ping的pid还在
+
+# nohup Command [ Arg ... ] [ & ]
+nohup 无疑是我们首先想到的办法。顾名思义，nohup 的用途就是让提交的命令忽略 hangup 信号。让我们先来看一下 nohup 的帮助信息：
+可见，nohup 的使用是十分方便的，只需在要处理的命令前加上 nohup 即可，标准输出和标准错误缺省会被重定向到 nohup.out 文件中。
+一般我们可在结尾加上"&"来将命令同时放入后台运行，也可用">filename 2>&1"来更改缺省的重定向文件名。
+# ping localhost > /dev/null &
+# pstree -p
+
+disown 示例1（如果提交命令时已经用“&”将命令放入后台运行，则可以直接使用“disown”）
+# jobs
+[1]+  Running                 cp -i -r testLargeFile largeFile &
+# disown -h %1
+# ps -ef |grep largeFile
+root      4825   968  1 09:46 pts/4    00:00:00 cp -i -r testLargeFile largeFile
+root      4853   968  0 09:46 pts/4    00:00:00 grep largeFile
+# logout   
+
+disown 示例2（如果提交命令时未使用“&”将命令放入后台运行，可使用 CTRL-z 和“bg”将其放入后台，再使用“disown”） 别忘了在disown之前执行bg命令，否则进程会一直stopped
+# bg %1
+[1]+ cp -i -r testLargeFile largeFile2 &
+# jobs
+[1]+  Running                 cp -i -r testLargeFile largeFile2 &
+# disown -h %1
+# ps -ef |grep largeFile2
+root      5790  5577  1 10:04 pts/3    00:00:00 cp -i -r testLargeFile largeFile2
+root      5824  5577  0 10:05 pts/3    00:00:00 grep largeFile2
+# logout  
+
+
+nohup command 登录后执行command,logout后,此command不受影响的继续运行
+command & 把任务放在后台 ,用户logout后,此command也被kill掉
+
+disown是bash内部命令，nohup是外部命令
+disown跟bg,fg一样是针对job进行操作，nohup是针对命令操作
+disown -h 和nohup一样，在退出bash后，把进程的控制权都交给init
+
+disown
+场景：
+我们已经知道，如果事先在命令前加上 nohup 或者 setsid 就可以避免 HUP 信号的影响。但是如果我们未加任何处理就已经提交了命令，该如何补救才能让它避免 HUP 信号的影响呢？
+解决方法：
+这时想加 nohup 或者 setsid 已经为时已晚，只能通过作业调度和 disown 来解决这个问题了。让我们来看一下 disown 的帮助信
+以看出，我们可以用如下方式来达成我们的目的。
+用disown -h jobspec 来使某个作业忽略HUP信号。
+用disown -ah 来使所有的作业都忽略HUP信号。
+用disown -rh 来使正在运行的作业忽略HUP信号。
+
+
+让Linux的进程不受终端影响
+http://blog.csdn.net/az9009za/article/details/6170730
+http://www.linuxidc.com/Linux/2011-02/32062.htm
+
+ 有两种方式：
+1. command & ： 后台运行，你关掉终端会停止运行
+2. nohup command & ： 后台运行，你关掉终端也会继续运行
+
+我们经常会碰到这样的问题，用ssh登录了远程的Linux服务器，运行了一些耗时较长的任务，结果却由于网络等的不稳定导致任务中途失败。
+这是由于在用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。
+解决办法有两种：让进程忽略HUP信号，或让进程运行在新的会话里从而成为不属于此终端的子进程。
+
+下面是对Linux下运行与控制后台进程的各种方法的介绍：
+1.nohup
+顾名思义，nohup的用途就是让提交的命令忽略所有的hangup信号。
+使用方法：nohup COMMAND [ARG]...
+
+3.&
+可以结合()产生一个新的子shell并在这个子shell中将任务放置到后台运行，从而不受当前shell终端的HUP信号影响。
+使用方法：(COMMAND [ARG]... &)
+
+而我通常的使用方式为：
+nohup ./filename.sh > filename.log 2>&1 &
+三点理由:
+1)nohup保障进程不会被hangup信号异常中断；
+2)将任务放置到后台运行，不占用当前的终端；
+3)将错误输出也打印到log中，默认>只有标准输出，错误输出没有。
+
+
+4.控制进程
+通过以下命令，我们可以对放入到后台的命令进行控制
+
+查看当前终端下的后台进程：
+直接执行：jobs
+
+将查看到的某个后台进程放回到前台：
+直接输入：fg {jobid} //这里的{jobid}是通过jobs命令中看到的进程前[]中的数字。
+
+将当前正在前台运行的进程放到后台运行:
+先敲下快捷键：ctrl +z //暂停当前正在运行的进程。
+再执行：bg
+
+终止当前正在前台运行的进程：
+直接敲下快捷键：ctrl +c
+
+
+
+
+
+

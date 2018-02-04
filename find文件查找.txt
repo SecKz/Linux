@@ -1,0 +1,202 @@
+
+
+# find . -type f|xargs chmod 644		把当前所有文件权限都改为644，chmod不要加-R		find /data/wwwroot/ -type d -exec chmod 755 {} \;
+# find . -type d|xargs chmod 755 	把当前所有文件夹权限都改为755，chmod不要加-R		find /data/wwwroot/ -type f -exec chmod 644 {} \;
+
+# find tgfiles/ -name '*国有企业*影响*'			多关键字查找
+# find /dir /dir2 -iname aa.txt				find同时查找多个目录
+# find . -perm 0777 
+# find . -type f -name "* *" -print		查看文件名有空格的文件
+# find . -maxdepth 1 |egrep '\.log$'			查找以log结尾的文件
+# find . -maxdepth 1 -iname '*.sh' -o -iname '*.txt'		查看sh或txt文件
+
+# find . | wc -l					查看当前文件夹文件数目
+# find glqch.com -type f|wc -l		查看文件夹的文件数量
+# find glqch.com -type d|wc -l		查看文件夹的文件夹数量
+# find . ! -user www -and ! -perm 644 -and -type f | xargs ls -ald	查找user不是www，并且perm不是644的文件
+# find . ! -user www -and ! -perm 755 -and -type d | xargs ls -ald	查找user不是www，并且perm不是755的文件夹
+
+# find cc -delete		用find删除文件或文件夹
+# find cc -type f -delete
+# find cc -maxdepth 1 -type f -delete
+
+# find . -iname '*[a-z]sh*'
+# find . | egrep -i '.sh'		find找到结果，用egrep过滤
+# find . | xargs -n1 basename | egrep '^.sh'
+
+
+查找目录深度
+# find . -maxdepth 1 -name '*.txt'  	查询后缀txt的目录，且不遍历子目录，maxdepth要在name前面
+# find . -maxdepth 2 -iname a.txt	 列出当前目录内的a.txt 查时深度最多为2层
+# find . -maxdepth 1 -type d | xargs du -sh | sort -n		列出当前目录中所有目录大小，不查找子目录
+# find . -maxdepth 1 -type d|grep -v '^.$' | xargs du -sh | sort -n	列出当前目录中所有目录大小，不查找子目录，不包括当前目录
+
+目录排除
+-path后跟要排除的路径，比普通查找多了-path '/root/pure-ftpd' -prune -o
+# find / -path '/root/pure-ftpd' -prune -o -name 'pure-ftpd' -print	
+# find / -path '/root/lnmp0.9' -prune -o -name 'mysql' -print		/root/lnmp0.9和mysql的分号、-print不能少，并且'/root/lnmp0.9'不能以斜杠/结尾
+find . -path ./dir/dir/test -prune -o -iname a -type f -print
+find . \( -path ./dir/dir/test -o -path ./dir/test \) -prune -o -iname a -type f -print		排除多个目录
+
+
+星号*模糊查找
+find / -iname lnmp -type d　查看名为lnmp的文件夹, lnmp0.9不会被找出来, iname表示不区分大小写
+find / -iname 'lnmp*' -type d　查看含有lnmp文字的文件夹, lnmp0.9会被找出来，但xlnmp0.9不会被找出来
+find / -iname '*lnmp*' -type d　查看含有lnmp文字的文件夹, lnmp0.9和xlnmp0.9都会被找出来
+
+# find /etc/rc.d -name *mysql*  在/etc/rc.d中查找文件名含有mysql字符的文件
+# find / -iname zend -type d  	忽略大小写，使用 -iname参数来忽略大小写
+# find / -name mysql -type d|xargs ls -ald 找出mysql文件夹，不列出其中文件，只列出文件夹详细
+
+
+# find . -atime -1 -type f					查找1天前以内的被访问过的文件
+# find . -mtime -1 -type f					查找1天前以内的被修改过的文件
+# find . -atime +1 -type f|wc -l			统计1天前以内的被访问过的文件的数量
+
+# find . -amin -1 -type f 					查找1分钟内被访问的文件
+# find . -amin -10 -type f					查找10分钟内被访问的文件
+# find . -mmin -$(( 60*24))					查看28小时以内更改过的文件
+
+-mtime ：按照更改文件数据的天数来查找文件
+-ctime  ：按照更改文件状态的天数来查找文件。附参数同上。
+-atime  ：按照访问文件的天数来查找文件。附参数同上。
+-mmin  ：按照更改文件数据的分钟来查找文件。附参数同上。
+-amin   ：按照访问文件的分钟来查找文件。附参数同上。
+-cmin   ：按照更改文件状态的分钟来查找文件。附参数同上。
+
++n     for greater than n,  #N天以外的，N天前的
+-n     for less than n,     #N天以内的
+n      for exactly n.     #正好的
+
+find . -mmin +9 -mmin -21	搜索当前目录下前20分钟到10分钟修改过的文件
+# find . -newer temp		查找更改时间在比temp文件新的文件：
+# find -newer httpd1.conf  ! -newer temp	查找更改时间比文件sam新但比文件temp旧的文件 其中，！是逻辑非符号。
+-newer 指内容最近被修改的文件 
+-anewer 指最近被读取过的文件 
+-cnewer 指状态最近发生变化的文件（查看文件状态命令 stat filename）
+
+按大小查找
+find . -empty									找空文件
+find /tmp/session/ -size 0						同上
+find . -size 10M	   							搜索大小为10M的文件
+find . -size +10M								搜索大于10M的文件
+find . -size -10M								找到小于10M的文件
+find . -size 1500c								大小为1,500 bytes
+find . -size +10000000c						查找出大于10000000字节的文件并显示出来。
+find . -type f -size +50k -exec ls -l {} \;  		查找当前目录中文件大于50kb的文件，并显示。
+find -type f -name \*.php -exec chomd 644{} \;
+find -type d -exec chmod 755{} \;
+find / -type f -size +500k -and -size -1000k		如何查找大小为500K到1000K之间的文件
+find / -size 1500c 							查找1,500字节大小的文件，c表示字节
+find / -size +1500c 							查找大于1,500字节大小的文件，+表示大于 
+find / -size +1500c 							查找小于1,500字节大小的文件，-表示小于
+
+命令中的“＋”是表示要求系统只列出大于指定大小的文件，
+而使 用“-”则表示要求系统列出小于指定大小的文件。
+
+
+根据user,group, uid, gid查找
+find /home -user mysql #列出/目录内属于用户mysql的文件或目录
+find /home -group mysql 列出/home内组为mysql的文件或目录
+find /home -uid +501 列出/home目录内uid大于501的文件或目录
+find /home -gid 501列出/home内gid为501的文件或目录
+find . ! -gid 0		查找gid不是0的文件
+find . ! -user root	查找user不是root的文件	感叹号"!"取反
+find /home -nouser 列出/home内不属于本地用户的文件或目录
+find /home -nogroup列出/home内不属于本地组的文件或目录
+
+
+# find / -type p	查找全部管道文件
+# find / -name '*a*' -type p  查找含有字母a的管道文件
+-type　  指定查找文件的类型
+b - 块设备文件。
+d - 目录。
+c - 字符设备文件。
+p - 管道文件。
+l - 符号链接文件。
+f - 普通文件。
+
+
+{}代表的是“由find找到的内容”， find的结果会被放置到{}位置中。
+-exec一直到“\;”是关键字，代表find额外命令的开始（-exec）到结束（\;），在这中间的就是find命令内的额外命令。就是本例中的“ls -l {}”
+因为“;”在bash环境下是有特殊意义的，因此利用反斜杠来转义。
+-exec command {} \;  -----将查到的文件执行command操作,{} 和 \;之间有空格
+-ok 和-exec相同，只不过在操作前要询用户
+
+find . -name ‘*. php’ -exec ls -l {} \;
+find . -name ‘*. php’ | xargs rm –fr      # *. php记得加引号，不加引号是一种很不好的习惯。
+find . -name ‘*. php’ -exec rm -rf {} \;
+find . -perm -007 -exec ls -l {} \;  #查所有用户都可读写执行的文件同-perm 777，不要漏掉结尾的分号”；”
+find logs -type f -mtime +5 -exec -ok rm {} \;	查找更改时间在5日以前的文件并删除它们：
+# find . -perm 0777 
+
+
+# ll `find / -name '*a.txt'`   	查找含有a.txt的文件并列出详细
+# ll `find / -name my.cnf`		查找my.cnf的文件并列出详细
+
+-print ：对匹配的文件输出到标准输出，该命令一般会和xargs来搭配使用（在后面我们会说到）。
+-exec ：对匹配的文件执行所给出的shell命令。
+-ok ：与-exec作用相同，只不过以一种更为安全的模式来执行shell命令，例如当执行rm命令的时候，会提示是否删除。
+-size     ：按照文件大小来查找文件。
+-depth  ：在查找文件时，遍历完当前目录文件邮件后，在对其子目录进行查找。
+-type     ：按照文件类型来查找文件。f - 普通文件、d - 目录、l - 符号链接文件、b - 块设备文件、c - 字符设备文件、p - 管道文件。
+-newer ：比对文件的新旧。
+-user ：根据用户名来查询文件。
+-maxdepth : 限制查询目录的深度。
+-mount                       #查文件时不跨越文件系统mount点
+-follow                      #如果遇到符号链接文件，就跟踪链接所指的文件
+
+按目录查找，-path的用法
+# find ./ -path './dir0*' -name ‘*.txt’	在当前目录下的dir0目录及子目录下查找txt后缀文件
+# find ./ -path '*/lnmp0.9/*' -name '*.sh'		在当前目录所有以名为lnmp0.9的目录下查找sh后缀文件
+# find ./ -path '*dir0*' -name  ‘*.txt’ 在当前目录下的dir0目录及子目录下查找txt后缀文件
+# find ./ -path './dir0*' -a -prune -o -name *.txt –print	在除dir0及子目录以外的目录下查找txt后缀文件，-prune忽略某个目录
+
+-a是and的缩写，意思是逻辑运算符‘或’(&&); -o是or的缩写,意思是逻辑运算符‘与’(||), -not 表示非.
+
+
+5. 其它：
+find . -empty 空白文件、空白文件夹、没有子目录的文件夹
+find . -false 查找系统中总是错误的文件
+find . -fstype type 找存在于指定文件系统的文件，如type为ext2
+find . -group gname 组名为gname的文件
+find . -depth n 在某层指定目录中优先查找文件内容
+find . -maxdepth levels 在某个层次目录中按递减方式查找
+
+-prune  #忽略某个目录
+$find .  -name "[A-Z]*" -print #查以大写字母开头的文件
+$find . -name "[a-z][a-z][0--9][0--9].txt"  -print #查以两个小写字母和两个数字开头的txt文件
+
+find -name april* fprint file 在当前目录下查找以april开始的文件，并把结果输出到file中
+find /mnt -name tom.txt -ftype vfat 在/mnt下查找名称为tom.txt且文件系统类型为vfat的文件
+find /mnt -name t.txt ! -ftype vfat  在/mnt下查找名称为tom.txt且文件系统类型不为vfat的文件
+find /tmp -name wa* -type l 在/tmp下查找名为wa开头且类型为符号链接的文件
+find /home -newer tmp.txt在/home下查更新时间比tmp.txt近的文件或目录
+find /home -anewer tmp.txt  在/home下查存取时间比tmp.txt近的文件或目录
+find /home -used -2  列出文件或目录被改动过之后，在2日内被存取过的文件或目录
+find /home -name tmp.txt  -maxdepth 4 列出/home内的tmp.txt 查时深度最多为3层
+find /home -name tmp.txt -mindepth 3 从第2层开始查
+find /home -links +2 查硬连接数大于2的文件或目录
+find ./ -name "*php" | ls -l --full-time $A 2>/dev/null | grep "2004-11-30 16:36:37	查找2004-11-30 16:36:37时更改过的文件
+
+http://blog.csdn.net/dante_k7/article/details/7363138
+http://www.ha97.com/4571.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+
+windows安装sqlite添加 sqlite的安装路径添加到 PATH 环境变量，最后在命令提示符下，使用 sqlite3 命令
+D:\>sqlite3
+
+http://www.sqlite.org/download.html
+http://www.runoob.com/sqlite/sqlite-installation.html
+
+创建数据库
+# sqlite3 aa.db
+上面的命令将在当前目录下创建一个文件 aa.db。该文件将被 SQLite 引擎用作数据库。如果您已经注意到 sqlite3 命令在成功创建数据库文件之后，将提供一个 sqlite> 提示符。
+
+# sqlite3 aa.db .dump > aa.sql   将转换整个 aa.db 数据库的内容到 SQLite 的语句中，并将其转储到 ASCII 文本文件 aa.sql 中
+# sqlite3 aa.db < aa.sql
+
+
+sqlite>.databases
+sqlite>.tables

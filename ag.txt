@@ -1,0 +1,24 @@
+
+# ag -wg g.conf			全名匹配
+# ag -lQ "\$pwd" 			当前目录查找含有$pwd的文件
+# ag "^pwd"				在当前目录查找已pwd开头的
+# ag -i pwd dber.sh		在当前文件查找
+# ag -i pwd .				在当前目录查找
+# ag -li pwd .				列出文件名
+# ag -Li pwd .			列出文件名没有pwd的
+
+# ag -g txt /root/centos		文件名有txt的
+# ag -g '\.txt'				含有.txt文件名
+
+
+# ag --list-file-types | ag js
+# ag -l aa /root/centos --php	
+
+-g PATTERN              按文件名匹配，默认是按文件内容匹配
+-l --files-with-matches    	 只列出匹配的文件名 	   	
+-L --files-without-matches			
+-Q --literal            Don't parse PATTERN as a regular expression	
+-G --file-search-regex  PATTERN Limit search to filenames matching PATTERN
+.                          
+# yum install the_silver_searcher
+https://github.com/ggreer/the_silver_searcher

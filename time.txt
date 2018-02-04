@@ -1,0 +1,17 @@
+
+
+# time -p date
+# time (awk 'BEGIN{ total=0; for(i=0; i<=100000; i++){total+=i;} print total;}')
+# time(total=0; for i in $(seq 100000); do total=$(($total+i)); done; echo $total;)
+
+# time grep -Fo 'sheng-cheng.com' new_5200tv-20131031.sql2 |wc -l
+real    0m8.106s
+user    0m7.956s
+sys     0m0.084s
+
+1)实际时间(real time): 从command命令行开始执行到运行终止的消逝时间；
+2)用户CPU时间(user CPU time): 命令执行完成花费的用户CPU时间，即命令在用户态中执行时间总和；
+3)系统CPU时间(system CPU time): 命令执行完成花费的系统CPU时间，即命令在核心态中执行时间总和。
+
+以上三种时间的显示格式均为MMmNN[.FFF]s。
+CPU时间 = 用户CPU时间 + 系统CPU时间 = 0m0.010s + 0m0.070s = 0m0.080s，实际时间大于CPU时间，说明在date命令运行的同时，还有其它任务在运行。

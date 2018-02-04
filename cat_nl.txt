@@ -1,0 +1,75 @@
+
+
+# command  << MARKER	 任何字词都可以当作分界符
+# cat -n /etc/passwd			输出行号
+# cat < 1.txt > 2.txt			相当于复制1.txt的内容到2.txt
+# cat > filename 				创建一个文件，并呈输入状态，以ctrl + c 结束输入
+# cat < 3.txt					输出3.txt内容，等价于cat 3.txt
+# cat >> d.txt				向d.txt追加内容，ctrl+C结束输入状态
+
+# cat << HELP				呈输入状态, 输入HELP结束输入状态，但不创建文件
+# cat > d.txt << EOF			创建d.txt并呈输入状态，输入EOF结束输入状态, EOF可换成其它的结束符
+# cat << EOF >d.txt			等价于上行创建d.txt并呈输入状态
+# cat >> d.txt << EO			向d.txt追加内容，输入EO结束输入状态
+
+# sed -e 's|a|z|' << eof		输入的会替换，每行的第一个a被替换为z
+
+# cat -s disk.sh					压缩连续空白行
+# cat read-p.sh|tr -s "\n"			移除所有的空白行
+
+
+
+# cat 1.txt >> 2.txt			把1.txt内容追加到2.txt后面
+# cat -b textfile1 textfile2 >> textfile3		 把 textfile1 和 textfile2 的档案内容加上行号（空白行不加）之后将内容附加到 textfile3 
+# cat -n textfile1 > textfile2 	把 textfile1 的档案内容加上行号后输入 textfile2 这个档案里 
+
+# cat file1 file2  > file 	将几个文件合并为一个文件
+# cat /dev/null > /etc/test.txt 	清空/etc/test.txt档案内容
+# cat *.txt > a.php	把全部txt文件合并到a.php中
+# cat -n *.txt > a.php
+
+
+# cat -n rsyslog.conf              显示所有行号（包括空行）
+# cat -b rsyslog.conf              显示所有行号（但不包括空行）
+# cat file1 file2 > file3	将几个文件合并为一个文件
+
+-A, --show-all 等价于 -vET
+-b, --number-nonblank 对非空输出行编号
+-e 等价于 -vE
+-E, --show-ends 在每行结束处显示 $
+-n, --number 对输出的所有行编号
+-s, --squeeze-blank 不输出多行空行
+-t 与 -vT 等价
+-T, --show-tabs 将跳 字符显示为 ^I
+-u (被忽略)
+-v, --show-nonprinting 使用 ^ 和 M- 引用，除了 LFD 和 TAB 之外
+
+
+# nl -b a log2012.log 						空行也加上行号
+# nl -b a -n rz log2014.log					让行号前面自动补上0,统一输出格式
+-b  ：指定行号指定的方式，主要有两种：
+-b a ：表示不论是否为空行，也同样列出行号(类似 cat -n)；
+-b t ：如果有空行，空的那一行不要列出行号(默认值)；
+-n  ：列出行号表示的方法，主要有三种：
+-n ln ：行号在萤幕的最左方显示；
+-n rn ：行号在自己栏位的最右方显示，且不加 0 ；
+-n rz ：行号在自己栏位的最右方显示，且加 0 ；
+-w  ：行号栏位的占用的位数。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

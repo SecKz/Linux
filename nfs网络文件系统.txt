@@ -1,0 +1,56 @@
+
+NFS 是Network File System的缩写，即网络文件系统。一种使用于分散式文件系统的协定。
+功能是通过网络让不同的机器、不同的操作系统能够彼此分享个别的数据，让应用程序在客户端通过网络访问位于服务器磁盘中的数据，是在类Unix系统间实现磁盘文件共享的一种方法。
+
+# yum install nfs-utils
+# nfsstat				查看NFS的运行状态
+# rpcinfo				查看rpc执行信息
+# exportfs -au 卸载所有共享目录
+# exportfs -rv 重新共享所有目录并输出详细信息
+
+如果我们在启动了NFS之后又修改了/etc/exports，是不是还要重新启动nfs呢？这个时候我们就可以用exportfs 命令来使改动立刻生效
+-a 全部挂载或卸载 /etc/exports中的内容 
+　-r 重新读取/etc/exports 中的信息 ，并同步更新/etc/exports、/var/lib/nfs/xtab
+　-u 卸载单一目录（和-a一起使用为卸载所有/etc/exports文件中的目录）
+　-v 在export的时候，将详细的信息输出到屏幕上。
+
+启动服务：一定要先启动rpc，然后启动nfs
+# service rpcbind start
+# service nfs start   
+# chkconfig nfs on
+# chkconfig rpcbind on
+
+服务器端使用showmount命令查询NFS的共享状态
+# showmount -e　　　	默认查看自己共享的服务
+# showmount -a		显示已经与客户端连接上的目录信息
+
+客户端使用showmount命令查询NFS的共享状态
+# showmount -e 45.63.122.222
+
+客户端挂载NFS服务器中的共享目录 
+# yum install nfs-utils							客服端也要安装才能挂载	
+# touch /data			
+# chown -R www.www /data			
+# mount -t nfs 172.20.65.16:/data /data 
+# umount /data 						卸载目录挂载
+
+设置开机自动挂载目录 在/etc/fstab 写入
+
+
+vi /etc/exports   			编辑配置文件，添加以下内容
+/home/html/data *(rw,sync,no_subtree_check,anonuid=500,anongid=500)
+相关参数说明：
+/home/html/data 							NFS共享目录
+192.168.21.0/24							允许这个网段内的IP地址访问共享目录
+rw  									读取写入权限
+sync 									数据实时同步
+no_subtree_check 						不检查目录权限，提高数据读取效率
+anonuid=500 							500代表www用户 
+anongid=500  							500代表www组  
+
+
+http://www.cnblogs.com/mchina/archive/2013/01/03/2840040.html
+https://mcdee.com.au/tutorial-configure-iptables-for-nfs-server-on-centos-6/
+
+
+

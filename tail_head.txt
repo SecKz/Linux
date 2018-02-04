@@ -1,0 +1,46 @@
+
+# tail -10 /etc/passwd 或 tail -n 10 /etc/passwd
+# head -20 /etc/passwd | tail -10		查看文件11 行到第 20 行
+# sed -n '5,10p' /etc/passwd		只查看文件的第5行到第10行
+# tail -n +31 /etc/passwd	显示指定从第31行起到文件尾部
+# tail -c 27 /etc/passwd
+
+
+参数-f使tail不停地去读最新的内容，这样有实时监视的效果 用Ctrl＋c来终止，可用于读取日志文件。
+# tail -f /var/log/httpd/error_log
+# tail -f /var/log/httpd/error_log|tac						  最新在最上面
+#tail -f /var/log/mail.log /var/log/apache/error_log     		也可以同时监听多个文件
+
+
+-c            输出最后几个字节
+-f             在文件增长时，动态追加数据
+-n            输出最后n行
+-s n         与-f选项合用，使tail每隔n秒检查一次文件的输出，默认5秒
+
+tail -n 1000：显示最后1000行
+tail -n +1000：从1000行开始显示，显示1000行以后的
+head -n 1000：显示前面1000行
+
+# head -c5 /etc/passwd		显示第一行的前5个字符
+# head -5 /etc/passwd
+
+
+# head -n -3 yum.conf |tail -n +11		从第11行开始显示，但不包括最后3行
+# head -n 20 yum.conf |tail -n +11		显示前20行，但从第11行开始
+# head -n -3 yum.conf |tail -n 10		显示除最后3行以外的所有行，但只显示最后10行
+# head -n 20 yum.conf |tail -n 10		显示前20行中的后10行
+# tail -n +11 yum.conf |head -n 10		从第11行开始显示，但只显示前10行
+# tail -n +11 yum.conf |head -n -3		从第11行开始显示，但不包括最后3行
+# tail -n 13 yum.conf |head -n 10		显示最后13行中的前10行
+# tail -n 13 yum.conf |head -n -3 		 显示最后13行中除末尾的3行以外的前10行
+
+
+命令参数：
+-q 隐藏文件名
+-v 显示文件名
+-c<字节> 显示字节数
+-n<行数> 显示的行数
+
+
+
+

@@ -1,0 +1,77 @@
+
+
+# find . | fgrep '环境' |fgrep '社会'			查看当前目录下同时有环境和社会关键字的文件
+# echo helloworld | egrep -o 'w.'
+# echo helloworld | egrep -o 'w\.'	匹配点号要转义
+
+# find . -type f | egrep -vi '\.(jpg|gif|png|bmp|ico)$'			过滤图片
+# date | egrep -o '[0-9]+'
+# find . -mtime -2 -type f |egrep '\.(gz|sql)$'		查找以.gz或.sql结尾的文件
+# egrep 'root|sshd' /etc/passwd			
+# egrep 'r[o]+t' /etc/passwd			
+# egrep 's[a-z]+t' /etc/passwd
+# egrep 's[a-zA-Z]+t' /etc/passwd
+# egrep '^[f-z]{5,8}' /etc/passwd		查找以用户名字母f到z的开头，长度为5到8位的记录
+# service --status-all | egrep 'locked|已死'
+
+-o只打印匹配
+# egrep -o 'r[o]+t' /etc/passwd			有结果，用grep 'r[o]+t' /etc/passwd无结果	
+# egrep -o 's[a-z]+t' /etc/passwd
+# egrep -o 's[a-zA-Z]+t' /etc/passwd
+# echo 12a4b8e4c | egrep -o '[0-9]+'		从字符串中取出数字的部分
+# echo 12a4b8e4c | egrep -o '[0-9]+' | sort -n	从字符串中取出数字的部分并排序
+
+-x整行匹配
+egrep -x 'n.+n' passwd		以n开头结尾的行
+
+
+egrep（extended grep） 支持更丰富的正则表达式，而且支持多目标检索，比grep快得多
+egrep 相当于grep -E		fgrep 相当于 grep -F
+egrep是grep的扩展, egrep除了具备grep的基本功能外还可以使用附加的正则表示式元字符
+egrep为 grep 的扩充版本, 改良了许多传统 grep 不能或不便的操作. 比方说:
+grep 之下不支持 ? 与 + 这两种 modifier, 但 egrep 则可.
+grep 不支持 a|b 或 (abc|xyz) 这类"或一"比对, 但 egrep 则可.
+grep 在处理 {n,m} 时, 需用 \{ 与 \} 处理, 但 egrep 则不需.
+
+
+-o		保打印符合pattern的部分
+-b         在每行前面加上找到该行的块号码。使用此标志有助于按照上下文查找磁盘块号码。-b 标志不能用于来自标准输入和管道的输入。
+-c         仅显示匹配行的计数。
+-e 模式         指定一个模式。这象一个简单的模式，但是它在 模式 以一个 －（负号）开始时很有用。
+-f 		StringFile         指定包含字符串的文件。
+-h         当处理多个文件时排除文件名。
+-i         当进行比较时忽略字符的大小写。
+-l         列出包含匹配行的文件名（一次）。文件名之间用换行符加以分隔。如果搜索标准输入，会返回一个 "(StandardInput)" 路径名。
+-n         在每行之前加上该行在文件中的相对行号。
+-p[ Separator]         显示包含匹配行的整个段落。段落之间将按照分隔符 Separator参数指定的段落分隔符加以定界，这些分隔符是与搜索模式有着相同格式的模式。包含段落分隔符的行将仅用作分隔符；它们不会被包含在输出中。缺省的段落分隔符是空白行。
+-q         禁止所有的输出到标准输出，不管匹配行。如果选中输入行，以 0 状态退出。
+-s         仅显示出错消息。这点对检查状态有用。
+-v         显示除了与指定的模式匹配的行之外的所有行。
+-w         执行单词搜索。
+-x         显示与指定模式精确匹配而不含其它字符的行。
+-y         当进行比较时忽略字符的大小写。
+
+
+
+如果只是查找普通的字符串，用fgrep更快
+# fgrep 'nolan' /etc/passwd
+# fgrep -irl 'abcd' glqch.com		在文件夹glqch.com查找含有abcd的文件
+
+fgrep是fix grep，允许查找字符串 而不是一个模式，运算速度快，适合于从大量数据中进行检索
+grep把模式当做正则表达式看，fgrep把模式当做固定字符串看，所以后者要比前者速度快，同时后者的搜索功能要弱于前者。
+# fgrep -lr 'parent(' glhyzs.com		在目录中找
+# fgrep -irl 'abcd' glqch.com		在文件夹glqch.com查找含有abcd的文件
+# fgrep 'nolan' /etc/passwd		在文件中找
+# find . -maxdepth 1 |egrep '\.log$'			查找以log结尾的文件
+
+
+
+
+
+
+
+
+
+
+
+

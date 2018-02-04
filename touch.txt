@@ -1,0 +1,43 @@
+
+
+# touch {1..9}		创建1-9文件多个文件
+# touch test{1..9}.html
+# touch {a..z}
+# rm -f {a..z}
+# touch log2012.log log2013.log
+# touch {aa,bb,cc} 一次建立多个空文件	touch aa bb cc
+
+
+修改文件时间
+# touch -t 0811142234.50 file1.txt 设定文件的时间错为08年11月14日22点34分50秒
+# touch -t 200910112200 new.txt  
+# touch -r a.txt b.php      将b.txt的时间改的和a.txt一样
+
+# ls -l --full-time 		验证上面的时间
+# date > outfile         通过date命令生成文件outfile。
+touch -d "4 days ago" test.txt		修改test.txt的时间为操作系统当前时间四天前的时间
+
+
+3．命令功能：
+touch命令参数可更改文档或目录的日期时间，包括存取时间和更改时间。 
+
+-a   或--time=atime或--time=access或--time=use 　只更改存取时间。
+-c   或--no-create 　不建立任何文档。
+-d 　使用指定的日期时间，而非现在的时间。
+-f 　此参数将忽略不予处理，仅负责解决BSD版本touch指令的兼容性问题。
+-m   或--time=mtime或--time=modify 　只更改变动时间。
+-r 　把指定文档或目录的日期时间，统统设成和参考文档或目录的日期时间相同。
+-t 　使用指定的日期时间，而非现在的时间。
+
+
+
+
+
+
+
+
+
+
+
+
+

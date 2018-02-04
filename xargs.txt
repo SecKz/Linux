@@ -1,0 +1,104 @@
+
+# echo '11@22@33@44@55' | xargs -d '@' -tn2 echo
+# find /home/html/prz22/ -type f | xargs -tn2 chmod 644			# 一次传2个参数
+
+n的用法  表示命令在执行的时候一次用的argument的个数，默认是用所有
+# date | xargs -n1
+# la|xargs -n1
+# la|xargs -n2
+# echo stu stu1 stu2|xargs														无换行
+# echo stu stu1 stu2|xargs -n1													有换行
+# echo stu stu1 stu2|xargs -n2	
+
+# find . | xargs -n1 basename				找出所有文件，只列出文件名
+# find . | xargs -n2 basename	
+# find . | xargs -n2 -t
+
+-i 或者是-I，将xargs的每项名称，一行一行赋值给{}，和{}配合使用
+# rpm -ql pure-ftpd | xargs -ti rm -rf {}
+# pwd|xargs -i basename {}		i要配合{}一起使用 获取当前所在目录的名称 等同用 xargs -I {}
+# pwd|xargs -ti basename {}
+
+# find . -inum 3735617 | xargs -ti mv {} shell			找到inode为3735617 的文件并重命名为shell
+# find . -name '*.log' | xargs -i mv {} {}.bak				给所有以log结尾的文件名加上bak
+# find . -inum 3735617 | xargs -ti mv {} shell			找到inode为3735617 的文件并重命名为shell
+# find . -name '*.log' | xargs -i mv {} {}.bak				给所有以log结尾的文件名加上bak
+
+# find . -name '*.log' | xargs -t0 rm -f		
+# find . -type f | xargs -ti bash -c 'echo zz >> {}'			直接用xargs -ti echo zz >> {}执行不了
+# find . -type f | xargs -ti sh -c 'echo zz >> "{}"'		文件名空格时,用-0不起作用
+
+-t 表示先打印命令，然后再执行
+# find . -type d | xargs -ti chmod 755 {}
+# find . -type f | xargs -t -I{} mv {} {}.bak				文件名加上.bak后缀
+# ls|xargs -ti mv {} {}.bak												把当前文件夹的文件加后缀.bak
+# ls|sed -n 's/\.bak$//p'|xargs -ti -n1 mv {}.bak {}							文件名去掉.bak
+
+搜索到-e指定的命令行参数，则只会将-e指定的命令行参数之前的参数(不包括-e指定的这个参数)传递给xargs后面的命令
+# echo '11 22 33' | xargs -E '33' echo 
+
+
+# find . -print0 | xargs -n1 -0			如果文件名有空格或换行
+
+# echo stu stu1 stu2|xargs -n1 useradd											批量增加用户stu stu1 stu2
+# cat /etc/passwd|grep '^stu'|awk -F':' '{print $1}'|xargs -t -n1 userdel –r				删除上面添加的用户
+
+# cat username.txt|xargs echo											无换行输出
+# cat username.txt|xargs -n1 echo											有换行输出，可以用cat username.txt | xargs -n1 -t来验证
+# cat username.txt | xargs -n1 -t											先打印命令，再执行命令
+# find . -name '*.sh' | xargs -i mv {} test4									使用xargs执行mv
+# find . -iname '*.sh'|xargs -ti mv {} sh										边打印命令边执行命令，xargs -ti等同于xargs -t -i
+# find . -iname '*.sh'|xargs -ti cp {} ../{}										使用xargs执行cp命令 把目录中sh文件复制到上层目录
+
+
+
+
+-d delim 分隔符，默认的xargs分隔符是回车，argument的分隔符是空格，这里修改的是xargs的分隔符
+# echo "splitXhiXamosliXsplit" | xargs -d "X" -n1
+# date | xargs -n1
+# la|xargs -d s		以字母s作为分隔符
+# ll|xargs -d '\r'		以换行为分隔符 等同\n
+# la|xargs -d '\t'	 	以tab为分隔符，引号不能少
+
+
+
+-a file 从文件中读入作为sdtin，（看例一）
+-e flag ，注意有的时候可能会是-E，flag必须是一个以空格分隔的标志，当xargs分析到含有flag这个标志的时候就停止。
+-p 当每次执行一个argument的时候询问一次用户。输入y或n，再enter
+-n num 后面加次数，表示命令在执行的时候一次用的argument的个数，默认是用所有的。
+-t 表示先打印命令，然后再执行。
+-i 或者是-I，将xargs的每项名称，一行一行赋值给{}，和{}配合使用
+-r no-run-if-empty 当xargs的输入为空的时候则停止xargs，不用再去执行了。
+-s num 命令行的最好字符数，指的是xargs后面那个命令的最大命令行字符数。
+ -L  num Use at most max-lines nonblank input lines per command line.-s是含有空格的。-l  同-L
+-d delim 分隔符，默认的xargs分隔符是回车，argument的分隔符是空格，这里修改的是xargs的分隔符
+-x exit的意思，主要是配合-s使用。
+-P 修改最大的进程数，默认是1，为0时候为as many as it can ，这个例子我没有想到，应该平时都用不到的吧。
+
+http://www.bfcat.com/index.php/2012/07/find-xargs/
+
+之所以能用到这个命令，关键是由于很多命令不支持 | 管道来传递参数，所以就有了xargs命令
+# locate ~/test/a | ls -l			这是是错误的
+# locate ~/test/a | xargs ls -l		这是正确的
+
+xargs的默认命令是echo，这意味着通过管道传递给xargs的输入将会包含换行和空白，不过通过xargs的处理，换行和空白将被空格取代。
+# find . -print0 | xargs -n1 -0			如果文件名有空格或换行
+
+find后执行xargs提示xargs: argument line too long解决方法：用-n1
+
+
+
+
+
+使用xargs在shell中多进程并发运行程序
+# seq 20 22 | xargs -n 1 -t -P 3 sleep	    	相当于开3个进程分别执行sleep 1;sleep 2;sleep3
+按ctrl+z
+# bg
+# ps aux | grep sleep					
+
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+
+1，当我们仅仅只是读取文件时，access time 改变，而modify，change time 不会改变
+2，当修改文件时，access，modify，change time 都会跟着改变
+3，当修改文件属性时，change time 改变，而access，modify time 不变。
+
+
+linux 的文件时间属性分为：访问时间access time、修改时间modifed time、更改时间change time。
+
+文件访问时间access time
+当我们创建一个文件后，文件就有了相同的访问时间access time、修改时间modifed time、更改时间change time。
+文件访问时间access time，即读取了文件的内容。如果查看了文件，文件的查看时间就会更新。如进行cat、more、less等操作后，文件的访问时间就会更新。
+如下用ls默认是看到文件的修改时间modifed time
+
+文件修改时间modifed time
+文件的修改时间即对文件内容的修改时间，比如通过vim、emacs对文件内容进行了修改、或追加等其他方式对文件内容做修改后，文件的修改时间就会发生变化。
+
+文件更改时间change time
+文件更改时间即对文件文件的其他属性的变化时间。比如通过chmod、chown、ln等对文件的（忽略文件访问时间属性、文件修改时间属性的变化）属性变化随之更新文件的访问时间。
+chmod、chown更新文件全新，ln更新文件的软硬链接属性信息。
+
+

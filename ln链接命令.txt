@@ -1,0 +1,82 @@
+
+
+# ln -svf /usr/local/nagios/bin/* /bin					要用绝对路径，相对路径不能正确指向
+# ln -s /etc/pure-ftpd/sbin/* /usr/local/sbin/				把/etc/pure-ftpd/sbin下的全部文件链接到/usr/local/sbin/下，注意星号*不能少
+
+# ln -s mysql.sql test/								在文件夹test建立同名链接文件mysql.sql , 等同于ln -s mysql.sql test
+# ln -s mysql.sql test/rename.sql						在文件夹test建立链接文件，并改名为rename.sql
+# ln c.txt lc.txt  										为c.txt建立一个链接文件lc.txt，建立一个硬链接，类型为-
+# ln -s c.txt lc.txt  									为c.txt建立一个软链接文件lc.txt，建立一个软链接，类型为l
+无论是软链接还是硬链接，文件都保持同步变化。
+删除源文件，软链接和硬链接文件还会存在
+
+# ln -s -vb /etc/pure-ftpd/sbin/* /usr/local/sbin/		-v 显示详细的处理过程 -b 删除，覆盖以前建立的链接
+# ln -s -vi /etc/pure-ftpd/sbin/* /usr/local/sbin/		-i 交互模式，文件存在则提示用户是否覆盖
+
+# [ -e linkfile ]&&echo '是有效链接'				判断拨接的有效性
+# [ ! -e linkfile ]&&echo '不是有效链接'		
+
+# find . -type l		获取当前目录全部链接文件
+
+# readlink /etc/rc.local		获取链接文件指向的文件
+# find . -type l -exec ls -l {} \;		获取当前目录全部链接文件
+# find / -type l -exec ls -l {} \;		获取系统全部链接文件
+
+
+# find /etc -lname ../init.d/httpd		找出链接值为../init.d/httpd全部链接文件
+# find /etc -lname '*init.d/http*'		找出链接值含有init.d/http字符的全部链接文件
+# find /etc -lname '../init.d/mysql*'		有星号时，双引号不能少	
+# find /etc -ilname '../init.d/mysql*'	加上i，不区分大小写
+# find /etc -ilname '*init.d/mysqL*' | xargs ls -ald
+# find /etc/ -ilname '*imap*'|xargs rm -f
+
+
+软链接：
+1.软链接，以路径的形式存在。类似于Windows操作系统中的快捷方式
+2.软链接可以 跨文件系统 ，硬链接不可以
+3.软链接可以对一个不存在的文件名进行链接
+4.软链接可以对目录进行链接
+硬链接:
+1.硬链接，以文件副本的形式存在。但不占用实际空间。
+2.不允许给目录创建硬链接
+3.硬链接只有在同一个文件系统中才能创建，不同分区的不能创建硬连接
+
+如果软链接的是目录
+删除目录中的源文件或链接文件，也会同时删除另外一份
+给其中一个写，另外一个也会同时变化
+
+Linux文件系统中，有所谓的链接(link)，我们可以将其视为档案的别名，而链接又可分为两种 : 硬链接(hard link)与软链接(symbolic link)，硬链接的意思是一个档案可以有多个名称，而软链接的方式则是产生一个特殊的档案，该档案的内容是指向另一个档案的位置。硬链接是存在同一个文件系统中，而软链接却可以跨越不同的文件系统。
+这里有两点要注意：
+第一，ln命令会保持每一处链接文件的同步性，也就是说，不论你改动了哪一处，其它的文件都会发生相同的变化；
+第二，ln的链接又分软链接和硬链接两种，软链接就是ln –s 源文件 目标文件，它只会在你选定的位置上生成一个文件的镜像，不会占用磁盘空间，硬链接 ln 源文件 目标文件，没有参数-s， 它会在你选定的位置上生成一个和源文件大小相同的文件，无论是软链接还是硬链接，文件都保持同步变化。删除源文件，软链接对硬链接文件还会存在
+ln指令用在链接文件或目录，如同时指定两个以上的文件或目录，且最后的目的地是一个已经存在的目录，则会把前面指定的所有文件或目录复制到该目录中。若同时指定多个文件或目录，且最后的目的地并非是一个已存在的目录，则会出现错误信息。
+
+3．命令参数：ln [options] source dist
+必要参数:
+-b 删除，覆盖以前建立的链接
+-d 允许超级用户制作目录的硬链接
+-f 强制执行 链结时先将与 dist 同档名的档案删除
+-i 交互模式，文件存在则提示用户是否覆盖
+-n 把符号链接视为一般目录
+-s 软链接(符号链接)
+-v 显示详细的处理过程
+选择参数:
+-S “-S<字尾备份字符串> ”或 “--suffix=<字尾备份字符串>”
+-V “-V<备份方式>”或“--version-control=<备份方式>”
+--help 显示帮助信息
+--version 显示版本信息
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+
+# echo -e 'aa\nbb'	-e 说明解析\n,\t，反之不解析，直接输出
+# echo -e 'aa\tbb' 	\t被解析成tab键
+# echo -e 'aa\bbb' 	输出abb, 删除前面的一个a
+# echo > 文件名		清空文件
+# echo > a.txt		新建一个文件
+
+echo输出加上颜色
+# echo -e "\033[1;40;35m文字my word\033[0m"
+# echo -e "\033[40;35m文字my word\033[0m"
+
+
+# echo -n "Enter your name"   参数-n的作用是不换行，echo在shell中默认会在Enter your name后再输出一个换行
+
+# printf "This script is a tool to install pureftpd for lnmp \n\n" 	\n会转化成换行
+# echo "This script is a tool to install pureftpd for lnmp \n\n"	\n会不会转化成换行
+
+# echo -e "\tHello World\c"
+
+-e选项使得echo命令可以无限制地使用转义序列控制输出的效果。下面的列表给出常用的转义序列。
+
+转义序列	功能
+\c	不换行打印
+\n	换行
+\t	制表符
+\\	反斜杠
+

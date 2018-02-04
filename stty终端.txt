@@ -1,0 +1,39 @@
+
+
+
+stty时一个用来改变并打印终端行设置的常用命令
+
+# stty -a								打印当前的所有设置
+
+# stty erase ^h						按backspace输出^?
+# stty erase ^?						改回原来
+
+# stty size							打印出终端的行数和列数
+
+# stty -echo 							禁止屏蔽显示
+# stty echo 							打开回显
+# stty -echo; date; stty echo;   	   测试方法
+
+在命令行下禁止输出小写
+# stty olcuc 							开启
+# stty -olcuc							恢复
+# stty olcuc;pwd;stty -olcuc			开启再关闭
+
+忽略回车符
+# stty igncr 				开启
+# stty -igncr				恢复
+
+# stty  cbreak        开启输入立即响应模式
+# stty  -cbreak           关闭输入立即响应模式
+
+http://www.cnblogs.com/xdzone/archive/2011/03/15/1984981.html
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,240 @@
+
+# rpm -ivh php.rpm --force --nodeps				强制安装
+# rpm -qa |grep '5.1.59'							查找版本号为5.1.59的包
+# rpm -qa 'mysql*'								先找出有关mysql的包名 rpm –qa|grep –i mysql
+# rpm -qi mysql 									查看mysql的详细信息
+# rpm -qc mysql 									查看mysql配置文件
+# rpm -ql mysql									  查看mysql包里的文件
+# rpm -qlp mysql.rpm							查询rpm文件包含哪些文件
+
+# rpm -qf `which updatedb						查看命令属于哪个rpm包，用于无该命令时，查找要安装的包
+# rpm -qi mlocate								根据上句查找到包名，再查看某个命令包的详细
+# rpm -qf /etc/php.d/mysql.ini
+
+# rpm -qa --last|grep -i mysql 					查询有关全部mysql包的安装时间。rpm -qi mysql是查看单个包
+# yum search mysq  							列出所有含有mysq字符的包，比list好用
+# yum list mysql* 								列出所有含有mysql字符的包
+
+# rpm -ql pure-ftpd | xargs -ti rm -rf {}			yum remove或rpm -e 的删除只是rpm包，但包遗留的相关文件夹要手动删除
+
+http://pkgs.org
+
+基础命令：
+# rpm -i software.rpm	安装
+# rpm -ivh soft.rpm
+# rpm -ivh http://www.linuxcast.net/software.rpm		远程安装
+# rpm -ivh pure-ftpd --nodeps --force			nodeps和force双强制安装
+# rmp -e software	卸载
+# rpm -ev pure-ftpd --nodeps		强制删除
+# rpm -U software-new.rpm	升级安装
+
+-v 显示安装信息
+-h 显示进度条
+
+# rpm -ivh --test MySQL-server-5.6.10-1.el6.i686.rpm				检查安装MySQL
+# rpm -ivh --nosignature pure-ftpd-1.0.36-1.el6.rf.x86_64.rpm 		略过数字签名的检查
+# rpm -Uvh MySQL-server-5.6.10-1.el6.i686.rpm					升级，如果MySQL未安装过则安装，如果MySQL已安装过则升级
+# rpm -Fvh MySQL-server-5.6.10-1.el6.i686.rpm					更新，如果MySQL未安装过则忽略，如果MySQL已安装过则升级
+# rpm -qpR MySQL-server-5.6.10-1.el6.i686.rpm 				查询MySQL安装包所依赖的软件包
+# rpm -Vf /etc/crontab											检查文件是否被改动过
+# rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6 		导入密钥文件
+# rpm --rebuilddb												重建rpm数据库
+# rpm -Vp MySQL-server-5.6.10-1.el6.i686.rpm | tail				列出MySQL安装包中可能被改动过的文件
+# rpm -qR man #查询man所需的程序包
+
+RPM验证：
+可验证RPM来源是否合法，防止软件的恶意更改。
+一般使用非对称加密算法，需要一个秘钥：
+rpm –import 秘钥 ：导入密钥（一般软件包默认导入秘钥）
+rpm –K software.rpm：验证rpm文件
+rpm –V 软件名：验证安装后的软件
+
+# rpm -K pure-ftpd-1.0.30-1.el6.x86_64.rpm
+# rpm -K pure-ftpd-1.0.30-1.el6.x86_64.rpm –nopgp
+# #rpm -V pure-ftpd		查看rpm包被修改过的文件
+
+移走一个包 用户要注意使用的是软件的名称pure-ftpd，而不是软件包的名称pure-ftpd-1.0.35-0.lxcenter.0。
+# rpm -ev pure-ftpd  
+# yum downgrade pure-ftpd -y				有些包不能删除，可以先用yum downgrade，再rpm –e
+# rpm -e pure-ftpd
+
+
+
+rpm 执行安装包
+二进制包（Binary）以及源代码包（Source）两种。二进制包可以直接安装在计算机中，
+而源代码包将会由RPM自动编译、安装。源代码包经常以src.rpm作为后缀名。
+
+linux下安装软件包有两种方法：源文件编译安装（source）和 rpm 安装
+每一个rpm包的名称都由”-“和”.”分成了若干部分。就拿 a2ps-4.13b-57.2.el5.i386.rpm 这个包来解释一下，a2ps 为包名；4.13b则为版本信息；57.2.el5为发布版本号；i386为运行平台。
+其中运行平台常见的有i386, i586, i686, x86_64 ，需要你注意的是cpu目前是分32位和64位的，i386,i586和i686都为32位平台，x86_64则代表为64位的平台。
+另外有些rpm包并没有写具体的平台而是noarch，这代表这个rpm包没有硬件平台限制。
+
+noarch是no architecture的缩写，说明这个包可以在各个不同的cpu上使用。
+rpm软件包有这么几种（后缀）：*.386.rpm,*.486.rpm,*.586. rpm,*.686.rpm，这是与CPU的指令集有关.
+noarch表明与处理器无关，src是源码包需要编译
+
+RPM的配置文件；RPM包管理，的配置文件是 rpmrc ，我们可以在自己的系统中找到；比如Fedora Core 4.0中的rpmrc 文件位于；
+# locate rpmrc
+/usr/lib/rpm/rpmrc
+/usr/lib/rpm/redhat/rpmrc
+
+
+
+-i, --install                     install package(s)
+-v, --verbose                     provide more detailed output
+-h, --hash                        print hash marks as package installs (good with -v)
+-e, --erase                       erase (uninstall) package
+-U, --upgrade=<packagefile>+      upgrade package(s)
+－-replacepkge                    无论软件包是否已被安装，都强行安装软件包
+--test                            安装测试，并不实际安装
+--nodeps                          忽略软件包的依赖关系强行安装
+--force                           忽略软件包及文件的冲突
+-a, --all                         query/verify all packages
+-p, --package                     query/verify a package file
+-l, --list                        list files in package
+-d, --docfiles                    list all documentation files
+-f, --file                        query/verify package(s) owning file
+
+-i ：安装的意思
+-v ：可视化
+-h ：显示安装进度
+-U ：即升级的意思
+
+另外在安装一个rpm包时常用的附带参数有：
+
+--force 强制安装，即使覆盖属于其他包的文件也要安装
+--nodeps 当要安装的rpm包依赖其他包时，即使其他包没有安装，也要安装这个包
+--nodeps	当遇到软件依赖于其它软件而无法安装时，可强制安装
+--replacefiles	在安装过程中，如果遇到某个文件已经存在的情况，可直接覆盖
+--replacepkgs	如果软件已经安装过，可使用该选项重复安装
+--force	强制安装，已存在的文件会被覆盖，已安装过的软件会重新安装
+--test	测试安装，不会真实安装软件，而指示检查安装过程
+--justdb	只更新rpm数据库，当rpm数据库损坏时可使用该选项重新生成相关信息
+--nosignature	略过数字签名的检查
+--prefix NEWPATH	将软件安装到指定的目录
+--noscripts	禁止安装过程中自行执行系统指令
+
+
+一、安装 
+命令格式： 
+rpm -i ( or --install) options file1.rpm ... fileN.rpm 
+参数： 
+file1.rpm ... fileN.rpm 将要安装的RPM包的文件名 
+详细选项： 
+-h (or --hash) 安装时输出hash记号 (``#'') 
+--test 只对安装进行测试，并不实际安装。 
+--percent 以百分比的形式输出安装的进度。 
+--excludedocs 不安装软件包中的文档文件 
+--includedocs 安装文档 
+--replacepkgs 强制重新安装已经安装的软件包 
+--replacefiles 替换属于其它软件包的文件 
+--force 忽略软件包及文件的冲突 
+--noscripts 不运行预安装和后安装脚本 
+--prefix 将软件包安装到由 指定的路径下 
+--ignorearch 不校验软件包的结构 
+--ignoreos 不检查软件包运行的操作系统 
+--nodeps 不检查依赖性关系 
+--ftpproxy 用 作为 FTP** 
+--ftpport 指定FTP的端口号为 
+通用选项 
+-v 显示附加信息 
+-vv 显示调试信息 
+--root 让RPM将指定的路径做为"根目录"，这样预安装程序和后安 
+装程序都会安装到这个目录下 
+--rcfile 设置rpmrc文件为 
+--dbpath 设置RPM 资料库存所在的路径为 
+二、删除 
+命令格式： 
+rpm -e ( or --erase) options pkg1 ... pkgN 
+参数 
+pkg1 ... pkgN ：要删除的软件包 
+详细选项 
+--test 只执行删除的测试 
+--noscripts 不运行预安装和后安装脚本程序 
+--nodeps 不检查依赖性 
+通用选项 
+-vv 显示调试信息 
+--root 让RPM将指定的路径做为"根目录"，这样预安装程序和后安装 
+程序都会安装到这个目录下 
+--rcfile 设置rpmrc文件为 
+--dbpath 设置RPM 资料库存所在的路径为 
+三、升级 
+命令格式 
+rpm -U ( or --upgrade) options file1.rpm ... fileN.rpm 
+参数 
+file1.rpm ... fileN.rpm 软件包的名字 
+详细选项 
+-h (or --hash) 安装时输出hash记号 (``#'') 
+--oldpackage 允许"升级"到一个老版本 
+--test 只进行升级测试 
+--excludedocs 不安装软件包中的文档文件 
+--includedocs 安装文档 
+--replacepkgs 强制重新安装已经安装的软件包 
+--replacefiles 替换属于其它软件包的文件 
+--force 忽略软件包及文件的冲突 
+--percent 以百分比的形式输出安装的进度。 
+--noscripts 不运行预安装和后安装脚本 
+--prefix 将软件包安装到由 指定的路径下 
+--ignorearch 不校验软件包的结构 
+--ignoreos 不检查软件包运行的操作系统 
+--nodeps 不检查依赖性关系 
+--ftpproxy 用 作为 FTP** 
+--ftpport 指定FTP的端口号为 
+通用选项 
+-v 显示附加信息 
+-vv 显示调试信息 
+--root 让RPM将指定的路径做为"根目录"，这样预安装程序和后安装程序都会安装到这个目录下 
+--rcfile 设置rpmrc文件为 
+--dbpath 设置RPM 资料库存所在的路径为 
+四、查询 
+命令格式： 
+rpm -q ( or --query) options 
+参数： 
+pkg1 ... pkgN ：查询已安装的软件包 
+详细选项 
+-p (or ``-'') 查询软件包的文件 
+-f 查询属于哪个软件包 
+-a 查询所有安装的软件包 
+--whatprovides 查询提供了 功能的软件包 
+-g 查询属于 组的软件包 
+--whatrequires 查询所有需要 功能的软件包 
+信息选项 
+显示软件包的全部标识 
+-i 显示软件包的概要信息 
+-l 显示软件包中的文件列表 
+-c 显示配置文件列表 
+-d 显示文档文件列表 
+-s 显示软件包中文件列表并显示每个文件的状态 
+--scripts 显示安装、卸载、校验脚本 
+--queryformat (or --qf) 以用户指定的方式显示查询信息 
+--dump 显示每个文件的所有已校验信息 
+--provides 显示软件包提供的功能 
+--requires (or -R) 显示软件包所需的功能 
+通用选项 
+-v 显示附加信息 
+-vv 显示调试信息 
+--root 让RPM将指定的路径做为"根目录"，这样预安装程序和后安装程序都会安装到这个目录下 
+--rcfile 设置rpmrc文件为 
+--dbpath 设置RPM 资料库存所在的路径为 
+五、校验已安装的软件包 
+命令格式： 
+rpm -V ( or --verify, or -y) options 
+参数 
+pkg1 ... pkgN 将要校验的软件包名 
+软件包选项 
+-p Verify against package file 
+-f 校验所属的软件包 
+-a Verify 校验所有的软件包 
+-g 校验所有属于组 的软件包 
+详细选项 
+--noscripts 不运行校验脚本 
+--nodeps 不校验依赖性 
+--nofiles 不校验文件属性 
+通用选项 
+-v 显示附加信息 
+-vv 显示调试信息 
+--root 让RPM将指定的路径做为"根目录"，这样预安装程序和后安装程序都会安装到这个目录下 
+--rcfile 设置rpmrc文件为 
+--dbpath 设置RPM 资料库存所在的路径为 
+
+

@@ -1,0 +1,72 @@
+
+
+
+# locate /home/html/tg7/files/*国有企业*思路*		指定目录下多关键字查找
+# locate /root/*dber*				搜索/root目录下含有dber的文件名
+
+# locate ./*.gz					查看当前目录所有以gz结尾的文件
+# locate /var/run/*.pid		查看run下全部pid文件
+# locate /var/*/*.pid		查看var下全部pid文件
+# locate /etc/sh			搜索etc目录下所有以sh开头的文件
+# locate ~/a				搜索用户主目录下，所有以a开头的文件
+# locate -i ~/a			不区分大小写
+
+# updatedb -U /home/html/ -o /home/html/dbtg		更新/home/html/目录到数据库dbtg
+# locate str -d /home/html/dbtg 	在数据库dbtg查找str
+
+# locate -n 5 *.txt		可找5个txt文件，等同于l
+# locate -l 5 passwd		只列出5跳结果
+
+# locate -c a.txt			查找有多少个a.txt文件
+# locate -c  *.jpg  	 -c 或 --count 只显示匹配的个数
+
+使用正则
+# locate -r ^/var/log/.*php
+# locate -r .gz$			查找以.gz结尾的文件，-r表示用正则查找
+# locate -r '/usr/bin.*ow$'
+
+# locate -S 		打印系统有多少文件、文件夹
+
+
+
+安装updatedb
+# updatedb出现 updatedb: command not found 未安装mlocate包
+# yum search updatedb
+# yum info mlocate
+# yum install mlocate
+
+
+# locate [-ir] keyword
+-i ：忽略大小写的差异。
+-r ：后面可接正则表达式。 
+locate的文件查找要比find命令快。之所以快是因为locate寻找的数据是由已创建的数据库/var/lib/mlocate里面的数据所查找到的，
+所以不用直接在去硬盘当中访问数据。可以要手动更新数据库。
+# updatedb  
+
+locate能查所以，但跟whereis一样都是查数据库里的内容。
+which 只能寻找可执行文件(shell命令) ，并在PATH变量里面寻找。
+whereis 除了寻找可执行文件，还有对应的帮助文件。
+# whereis pwd
+# which pwd
+
+3、locate
+locate命令其实是“find -name”的另一种写法，但是要比后者快得多，原因在于它不搜索具体目录，而是搜索一个数据库（/var/lib/locatedb），这个数据库中含有本地所有文件信息。Linux系统自动创建这个数据库，并且每天自动更新一次，所以使用locate命令查不到最新变动过的文件。为了避免这种情况，可以在使用locate之前，先使用updatedb命令，手动更新数据库。
+locate命令的使用实例：
+$ locate /etc/sh
+搜索etc目录下所有以sh开头的文件。
+$ locate -i ~/m
+搜索用户主目录下，所有以m开头的文件，并且忽略大小写。
+
+#  locate /etc/sh
+搜索etc目录下所有以sh开头的文件。
+#  locate ~/m
+搜索用户主目录下，所有以m开头的文件。
+#  locate -i ~/m
+
+
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+
+
+# file -i data.txt		如果需要更详细的信息，可以加参数
+# file /tmp/mysql.sock
+# file data.txt
+data.txt: ASCII text
+就告诉我们,data.txt 是一个text （即txt) 类型的文件。
+所以 text 是文件类型；ASCII是编码体系。
+# file -i /bin/ls
+/bin/ls: application/x-executable; charset=binary
+
+
+
+# strings /bin/ls
+# strings /bin/ls|grep -ni help	用strings读取二进制文本
+strings打印文件中的可打印字符串（print the strings of printable characters in files）。常用来在二进制文件中查找字符串，与grep配合使用
+
+
+
+
+
+

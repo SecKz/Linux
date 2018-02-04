@@ -1,0 +1,49 @@
+
+
+diff命令能比较单个文件或者目录内容。如果指定比较的是文件，则只有当输入为文本文件时才有效。以逐行的方式，比较文本文件的异同处。
+如果指定比较的是目录的的时候，diff 命令会比较两个目录下名字相同的文本文件。列出不同的二进制文件、公共子目录和只在一个目录出现的文件。
+
+-i  --ignore-case  Ignore case differences in file contents.
+--ignore-file-name-case  Ignore case when comparing file names.
+--no-ignore-file-name-case  Consider case when comparing file names.
+-E  --ignore-tab-expansion  Ignore changes due to tab expansion.
+-b  --ignore-space-change  Ignore changes in the amount of white space.
+-w  --ignore-all-space  Ignore all white space.
+-B  --ignore-blank-lines  Ignore changes whose lines are all blank.
+-I RE  --ignore-matching-lines=RE  Ignore changes whose lines all match RE.
+--strip-trailing-cr  Strip trailing carriage return on input.
+-a  --text  Treat all files as text.
+-c  -C NUM  --context[=NUM]  Output NUM (default 3) lines of copied context.
+-u  -U NUM  --unified[=NUM]  Output NUM (default 3) lines of unified context.
+--label LABEL  Use LABEL instead of file name.
+-p  --show-c-function  Show which C function each change is in.
+-F RE  --show-function-line=RE  Show the most recent line matching RE.
+-q  --brief  Output only whether files differ.
+-e  --ed  Output an ed script.
+-q或--brief 　仅显示有无差异，不显示详细的信息。
+
+http://www.cnblogs.com/peida/archive/2012/12/12/2814048.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**/

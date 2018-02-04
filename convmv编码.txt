@@ -1,0 +1,68 @@
+
+
+在Linux中专门提供了一种工具convmv进行文件名编码的转换，可以将文件名从GBK转换成UTF-8编码,或者从UTF-8转换到GBK。
+# yum install convmv
+# convmv --list	列出所有可用的编码
+# convmv --list|grep -i gb		看是否支持中文编码 zh,cn,utf8
+# convmv --list|grep -i utf		看支持哪种utf8格式
+
+# convmv -f GBK -t utf8 -r --notest /home/directory	GBK换成utf8的文件名	
+# convmv -f UTF-16 -t gb2312-raw -r --notest --nosmart /home/directory
+# convmv -f gb2312-raw -t utf8 -r --notest /home/directory
+
+有时不能直接到convmv，需通过inode结点来指向文件
+# ls -i
+# find -inum 2818083 | xargs convmv -f gbk -t utf8 --notest	
+	
+*是需要转换的文件 --notest是对文件进行重命名
+# convmv  *  -f gb2312-raw -t utf8 				输出转码后的文件名，并不真正重命名文件
+# convmv  *  -f gbk -t utf8 --notest
+
+
+从Linux往 windows拷贝文件或者从windows往Linux拷贝文件，有时会出现中文文件名乱码的情况
+convmv的具体用法：convmv -f 源编码 -t 新编码 [选项] 文件名
+常用参数：
+-r 递归处理子文件夹
+–notest 真正进行操作，请注意在默认情况下是不对文件进行真实操作的，而只是试验。
+–list 显示所有支持的编码
+–unescap 可以做一下转义，比如把%20变成空格
+
+
+
+查看文件类型，编码
+# file test.txt		ISO-8859 text		说明是ansi编码
+# file ls
+# strings /bin/ls		bin下的文件，此类文件可用strings命令查看
+
+
+Linux下利用Vim查看文件编码和进行编码转换。
+:set fileencoding	在VIM中查看文件编码
+:set fileencoding=utf-8	在VIM中执行文件编码转换
+
+VIM默认是不支持GBK的，如果想让VIM支持，需要修改～/.vimrc
+set fileencodings=utf-8,gbk
+这样VIM就会按照这个顺序去匹配文件的编码
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,67 @@
+
+
+
+md5,sha1用于检验文件内容是否修改过，比如下载和传输得到的文件
+
+如果输出的一样，证明文件内容没有被修改过 (chown不影响md5shum),或者说两个文件内容一样
+# md5sum *
+# md5sum curl.txt curl.txt2
+# sha1sum curl.txt curl.txt2
+
+生成md5验证文件
+# md5sum curl.txt curl.txt2 > md5.so
+# md5sum shell/declare1.sh shell/declare.sh >> md5.so
+# md5sum -c md5.so					从文件md5.so中读取MD5 的校验值并予以检查
+
+http://my.oschina.net/willSoft/blog/40072
+
+# find . -type f | xargs -ti md5sum {} >> md5.txt
+
+
+
+PHP里的md5函数与linux的md5sum命令的区别
+# php -r 'echo md5(123);'
+# echo 123 | md5sum			
+
+正确的写法应该是通过echo的’-n’选项,让echo不要输出换行符,这样结果就一样了.
+# echo -n'123' | md5sum			
+# php -r 'echo sha1(123);'
+# echo -n '123' | sha1sum
+# date +%s | sha1sum
+
+http://www.leonzhang.com/2011/10/23/php-md5-vs-linux-md5sum/
+
+
+
+
+MD5算法常常被用来验证网络文件传输的完整性，防止文件被人篡改。
+MD5全称是报文摘要算法（Message-Digest Algorithm 5），此算法对任意长度的信息逐位进行计算，产生一个二进制长度为128位（十六进制长度就是32位）的“指纹”（或称“报文摘要”），不同的文件产生相 同的报文摘要的可能性是非常非常之小的。 
+
+在linux或Unix上，md5sum是用来计算和校验文件报文摘要的工具程序。
+一般来说，安装了Linux后，就会有md5sum这个工具，直接在命令行终端直接运行。可以用下面的命令来获取md5sum命令帮助 man md5sum 
+
+1）md5sum 是校验文件内容，与文件名是否相同无关
+2）md5sum值逐位校验，所以文件越大，校验时间越长。
+
+-b 以二进制模式读入文件内容
+-t 以文本模式读入文件内容
+-c 根据已生成的md5值，对现存文件进行校验
+--status 校验完成后，不生成错误或正确的提示信息，可以通过命令的返回值来判断。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
