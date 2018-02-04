@@ -1,0 +1,42 @@
+
+
+CentOS 7.0默认使用的是firewall作为防火墙，这里改为iptables防火墙。
+
+systemctl stop firewalld.service 			停止firewall
+systemctl disable firewalld.service 			禁止firewall开机启动
+firewall-cmd --state 					查看默认防火墙状态（关闭后显示notrunning，开启后显示running）
+
+启动iptables
+systemctl start iptables.service			
+cat /etc/sysconfig/iptables
+
+原来在RHEL7开始，使用systemctl工具来管理服务程序，包括了service和chkconfig
+systemctl list-unit-files|grep enabled			查看已启动的服务列表
+systemctl start firewalld.service				启动一个服务
+systemctl stop firewalld.service				关闭一个服务
+systemctl restart firewalld.service				重启一个服务
+systemctl status firewalld.service				显示一个服务的状态：
+systemctl enable firewalld.service				在开机时启用一个服务
+systemctl disable firewalld.service				在开机时禁用一个服务
+systemctl is-enabled firewalld.service;echo $?	查看服务是否开机启动
+
+
+Centos7用ip命令代替ifconfig
+
+# ip link show                # 显示网络接口信息
+# ip link set eth0 upi           # 开启网卡
+# ip link set eth0 down          # 关闭网卡
+# ip link set eth0 promisc on      # 开启网卡的混合模式
+# ip link set eth0 promisc offi     # 关闭网卡的混个模式
+# ip link set eth0 txqueuelen 1200   # 设置网卡队列长度
+# ip link set eth0 mtu 1400        # 设置网卡最大传输单元
+# ip addr show                # 显示网卡IP信息
+# ip addr add 192.168.0.1/24 dev eth0 # 设置eth0网卡IP地址192.168.0.1
+# ip addr del 192.168.0.1/24 dev eth0 # 删除eth0网卡IP地址
+
+# ip route list                 # 查看路由信息
+# ip route add 192.168.4.0/24  via  192.168.0.254 dev eth0 # 设置192.168.4.0网段的网关为192.168.0.254,数据走eth0接口
+# ip route add default via  192.168.0.254  dev eth0    # 设置默认网关为192.168.0.254
+# ip route del 192.168.4.0/24      # 删除192.168.4.0网段的网关
+# ip route del default          # 删除默认路由
+

@@ -1,0 +1,17 @@
+
+
+*启动、重启、停止、重载服务
+# systemctl start httpd.service
+# systemctl restart httpd.service
+# systemctl stop httpd.service
+# systemctl reload httpd.service
+# systemctl status httpd.service
+
+*激活/禁止自动启动
+# systemctl enable httpd.service
+# systemctl disable httpd.service
+
+*杀死服务
+# systemctl kill httpd
+
+http://blog.csdn.net/cds86333774/article/details/51165361

@@ -1,0 +1,31 @@
+
+
+WINDOWS提供WEB服务的IIS有时候会出现访问过大导致网站打不开，这时重启IIS是最好的选择。
+1、界面操作
+打开“控制面板”->“管理工具”->“服务”。找到“IIS Admin Service” 右键点击“重新启动” 弹出 “停止其它服务” 窗口，点击“是”。
+2、Net 命令操作
+点击 “开始”->“运行”，输入cmd 打开命令窗口；
+输入 net stop iisadmin /y  回车停止IIS；
+再输入 net start iisadmin  回车启动IIS；
+再输入 net start w3svc 回车WEB服务。
+3、IISReset 命令操作
+点击 “开始”->“运行”，输入iisreset 回车。
+
+
+查看windows服务器是32位还是86
+cmd中输入systeminfo
+在系统类型出现以下有84的字样，说明32位
+系统类型:         X86-based PC
+处理器:           安装了 4 个处理器。
+                  [01]: x86 Family 6 Model 44 Stepping 2 GenuineIntel ~2132 Mhz
+                  [02]: x86 Family 6 Model 44 Stepping 2 GenuineIntel ~2132 Mhz
+                  [03]: x86 Family 6 Model 44 Stepping 2 GenuineIntel ~2132 Mhz
+                  [04]: x86 Family 6 Model 44 Stepping 2 GenuineIntel ~2132 Mhz
+
+其它方法
+最简单的是看WINDOWS目录下有没有SYSTEM64的目录，有就是64位系统，没有的就是32位系统。
+还有就是Program Files目录，它也用32和64来分的。
+
+网站出现service unaviable 500错误
+解决：重启iis
+

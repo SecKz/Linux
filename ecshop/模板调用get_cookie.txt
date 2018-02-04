@@ -1,0 +1,24 @@
+
+ecshop模板中smarty怎样判断用户等级、用户id、用户昵称用户名
+
+<!-- {if $smarty.session.user_rank gt 1} -->gt大于 lt小于
+1:ecshop模板中调用session的值
+ {$smarty.session.user_id} 用户ID
+ {$smarty.session.user_rank} 用户等级
+2:ecshop模板中调用cookie的值
+ {$smarty.cookie.user_id}
+3:ecshop模板中调用当前时间
+ {$smarty.now}
+4:ecshop模板中调用调用$_GET里面的数据
+ {$smarty.get.act}
+5:调用模板中调用调用$_POST里面的数据
+ {$smarty.post}
+6:在ecshop模板中调用cookie
+ {$smarty.cookie.name}
+7:在ecshop的smarty中调用$_SERVER的值
+ {$smarty.server}
+8:在ecshop中进行一些foreach的取值和判断
+ {$smarty.foreach.iteration.first}判断是否第一条数据
+ {$smarty.foreach.iteration.last} 最后一条数据
+9:在ecshop模板中取得$_REQUEST的值
+ {$smarty.request.name}

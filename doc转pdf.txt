@@ -1,0 +1,97 @@
+
+
+安装libreoffice 
+# yum install libreoffice xorg-x11-server-utils  												
+# libreoffice --headless --convert-to pdf 2.doc									把2.doc转换成2.pdf，也可以用soffice命令转换，等同于libreoffice  
+# libreoffice --headless --convert-to pdf --outdir /home/html/flexpager/pdf 2.doc	转换到指定文件夹
+# libreoffice -h
+
+# export DISPLAY=':0.0' && libreoffice --headless --convert-to pdf 123.ppt  
+
+若转换出错，在.bashrc添加export DISPLAY=:0.0，在/etc/rc.local加入xhost +
+# xhost +
+
+http://blog.51yip.com/linux/1669.html
+http://www.cnblogs.com/xkfz007/articles/2182480.html
+使用参数启动 LibreOffice
+https://help.libreoffice.org/Common/Starting_the_Software_With_Parameters/zh-CN
+
+# yum install ImageMagick   imagemagick可以实现pdf转图片
+
+也可以用unoconv,实现doc,ppt转pdf	unoconv是基于libreoffice的
+# yum install unoconv
+# unoconv --show 		列出支持的输出格式	
+# unoconv -f pdf myDoc.doc  	生成一个名为 myDoc.pdf 的 pdf 文件
+# unoconv -f jpg some-image.png
+
+
+
+FlexPaper安装设置
+
+# yum install swftools					要先安装swftools
+# pdf2swf file.pdf -o file.swf 			pdf转swf		
+# pdf2swf file.pdf -o file.swf -f -T 9 -t -s storeallcharacters -s linknameurl
+# cd /home/html/flexpaper
+# unzip FlexPaper_Zine_Trial.zip
+
+Flexpager设置文件：php/setup.php， FlexPaper参数存储在php/config/config.ini.nix.php
+pdf文件管理入口：php/index.php
+参数更改页面：flexpager/php/change_config.php
+帮助页面：flexpager/index_startatpage.html
+
+两个重要参数
+PDF Directory 转换后pdf的存放路径
+Working Directory转换后swf的存放路径
+
+转换后的pdf文件通过simple_document.php访问
+php/simple_document.php?doc=2.pdf
+php/split_document.php?subfolder=&doc=2.pdf
+
+http://www.php230.com/flexpaper-use-introduction.html
+http://flexpaper.devaldi.com/Convert-pdf-documents-html-with-PHP.jsp
+
+	
+FlexPaper+swfTools仿文档在线阅读基本步骤
+1、将要展示的office文件 转换成 PDF，  使用工具 openoffice  
+2、将PDF文件转换成swf ，实用工具swftools
+3、使用flexPaper，显示转换后的swf文件。
+
+二、准备工作 
+1.安装OpenOffice，或者libreOffice，官网下载地址：http://www.openoffice.org/download/index.html
+1 解压
+2 解压后进入到解压出来的文件下   里面有3个文件夹和1个文件：分别是licenses   readmes  RPMS 文件夹  和update文件
+3 进入到RPMS 文件夹下  输入命令  rpm  -ivh  *.rpm  开始安装 （因为RPMS 文件夹下有很多rpm包）用这条命令就能安装所有的
+4 安装完后  进入到RPMS 文件夹下的desktop-integration文件夹   desktop-integration夹里有4个rpm包  分别是四个不同发行版的linux,选择相应发行版本那个rpm包，用 rpm 命令进行安装。
+
+解决xhost:unable to open display""的问题
+linux系统下如果需要打开X-Server的,需要设置显示器位置.
+简单的xhost+命令提示我们unable to open display "";这个标识DISPLAY环境变量没有设置.
+DISPLAY变量是用来设置将图形显示到何处.比如CENTOS,你用图形界面登录进去,DISPLAY自动设置为DISPLAY=:0.0表示显式到本地监视器.
+那么通过终端工具(例如:putty)进去,运行图形界面的程序,如果没有设置,系统是不允许程序启动的.
+如果你不想在其他地方显式图形,只是运行一些后台服务程序,那么你需要做一下操作:
+在.bashrc添加export DISPLAY=:0.0
+# xhost +
+access control disabled, clients can connect from any host
+
+我的解决办法如下（我是在linux下安装oralce时碰到该问题的）：
+1，到/etc/inittab文件里，把init3或者其他值改成init5
+2，reboot system，用root用户通过图形界面进入系统，在终端里执行xhost +（一般在这里都xhost会执行成功，如果无法执行成功，那你图形肯定有问题！）
+3，设置客户机的DISPLAY值(export DISPLAY=IP(客户端的IP地址,你要设成别的地址，那你就看不到图形):0.0
+4，按正常流程走，就OK了！
+
+xhost命令 用途  控制什么人可以访问当前主机上的增强 X-Windows。
+该命令必须从有图形显示连接的机器上运行。
+# runlevel		为5说明是图形界面
+在Linux/Unix类操作系统上, DISPLAY用来设置将图形显示到何处
+
+
+
+
+
+
+
+
+
+
+
+
