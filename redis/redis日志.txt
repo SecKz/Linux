@@ -1,0 +1,30 @@
+
+> config get slowlog*		查看慢日志的配置
+> slowlog get				查看redis的慢日志
+> slowlog get 5				查看5条慢日志
+> slowlog len
+> slowlog reset				重置slow log 日志一旦被删除，将无法恢复。 
+
+redis的slow log记录了那些执行时间超过规定时长的请求。执行时间不包括I/O操作（比如与客户端进行网络通信等），只是命令的实际执行时间（期间线程会被阻塞，无法服务于其它请求）。 
+有两个参数用于配置slow log： 
+slowlog-log-slower-than：设定执行时间，单位是毫秒，执行时长超过该时间的命令将会被记入log。-1表示不记录slow log; 0强制记录所有命令。 
+slowlog-max-len：slow log的长度。最小值为0。如果日志队列已超出最大长度，则最早的记录会被从队列中清除。 
+可以通过编辑redis.conf文件配置以上两个参数。对运行中的redis, 可以通过config get, config set命令动态改变上述两个参数
+> config set slowlog-max-len 50
+
+Redis 提供了SLOWLOG指令来获取最近的慢日志，Redis 的慢日志是直接存在内存中的，所以它的慢日志开销并不大
+
+输出格式
+redis 127.0.0.1:6379> slowlog get 1
+1) 1) (integer) 14
+   2) (integer) 1309448221
+   3) (integer) 15
+   4) 1) "ping"
+每个条目由4个字段构成： 
+1）用于表示该条slow log的唯一id 
+2）以unix时间戳表示的日志记录时间 
+3）命令执行时间，单位：微秒 
+4） 执行的具体命令 
+
+
+

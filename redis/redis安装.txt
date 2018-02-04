@@ -1,0 +1,48 @@
+
+
+安装redis和php redis模块
+# yum install redis
+# service redis start 	或者 redis-server --daemonize yes
+# chkconfig redis on
+
+
+# wget http://pecl.php.net/get/redis-2.2.7.tgz 下载解压
+# tar -zxvf redis-2.2.7.tgz
+# cd redis-2.2.7
+# phpize   																phpize是用来扩展php扩展模块的
+# ./configure --with-php-config=/usr/bin/php-config
+# make && make install
+# echo 'extension=redis.so' > /etc/php.d/redis.ini								或者在php.ini中加入extension=redis.so
+# grep -q '^vm.overcommit_memory = 1' /etc/sysctl.conf || echo 'vm.overcommit_memory = 1' >> /etc/sysctl.conf 
+# echo never > /sys/kernel/mm/transparent_hugepage/enabled
+# service php-fpm restart														
+# php -m															查看redis模块是否安装成功。php模块的放置目录php -i | grep 'extension_dir'	
+
+通过pecl安装redis模块
+# pecl install redis						 pecl channel-update pecl.php.net
+# pecl uninstall redis
+
+http://www.cnblogs.com/firesnow/archive/2013/02/05/2892737.html
+
+解决redis 无法启动的问题
+# rm -f /var/lib/redis/dump.rdb  
+# rm -f /var/run/redis.pid  
+# service redis start 
+
+http://windows.php.net/downloads/pecl/snaps/redis/2.2.5/ 下载php_redis.dll模块
+通过phpinfo() 查找Thread safety的值，enabled说明是Thread safety
+Architecture	x86
+把redis.dll放入php的ext目录，并在php.ini添加extension=php_redis.dll
+
+windows下php不同的版本要下不同的redis
+
+redis-server：Redis服务器的daemon启动程序
+redis-cli：Redis命令行操作工具。当然，你也可以用telnet根据其纯文本协议来操作
+redis-benchmark：Redis性能测试工具，测试Redis在你的系统及你的配置下的读写性能
+redis-stat：Redis状态检测工具，可以检测Redis当前状态参数及延迟状况
+
+
+
+
+
+

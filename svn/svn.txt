@@ -1,0 +1,58 @@
+
+# yum install subversion mod_dav_svn
+# svnserve --version
+# ps aux | grep svn				svn是否启动
+
+# mkdir -p /home/svn/repo	
+# svnadmin create /home/svn/repo		创建仓库
+# svnserve -d -r /home/svn		启动svn	
+# netstat -ln |grep 3690					svn端口
+# killall svnserve   						停止 
+
+开放端口
+# iptables -I INPUT -p tcp --dport 3690 -j ACCEPT
+# service iptables save;service iptables restart
+
+
+配置防火墙端口
+# vi /etc/sysconfig/iptables
+添加以下内容： 
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 3690 -j ACCEPT
+# service iptables restart		保存后重启防火墙 
+
+
+# chmod -R www:www/home/svn/repo	  
+这里把仓库目录权限给www用户及www用户组，主要是因为我们要通过http来访问svn
+
+ SVN多项目多仓库管理
+
+# 在home/svn目录下建立多个仓库
+svnadmin create /home/svn/repo1
+svnadmin create /home/svn/repo2
+svnadmin create /home/svn/repo3
+ 
+建立后每个仓库下都有conf目录，可分别配置账户、权限等只需要启动/home/svn目录
+# svnserve -d -r /home/svn
+svn的url分别是
+svn://127.0.0.1/repo1
+svn://127.0.0.1/repo2
+svn://127.0.0.1/repo3
+
+
+http://www.centoscn.com/image-text/install/2016/0901/7875.html
+http://blog.csdn.net/yin380697242/article/details/49362197
+http://www.codeceo.com/article/centos-7-http-svn-server.html
+
+ Linux下SVN一个版本库多个目录权限设置 
+http://blog.chinaunix.net/uid-7248244-id-2060481.html
+http://www.cnblogs.com/sns007/p/5769270.html
+
+
+
+
+
+
+
+
+
+

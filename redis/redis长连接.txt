@@ -1,0 +1,42 @@
+
+
+redis做LPUSH后立即close也会产生TIME_WAIT，所以使用redis做消息队列写入量大的时候，就造成大量TIME_WAIT，怎么办。
+
+如果redis和php在同一台服务器上，通过unix socket连接即可
+如果不在同一台服务器上，必须使用长连接
+否则只要连接一多，就会出现连接不上的情况，我以前碰到过这个问题，用了长连接就药到病除
+
+pconnect用于连接一个Redis的实例或者复用一个已经存在的实例。
+这个连接将不会被主动关闭，比如使用close()，或者PHP执行结束这个连接都不会被主动关闭。当有大量的connect请求在redis服务器端时，使用持久化的连接对象。
+
+关闭Redis的连接实例,但是不能关闭用pconnect连接的实例
+$redis->close();
+
+$redis->connect('127.0.0.1', 6379);
+$redis->connect('127.0.0.1'); // port 6379 by default
+$redis->connect('127.0.0.1', 6379, 2.5); // 2.5 sec timeout.
+$redis->connect('/tmp/redis.sock'); // unix domain socket.
+
+$redis->pconnect('127.0.0.1', 6379);
+$redis->pconnect('127.0.0.1'); // port 6379 by default - same connection like before.
+$redis->pconnect('127.0.0.1', 6379, 2.5); // 2.5 sec timeout and would be another connection than the two before.
+$redis->pconnect('127.0.0.1', 6379, 2.5, 'x'); // x is sent as persistent_id and would be another connection the the three before.
+$redis->pconnect('/tmp/redis.sock'); // unix domain socket - would be another connection than the four before.
+
+
+关于最大连接数 maxclients
+在 Redis2.4 中，最大连接数是被直接硬编码在代码里面的，而在2.6版本中这个值变成可配置的。maxclients 的默认值是 10000，你也可以在 redis.conf 中对这个值进行修改。
+
+如果你需要支持更高的连接数，还需要更改系统的相关配置，比如ulimit数目：
+ulimit -n xxx
+redis.conf中maxclients 设置为0表示不作限制。
+
+PHP连接Memcached使用短连接造成CPU过高
+用pconnect，也就是长连接去连memcached,这样每个php进程只要建立一次连接，后面都可以重复利用这个连接。
+再看服务器，在top内看到%si使用不到1%，cpu和负载都下来了。
+
+http://phpff.com/980.html
+
+
+Memcache::pconnect()和 Memcache::connect()非常类似，不同点在于这里建立的连接是持久化的。 这个连接不会在脚本执行结束后或者Memcache::close()被调用后关闭。
+
