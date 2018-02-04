@@ -27,3 +27,7 @@ OR If you are on some other branch:
 单独clone远程分支
 git clone -b <branch> <remote_repo>
 git clone -b my-branch git@github.com:user/myproject.git
+
+HEAD^和HEAD的区别
+# git reset --hard HEAD^				回退到上一个版本
+# git reset --hard HEAD					撤销未提交的全部修改 相当与git reset HEAD 加 git checkout -- .

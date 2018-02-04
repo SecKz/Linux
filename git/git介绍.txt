@@ -17,22 +17,25 @@ git init创建版本库 当前目录下多了一个.git的目录，这个目录�
 版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。
 git add命令实际上就是把要提交的所有修改放到暂存区（Stage）
 
-撤销修改
-场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
-场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
-# git reset HEAD file					如果file没加到暂存区，这行可以不用执行
-# git checkout -- readme.txt			撤销文件在工作区做的修改 
-# git checkout -- .											恢复工作区的全部修改
-
 # git add readme.txt										文件修改添加到暂存区
 # git add .													工作区的全部修改一起提交到暂存区
 # git commit -m "wrote a readme file"						把文件提交到仓库
 # git rm a.txt												相当于 rm a.txt和git add a.txt
 
+撤销修改
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，
+分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+# git reset HEAD file					如果file没加到暂存区，这行可以不用执行
+# git checkout -- readme.txt			撤销文件在工作区做的修改 
+# git checkout -- .						恢复工作区的全部修改
+
+
 修改已经add到暂存区，撤销暂存区的修改
-# git reset HEAD file.txt										撤销暂存区的修改，重新放回工作区
-# git reset HEAD												撤销暂存区的全部修改	等于git reset HEAD .		
-# git reset --hard HEAD										撤销未提交的全部修改
+# git reset HEAD file.txt									撤销暂存区的修改，重新放回工作区
+# git reset HEAD											撤销暂存区的全部修改	等于git reset HEAD .
+
+# git reset --hard HEAD										撤销未提交的全部修改 相当与git reset HEAD 加 git checkout -- .
 						
 修改已经commit了，版本回退
 # git reset --hard HEAD^										回退到上个版本，修改已经commit
