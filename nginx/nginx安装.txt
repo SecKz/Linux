@@ -38,7 +38,8 @@ http://nginx.org/en/linux_packages.html
         # Send rest of the world to /dev/null #
         deny all;
    }
-http://my.oschina.net/gorillaz/blog/107878
+
+
 Active connections: 对后端发起的活动连接数.
 Server accepts handled requests: Nginx总共处理了38810620个连接,成功创建38810620次握手(证明中间没有失败的),总共处理了298655730个请求.
 Reading: Nginx 读取到客户端的Header信息数.
