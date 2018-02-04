@@ -1,0 +1,95 @@
+
+mount分区或LV挂载在到一个目录，该目录里的文件会消失，不能被访问，umount该目录后，原来的文件又可以访问了
+逻辑卷对应的设备文件保存在卷组目录下例如：在卷组"vg1000"上创建一个逻辑卷"lvol0"，则此逻辑卷对应的设备文件为"/dev/VG0/lvol0"。
+
+# vgcreate VG0 /dev/sdb1 /dev/sdb2  		创建卷组 VG0，并且将物理卷"/dev/sdb1"和"/dev/sdb2"添加到卷组中
+# lvextend -L +100M /dev/VG0/lvol0   		为逻辑卷/dev/VG0/lvol0增加100M空间
+# lvcreate -L 15G -n lv1 VG0			 	 在卷组VG0上创建指定名称的的逻辑卷lv1	
+# lvcreate -L 200M VG0 			  		在卷组VG0上创建大小为200M的逻辑卷，逻辑卷的名字默认生成
+
+# lsblk -f
+
+从VG中划分出LV 
+-L 指定创建LV大小 
+-l 指定创建LV的PE数量 
+-n LV的名字 
+
+LVM的扩容
+# vgdisplay											先查看卷组是否还有剩余空间
+# pvcreate /dev/sdb1 /dev/sde							将分区/dev/sdb1和整个硬盘/dev/sde创建为物理卷
+# pvdisplay
+# vgextend VG0 /dev/sdb1 /dev/sde						扩容卷组VG0, 把pv添加到卷组VG0中
+# lvextend -L +1G /dev/VG0/lv1							从VG0中追加分配1G空间给根分区所在的lv1
+# resize2fs -p /dev/VG0/lv1							执行该重设大小， /dev/VG0/lv1对应上面的lvextend中的逻辑卷 /dev/VG0/lv1
+# df -h
+
+最后要使用resizefs2命令重新加载逻辑卷的大小才能生效。   
+如果不用这个命令的话，你会发现用df -h命令查看扩展的逻辑卷大小还是原来的值，没有发生变化。即使重启也不会变，所以一定要执行 resize2fs命令。
+
+LVM的创建
+# pvcreate /dev/sdb1 /dev/sde							将分区/dev/sdb1和整个硬盘/dev/sde创建为物理卷
+# pvdisplay
+# vgcreate VG0 /dev/sdb1 /dev/sde 					用物理卷 //dev/sdb1 /dev/sde	创建名为VG0的卷组	
+# lvcreate -L 1G -n lv1 VG0							创建逻辑卷，从VG0中分出1G的空间给lv1
+# mkfs.ext4 /dev/VG0/lv1								格式化LV 
+# mount /dev/VG0/lv1 /home							挂载使用
+# echo '/dev/VG0/lv1    /home     ext4    defaults   1 2' >> /etc/fstab		将挂载信息写入/etc/fstab
+
+/etc/fstab
+第五列：指明是否要备份，（0为不备份，1为要备份，一般根分区要备份）
+第六列：指明自检顺序。 （0为不自检，1或者2为要自检，如果是根分区要设为1，其他分区只能是2）如果想开机
+
+
+创建过程：PV > VG -> LV
+
+LVM 基本术语
+PV（ Physical Volume）：物理卷，处于 LVM 最底层，可以是物理硬盘或分区。
+VG（Volume Group）：卷组，建立在PV之上，可以含有一个到多个PV。
+LV（ Logical Volume）：逻辑卷，建立在VG 之上，相当于原来分区的概念。不过大小可动态改变。
+
+LVM（Logical Volume Manager，逻辑卷管理器）是一种把硬盘空间划分成“弹性”逻辑卷的方法。这里的“弹性”体现在硬盘不必重新分区也能够被简单地重新划分大小。
+LVM可以将若干个物理卷（Physical Volumes， PV）（例如磁盘、分区）组成一个卷组（ Volume Group，VG），而这些物理卷的大小可以并不相同，甚至类型也可以不同（如 IDE、SCSI 磁盘）。
+之后，卷组又被划分为逻辑卷（ Logical Volumes， LV），也即虚拟分区。而逻辑卷的大小可以随时动态的调整从而实现了灵活管理磁盘分区的目的。
+
+http://www.cnblogs.com/chenmh/p/5107901.html
+http://www.liusuping.com/ubuntu-linux/redhat-linux-lvm.html
+
+# rpm -qa |grep lvm					Linux系统中是默认安装了lvm工具
+# lvdisplay							lvdisplay用于显示LVM逻辑卷空间大小、读写状态和快照信息等属性。lvs的详细版 
+# lvdisplay|awk  '/LV Name/{n=$3} /Block device/{d=$3; sub(".*:","dm-",d); print d,n;}'
+# dmsetup ls			 
+# lvs 			查看有多少个逻辑卷 report information about logical volumes
+# vgs			查看有多少个卷组	report information about volume groups		
+# pvs			查看有多少个物理卷report information about physical volumes
+# pvs -a
+# pvscan			查看所有卷组的逻辑卷
+# lvscan				查看所有卷组的物理卷
+
+# partprobe				重读分区表，centos6用partx
+# partx -a /dev/vda		修改磁盘分区表后，无需重启，用partx命令告诉内核，分区已改动，内核可以读入新的分区表
+
+
+首先创建一块新的分区：
+# fdisk  /dev/hda
+n
+p       						 选择逻辑分区，如果没有，则首先创建扩展分区，然后再添加逻辑分区（硬盘：最多四个分区P-P-P-P或P-P-P-E）
+1        						 分区号（从1开始），/dev/hda6
+t      
+8e   						 分区类型8e表示LVM分区
+w        						 写入分区表退出分区模式
+
+# partprobe  					 重读分区表 ，用partx -a /dev/vda或partprobe命令告诉内核，分区已改动，无需重启。
+# mkfs -t ext4 /dev/hda1 		#格式化
+# partx /dev/hda 				#查看当前硬盘的分区表及使用情况
+
+
+
+
+
+
+
+
+
+
+
+

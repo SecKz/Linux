@@ -1,0 +1,90 @@
+
+安装libmemcached 安装memcached的时候会要求先安装libmemcached
+# wget https://launchpad.net/libmemcached/1.0/1.0.18/+download/libmemcached-1.0.18.tar.gz
+# tar zxvf libmemcached-1.0.18.tar.gz
+# cd libmemcached-1.0.18
+# ./configure --prefix=/usr/local/libmemcached
+# make && make install
+
+编译安装memcached的php扩展
+# wget http://pecl.php.net/get/memcached-2.2.0.tgz
+# tar -zxvf memcached-2.2.0.tgz
+# cd memcached-2.2.0
+# phpize   
+# ./configure --with-php-config=/usr/bin/php-config --with-libmemcached-dir=/usr/local/libmemcached --enable-memcached-sasl
+# make && make install
+
+
+yum安装memcache
+# yum install memcached libevent
+
+通过pecl安装memcache模块
+# pecl channel-update pecl.php.net
+# pecl install memcache		
+# echo 'extension=memcache.so' > /etc/php.d/memcache.ini	
+# service php-fpm restart										
+# php -m															查看模块是否安装成功。php模块的放置目录php -i | grep 'extension_dir'	
+
+# pecl list-files memcache		
+# pecl uninstall memcache
+
+windows下安装Memcached
+> memcached.exe -d install
+> memcached.exe -d  start				可以添加参数.,指定内存划分-m 200 ,IP监听 -l 192.168.1.*,端口号-p 11211等.
+以后memcached将作为windows的一个服务每次开机时自动启动。这样服务器端已经安装完毕了。在cmd中输入services.msc查看是否是服务
+不是服务的话，输入以下
+> net start "memcached Server"		
+
+输入version查看版本,输入stats查看状态
+> telnet localhost 11211
+version
+stats
+quit
+
+http://www.cnblogs.com/lucky_hu/p/4676734.html
+http://blog.csdn.net/rainysia/article/details/6782732
+
+http://blog.51yip.com/php/928.html
+
+
+安装php的memcache扩展
+有两个版本一个是memcache（http://pecl.php.net/package/memcache ），另一个是基于libmemcached的memcached版本（http://pecl.php.net/package/memcached ）
+后一个比前一个功能更强大。比较推荐使用基于libmemcahced 库的memcached扩展。
+
+windows下memadmin安装
+MemAdmin是一款可视化的Memcached管理与监控工具，基于 PHP5 & JQuery 开发，体积小，操作简单。
+主要功能：
+服务器参数监控：STATS、SETTINGS、ITEMS、SLABS、SIZES实时刷新
+服务器性能监控：GET、DELETE、INCR、DECR、CAS等常用操作命中率实时监控
+支持数据遍历，方便对存储内容进行监视
+支持条件查询，筛选出满足条件的KEY或VALUE
+数组、JSON等序列化字符反序列显示
+兼容memcache协议的其他服务，如Tokyo Tyrant (遍历功能除外)
+支持服务器连接池，多服务器管理切换方便简洁
+
+http://www.nowamagic.net/librarys/veda/detail/332
+
+Pid: Memcached 服务器中的进程编号
+Uptime：Memcached服务器启动之后所经历的时间，单位秒
+Time： 当前系统时间，单位秒
+Version: Memcached 的版本号
+pointer_size：服务器所在主机操作系统的指针大小，一般为32或64
+curr_items：表示当前缓存中存放的所有缓存对象的数量
+total_items：表示从memcached服务启动到当前时间，系统存储过的所有对象的数量，包括已经删除的对象
+bytes：表示系统存储缓存对象所使用的存储空间，单位为字节
+curr_connections：表示当前系统打开的连接数
+total_connections：表示从memcached服务启动到当前时间，系统打开过的连接的总数
+cmd_get： 查询缓存的次数，即使不成功也算一次
+cmd_set： 保存数据的次数，当然这里只保存成功的次数
+get_hits：表示获取数据成功的次数。
+get_misses：表示获取数据失败的次数。
+evictions：为了给新的数据项目释放空间，从缓存移除的缓存对象的数目。比如超过缓存大小时根据LRU算法移除的对象，以及过期的对象
+bytes_read：memcached服务器从网络读取的总的字节数
+bytes_written：memcached服务器发送到网络的总的字节数
+limit_maxbytes：memcached服务缓存允许使用的最大字节数
+threads：被请求的工作线程的总数量
+缓存命中率 = get_hits / cmd_get * 100% ; 
+
+
+
+

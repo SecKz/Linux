@@ -1,0 +1,78 @@
+
+# pure-ftpwho	查看在线用户
+
+安装pureftp前关闭SELinux
+# setenforce 0
+# getenforce	
+
+pureftp读取目录列表失败解决办法
+修改iptables-config配置文件，重启iptables
+IPTABLES_MODULES="ip_conntrack_netbios_ns ip_conntrack_ftp ip_nat_ftp"
+
+不用service 重启pure ftp
+# ./pure-config.pl /usr/local/pureftpd/etc/pure-ftpd.conf --daemonize > /dev/null
+# /usr/local/pureftpd/bin/pure-config.pl /usr/local/pureftpd/etc/pure-ftpd.conf
+# ./pure-config.pl /usr/local/pureftpd/etc/pure-ftpd.conf --daemonize
+
+
+Response:	530 Login authentication failed
+找到pure-ftpd.conf，看MySQLConfigFile是否开启，并指向正确的位置，如/etc/pure-ftpd/pureftpd-mysql.conf
+检查pureftpd-mysql.conf的字段是否正确
+
+改变mysql.sock的位置，以下修改以下			
+MYSQLSocket     /var/lib/mysql/mysql.sock					
+# mkdir /var/lib/mysql/  									
+# ln -vs /tmp/mysql.sock /var/lib/mysql/mysql.sock
+
+查看tail /var/log/messages中的错误日志
+查看mysql.sock是否存在，比如 /tmp/mysql.sock
+
+开放21端口
+
+
+确认pureftpd和mysql在运行
+# lsof -i:21
+找到pureftpd的进程或mysql进程
+restart或killall，再restart
+
+530 Login authentication failed
+检查pureftpd-mysql.conf中pureftpd的连接密码是否正确
+MYSQLUser       pureftpd
+MYSQLPassword	hqrreteSNM17UUWah5RIT5aT1j751KjI
+
+Pure-ftpd 421 错误  421 Home directory not available - aborting
+请检查ftp的user的主目录是否建立，以及目录的own和group是否正确，权限是否为755
+
+553 Can't open that file: Permission denied
+在数据库pureftpd找到对应的FTP用户，把用户名的UID和GID改成用户主目录文件一样的UID,GID
+
+pure-ftpd: relocation error: pure-ftpd: symbol my_make_scrambled_password, version libmysqlclient_15 not defined in file libmysqlclient.so.15 with link time reference
+解决办法：
+yum install mysql-devel
+或者
+yum downgrade pure-ftpd
+
+
+
+启动出现Unknown authentication method: pam
+pure-ftpd.conf找到以下一行注释掉
+PAMAuthentication             yes
+
+编译安装时出现：pam headers not found，安装pam-delvel
+# yum search pam
+# yum install pam-devel.i386
+
+编译安装时出现：configure: error: libpq library not found ，安装postgresql-devel
+# yum search postgresql
+# yum install postgresql
+
+pureftpd dead but subsys locked” mean?
+解决方法是删除 /var/run/*.pid和/var/lock/subsys/对应的服务名文件。
+
+
+
+
+
+
+
+

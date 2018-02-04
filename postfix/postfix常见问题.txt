@@ -1,0 +1,57 @@
+
+
+
+不能收到域外的信，查看postfix.conf的配置 $mydomain不能少
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+
+
+
+service postfix stop提示failed．解决方法
+# service postfix status 　删除
+# nl /etc/init.d/postfix	找到postfix的pid文件删除　
+master dead but pid file exists
+
+若问题还是存在，找到是否有进程已经占用的25端口， 或者是否postfix真的已停止。
+# ps aux		找出postfix的进程，然后kill掉
+# chkconfig --list		找出占用25的服务，然后停掉
+
+
+
+/var/log/maillog为空
+查看syslog配置文件/etc/syslog.conf，找到如下行，修改对应的路径
+# Log all the mail messages in one place.
+mail.*							/var/log/maillog			#mail日志的路径
+
+
+
+# telnet localhost 25	测试本机的25端口
+Trying 127.0.0.1...
+Connected to localhost.localdomain (127.0.0.1).
+Escape character is '^]'.
+220 mail.xxzhinan.com ESMTP Postfix
+如果出来以上信息，只能用于本地收发，发到域外，。
+
+postfix, dovecot只能发信，不能收来处域外的信
+# telnet 119.147.143.30 25   或者 telnet xxzhinan.com 25
+Trying 119.147.143.30..
+telnet: connect to address 64.13.192.208: Connection refused
+telnet: Unable to connect to remote host
+如果出来以上信息，说明25端口被服务商禁用。
+
+第二种验证方式
+# telnet 119.147.143.30 smtp
+Connection closed by foreign host.
+如果出来以上信息，说明25端口被服务商禁用。
+
+第三种，如果mail服务器是mail.xxzhinan.com
+# telnet mail.xxzhinan.com 25
+# telnet mail.xxzhinan.com 110
+# telnet mail.xxzhinan.com 143
+Connection closed by foreign host.
+如果出来以上信息，说明25端口被服务商禁用。
+
+
+
+
+
+

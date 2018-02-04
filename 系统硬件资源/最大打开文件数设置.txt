@@ -1,0 +1,73 @@
+
+
+
+# lsof | wc -l 						正在打开的文件数目 
+# cat /proc/sys/fs/file-max		查看系统最大文件打开限制
+# sysctl -a|grep file	
+# cat /etc/sysctl.conf | grep file
+
+如果需要增加配置数量就修改/etc/sysctl.conf文件，配置fs.file-max属性，如果属性不存在就添加。
+配置完成后使用sysctl -p来通知系统启用这项配置
+
+
+
+运行在Linux系统上的Java程序运行了一段时间后出现"Too many open files"的异常情况。
+这种情况常见于高并发访问文件系统，多线程网络连接等场景。程序经常访问的文件、socket在Linux中都是文件file，
+系统需要记录每个当前访问file的name、location、access authority等相关信息，这样的一个实体被称为file entry。“open files table”(图中橙色标识)存储这些file entry，以数组的形式线性管理。
+文件描述符(file descriptor)作为进程到open files table的指针，也就是open files table的下标索引，将每个进程与它所访问的文件关联起来了。
+
+
+用户级：
+Linux限制每个登录用户的可连接文件数。可通过 ulimit -n来查看当前有效设置。如果想修改这个值就使用 ulimit -n <setting number> 命令。
+对于文件描述符增加的比例，资料推荐是以2的幂次为参考。如当前文件描述符数量是1024，可增加到2048，如果不够，可设置到4096，依此类推。
+在出现Too many open files问题后，首先得找出主要原因。最大的可能是打开的文件或是socket没有正常关闭。为了定位问题是否由Java进程引起，通过Java进程号查看当前进程占用文件描述符情况：
+
+
+# pgrep -lo java			查看java主进程ID
+# lsof -p $java_pid 每个文件描述符的具体属性
+# lsof -p $java_pid | wc -l 当前Java进程file descriptor table中FD的总量
+
+
+分析命令的结果，可判断问题是否由非正常释放资源所引起。
+
+如果我们只是普通用户，只是暂时的修改ulimit -n，可以直接shell命令来修改（ulimit -n 1024000）。但是这个设置时暂时的保留！当我们退出bash后，该值恢复原值。
+如果要永久修改ulimit，需要修改/etc/security/limits.conf。
+vim /etc/security/limits.conf
+
+# 添加如下的行
+
+*  soft nofile 2048
+*  hard nofile 2048
+ 
+以下是说明：
+* 代表针对所有用户
+noproc 是代表最大进程数
+nofile 是代表最大文件打开数
+添加格式：
+[username | @groupname] type resource limit
+[username | @groupname]：设置需要被限制的用户名，组名前面加@和用户名区别。也可以用通配符*来做所有用户的限制。
+type：有 soft，hard 和 -，soft 指的是当前系统生效的设置值。hard 表明系统中所能设定的最大值。soft 的限制不能比hard 限制高。用 - 就表明同时设置了 soft 和 hard 的值。
+resource：
+core - 限制内核文件的大小(kb)
+date - 最大数据大小(kb)
+fsize - 最大文件大小(kb)
+memlock - 最大锁定内存地址空间(kb)
+nofile - 打开文件的最大数目
+rss - 最大持久设置大小(kb)
+stack - 最大栈大小(kb)
+cpu - 以分钟为单位的最多 CPU 时间
+noproc - 进程的最大数目
+as - 地址空间限制
+maxlogins - 此用户允许登录的最大数目
+实例：
+username soft nofile 2048
+username hard nofile 2048
+@groupname soft nofile 2048
+@groupname hard nofile 2048
+
+http://www.cnblogs.com/mylingc/archive/2013/05/24/3097416.html
+
+
+
+
+

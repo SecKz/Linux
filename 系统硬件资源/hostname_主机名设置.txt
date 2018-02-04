@@ -1,0 +1,63 @@
+# hostname   					等同于echo $HOSTNAME
+# cat /proc/sys/kernel/hostname		显示主机名
+# grep -i hostname /etc/hosts 			显示主机名
+# grep -i hostname /etc/sysconfig/network		显示主机名
+# hostname -i 		带上-i参数时显示ip地址
+# hostname -f 		带上-f参数时显示全域名
+# hostname new55		修改主机名时，后面跟上新的主机名即可。注意此方法立即生效，但不会永久保存
+
+hostname命令可以用来显示或者设置主机名（show or set the system’s host name）。环境变量HOSTNAME也保存了当前的主机名。在使用hostname命令设置主机名后，系统并不会永久保存新的主机名，重新启动机器之后还是原来的主机名。如果需要永久修改主机名，需要同时修改/etc/hosts和/etc/sysconfig/network的相关内容。某些依赖于系统主机名的软件，在修改主机名之后可能会出现问题，比如为mysql配置了同步复制时，修改主机名前最好先停止其运行（经验之谈，本人就因此折腾了很久）。
+
+
+在此，总结一下修改主机名的方法：
+1. 停止与主机名相关的软件运行，比如mysql。
+2. 先使用 hostname newname 设置主机名。
+3. 在/etc/hosts中修改或增加 ip fqdn newname 行，并检查原来127.0.0.1行的设置。
+4. 在/etc/sysconfig/network中修改HOSTNAME=newname。
+5. 重新启动机器并确认是否修改成功。
+
+
+
+Linux 安装好后，其默认的主机名是 localhost。修改 Linux 主机名需要3步。
+使用 hostname 修改当前主机名。
+hostname new-hostname
+修改 /etc/sysconfig/network  配置文件，以便下次重启的时，使用新的主机名。
+打开 /etc/sysconfig/network 文件，修改 HOSTNAME=new-hostname.domainname。
+
+修改后的 /etc/sysconfig/network 文件如下：
+NETWORKING=yes
+HOSTNAME=new-hostname.localdomain
+修改本机的域名解析文件 /etc/hosts ，使得本机的应用程序能够解析新的主机名。
+编辑文件： /etc/hosts
+修改： xxx.xxx.xxx.xxx new-hostname.domainname new-hostname
+（这里的xxx代表本机的网络地址，也可以是环回地址127.0.0.1）
+
+修改后的 /etc/hosts 文件如下：
+127.0.0.1  localhost.localdomain localhost
+127.0.0.1  new-hostname.localdomain new-hostname
+
+
+
+
+# hostname
+
+修改hostname有几种方式？
+hostname DB-Server                                   --运行后立即生效（新会话生效），但是在系统重启后会丢失所做的修改
+echo DB-Server  > /proc/sys/kernel/hostname          --运行后立即生效（新会话生效），但是在系统重启后会丢失所做的修改
+sysctl kernel.hostname=DB-Server                      --运行后立即生效（新会话生效），但是在系统重启后会丢失所做的修改
+修改/etc/sysconfig/network下的HOSTNAME变量             --需要重启生效，永久性修改。
+
+hostname跟/etc/hosts 下配置有关系吗？
+如果从我上面的实验来看，其实hostname跟/etc/hosts下的配置是没有关系的。hostname的修改、变更完全不依赖hosts文件。 其实hosts文件的作用相当如DNS，提供IP地址到hostname的对应。
+Linux系统在向DNS服务器发出域名解析请求之前会查询/etc/hosts文件，如果里面有相应的记录，就会使用hosts里面的记录。/etc/hosts文件通常里面包含这一条记录
+127.0.0.1 localhost.localdomain localhost
+hosts文件格式是一行一条记录，分别是IP地址 、hostname、 aliases，三者用空白字符分隔，aliases可选。
+127.0.0.1到localhost这一条建议不要修改，因为很多应用程序会用到这个，比如sendmail，修改之后这些程序可能就无法正常运行。
+
+
+
+
+
+
+
+

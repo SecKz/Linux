@@ -1,0 +1,38 @@
+
+
+
+# dovecot -a									列出全部配置项
+# dovecot -a| grep max
+# dovecot -n									查看dovecot配置
+# dovecot -c /etc/dovecot.conf				查看dovecot的配置是否正确
+
+# qpm -ql dovecot
+# tail /var/log/dovecot.log
+
+
+
+
+# dovecotpw -l						列出dovecot可用加密的方式
+# dovecotpw -s MD5 -u cc			给用户cc使用md5方式加密
+
+把生成生的代码保存到密码文件
+# echo cc:'{MD5}$1$JKHP.kHq$UB0.Kp81wHF/PU5UtmdU00' > /etc/dovecot.passwd
+
+
+配置
+http://inosin.iteye.com/blog/1472653
+http://www.rackspace.com/knowledge_center/article/dovecot-installation-and-configuration-on-centos
+
+安装
+http://www.dovecot.org/download.html
+
+
+# telnet 127.0.0.1 110
+Trying 127.0.0.1...
+Connected to localhost.localdomain (127.0.0.1).
+Escape character is '^]'.
++OK Dovecot ready.
+user admin@cc.com
++OK
+pass 111111
+-ERR Authentication failed.

@@ -1,0 +1,46 @@
+
+pure-ftpd对虚拟用户的支持
+http://www.centos.bz/2011/03/centos-pureftpd-install/ 		CentOS 5 PureFTPd yum安装与配置(MySQL虚拟用户)
+http://linux.justinhartman.com/PureFTPd_Installation_and_Setup  PureFTPd Installation and Setup
+http://download.pureftpd.org/pub/pure-ftpd/doc/README.Virtual-Users  #帮助文件
+用户信息文件；/etc/pureftpd.passwd
+
+
+建立第一个虚拟用户：
+# pure-pw useradd ftpu -u ftpuser -d /usr/local/testRoot 
+说明：ftpu是用户名，-u ftpuser是其实际的linux用户，-d指定起始目录,并锁定于该目录。如果不锁定，则用-D
+如果需要不同的权限，可以建立新的linux用户与组
+
+建立用户数据库：
+# pure-pw mkdb /usr/local/pureftpd/pureftpd.pdb
+
+说明：今后每添加或修改用户数据库都应该执行一次mkdb.
+
+Create a new user
+Lets create our first FTP user. In this example our user will be "nolan":
+pure-pw useradd nolan -u ftpuser -g ftpgroup -d /home/pubftp/nolan -N 10
+In the above command we gave him a limit of 10 MB disk space with the option "-N 10". Now you have to enter nolan's new password twice.
+By default your users will be saved in /etc/pure-ftpd/pureftpd.passwd, but first we have to update the pureftpd Database:
+pure-pw mkdb   //刷新数据库
+The "Database" here is simply a binary file but it is ordered and has an index for quick access.
+User Information
+To get some user details enter the following to get a complete list of all pureftpd users:
+pure-pw list　　　//显示所有pure-ftp用户
+If you want to show information about a specific user:
+pure-pw show nolan   //修改nolan的密码
+This will show you detailed information about the user "nolan".
+You will notice that the line "Directory: /home/pubftp/nolan/./" has a trailing ./ but you shouldn't worry as this is simply the chroot for the user, which means he can't go "above" his directory.
+Resetting a password
+If you forget the password for a user, you can reset it as follows:
+pure-pw passwd nolan   //也可以直接修改用户信息文件再pure-pw mkdb
+After a password reset update your database:
+pure-pw mkdb
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+
+
+
+一个简单的邮件的传递过程
+MTA（服务器）通常是英特网服务商管理，如果这封邮件的收信人是系统中用户，MTA将邮件传递给MDA（分发代理），由MDA进行最终的发送，
+MDA会将邮件以文件形式存储或存储在一个专用的数据库中，一旦邮件被保存在邮件仓库服务器，它将一直保存直到收件人接收
+接收者使用MUA（用户界面）获取邮件并阅读，MUA连接到可以访问的邮件仓库，当服务器成功验证用户，它将把用户的邮件传输给MUA。
+
+因此，电子邮件是由三种软件完成的，MUA，MDA，MTA。
+MTA一般有sendmail,qmail,postfix;
+MDA一般如uw imapd, cyrus imapd, vpopmail, qpopmail等；
+组合式的如JAMES,  courier mail server；
+
+MUA：（Mail Transfer Agent）,邮件传输代理
+MDA：（Mail Delivery Agent）,邮件分发代理
+MUA：（Mail User Agent）.邮件用户代理
+
+一般MTA有qmail, sendmail，postfix。如果不安装MTA，则无法向外网进行邮件收发。
+系统自带的mail只能简单进行系统内部用户的邮件收发。如果没有MTA，则无法和qq，163这些邮箱进行通信。
+现在流行的组合是postfix（MTA,smtp）+dovecot（pop3）+cyrus（aduit user）
+
+
+MTA（Mail transfer Agent）—对于服务器管理员来说，邮件传输代理是最为重要的工具。MTA的主要工作就是将电子邮件从一台主机发送到另一台主机。MTA使用SMTP（简单邮件传输协议）来传送电子邮件。
+为了让你更清楚，我们平时用来收发邮件的客户端也使用SMTP，但它们并不是MTA。它们只是一个应用程序，提供某种接口让用户收发邮件。它们被称为MUA（Mial User Agent）—邮件用户代理。
+在Linux操作系统中有很多种邮件传输代理，每个MTA都有自己的长处和弱点。有些易于安装和配置，有些有很强的安全性。Linux中最受欢迎的MTA有如下一些：
+Postfix Sendmail Qmail Exim
+
+MTA        成熟性    安全性   功能   性能    与Sendmail兼容  模块化
+Qmail      中        好       多     高      添加            支持 
+Sendmail   高        差       多     低      x               没有
+Postfix    低        好       中等   高      兼容            支持 
+Exim       中        差       多     中等    兼容            没有
+
+http://blog.jobbole.com/21741/
+
+
+
+
+
+
+
+
+

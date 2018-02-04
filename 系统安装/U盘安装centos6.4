@@ -1,0 +1,54 @@
+
+http://www.jb51.net/os/128751.html
+http://www.jb51.net/os/78318.html
+http://www.osyunwei.com/archives/2307.html
+http://jingyan.baidu.com/article/414eccf60142f06b431f0a37.html
+http://jingyan.baidu.com/article/359911f571501457fe0306a6.html
+
+下载地址
+http://wiki.centos.org/Download
+
+
+由于初始化安装用的最小化安装包，没有桌面环境。
+# runlevel 					查看当前的运行级别
+# rpm -qa | egrep -i 'GNOME|Window'		查看是否安装了桌面环境的组件
+# yum groupinstall "X Window System" "GNOME Desktop Environment"  
+# init 5  
+
+# echo $LANG				查看当前使用的系统语言
+# locale 					查看是否有中文语言包，如有zh cn 表示已经安装了中文语言
+# yum groupinstall chinese-support		如果没有中文语言包则安装
+
+临时更换语言
+如果只是临时更换linux系统的语言环境，可以通过输入设置 LANG=语言名称， 如中文是 Zn_CN.UTF-8
+修改系统默认语言
+你可以选择编辑“/etc/sysconfig/i18n”文件，但是这个文件是作用于所有用户的，这里我们只修改成自己登录时显示中文。
+编辑.bashrc文件，在最后添加export LANG=zh_CN.UTF-8
+
+http://jingyan.baidu.com/article/6b182309b95badba58e159e0.html
+
+
+
+
+CentOS 6.2的安装镜像文件有两个DVD，安装系统只用到第一个镜像文件，即DVD1另外一个镜像文件是附带的软件包。
+dvd2等于是系统补充包，安装系统时，一般不会用到，搭建本地yum源时，将dvd二的Packages里面的rpm包都复制到第一个里面重新生成下数据.
+
+CentOS-6.6-x86_64-netinstall.iso
+  This is the network install and rescue image.
+  This image is designed to be burned onto a CD. You then boot your computer off the CD.
+
+CentOS-6.6-x86_64-minimal.iso
+  The aim of this image is to install a very basic CentOS 6.6 system, with the minimum of packages needed to have a functional system.
+  Please burn this image onto a CD and boot your computer off it. A preselected set of packages will be installed on your system. Everything else needs to be installed using yum.
+  Please read http://wiki.centos.org/Manuals/ReleaseNotes/CentOSMinimalCD6.6 for more details about this image.
+  The set of packages installed by this image is identical to the one installed when choosing the group named "Minimal" from the full DVD image.
+
+CentOS-6.6-x86_64-bin-DVD1.iso
+CentOS-6.6-x86_64-bin-DVD2.iso
+  These two dvd images contain the entire base distribution.
+  Please burn DVD1 onto a DVD and boot your computer off it.
+  A basic install will not need DVD2.
+  After the installation is complete, please run "yum update" in order to update your system.
+
+ Remember that in order to be able to partition your disk you will need to run the GUI installer which in turns needs enough RAM.
+ The same is true for the network setup step. The release notes ( http://wiki.centos.org/Manuals/ReleaseNotes/CentOS6.6 ) provide more details about these aspects.

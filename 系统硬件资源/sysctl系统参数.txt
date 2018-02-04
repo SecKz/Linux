@@ -1,0 +1,35 @@
+
+
+
+您可以使用sysctl修改系统变量，也可以通过编辑sysctl.conf文件来修改系统变量
+# sysctl -a		查看系统变量
+# sysctl -a|grep file	
+# cat /proc/sys/fs/file-max		查看系统最大文件打开限制
+# cat /etc/sysctl.conf | grep file
+
+编辑完成后，请执行以下命令使变动立即生效
+# sysctl -p 				等同于 sysctl -p /etc/sysctl.conf 指定要加载的配置文件并显示参数.如果不指定加载文件的路径,默认为/etc/sysctl.conf
+# sysctl -w net.ipv4.route.flush=1		
+
+/etc/sysctl.conf这个目录主要是配置一些系统信息，而且它的内容全部是对应于/proc/sys/这个目录的子目录及文件
+其实上面每个'.'分割的就代表一个目录，例如，fs.file-max也就代表/proc/sys/fs/file-max。
+
+那么/proc/sys/是用来做什么的呢？大家都知道/proc是每次系统启动的时候都要重新挂载的，它反映了系统内存里面的一些状态。
+通过/proc/可以很好的了解到当前系统的一些信息。而/proc/sys/则是这些信息的一小部分而已。你可以通过ls /proc/查看，里面还是不是有很多其他的数字命名的目录？
+那就是单个进程的信息了，那个数字就是进程ID。
+例如之前写过一篇关于two many open files解决办法的文章，那么查看某个进程打开多少FD，则可以通过ls /proc/<pid> | wc -l来统计。
+
+# echo 134217728 > /proc/sys/kernel/shmmax
+# echo 134217728 > /proc/sys/kernel/shmall
+按照以上方法更改，在每次重启系统时，该值会被自动还原。如果想永久更改，可以修改/etc/sysctl.conf文件
+
+
+
+
+
+
+
+
+
+
+

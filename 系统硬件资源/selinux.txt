@@ -1,0 +1,66 @@
+
+
+# getenforce		查看当前SELinux的工作状态
+# setenforce 0		不需要重启Linux，但重启后失效
+# vi /etc/selinux/config		永久修改，需要重启Linux	将SELINUX=enforcing 改成SELINUX=disabled
+
+# ls -Z index.html			查看index.html 的上下文信息，也就是SELinux信息
+# restorecon -v index.html	通过使用 restorecon 命令来恢复我们文件默认的上下文
+
+http://www.cnblogs.com/xiaoluo501395377/archive/2013/05/26/3100444.html
+
+
+
+SELinux的工作模式一共有三种 enforcing、permissive和disabled 
+enforcing　　强制模式：只要是违反策略的行动都会被禁止，并作为内核信息记录
+permissive　　允许模式：违反策略的行动不会被禁止，但是会提示警告信息
+disabled　　禁用模式：禁用SELinux，与不带SELinux系统是一样的，通常情况下我们在不怎么了解SELinux时，将模式设置成disabled，这样在访问一些网络应用时就不会出问题了。
+上面也说了SELinux的主配置文件是 /etc/sysconfig/selinux 
+
+以root用户运行以下命令
+# setenforce 0
+这条命令的作用是把SELinux暂时设定成Permissive模式（关于Permissive Mode在以下会有介绍）
+如果要恢复运行SELinux则可以运行
+# setenforce 1
+这条命令会把SELinux设定成Enforcing模式
+
+
+
+什么是SELinux
+SELinux (Security-Enhanced Linux) 是一种Mandatory Access Control (MAC) 的应用。先不忙解释它，让我们先来看看Linux本身的安全标准
+
+那么SELinux的Mandatory Access Control是怎么解决这些问题的呢
+1. SELinux给file, resource(device etc.), user, process等增加了另一层的属性：称之为Security Context
+2. SELinux的security context里面包括了: Type Enforcement, Role-Based Access Control 以及 Multi-Level Security (MLS) 三种不同的access control
+3. 应用这些新属性的目的在于SELinux可以将程序限制在它仅需要控制的范围之内，从而最大限度的保护了user space
+4. 使用SELinux可以一定程度降低root用户的权限。比如即使以root所运行的程序被侵犯以后，它也不可以获取对于用户空间资源的操控
+如果说运用到实际中的话。那么比如当许多应用软件被发现漏洞以后，发行商和自由社区通常需要一段时间来给程序打补丁。那么使用了SELinux之后我们就可以保护我们的系统在这段时间内不会被次类攻击所侵犯
+
+
+3.2 把SELinux永久设定为Permissive模式
+
+这里需要讲一下Permissive和Enforcing模式的区别。 SELinux有三种模式：Enforcing, Permissive and Disable.
+Enforcing模式就是应用SELinux所设定的Policy, 所有违反Policy的规则(Rules)都会被SELinux拒绝
+Permissive和Enforcing的区别就在于它还是会遵循SELinux的Policy,但是对于违反规则的操作只会予以记录而并不会拒绝操作
+Disable 顾名思义就是完全禁用SELinux
+
+4. SELinux需要注意的几点
+
+SELinux和其他的linux安全工具一样是用来辅助和增强linux的安全性，而不是用来代替原有的linux的安全设置。
+所以如果遇到 permission deny的情况下，应该首先检查是不是遵守了Linux本身的安全设置，然后再来检查它是否违反了SELinux所设定的规则
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

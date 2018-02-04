@@ -1,0 +1,126 @@
+
+
+# cat /etc/cron.daily/logrotate				查看logrotate的cron
+# logrotate /etc/logrotate.conf			让配置生效
+# man logrotate							查看帮助
+
+# logrotate -vf /etc/logrotate.d/nginx			如果你等不及cron，可以通过如下命令来手动执行
+# logrotate -df /etc/logrotate.d/nginx			正式执行前最好通过Debug选项来验证一下
+# logrotate -vf /etc/logrotate.conf			手动强制rotate，显示rotate信息
+# logrotate -f /etc/logrotate.conf			强制rotate
+
+logrotate是基于cron来运行的，其脚本是etc/cron.daily/logrotate
+logrotate定时切分日志，以避免日志文件过大。以下是logrotate运行的关键点：
+/etc/cron.daily/logrotate		 默认让Cron每天执行logrotate一次；
+/etc/logrotate.conf 			全局配置文件；
+/etc/logrotate.d 				应用自个的配置文件存放目录，覆盖全局配置；
+
+http://www.cnblogs.com/futeng/p/4785206.html
+
+
+
+/log/test.log
+{
+         size 10M			超过10M时就开始rotate
+         create				允许logrotate创建文件
+         start 10			循环文件的开始为10
+         rotate 4			最多循环创建4个文件
+     dateext  			增加日期作为后缀，不然会是一串无意义的数字
+         compress
+         copytruncate
+}
+                                               
+
+# vi /etc/logrotate.d/apache
+/usr/local/apache2/logs/access_log /usr/local/apache2/logs/error_log {
+    size 100M
+    compress
+    dateext
+    maxage 30
+    postrotate
+      /usr/bin/killall -HUP httpd
+      ls -ltr /usr/local/apache2/logs | mail -s "$HOSTNAME: Apache restarted and log files rotated" ramesh@thegeekstuff.com
+    endscript
+}
+dateext - Appends the date in YYYYMMDD format to the rotated log files. i.e Instead of access_log.1.gz, it creates access_log-20110616.gz
+maxage - Indicates how long the rotated log files should be kept. In this example, it will be kept for 30 days.
+postrotate and endscript – Any commands enclosed between these two parameter will be executed after the log is rotated.
+postrotate/endscript ：日志转储后执行的脚本
+
+
+
+
+# rotate log files weekly
+weekly 
+# keep 4 weeks worth of backlogs
+rotate 4 
+# send errors to root
+errors root
+# create new (empty) log files after rotating old ones
+create 
+# uncomment this if you want your log files compressed
+#compress
+weekly 指定所有的日志文件每周转储一次。
+rotate 4 指定转储文件的保留4份。
+errors root 指定错误信息发送给root。
+create 指定 logrotate 自动建立新的日志文件，新的日志文件具有和原来的文件一样的权限。
+compress 指定不压缩转储文件，如果需要压缩，去掉注释就可以了。
+dateext                                        使用日期作为命名格式
+
+这里的设置可以理解为Logrotate的缺省值，当然了，可以我们在/etc/logrotate.d目录里放置自己的配置文件，用来覆盖Logrotate的缺省值。
+
+
+
+sharedscripts的作用是什么？
+大家可能注意到了，我在前面Nginx的例子里声明日志文件的时候用了星号通配符，也就是说这里可能涉及多个日志文件，比如：access.log和error.log。
+说到这里大家或许就明白了，sharedscripts的作用是在所有的日志文件都轮转完毕后统一执行一次脚本。
+如果没有配置这条指令，那么每个日志文件轮转完毕后都会执行一次脚本。
+rotate和maxage的区别是什么？
+它们都是用来控制保存多少日志文件的，区别在于rotate是以个数为单位的，而maxage是以天数为单位的。如果我们是以按天来轮转日志，那么二者的差别就不大了。
+
+http://huoding.com/2013/04/21/246
+
+    
+
+logrotate 程序是一个日志文件管理工具。用来把旧的日志文件删除，并创建新的日志文件，我们把它叫做“转储”。
+我们可以根据日志文件的大小，也可以根据其天数来转 储，这个过程一般通过 cron 程序来执行。logrotate 程序还可以用于压缩日志文件，以及发送日志到指定的E-mail 。
+ 
+logrotate 的配置文件是 /etc/logrotate.conf。主要参数如下表：
+ 
+参数 功能
+compress                               通过gzip 压缩转储以后的日志
+nocompress                           不需要压缩时，用这个参数
+copytruncate                          用于还在打开中的日志文件，把当前日志备份并截断
+nocopytruncate                      备份日志文件但是不截断
+create mode owner group      转储文件，使用指定的文件模式创建新的日志文件
+nocreate                                 不建立新的日志文件
+delaycompress                       和 compress 一起使用时，转储的日志文件到下一次转储时才压缩
+nodelaycompress                   覆盖 delaycompress 选项，转储同时压缩。
+errors address                        专储时的错误信息发送到指定的Email 地址
+ifempty                                     即使是空文件也转储，这个是 logrotate 的缺省选项。
+notifempty                                如果是空文件的话，不转储
+mail address                            把转储的日志文件发送到指定的E-mail 地址
+missingok                                 如果日志不存在则忽略该警告信息
+nomail                                       转储时不发送日志文件
+olddir directory                          转储后的日志文件放入指定的目录，必须和当前日志文件在同一个文件系统
+noolddir                                     转储后的日志文件和当前日志文件放在同一个目录下
+prerotate/endscript                   在转储以前需要执行的命令可以放入这个对，这两个关键字必须单独成行
+postrotate/endscript                  在转储以后需要执行的命令可以放入这个对，这两个关键字必须单独成行
+daily                                           指定转储周期为每天
+weekly                                       指定转储周期为每周
+monthly                                      指定转储周期为每月
+rotate count                               指定日志文件删除之前转储的次数，0 指没有备份，5 指保留5 个备份
+tabootext [+] list                         不转储指定扩展名的文件，缺省的扩展名是：.rpm-orig .rpmsave
+size size                                     当日志文件到达指定的大小时才转储，可以指定bytes(缺省)以及K或者M
+dateext                                        使用日期作为命名格式
+dateformat .%s                           配合dateext使用，紧跟在下一行出现，定义文件切割后的文件名，必须配合dateext使用，只支持 %Y %m %d %s 这四个参数
+
+
+
+
+
+
+
+
+
+

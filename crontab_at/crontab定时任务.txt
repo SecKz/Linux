@@ -1,0 +1,106 @@
+
+# grep 'rsync' /var/log/cron | tail
+# tail /var/log/cron					查看cron日志
+# service crond status				crond是否启动
+
+/var/log/cron只会记录是否执行了某些计划的脚本，但是具体执行是否正确以及脚本执行过程中的一些信息则linux会每次都发邮件到该用户下。
+# tail /var/spool/mail/root -n100
+
+# crontab -e		给当前用户建立或编辑一个cron任务，文件在文件夹/var/spool/cron/里对应的用户名文件
+# crontab -l		查看当前用户的cron任务
+# crontab -r 		删除任务
+# crontab -u root –l	比如说root查看自己的cron设置 简写成crontab –e
+# crontab -u fred -r 	root想删除fred的cron设置
+# crontab -u root -e	编辑cron服务 进入vi编辑模式，编辑的内容一定要符合下面的格式：*/1 * * * * ls >> /tmp/ls.txt
+# crontab -u root file.txt	将file.txt做为crontab的任务列表文件并载入crontab
+
+-u user：用来设定某个用户的crontab服务，例如，“-u ixdba”表示设定ixdba用户的crontab服务，此参数一般有root用户来运行。
+file：file是命令文件的名字,表示将file做为crontab的任务列表文件并载入crontab。如果在命令行中没有指定这个文件，crontab命令将接受标准输入（键盘）上键入的命令，并将它们载入crontab。
+-e：编辑某个用户的crontab文件内容。如果不指定用户，则表示编辑当前用户的crontab文件。
+-l：显示某个用户的crontab文件内容，如果不指定用户，则表示显示当前用户的crontab文件内容。
+-r：从/var/spool/cron目录中删除某个用户的crontab文件，如果不指定用户，则默认删除当前用户的crontab文件。
+-i：在删除用户的crontab文件时给确认提示。
+
+
+编辑/etc/crontab 文件配置cron
+cron服务每分钟不仅要读一次/var/spool/cron内的所有文件，还需要读一次/etc/crontab,因此我们配置这个文件也能运用 cron服务做一些事情。
+用crontab配置是针对某个用户的，而编辑/etc/crontab是针对系统的任务。此文件的文件格式是：
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root      //如果出现错误，或者有数据输出，数据作为邮件发给这个帐号
+HOME=/    //使用者运行的路径,这里是根目录
+
+# run-parts
+01 * * * * root run-parts /etc/cron.hourly	 	每小时执行/etc/cron.hourly内的脚本 
+02 4 * * * root run-parts /etc/cron.daily 		每天执行/etc/cron.daily内的脚本
+22 4 * * 0 root run-parts /etc/cron.weekly 		每星期执行/etc/cron.weekly内的脚本 
+42 4 1 * * root run-parts /etc/cron.monthly 	每月去执行/etc/cron.monthly内的脚本
+run-parts就是说明执行目录下的所有的脚本的意思
+run-parts后面接的是文件夹，否则接的是要运行的某个脚本名
+前四行是用来配置crond任务运行的环境变量
+第一行SHELL变量指定了系统要使用哪个shell，这里是bash，
+第二行PATH变量指定了系统执行命令的路径，
+第三行MAILTO变量指定了crond的任务执行信息将通过电子邮件发送给root用户，如果MAILTO变量的值为空，则表示不发送任务执行信息给用户，
+第四行的HOME变量指定了在执行命令或者脚本时使用的主目录。第六至九行表示的含义将在下个小节详细讲述。这里不在多说。
+
+有时候脚本执行不成功的话，如/etc/cron.d中的脚本，要给脚本前的要加上user
+*/1 * * * * root  /root/date.sh
+有时候定时任务不执行，看看是不是文件权限的问题，没有执行权限。
+
+
+星号（*）：代表所有可能的值，例如month字段如果是星号，则表示在满足其它字段的制约条件后每月都执行该命令操作。
+逗号（,）：可以用逗号隔开的值指定一个列表范围，例如，“1,2,5,7,8,9”
+中杠（-）：可以用整数之间的中杠表示一个整数范围，例如“2-6”表示“2,3,4,5,6”
+正斜线（/）：可以用正斜线指定时间的间隔频率，例如“0-23/2”表示每两小时执行一次。同时正斜线可以和星号一起使用，例如*/10，如果用在minute字段，表示每十分钟执行一次。
+
+1 * * * * /home/bruce/backup  每小时的第一分执行 /home/bruce/backup这个文件
+0 */2 * * * /sbin/service httpd restart  意思是每两个小时重启一次apache
+*/10 * * * * 　　　　　　 每隔10分钟执行，不可写成 10 * * * * 
+
+30 21 * * * /usr/local/etc/rc.d/lighttpd restart		每晚的21:30重启lighttpd 。
+45 4 1,10,22 * * /usr/local/etc/rc.d/lighttpd restart	每月1、10、22日的4 : 45重启lighttpd
+10 1 * * 6,0 /usr/local/etc/rc.d/lighttpd restart		每周六、周日的1 : 10重启lighttpd
+0,30 18-23 * * * /usr/local/etc/rc.d/lighttpd restart	每天18 : 00至23 : 00之间每隔30分钟重启lighttpd
+0 23 * * 6 /usr/local/etc/rc.d/lighttpd restart			每星期六的11 : 00 pm重启lighttpd
+
+0 11 4 * mon-wed /usr/local/etc/rc.d/lighttpd restart		每月的4号与每周一到周三的11点重启lighttpd
+0 4 1 jan * /usr/local/etc/rc.d/lighttpd restart			一月一号的4点重启lighttpd
+0 11 4 * 1-3 command line	每个月的4号和每个礼拜的礼拜一到礼拜三的早上11点
+0 0 1,15 * * fsck /home  每月1号和15号检查/home 磁盘
+30 6 */10 * * ls  意思是每月的1、11、21、31日是的6：30执行一次ls命令
+
+crontab执行定时任务有三个方式：
+1 crontab -e来配置，生成/var/spool/cron/下对应于特定用户的同名文件
+2 系统用户调度的/etc/cron.daily /etc/cron.weekly /etc/cron.monthly目录下的计划任务
+3 编辑/etc/crontab文件，直接在/etc/crontab文件中加任务命令。 
+
+cron执行时，是要读取三个地方的配置文件：
+一是/etc/crontab，二是/etc/cron.d目录下的所有文件，三是每个用户的配置文件 /var/spool/cron
+
+每次编辑完某个用户的cron设置后，cron自动在/var/spool/cron下生成一个与此用户同名的文件，这个文件只可以用crontab -e 来编辑。
+cron启动后每过一份钟读一次这个文件，检查是否要执行里面的命令。因此此文件修改后不需要重新启动cron服务。
+
+使用 crontab -e 与 直接编辑 /etc/crontab 的区别
+修改/etc/crontab这种方法只有root用户能用，用crontab -e这种所有用户都可以使用，普通用户也只能为自己设置计划任务。 
+
+系统级的做系统级配置我们会直接配置 /etc/crontab
+用户级的一般还是建议大家使用 crontab -e ，这样系统也会帮着检查我们配置的脚本语法
+用户所建立的Crontab文件存于/var/spool/cron中，其文件名与用户名一致。
+
+
+文件	含义
+/etc/cron.deny	该文件中所列的用户不允许使用Crontab命令
+/etc/cron.allow	该文件中所列的用户允许使用Crontab命令
+/var/spool/cron/	是所有用户的crontab文件
+/var/spool/cron/crontabs	/var/spool/cron/crontabs
+
+
+
+
+
+
+
+
+
+
+

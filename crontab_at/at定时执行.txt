@@ -1,0 +1,43 @@
+
+需要只运行作业一次而不是定期运行，应该使用 at 命令。
+# yum install at			
+# service atd start
+
+# echo "date >> 111.txt " | at now +1 minutes   	一分钟后执行	
+# du -sh *|sort -n | at midnight 					在凌晨0点执行命令	
+
+# at -f /home/aa.sh 4pm + 3 days  		在三天后下午4点执行文档aa.sh中的作业。 
+
+# atq  列出定时任务
+# atrm 14 15  删除14 15任务
+
+可以进入到/var/spool/at目录里把计划任务删除，计划任务的文件都保存在该目录里
+
+-m   Send mail to the user when the job has completed even if there was no output.
+-f 	file Reads the job from file rather than standard input.
+-v      Shows the time the job will be executed.
+
+at可以使用的时间格式
+at 5:30pm 
+at 17:30 
+at 17:30 today 
+at now + 5 hours 
+at now + 300 minutes 
+at 17:30 24.2.99 
+at 17:30 2/24/99 
+at 17:30 Feb 24 
+
+
+　　Minute    at now + 5 minutes   任务在5分钟后运行
+　　Hour      at now + 1 hour      任务在1小时后运行
+　　Days      at now + 3 days      任务在3天后运行
+　　Weeks     at now + 2 weeks     任务在两周后运行
+　　Fixed     at midnight          任务在午夜运行
+　　Fixed     at 10:30pm           任务在晚上10点30分
+　　Fixed     at 23:59 12/31/2018　　 任务在2018年12月31号23点59分　
+
+
+
+
+
+

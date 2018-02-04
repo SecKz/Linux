@@ -1,0 +1,175 @@
+
+
+
+# sendmail -q				刷新邮件对列。mta是sned的时候用
+# postfix -f					等同postfix flush
+# mailq				查看邮件列表
+# postsuper -d ALL			删除队列所有邮件
+# postsuper -d mailID
+# postsuper -h ALL			暂停发送全部队列中的邮件
+
+# postqueue -p			显示正在发送队列中的mail，可用于查看mail是否有已发送出去
+# postsuper -d 3C2C11FBE7			删除上行查出的邮件队列ID
+
+# host -a 126.com		显示NS、a记录、mx记录
+
+比如域名是：126.com , 配置的邮件服务器是 mail.126.com 那么你就需要在域名管理界面添加一条MX记录，key=126.com, value=mail.126.com
+# host -t mx 126.com		返回如下类似结果，表面MX生效：
+126.com mail is handled by 50 126mx00.mxmail.netease.com
+
+# alternatives --display mta		检查默认的MTA
+# alternatives --config mta		更改默认邮件传输代理
+# yum remove sendmail			首先删除sendmail
+# rpm -ql postfix		查看postfix安装路径
+# rpm -qc postfix	查看postfix配置文件
+
+# postconf -n     查看用户自定义设置
+# postconf -n | grep time
+# postconf -d     查看postfix 默认设置
+# postconf -e      修改用户自定义设置
+# postfix check		检查当前配置的参数是否正确
+# postfix reload		修改配置文件后，重新加载
+# postconf -a			查看postfix支持的验证方式
+smtpd_sasl_path = private/auth  postfix会生成auth
+
+
+
+
+
+测试本机的25端口
+# telnet localhost 25		等同于telnet localhost smtp
+ehlo localhost
+quit					退出telnet
+看到250-AUTH LOGIN PLAIN字样即表示配置成功
+
+查看服务商是否开通了25端口，若禁用，是收不到域外的信。
+# telnet 119.147.143.30 25   或者 telnet xxzhinan.com 25   测试外网的25端口
+telnet: Unable to connect to remote host
+如果出来以上信息，说明25端口被服务商禁用。
+
+# telnet 119.147.143.30 smtp		第二种验证方式
+Connection closed by foreign host.
+如果出来以上信息，说明25端口被服务商禁用。
+
+修改postfix配置文件来支持Cyrus
+# vi /etc/postfix/main.cf
+mailbox_transport = lmtp:unix:/var/lib/imap/socket/lmtp		启动cyrus-imapd会生成lmtp文件
+
+# find / -iname postfix* -type d			找出postfix相当目录
+
+
+# yum install cyrus*			安装cyrus-sasl，cyrus-imapd等
+# yum install dovecot		dovecot 提供pop3与imap服务
+
+安装saslauthd 
+# yum install cyrus-sasl
+# testsaslauthd -u root -p 'JOvo1495654646#GUIOv6' -s smtp		验证下sasl 
+0: OK "Success." 
+# rpm -qf `which saslauthd `		
+
+安装dovecot配置
+# dovecot -c /etc/dovecot.conf		检查dovecot配置文件是否正确
+# dovecot -n		查看dovecot配置
+
+
+环境:
+需要搭建dns服务做mx解析;
+postfix实现smtp功能;
+dovecot 提供pop3与imap服务;
+cyrus-sasl 提供smtp认证;		rpm -qf `which saslauthd `
+dns：mail.example.com (邮件主机)
+
+dovecot和cyrus-imapd这两个可以同时提供POP和IMAP
+ps: 发送邮件的默认端口是25，收信端口是110，两个端口需要在防火墙中开放，否则会出现发不出
+# lsof -i:25		
+# lsof -i:110		110端口可以被dovecot或cyrus-imapd占用，根据启动哪个
+# lsof -i:143
+
+如果已经安装了dovecot服务，则应该先关掉dovecot服务及开机时自动启动，或者将dovecot服务
+卸载掉，然后启动启动cyrus-imapd服务并设置为开机启动.
+
+
+
+让saslauthd服务开机自动启动
+# chkconfig saslauthd on
+# chkconfig --list saslauthd
+
+让saslauthd服务开机自动启动
+# chkconfig cyrus-imapd on
+# chkconfig --list cyrus-imapd
+
+启动Cyrus并检测imap和pop3端口
+# servcice cyrus-imapd start
+# netstat -tunlp | egrep -i  'imap|pop3'
+# nmap 119.147.143.30 | egrep -i 'imap|pop3'
+
+安装roundcubemail
+# yum search cube
+# yum search php-pear
+# yum search php-pear-mail		roundcubemail需要
+# yum install roundcubemail
+
+
+
+
+# postconf -d| grep queue			查看邮件队列的默认配置
+# if you can't deliver it in an hour - it can't be delivered! 降低重复次数
+maximal_queue_lifetime = 1h
+maximal_backoff_time = 15m
+minimal_backoff_time = 5m
+queue_run_delay = 5m
+
+# postconf -n| grep time			验证
+
+bounce_queue_lifetime        退信邮件的生存时间
+maximal_queue_lifetime       发送队列中邮件的生存时间
+
+
+
+
+邮件服务之POSTFIX, dovecot
+http://wenku.baidu.com/view/9cbe6ffaaef8941ea76e05be.html
+http://xxfvert.blog.51cto.com/794431/314641
+http://www.centos.bz/2011/06/centos-install-setup-postfix/
+http://wenku.baidu.com/view/7052394de518964bcf847cb5.html
+http://wenku.baidu.com/view/22fb68c28bd63186bcebbc40.html
+
+构建postfix邮件服务器(四)配置postfix支持虚拟用户
+http://wenku.baidu.com/view/b5fba484b9d528ea81c779b5.html
+
+http://blog.51yip.com/server/1382.html
+http://www.yandong.org/archives/357
+
+postfix-setup自动化安装
+https://code.google.com/p/postfix-setup/
+
+postfix官方配置
+http://postfix.state-of-mind.de/patrick.koetter/smtpauth/postfix_configuration.html
+
+
+http://blackonsole.org/centos-6-postfix-and-dovecot
+http://wenku.baidu.com/view/874b43212f60ddccda38a019.html
+http://www.07net01.com/linux/centos_youjianfuwuqipostfix_saslauthd_dovecotanzhuangpeizhi__5699_1341821381.html
+http://wenku.baidu.com/view/92e5486d58fafab069dc02fb.html
+http://www.live-in.org/archives/1392.html
+
+http://blog.lzhaohao.info/archive/pop3-smtp-server-by-postfix-cyrus-sasl-dovecot/
+
+postfix专题
+http://blog.51cto.com/zt/139
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+
+
+# telnet 127.0.0.1 11211			连接memcache
+# memcached -V
+# memcached -d -p 11211 -u www -m 264 -c 1024 -P /var/run/memcached/memcached.pid		启动memcache
+
+# memcached-tool 127.0.0.1:11211 stats
+# memcached-tool 127.0.0.1:11211 dump
+# memcached-tool 127.0.0.1:11211 settings
+
+缓存对象的大小有1M限制，key最大长度250位，最长过期30天
+
+
+-d选项是启动一个守护进程，
+    -m是分配给Memcache使用的内存数量，单位是MB
+    -u是运行Memcache的用户，我这里是root，
+    -l是监听的服务器IP地址，, 默认是本机    
+    -p是设置Memcache监听的端口，我这里设置了11211，最好是1024以上的端口，我们这里统一使用11211
+    -c选项是最大运行的并发连接数，默认是1024，我这里设置了256，按照你服务器的负载量来设定。
+    -P是设置保存Memcache的pid文件，我这里是保存在/tmp/memcached.pid
+
+-d start 启动memcached服务   
+-d restart 重起memcached服务   
+-d stop|shutdown 关闭正在运行的memcached服务   
+-d install 安装memcached服务   
+-d uninstall 卸载memcached服务   
+-M 内存耗尽时返回错误，而不是删除项   
+-f 块大小增长因子，默认是1.25   
+-n 最小分配空间，key+value+flags默认是48
+
+Memcached和redis。它们都是内存型数据库，数据保存在内存中，通过tcp直接存取，优势是速度快，并发高，缺点是数据类型有限，查询功能不强，一般用作缓存。
+redis是一种k/v的内存数据库，适合小数据量的存储以及实时要求高的地方，但是不适合做完整数据库。
+我们项目里用到的redis是用来做缓存的，设置过期时间，到时就自动清掉。数据库还是用mysql等这种成熟的方案。
+redis能否做数据库用取决于如下几个条件：
+1：数据量，毕竟内存数据库，还是受限于内存的容量，虽然可以redis可以持久化。
+2：数据的结构，是否能够将关系型数据结构都转换为key/value的形式。
+3：查询的效率，对范围查询等，是否能转换为高效的hash索引查询
+
+http://www.infoq.com/cn/news/2011/01/nosql-why/
+
+
+
+

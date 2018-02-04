@@ -1,0 +1,58 @@
+
+# cat /proc/cpuinfo | grep "physical id"		以下信息显示有两个物理cpu，第个cpu都是4核  该服务器有2个4核CPU
+physical id     : 0
+physical id     : 0
+physical id     : 0
+physical id     : 0
+physical id     : 1
+physical id     : 1
+physical id     : 1
+physical id     : 1
+# cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l		物理CPU个数：
+# cat /proc/cpuinfo | grep "processor" | wc -l					逻辑CPU个数, 即全部cpu的核数			
+
+/proc/cpuinfo 文件包含系统上每个处理器的数据段落。/proc/cpuinfo 描述中有 6 个条目适用于多内核和超线程（HT）技术检查：processor, vendor id, physical id, siblings, core id 和 cpu cores。
+
+processor 条目包括这一逻辑处理器的唯一标识符。
+physical id 条目包括每个物理封装的唯一标识符。
+core id 条目保存每个内核的唯一标识符。
+siblings 条目列出了位于相同物理封装中的逻辑处理器的数量。
+cpu cores 条目包含位于相同物理封装中的内核数量。
+
+如果处理器为英特尔处理器，则 vendor id 条目中的字符串是 GenuineIntel。
+1.拥有相同 physical id 的所有逻辑处理器共享同一个物理插座。每个 physical id 代表一个唯一的物理封装。
+2.Siblings 表示位于这一物理封装上的逻辑处理器的数量。它们可能支持也可能不支持超线程（HT）技术。
+3.每个 core id 均代表一个唯一的处理器内核。所有带有相同 core id 的逻辑处理器均位于同一个处理器内核上。
+4.如果有一个以上逻辑处理器拥有相同的 core id 和 physical id，则说明系统支持超线程（HT）技术。
+5.如果有两个或两个以上的逻辑处理器拥有相同的 physical id，但是 core id 不同，则说明这是一个多核处理器。cpu cores 条目也可以表示是否支持多内核。
+判断CPU是否64位，检查cpuinfo中的flags区段，看是否有lm标识。
+
+
+# cat /proc/loadavg 
+4.61 4.36 4.15 9/84 5662
+
+每个值的含义为：
+参数 解释
+lavg_1 (4.61) 			1-分钟平均负载
+lavg_5 (4.36) 			5-分钟平均负载
+lavg_15(4.15) 			15-分钟平均负载
+nr_running (9) 		在采样时刻，运行队列的任务的数目，与/proc/stat的procs_running表示相同意思
+nr_threads (84) 		在采样时刻，系统中活跃的任务的个数（不包括运行已经结束的任务）
+last_pid(5662) 		最近运行的进程ID号。
+
+后面两个呢，一个的分子是正在运行的进程数，分母是进程总数；另一个是最近运行的进程ID号
+
+假设当前有两个CPU，则每个CPU的当前任务数为4.61/2=2.31
+
+
+
+
+
+
+
+
+
+
+
+
+

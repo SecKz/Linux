@@ -1,0 +1,82 @@
+
+
+# uname -a 			x86_64表示64位机器	i686表示32位机器
+# file /bin/ls	查看系统是64位还是32位，用file查于bin下任一文件均可		#file命令用于辨识文件类型
+# arch	i686为32位，x86_64表示64位
+# getconf LONG_BIT  操作系统位数
+
+# uname -r			查看内核版本号
+# cat /etc/issue	查看发行版本号
+#cat /proc/version 	查看内核版本号
+# lsb_release -a  操作系统信息
+
+
+
+uname -a或–all     详细输出所有信息，依次为内核名称，主机名，内核版本号，内核版本，硬件名，处理器类型，硬件平台类型，操作系统名称
+-s, --kernel-name        输出内核名称
+-n, --nodename        输出网络节点上的主机名
+-r, --kernel-release        输出内核发行号
+-v, --kernel-version        输出内核版本
+-m, --machine        输出主机的硬件架构名称
+-p, --processor        输出处理器类型或"unknown"
+-i, --hardware-platform    输出硬件平台或"unknown"
+-o, --operating-system    输出操作系统名称
+
+
+# free -m	内存空间 
+# cat /proc/meminfo	检查free值是否过低  也可以用 
+# grep MemTotal /proc/meminfo 	 查看内存总量
+# grep MemFree /proc/meminfo 	查看空闲内存量
+# uptime 			查看系统运行时间、用户数、负载
+# cat /proc/loadavg 		查看系统负载
+# dmesg		显示开机自检的内容命令
+# /var/log/messages	 linux操作日志在
+
+# last	显示最后一个登录到系统的用户
+# lastlog /var/log/lastlog 查看所有帐号的最后登录时间
+# cat /var/log/secure  查看系统自开通以来所有用户的登录时间和地点
+# id	显示当前用户所属信息
+
+----Linux 重启命令----
+1、shutdown
+2、poweroff
+4、reboot
+5、halt
+2.halt----最简单的关机命令
+其实halt就是调用shutdown -h。halt执行时﹐杀死应用进程﹐执行sync系统调用﹐文件系统写操作完成后就会停止内核。
+
+系统
+# hostname # 查看计算机名
+# lspci -tv # 列出所有PCI设备
+# lsusb -tv # 列出所有USB设备
+# lsmod # 列出加载的内核模块
+# env # 查看环境变量
+磁盘和分区
+# mount | column -t # 查看挂接的分区状态
+# fdisk -l # 查看所有分区
+# swapon -s # 查看所有交换分区
+# hdparm -i /dev/hda # 查看磁盘参数(仅适用于IDE设备)
+# dmesg | grep IDE # 查看启动时IDE设备检测状况
+网络
+# ifconfig # 查看所有网络接口的属性
+# iptables -L # 查看防火墙设置
+# route -n # 查看路由表
+# netstat -lntp # 查看所有监听端口
+# netstat -antp # 查看所有已经建立的连接
+# netstat -s # 查看网络统计信息
+
+用户
+# w # 查看活动用户
+# id # 查看指定用户信息
+# last # 查看用户登录日志
+# cut -d: -f1 /etc/passwd # 查看系统所有用户
+# cut -d: -f1 /etc/group # 查看系统所有组
+# crontab -l # 查看当前用户的计划任务
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+
+Chkrootkit是一个在本地系统检查rootkit痕迹的工具，它是检查系统二进制文件是否被rootkit病毒修改的一个shell脚本。
+
+# chkrootkit --h
+# chkrootkit			检测
+# chkrootkit -x		专家模式检测
+
+# unhide --h				查看帮助
+# unhide brute
+# unhide sys

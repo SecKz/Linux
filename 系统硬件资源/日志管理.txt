@@ -1,0 +1,72 @@
+
+# yum install rsyslog		rsyslog 是syslog 的升级版 /etc/rsyslog.conf
+# service syslog staus	有时是rsyslog	
+# ps -aux | grep log
+# chkconfig syslog on
+
+
+# tail -20 /var/log/messages
+# tail -20 /var/log/messages | grep ftp
+# lsof | grep messages	查询打开/var/log/messages文件的进程的进程ID(PID)。 
+# ps aux |grep syslogs 
+# echo > /var/log/messages
+# cat /dev/null>/var/log/messages  清空日志文件
+
+
+syslogd记录的日志一般在/var/log/下，一般系统中日志信息：
+/var/log/secure: 记录系统的安全信息，比如ssh、ftp、pop3等；
+/var/log/wtmp: 记录谁曾经登陆过系统，由于本日志被编码过，所以只能用last命令查看；
+/var/log/boot.log： 顾名思义，记录开启或者关闭系统及武夫的信息；
+/var/log/message：系统发生的错误信息都会记录在这个日志中，比如iptables中您使用log功能的日志；
+/var/log/mail:
+/var/log/httpd/
+/var/log/mysqld.d 等，记录的就是这些服务的日志
+
+
+存储位置的写法
+/var/log/messages 直接存储在文件中，若文件不存在则自动创建
+-/var/log/maillog  -不同步设置，表示先放到缓存中，达到一定数量后再写入磁盘，这样能提高性能；但若期间机器出现问题，这些日志数据可能会丢失；因此，只建议用于日志数量大，但非必要的日志文件中，例如mail 等。
+username 发送给登录的用户 *表示登录的所有人
+@[hostname | IP]  发送给某台主机
+对象和级别都可以用*来代表所有 *.* 所有对象的所有等级
+
+
+*.info;mail.none;news.none;authpriv.none;cron.none              /var/log/messages
+#把除邮件、新闻组、授权信息、计划任务等外的所有通知性消息都写入messages文件中。
+mail,news.=info              -/var/adm/info
+#把邮件、新闻组中仅通知性消息写入info文件，其他信息不写入；并且先放到缓存中，累积到一定程度后再写入文件。
+mail.*;mail.!=info           /var/adm/mail
+#把邮件的除通知性消息外都写入mail文件中，。
+mail.=info                   /dev/tty12
+#仅把邮件的通知性消息发送到tty12终端设备
+*.alert                      root,joey
+#如果root和joey用户已经登陆到系统，则把所有紧急信息通知他们
+*.*                          @finlandia
+#把所有信息都导向到finlandia主机（通过/etc/hosts或dns解析其IP地址）
+
+
+核心启动日志:/var/log/dmesg
+系统报错日志:/var/log/messages
+邮件系统日志:/var/log/maillog
+News日志:/var/log/spooler
+RPM软件包:/var/log/rpmpkgs
+引导日志:/var/log/boot.log   记录开机启动讯息，dmesg | more
+cron(定制任务日志)日志:/var/log/cron
+文件 /var/run/utmp 记录著现在登入的用户。
+文件 /var/log/wtmp 记录所有的登入和登出。
+文件 /var/log/lastlog 记录每个用户最后的登入信息。
+文件 /var/log/btmp 记录错误的登入尝试。
+
+
+http://tonylinux.blog.51cto.com/2268300/805490
+
+
+
+
+
+
+
+
+
+
+

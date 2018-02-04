@@ -1,0 +1,100 @@
+
+# yum search sysstat		
+# yum install sysstat
+# iostat
+# iostat -m		以M为单位显示所有信息
+# iostat -t		显示tty和Cpu信息
+# iostat 2 3		每隔 2秒刷新显示，且显示3次
+# iostat -d -k 1 1		查看TPS和吞吐量信息
+# iostat -c 1 3		查看cpu状态
+
+iostat主要用于监控系统设备的IO负载情况，iostat首次运行时显示自系统启动开始的各项统计信息，之后运行iostat将显示自上次运行该命令以后的统计信息。
+Linux系统中的 iostat是I/O statistics（输入/输出统计）的缩写，iostat工具将对系统的磁盘操作活动进行监视。
+它的特点是汇报磁盘活动统计情况，同时也会汇报出CPU使用情况。
+同vmstat一样，iostat也有一个弱点，就是它不能对某个进程进行深入分析，
+仅对系统的整体情况进行分析。iostat属于sysstat软件包。可以用yum install sysstat 直接安装。
+
+Device:            tps   Blk_read/s   Blk_wrtn/s   Blk_read   Blk_wrtn
+sda              22.73        43.70       487.42  674035705 7517941952
+sda1              0.00         0.00         0.00       2658        536
+sda2              0.11         3.74         3.51   57721595   54202216
+
+tps：该设备每秒的传输次数（Indicate the number of transfers per second that were issued to the device.）。
+"一次传输"意思是"一次I/O请求"。多个逻辑请求可能会被合并为"一次I/O请求"。"一次传输"请求的大小是未知的。
+
+kB_read/s：每秒从设备（drive expressed）读取的数据量；
+kB_wrtn/s：每秒向设备（drive expressed）写入的数据量；
+kB_read：读取的总数据量；
+kB_wrtn：写入的总数量数据量；这些单位都为Kilobytes。
+
+http://www.cnblogs.com/dkblog/archive/2011/04/25/2027242.html
+http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2858810.html
+http://www.cnblogs.com/peida/archive/2012/12/28/2837345.html
+
+
+
+iostat -d -x -k 1
+Device:    rrqm/s wrqm/s   r/s   w/s  rsec/s  wsec/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await  svctm  %util
+sda          1.56  28.31  7.84 31.50   43.65    3.16    21.82     1.58     1.19     0.03    0.80   2.61  10.29
+sda   1.98  24.75 419.80  6.93 13465.35  253.47  6732.67   126.73    32.15     2.00    4.70   2.00  85.25
+sda          3.06  41.84 444.90 54.08 14204.08 2048.98  7102.04  1024.49    32.57     2.10    4.21   1.85  92.24
+
+说明：
+cpu属性值说明：
+%user：CPU处在用户模式下的时间百分比。
+%nice：CPU处在带NICE值的用户模式下的时间百分比。
+%system：CPU处在系统模式下的时间百分比。
+%iowait：CPU等待输入输出完成时间的百分比。
+%steal：管理程序维护另一个虚拟处理器时，虚拟CPU的无意识等待时间百分比。
+%idle：CPU空闲时间百分比。
+备注：如果%iowait的值过高，表示硬盘存在I/O瓶颈，%idle值高，表示CPU较空闲，如果%idle值高但系统响应慢时，有可能是CPU等待分配内存，此时应加大内存容量。%idle值如果持续低于10，那么系统的CPU处理能力相对较低，表明系统中最需要解决的资源是CPU。
+disk属性值说明：
+rrqm/s:  每秒进行 merge 的读操作数目。即 rmerge/s
+wrqm/s:  每秒进行 merge 的写操作数目。即 wmerge/s
+r/s:  每秒完成的读 I/O 设备次数。即 rio/s
+w/s:  每秒完成的写 I/O 设备次数。即 wio/s
+rsec/s:  每秒读扇区数。即 rsect/s
+wsec/s:  每秒写扇区数。即 wsect/s
+rkB/s:  每秒读K字节数。是 rsect/s 的一半，因为每扇区大小为512字节。
+wkB/s:  每秒写K字节数。是 wsect/s 的一半。
+avgrq-sz:  平均每次设备I/O操作的数据大小 (扇区)。
+avgqu-sz:  平均I/O队列长度。
+await:  平均每次设备I/O操作的等待时间 (毫秒)。
+svctm: 平均每次设备I/O操作的服务时间 (毫秒)。
+%util:  一秒中有百分之多少的时间用于 I/O 操作，即被io消耗的cpu百分比
+备注：
+如果 %util 接近 100%，说明产生的I/O请求太多，I/O系统已经满负荷，该磁盘可能存在瓶颈。
+如果 svctm 比较接近 await，说明 I/O 几乎没有等待时间；
+如果 await 远大于 svctm，说明I/O 队列太长，io响应太慢，则需要进行必要优化。如果avgqu-sz比较大，也表示有当量io在等待。
+
+
+
+2．命令功能：
+ 通过iostat方便查看CPU、网卡、tty设备、磁盘、CD-ROM 等等设备的活动情况, 负载信息。
+3．命令参数：
+-C 显示CPU使用情况
+-d 显示磁盘使用情况
+-k 以 KB 为单位显示
+-m 以 M 为单位显示
+-N 显示磁盘阵列(LVM) 信息
+-n 显示NFS 使用情况
+-p[磁盘] 显示磁盘和分区的情况
+-t 显示终端和CPU的信息
+-x 显示详细信息
+-V 显示版本信息
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

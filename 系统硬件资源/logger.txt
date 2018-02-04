@@ -1,0 +1,39 @@
+
+# logger -i -t 'tag' -p local3.notice " $0 some error in …"		将日志写入messages
+# tail /var/log/messages
+# logger System rebooted
+# logger -p local0.notice -t HOSTIDM -f /dev/idmc
+
+
+更多的时候我处理我们的程序（脚本）的日志是通过重定向的方法去实现，而日志的大小和切割有的时候就会忽略掉（哦，也许你加条find命令检测一下大小或者超过一定时间执行删除或者切割操作），何必自己再去写这样的程序呢，我们的系统就自带这样的程序；
+logger
+logger 是一个shell 命令接口，可以通过该接口使用Syslog的系统日志模块，还可以从命令行直接向系统日志文件（或者自定义的文件）写入一行信息。
+下面就是logger的man信息
+用法
+logger [-isd] [-f file] [-p pri] [-t tag] [-u socket] [message ...]
+描述
+Logger 用于往系统中写入日志. 它提供了一个shell命令接口到syslog系统模块
+选项:
+-i 逐行记录每一次logger的进程ID.
+-s 记录消息到标准错误, 包括系统日志.
+-f file 记录特定的文件.
+-p pri 输入消息的特定优先级. 优先级可以是自定义的数值或者诸如 ``facility.level'' 的格式. 举例： ``-p local3.info'' local3 facility这个设备的消息级别为info. 默认是 ``user.notice.''
+-t tag 打上特定的标志.
+-u sock 以特定的socket代替内嵌系统常规工作
+-d 使用一个数据进程代替一个流连接到这个socket.
+-- 结束参数列表. 这个允许消息以一个“-”开始
+message 写入log文件的内容消息，可以与-f配合使用
+logger 以0退出表示成功, 大于0表示失败.
+可用的facility名有: auth, authpriv (for security information of a
+sensitive nature), cron, daemon, ftp, kern, lpr, mail, news, security
+(deprecated synonym for auth), syslog, user, uucp, and local0 to local7,
+inclusive.
+可用的level名用: alert, crit, debug, emerg, err, error (deprecated
+synonym for err), info, notice, panic (deprecated synonym for emerg),
+warning, warn (deprecated synonym for warning).
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+
+
+# free -t | grep "buffers/cache" | awk '{print $4/($3+$4) * 100}'			查看内存剩余率
+# watch -n 1 -d free -mt		实时监控内存使用
+# free -mt
+
+
+ $ free -m
+                 total       used       free     shared    buffers     cached
+Mem:         1002        769        232          0         62        421
+-/+ buffers/cache:        286        715					这行才是真正表示使用的和可用的内存数
+Swap:         1153          0       1153
+第一部分Mem行:
+total 内存总数: 1002M
+used 已经使用的内存数: 769M
+free 空闲的内存数: 232M
+shared 当前已经废弃不用，总是0
+buffers Buffer 缓存内存数: 62M
+cached Page 缓存内存数:421M
+关系：total(1002M) = used(769M) + free(232M)
+
+第二部分-/+ buffers/cache的意思相当于：
+-buffers/cache消耗内存数：286M (等于第1行的中的used - buffers - cached)
++buffers/cache)可用内存数: 715M (等于第1行的行中的free + buffers + cached)
+
+-buffers/cache反映的是被程序实实在在吃掉的内存，
++buffers/cache反映的是可以挪用的内存总数。
+
+The "buffers" (62MB) and "cached" (421MB) will be released by the kernal if they are needed.
+
+这两个的区别在于使用的角度来看，第一行是从OS的角度来看，因为对于OS，buffers/cached 都是属于被使用，
+所以他的可用内存是8908KB,已用内存是377116KB,其中包括，内核（OS）使用+Application(X,oracle,etc)使用的+buffers+cached.
+第三行所指的是从应用程序角度来看，对于应用程序来说，buffers/cached 是等于可用的，
+因为buffer/cached是为了提高文件读取的性能，当应用程序需在用到内存的时候，buffer/cached会很快地被回收。
+所以从应用程序的角度来说，(+buffers/cache) free内存数: 715M (指的第一部分Mem行中的free + buffers + cached)
+
+buffers指Buffer cache
+cached指Page cache
+这是内核中两种不同的缓存机制。
+
+
+
+
+手工释放linux内存 /proc/sys/vm/drop_caches
+drop_caches Linux清空缓存
+注意：在清空缓存之前使用sync命令同步数据到磁盘
+# cat /proc/sys/vm/drop_caches
+0
+默认是0，1表示清空页缓存，2表示清空inode和目录树缓存，3清空所有的缓存
+
+# sync
+# free -m
+# echo 3 > /proc/sys/vm/drop_caches 
+# free -m     可以发现第2行的buffers和cached的数量减少了
+
+# dd if=/dev/zero of=bigfile bs=1M count=100		生成一个100M的bigfile到当前目录
+# time cat bigfile > /dev/null		测试读取时间
+# free -m	查看第2行的buffers和cached的变化
+# time cat bigfile > /dev/null		再次测试读取时间，发现读取速度提升了数十倍。
+
+
+
+
+
+
+
+
+
+
+
+
+
+

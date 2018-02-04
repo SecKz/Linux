@@ -1,0 +1,86 @@
+
+# runlevel   	查看当前运行级别．若临时切换运行级别，则使用init命令结合0-6的运行级别参数
+N 5  			第一个字符“N”表示之前未切换过运行级别
+# init 3   		将运行级别改为3
+# runlevel 		显示之前和改后的级别
+5 3
+# init 6  		重启（这里我按了ctrl + C ，不然系统要重启了）
+# init 0 			系统关机
+
+
+INIT进程与配置文件：/etc/inittab
+INIT进程：由Linux内核加载运行/sbin/init程序，是系统中第一个进程，也是内核加载的第一个程序，PID（进程标识符）永远是1；　 
+ INIT进程启动后会启动其它程序，生成新的进程，这些由init启动的进程称之为init进程的子进程，而init进程是这些进程的父进程
+# pstree -up 可知init是所以进程的父进程
+
+1、系统启动的引导流程
+首先系统开机自检，然后是计算机开机后访问硬盘并读取首个扇区的MBR（即主引导目录），（备注：主引导扇区内部结构，其开头的446字节内容特指为“主引导记录”（MBR），其后是4个16字节的“磁盘分区表”（DPT），以及2字节的结束标志（55AA）。主引导扇区记录着硬盘本身的相关信息以及硬盘各个分区的大小及位置信息，是数据信息的重要入口。如果它受到破坏，硬盘上的基本数据结构信息将会丢失，需要用繁琐的方式试探性的重建数据结构信息后才可能重新访问原先的数据。）读取MBR记录后，这时进入系统选择界面，选择好某个操作系统后，则开始加载内核，接着从INIT进程获得系统控制权，即进入初始化过程，之后则读相应的配置文件，具体引导过程如下：
+
+
+
+ 查看一下/etc/inittab配置文件的内容：
+# grep -v "^#" /etc/inittab | grep -v "^$" 		查看这个文件时过滤掉注释行和空行
+id:5:initdefault:					==>这个5的意思就是设置开机后自动进入图形模式	
+si::sysinit:/etc/rc.d/rc.sysinit
+l0:0:wait:/etc/rc.d/rc 0
+l1:1:wait:/etc/rc.d/rc 1
+l2:2:wait:/etc/rc.d/rc 2
+l3:3:wait:/etc/rc.d/rc 3
+l4:4:wait:/etc/rc.d/rc 4
+l5:5:wait:/etc/rc.d/rc 5
+l6:6:wait:/etc/rc.d/rc 6
+ca::ctrlaltdel:/sbin/shutdown -t3 -r now
+pf::powerfail:/sbin/shutdown -f -h +2 "Power Failure; System Shutting Down"
+pr:12345:powerokwait:/sbin/shutdown -c "Power Restored; Shutdown Cancelled"
+1:2345:respawn:/sbin/mingetty tty1
+2:2345:respawn:/sbin/mingetty tty2
+3:2345:respawn:/sbin/mingetty tty3
+4:2345:respawn:/sbin/mingetty tty4
+5:2345:respawn:/sbin/mingetty tty5
+6:2345:respawn:/sbin/mingetty tty6
+x:5:respawn:/etc/X11/prefdm -nodaemon
+
+运行级别是指运行Linux系统的不同模式，每种模式对应不同的服务程序组合。 默认的7种运行级别
+0：关机状态
+1：单用户模式
+2：字符界面的多用户模式（不支持网络）
+3：字符界面的完整多用户模式
+4：未分配使用
+5：图形界面的多用户模式
+6：重新启动
+（解释：Linux系统在运行时，采用的每一种服务搭配称之为“运行级别”，运行级别类似于Windows系统中的正常启动、安全模式、带网络支持的安全模式……等概念，不同的运行级别使用了不同的服务程序组合，）
+
+调整默认运行级别
+修改/etc/inittab 文件中的 initdefault 配置，一般对于普通用户来说，runlevel设置为5，即为图像化操作，
+但是对于服务器来说，默认是设置为3，即字符界面，对于服务器来说，加载图形化界面是非常耗资源的，影响服务器性能。
+# vi /etc/inittab
+进入之后有这样一行：
+id:5:initdefault: 	这个5的意思就是设置开机后自动进入图形模式
+
+我们之间看到最后那几行，就可以看到Linux系统中默认的系统启动基本一共有7种，分别是：
+0：关机(不要设置这个！)
+1：单用户(类似于windows操作系统的安全模式)
+2：多用户状态没有网络服务     
+3：多用户状态由网络服务(在做开发时，通常设置成这个启动级别，直接进入到命令行的界面)
+4：系统未使用保留给用户(不要设置这个！)       
+5：图形界面(这是linux默认的启动级别，直接进入图形界面)
+6：系统重启(不要设置这个！)
+
+id:5:initdefault:   // 设置系统默认的启动级别
+就是用来设定系统的默认启动级别，Linux系统中默认是启动级别5，也就是图形界面启动
+如果需要修改成默认级别为开发模式，只需要将 5 改成 3 即可
+如：
+将 id:5:initdefault:  改成   id:3:initdefault:
+然后保存退出，重新启动一下系统 输入  reboot 命令即可。
+警告：千万不要将启动基本设置为0， 4， 6！！！！！！
+这时就会发现进入Linux系统的界面已经变成开发者模式了！
+如果我们只是需要在Linux上做开发、部署项目的话，建议一般将系统启动模式设置为 开发模式！
+
+
+
+
+http://www.cnblogs.com/zhoujie/archive/2013/03/16/linux5.html
+
+
+
+

@@ -1,0 +1,40 @@
+
+
+由于初始化安装用的最小化安装包，没有桌面环境。
+# runlevel 					查看当前的运行级别
+# rpm -qa | egrep -i 'GNOME|Window'		查看是否安装了桌面环境的组件
+# yum groupinstall "X Window System" "GNOME Desktop Environment"  
+# init 5  
+
+
+新安装的Linux系统默认是启动到图形界面，一般的Linux服务器都没有显示器，因此一般都不会默认启动到图形界面。
+在inittab文件中，找到“id:5:initdefault:”这一行。5就是现在的启动级别，然后把5改为3。重启Linux
+那如何再进入到图形界面呢？很简单，只需要在命令行输入“startx”。
+
+
+方法一：
+修改配置文件：/etc/inittab
+各选项含义如下：
+0：逐步终止进程模式，进程将有序的终止，关机时系统处于这个运行级别；
+1：单用户模式，用于系统维护，只有少数进程运行，大部分服务也不启动；
+2：多用户模式，和运行级别3一样，网络服务没启动；
+3：多用户模式，允许多用户登录系统，是系统默认的启动级别；
+4：未使用；
+5：多用户模式，并且在系统启动后运行X-Window，即桌面模式；
+6：重新启动；
+如果想开机进入桌面模式，将id改为5；
+如果想开机进入命令行模式，将id改为3；
+改完后重启即可（reboot）。
+方法二：
+如果只是临时从桌面模式切换到命令行模式,可以使用快捷键Ctrl + Alt + F1(F2~F6)；
+使用startx命令切换回来，或者Ctrl + Alt + F7(F8~F10)切换到桌面模式。
+CentOS 6.2图形界面自定义开启终端快捷键 
+System->Preferences->Keyboard Shortcuts
+在Desktop分类下找到“Run a terminal”
+点击Run a terminal，按下需要的快捷键，比如Ctrl+Alt+T，即可。
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+
+queue_directory = /var/spool/postfix-sen    //邮件的存放位置；
+command_directory = /usr/sbin                     //命令目录；
+daemon_directory = /usr/libexec/postfix     //进程目录；
+data_directory = /var/lib/postfix-sen           //数据目录；
+mail_owner = postfix                                      //邮件所有者；
+myhostname = sen.55tgo.com                      //postfix使用的主机名；
+mydomain = 55tgo.com                                 //域名；
+myorigin = $myhostname
+unknown_local_recipient_reject_code = 550   //拒绝代码550；
+mynetworks = 192.168.1.1,192.168.2.1          //所在的网络，或者是想让那个网络使用此实例；
+debug_peer_level = 2                                     //调试级别；
+sendmail_path = /usr/sbin/sendmail             //通用的sendmail的命令位置；
+newaliases_path = /usr/bin/newaliases       //别名位置；
+mailq_path = /usr/bin/mailq
+setgid_group = postdrop
+html_directory = no
+manpage_directory = /usr/local/man
+sample_directory = /etc/postfix
+readme_directory = no
+master_service_disable =                            //值为空即可；
+authorized_submit_users = root                 //此五项为创建实例时自动生成的；
+multi_instance_group = mta                       //一般为固定格式；
+multi_instance_name = postfix-sen             //这的实例时postfix-sen，视情况而定；
+multi_instance_enable = yes                      //当然是yes状态，否则你没法使用；
+
+
+postfix管理命令
+生成数据库 postmap hash:/etc/postfix/access
+显示信件列表： postqueue -p   
+显示信件內容： postcat -q Queue_ID          //Queue_ID为信件代号；
+刪除各別信件：postsuper -d Queue_ID 
+全部刪除： postsuper -d ALL 
+扣住信件： postsuper -h Queue_ID 
+回复： postsuper -H Queue_ID 
+重新排程： 
+postsuper -r Queue_ID 
+postsuper -r ALL 
+清除信件： 
+postqueue -f (全部) 
+postqueue -s 主机名称(个别对象) 
+要查看Postfix的当前主要配置文件的存放路径： postconf -n 
+系统日志：tail -f /var/log/messages 
+邮件日志：tail -f /var/log/maillog 
+clamd相关： tail -f /var/log/clamav/clamd.log　　tail -f /var/log/clamav/freshclam.log 
+maildrop相关：tail -f /var/log/maildrop.log 
+apache相关：tail -f /usr/local/httpd/logs/error_log　　tail -f /usr/local/httpd/logs/suexec_log 
+mysql相关： tail -f /usr/local/mysql/data/linux.linux.com.err 
+测试amavisd： amavisd -d config debug-sa 
+测试spam： spamassassin -D --lint 
+测试maildrop： maildrop -V 10 -d test@test.com
+ 
+重新加载postfix-sen的配置文件
+postfix -c /etc/postfix-sen reload
+查看postfix-sen下的邮件的数量
+postqueue -c /etc/postfix-sen -p
+删除postfix-mx2-staredm的所有邮件
+postsuper -c /etc/postfix-sen -d ALL
+grep  Queue_ID /var/log/maillog   //查看此邮件在邮件服务器发送状态；

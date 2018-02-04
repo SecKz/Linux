@@ -1,0 +1,33 @@
+
+/var/log/secure 日志不记录问题，为空 	
+查看/etc/syslog.conf是否有以下一行,或者rsyslog.conf
+authpriv.*                                              /var/log/secure
+打开/etc/ssh/sshd_config，修改SyslogFacility AUTH  重新启动sshd和syslog
+# service sshd restart
+# service syslog restart
+
+/var/log/maillog为空
+查看syslog配置文件/etc/syslog.conf，找到如下行，修改对应的路径 		或者/etc/rsyslog.conf
+# Log all the mail messages in one place.
+mail.*							/var/log/maillog			#mail日志的路径
+
+
+软件开发日常工作中，出于方便定位问题的需要，我们常常会去清空日志文件。但是，Linux新手容易犯的一个错误是把日志文件给直接删除，而不是删除日志文件的内容。
+直接删除日志文件往往导致新产生的日志记录无法被写入到日志文件中（因为它已经被删除了），而仅仅重新新建（touch）同样名字的文件是解决不了问题的。
+下面以Unbutu系统为例，说明如何恢复被误删除的syslog： 
+
+首先，在以root用户执行如下lsof命令，查询打开/var/log/messages文件的进程的进程ID(PID)。 
+# lsof | grep messages  
+rsyslogd 544 syslog 7w REG 8,1 214641 134422 /var/log/messages  
+
+从上面命令输出可以看到，这个打开/var/log/messages文件的进程的PID是544，文件/var/log/messages的文件描述符（FD）号是7。 
+根据上述的PID和FD，可以在/proc找到对应的文件： 
+# ls -al /proc/544/fd/7  
+l-wx------ 1 root root 64 2012-07-14 14:48 7 -> /var/log/messages  
+
+将文件/proc/544/fd/7拷贝到/var/log/messages 
+# cp /proc/544/fd/7 /var/log/messages  
+
+
+
+

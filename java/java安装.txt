@@ -1,0 +1,16 @@
+# rpm -qa | grep java			查看当前的jdk版本
+# yum install tomcat java-1.8.0-openjdk java-1.8.0-openjdk-devel 
+# java -version
+
+# which java javac
+/usr/bin/javac -> /etc/alternatives/javac
+/usr/bin/java -> /etc/alternatives/java
+
+如果机器上同时安装了多个jdk的话，java命令只能指向一个版本的jdk，为了在全局中方便修改jdk版本
+ /etc/alternatives 的目录下面会有个java链接，指向默认需要执行的版本的jdk的bin/java 命令
+
+
+https://my.oschina.net/andyfeng/blog/601291
+
+Jdk下载
+http://www.oracle.com/technetwork/cn/java/javase/downloads/jdk8-downloads-2133151-zhs.html

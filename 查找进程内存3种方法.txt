@@ -1,0 +1,5 @@
+# top -p pid 查看程序的情况 
+# ps -aux | grep process_name 
+# cat /proc/pid/status 
+这里会打印出当前进程详细的情况，其中，内存是 VmRSS。 
+注：pid是要替换成一个id数字的。可通过ps aux  |grep name  或 lsof |grep name 查得
