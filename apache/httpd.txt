@@ -1,0 +1,78 @@
+
+# /usr/local/apache/bin/apachectl -V					如果apache为编译安装 			安装目录，使用apachectl -v
+# curl -I 119.147.143.30								查看httpd请求头的信息
+# curl -I www.baidu.com
+
+# htpasswd -n eric1 									不生成密码文件，直接输出
+# htpasswd -c /root/pwdfile eric						生成eric的密码到文件/root/pwdfile中
+# cat /usr/local/apache/build/config.nice				查看apache编译参数
+
+
+# cat /etc/httpd/conf/httpd.conf |grep log|egrep -v ^#				查看apache日志
+# cat /etc/httpd/conf/httpd.conf |awk '$0 ~/log/ && $0 !~/^#/'			等同上句
+# cat access_log-20130804 | awk '{a[$1]++;}END{for(i in a){print a[i], i;}}' | sort -nr	
+
+# httpd -t		检查配置是否正确
+# httpd -M    列出已安装模块modules are built-in or shared.
+# httpd –l  	查处apche的编译的模块，如工作模式，prefork模式和worker模式
+# httpd –v
+# ps aux | grep httpd | wc –l	查看apache开启的进程数
+# pgrep httpd|wc –l			同上 
+# ps aux|grep -v grep|awk '/httpd/{sum+=$6;n++};END{print sum/n}'		计算httpd占用内存的平均数
+# rpm -ql httpd|grep apache
+# rpm –ql httpd		查看apache安装详细
+# rpm –ql httpd > apache.txt
+
+
+# ps -ef|grep httpd|wc -l		统计httpd进程数，连个请求会启动一个进程，使用于Apache服务器。
+1388		`				表示Apache能够处理1388个并发请求，这个值Apache可根据负载情况自动调整。
+# netstat -nat | grep -i 80 | wc -l					当前所有80端口的请求总数
+# netstat -nat | grep -i 3306 | wc -l				当前所有3306端口的请求总数
+
+让apache能解析php文件，在httpd.conf加上
+LoadModule	php5_module	modules/libphp5.so
+AddType	application/x-httpd-php .php
+AddType	application/x-httpd-php-source .phps
+
+
+以倒序方式查看apache日志最新30行
+# tail -30  /var/log/httpd/access_log |tac
+
+实时监听apache访问日志，Ctrl-c结束监听
+# tail -f  /var/log/httpd/access_log
+# tail –n 30 -f  /var/log/httpd/access_log
+
+相关命令
+# /usr/local/apache2/bin/apachectl status|start|stop|restart
+# /etc/init.d/httpd fullstatus
+
+要在重启 Apache 服务器时不中断当前的连接，则应运行：
+# /usr/local/sbin/apachectl graceful
+
+httpd访问日志：/var/log/httpd/access_log
+httpd错误日志：/var/log/httpd/error_log
+
+linux中的apachectl是什么命令
+apachectl是slackware内附Apache HTTP服务器的script文件，可供管理员控制服务器，但在其他Linux的Apache HTTP服务器不一定有这个文件
+
+参  数：
+configtest 检查设置文件中的语法是否正确。
+fullstatus 显示服务器完整的状态信息。
+graceful 重新启动Apache服务器，但不会中断原有的连接。
+help 显示帮助信息。
+restart 重新启动Apache服务器。
+start 启动Apache服务器。
+status 显示服务器摘要的状态信息。
+stop 停止Apache服务器。
+
+
+
+
+
+
+
+
+
+
+
+

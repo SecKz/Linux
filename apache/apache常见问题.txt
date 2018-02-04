@@ -1,0 +1,21 @@
+
+apache文件权限设置无误，访问时仍出现You don't have permission to access /pm1/1.html on this server.
+执行以下操作
+# setenforce 0
+或者
+# vi /etc/sysconfig/selinux
+把SELINUX=enforcing改成SELINUX=disabled
+
+
+要禁止 Apache 显示目录结构列表，只需将 Option 中的 Indexes 去掉即可。
+比如我们看看一个目录的目录配置：
+<Directory "D:/Apa/blabla">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Order allow,deny
+Allow from all
+DirectoryIndex index.php index.html
+</Directory>
+你只需要将上面红色代码中的 Indexes 去掉，就可以禁止 Apache 显示该目录结构。用户就不会看到该目录下的文件和子目录列表了。
+Indexes 的作用就是当该目录下没有 index.html 文件时，就显示目录结构，去掉 Indexes，Apache 就不会显示该目录的列表了。
+Options index MultiViews同理

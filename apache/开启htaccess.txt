@@ -1,0 +1,32 @@
+检测apache是否支持htaccess文件 打开httpd.conf
+
+去掉下面的注释 
+LoadModule rewrite_module modules/mod_rewrite.so 
+
+
+1 找到"<Directory />"与"</Directory>"内的"AllowOverride None"改为"AllowOverride All"，重启apache即可
+<Directory />
+    Options FollowSymLinks
+    AllowOverride All
+</Directory>
+
+404配置ErrorDocument 404 /404.php是正确，有时少了斜杠”/”会不起作用
+
+www跳转
+Options +FollowSymLinks
+ErrorDocument 404 /404.php
+RewriteEngine On
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+
+禁止局域网其他电脑通过路由器IP访问本机 如http://192.168.0.107/
+
+编辑httpd.conf，加入Allow From 127.0.0.1
+<Directory />
+    Options FollowSymLinks
+    AllowOverride None
+    Order deny,allow
+    Allow From 127.0.0.1
+    Deny from all
+</Directory>

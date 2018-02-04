@@ -1,0 +1,71 @@
+
+Apache如何添加虚拟目录，即别名
+
+通过设置alias别名可以使特定的目录（phpmyadmin目录）不出现在网站根目录下面，即使网站根目录被攻破，也不会影响到phpmyadmin目录里面的文件。
+
+Alias指令使文档可以被存储在DocumentRoot以外的本地文件系统中。
+注意：如果url-path中有后缀"/"，则服务器要求有后缀"/"以扩展此别名。也就是说"Alias /icons/ /usr/local/apache/icons/"并不能对"/icons"实现别名。
+
+特别地，如果对在DocumentRoot之外的某个目录建立了一个Alias ，则可能需要明确的对目标目录设定访问权限。示例：
+Alias /phpmyadmin /home/phpmyadmin 			#定义了phpmyadmin为虚拟目录，用http://域名/phpmyadmin访问
+<Directory /home/phpmyadmin >
+AllowOverride None
+Options Indexes MultiViews
+Order allow,deny
+Allow from all
+</Directory>
+
+<Directory> 指令
+说明 封装一组指令，使之仅对文件空间中的某个目录及其子目录生效
+
+Options 指令
+请查阅帮助手册ApacheMenu_zh_CN.chm目录中的apache模块->Apache核心(Core)特性
+
+AllowOverride 指令
+说明 确定允许存在于.htaccess文件中的指令类型 
+语法 AllowOverride All|None|directive-type [directive-type] ... 
+默认值 AllowOverride All 
+作用域 directory 
+状态 核心(C) 
+模块 core 
+
+<Directory "d:/wamp/apache2/cgi-bin">
+    AllowOverride None
+    Options None
+    Order allow,deny
+    Allow from all
+</Directory>
+
+当服务器发现一个.htaccess文件(由AccessFileName指定)时，它需要知道在这个文件中声明的哪些指令能覆盖在此之前指定的配置指令。
+
+仅允许存在于<Directory>配置段
+AllowOverride仅在不包含正则表达式的<Directory>配置段中才是有效的。在<Location>, <DirectoryMatch>, <Files>配置段中都是无效的。
+如果此指令被设置为None ，那么.htaccess文件将被完全忽略。事实上，服务器根本不会读取.htaccess文件。
+
+当此指令设置为 All时，所有具有".htaccess"作用域的指令都允许出现在.htaccess文件中。
+
+443端口即网页浏览端口，主要是用于HTTPS服务，是提供加密和通过安全端口传输的另一种HTTP。
+服务：Https
+
+Apache404页面定义,可在httpd.conf或.htaccess写入
+ErrorDocument 404 /404.html
+
+Apache开启gzip压缩功能需要用到模块mod_deflate.so
+
+a、vi /etc/httpd/conf/httpd.conf
+b、查找LoadModule (/LoadModule)，加入“LoadModule deflate_module modules/mod_deflate.so”这行
+
+c、添加配置项目(下段内容)
+
+<IfModule mod_deflate.c>
+# 压缩等级 9
+DeflateCompressionLevel 9
+# 压缩类型 html、xml、php、css、js
+AddOutputFilterByType DEFLATE text/html text/php text/plain text/css text/xml text/javascript 
+SetOutputFilter DEFLATE
+</IfModule>
+
+2、重启apache使之生效
+# service httpd start
+
+
