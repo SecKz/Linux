@@ -1,0 +1,46 @@
+
+
+改变用户使用的shell
+# echo $SHELL      				查看当前用户使用的shell, 等同echo $0
+# cat /etc/shells						查看bash的位置,chsh -l在csh会无效.
+# chsh -s /usr/local/bin/bash			把当前用户的shell改为bash	
+
+看了提示信息才回过神来，刚在 FreeBSD上 装的 bash shell 的路径是 /usr/local/bin/bash，不是 /bin/bash，我想当然的以为 FreeBSD 会把 bash 装到 /bin/bash。
+在 Linux 下遇到这种问题可以这样解决，su 时指定一个 shell 登陆：
+$ su --shell=/bin/sh -
+或者
+$ su -s /bin/sh
+
+
+Freebsd默认安装之后用户的shell是sh，平时都已经习惯了使用bash。通过下面的步骤可以配置用户来使用bash作为shell。
+1.安装bash。 cd /usr/ports/shells/bash; make install clean 这样安装完之后，bash会被安装在/usr/local/bin/目录下面。 
+2. 在/bin目录下面做一个符号连接。 ln -f /usr/local/bin/bash /bin 
+3. 修改 /etc/shells文件，将bash增加进去，这样在添加用户的时候就可以指定使用bash作为shell了。否则的话，会警告pwd_mkdb: warning, unknown root shell 
+4. 如果已经添加过的用户，可以使用chsh命令来修改默认的shell.
+
+# cd /usr/ports/shells/bash2
+# make clean install
+# chsh -s /usr/local/bin/bash			把当前用户的shell改为bash	
+
+
+
+修改freebsd提示符
+打开.cshrc加入
+set prompt="[%n@%c]#"
+
+
+FreeBSD更改csh为bash产生错误的解决办法
+http://jishu.zol.com.cn/3322.html
+
+
+
+
+
+
+
+
+
+
+
+
+

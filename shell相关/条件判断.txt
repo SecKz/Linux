@@ -1,0 +1,76 @@
+
+
+# [ 2 < 61 ] && echo 'ok'   		比较整数时会报错，在[]使用< > ，需要转义
+# [ 2 \< 61 ] && echo 'ok'
+# [ 2 -gt 1 -a 3 -lt 4 ] && echo 'ok'
+
+中括号的左右扩弧和EXPRESSION之间都必须有空格！
+
+[]前后都要有空格 ==前后也都有空格，和变量赋值相反 =前后不能有空格 a=123
+# [ a=b ] && pwd		不正确， 
+# [ a==b ] && pwd		不正确，不相等也执行pwd
+# [ a = b ] && pwd		正确，不执行pwd 无输出
+# [ a = a ] && pwd		正确
+# [ a == b ] && pwd
+# [ a == a ] && pwd
+
+三元判读
+# [ -e new.txt ] && echo "exist" || echo "not exist"
+# [ -e bin ] && echo "exist" || echo "not exist"
+
+
+# [ "$val" = "skywang" ]		判断变量val是否等于字符串“skywang”
+# [ "$num" -eq "100" ]		判断变量num是否等于数字100
+
+判断文件123.txt是不是可读写，不能写成　[ -rw install.log ] && pwd
+# [ -r 123.txt -a -w 123.txt ]	等价于[ -r 123.txt ] && [ -w 123.txt ] 	
+# [ -r 123.txt -a -w 123.txt ] && pwd	前面成立则执行pwd
+
+判断变量num是不是等于数字101或102
+# [ "$num" -eq "101" -o "$num" -eq "102" ]  
+
+$?表示上一个shell命令的返回值
+# [ -d /etc ]; echo $?		输出0
+# [ ! -d /etc ]; echo $?	输出1
+
+！为条件取反
+# [ ! -d /etc ] && mkdir aa		文件夹etc不存在，则创建 !和-d要有空格，linux中文件夹和文件不能同名
+# [ ! -e /etc ] && mkdir aa		文件aa不存在，则创建
+
+多重条件
+# [ -d /etc -a -f .bash_history ] && pwd		如果etc目录存在并且文件.bash_history存在
+# [ -d /etc ] && [ -f .bash_history ] && pwd		效果等同上句
+# [ -d aaa ] || [ -f .bash_history ] && pwd
+# [ -d aaa -o -f .bash_history ] && pwd		-o为或判断
+
+shell编程中有两种形式进行对判断条件进行测试：
+形式一：test
+形式二：[    ]
+# test -e new.txt && echo "exist" || echo "not exist"
+# [ -e new.txt ] && echo "exist" || echo "not exist"
+
+实现细节说明：
+当一次执行很多命令式&&、 ||很有用处，它们是从前往后依次执行。
+对于&&：当前面执行条件正确时，执行&&之后的，错误就停住了
+对于||：当前面的执行条件错误时，执行||之后的，正确就停住了。
+ 因此根据&&、||的特性可以对条件作出一个模式“条件 && 执行1|| 执行2”。当条件为真时执行1；当为假时“条件&&执行1”绝对为假，因此执行2
+注意事项：
+[ -e  new.txt  ]中每个字符（包括[、 -e、 new.txt、 ]）都有空格。[-e  new.txt]是不正确的。
+[   ]里面的变量名要用" "引起来,如[ "$filename" -e]
+[   ]里面的常量要用引号（单或双引起来）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

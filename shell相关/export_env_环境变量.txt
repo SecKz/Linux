@@ -1,0 +1,71 @@
+
+# name=eric				建立一个局部变量，子shell不可以用
+# export age=29			建立一个全局变量，子shell可以用	等同于age=29,export age
+# echo $name
+# bash					进入子shell
+# echo $name			不输出了eric
+# echo $age			
+ctrl+d退出子shell
+# export name
+# bash				再次进入子shell
+# echo $name		输出了eric
+# echo $age
+
+子shell不能删除父shell建立的局部变量或全局变量
+export
+命令：export变量名[=变量值]
+功能：export可以把bash的变量向下带入子bash(即子bash中可以使用父bash的变量)，从而让子进程继承父进程中的环境变量。
+但子bash不能用export把它的变量向上带入父bash。
+
+
+
+使用 unset 命令来清除环境变量
+$ export TEST=”test”       # 增加一个环境变量 TEST
+$ env | grep TEST               # 此命令有输出，证明环境变量 TEST 已经存在了
+TEST=test
+$ unset $TEST                   #删除环境变量TEST
+$ env | grep TEST              # 此命令无输出，证明环境变量 TEST 已经存在了
+使用 readonly 命令设置只读变量
+如果使用了 readonly 命令的话，变量就不可以被修改或清除了。示例如下：
+$ export TEST="Test"        # 增加一个环境变量 TEST
+$ readonly TEST                  #将环境变量TEST设为只读
+$ unset TEST                      #会发现此变量不能被删除
+-bash: unset: TEST: cannot unset: readonly variable
+$ TEST="New" #会发现此变量不能被修改
+-bash: TEST: readonly variable
+
+# export PATH=$PATH:命令目录
+set和env命令可打印变量；set打印所有变量，包括局域和全局变量；env只打印全局变量（即环境变量）。
+# name=eric
+# set    可以输出name的值，但env不能
+# env
+# export name    通过export使name变为全局变量,env也可以看到
+# env
+
+
+
+一、什么是环境变量？
+Linux是一个多用户的操作系统。多用户意味着每个用户登录系统后，都有自己专用的运行环境。而这个环境是由一组变量所定义,这组变量被称为环境变量。
+“/bin”、“/sbin”、“/usr/bin”、“/usr/sbin”、“/usr/local/bin”等路径已经在系统环境变量中了，如果可执行文件在这几个标准位置，在终端命令行输入该软件可执行文件的文件名和参数(如果需要参数)，回车即可。
+如果不在标准位置，文件名前面需要加上完整的路径。不过每次都这样跑就太麻烦了，一个“一劳永逸”的办法是把这个路径加入环境变量。命令 “PATH=$PATH:路径”可以把这个路径加入环境变量，但是退出这个命令行就失效了。
+要想永久生效，需要把这行添加到环境变量文件里。有两个文件可 选：“/etc/profile”和用户主目录下的“.bash_profile”，“/etc/profile”对系统里所有用户都有效，用户主目录下 的“.bash_profile”只对这个用户有效。
+ “PATH=$PATH:路径1:路径2:...:路径n”，意思是可执行文件的路径包括原先设定的路径，也包括从“路径1”到“路径n”的所 有路径。当用户输入一个一串字符并按回车后，shell会依次在这些路径里找对应的可执行文件并交给系统核心执行。那个“$PATH”表示原先设定的路径 仍然有效，注意不要漏掉。某些软件可能还有“PATH”以外类型的环境变量需要添加，但方法与此相同，并且也需要注意“$”。
+
+
+如何在Linux中用命令产生一个范围内的随机数？
+# echo $RANDOM
+在shell中有一个环境变量RANDOM,它的范围是0--32767
+如果我们想要产生0-25范围内的数，如何做呢？如下：
+$RANDOM%26
+用这个环境变量对26取模，就可以得到最小是0，最大是25的数了。
+如果想得到1--68范围内的数，可以这样
+$RANDOM%68+1，前面可以得到最小为0，最大为67的随机数，再加上1，很自然的就可以得到最大为1，最小为68的数了。
+如果想得到6--87范围内的数。可以这样
+$RANDOM%82+6,前面可以得到最小为0，最大为81的随机数，再加上6，很自然的就可以得到最大为87，最小为6的数了。
+
+
+
+
+
+
+

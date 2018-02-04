@@ -1,0 +1,80 @@
+
+
+脚本执行与调试
+bash -n myscript.sh		对脚本进行语法检查
+bash -v myscripts.sh　　跟踪脚本里每个命令的执行　　
+bash -x myscript.sh		跟踪脚本里每个命令的执行并附加扩充信息
+
+绝对路径执行，要求文件有执行权限
+以sh命令执行，不要求文件有执行权限
+.加空格或source命令执行，脚本将在当前shell中执行
+
+var=value 			赋值操作
+var = value			判断相等操作
+
+# [ a=b ]&&pwd
+# [ a = b ]&&pwd
+
+
+# ls /bin/*sh     查看系统中所有的shell类型
+# chsh -l 查看可用的shell, 等同cat /etc/shells
+# bash            进一个子shell,即在当前shell中再开一个shell
+# exit或Ctrl+D    退出当前shell
+# echo $SHELL  查看当前所用的shell的类型
+# echo $PATH  查看当前用户所有可用的shell命令的所在路径
+
+
+
+执行一个shell脚本，不是在当前shell(bash)中执行，而是另开一个shell来执行，即在bash中的bash执行，可以通过pstree来验证
+以下3种方法执行shell脚本，都是在原来的bash打开一个子bash去执行脚本
+# sh ./b.txt
+# bash b.txt
+# /root/b.txt
+
+sh是bash的链接, sh a.sh 等同于bash a.sh
+# ll /bin| grep bash
+
+
+
+#  !!：重复执行上一条指令，即获取上一条指令
+#  !a：重复执行上一条以a为首的指令
+#  !number：重复执行上一条在history表中记录号码为number的指令
+#  !-number：重复执行前第number条指令
+#  !$：表示获得上一条命令中的最后一项内容
+
+# cd – 返回上次目录
+# cd 返回家目录等同于cd ~ 
+# la ~  #列出家目录文件，~等号指家目录，可以用 echo ~ 验证
+
+# 字母+TAB键	bash sheel命令自动补全或提示。
+
+常用的Linux快捷键
+ctrl+a	移动光标到最前
+ctrl+e	移动光标到最后
+ctrl+k	删除光标后面所有
+ctrl+u	删除光标前面所有
+ctrl+c 	丢弃上一行所有的内容，重新开始下一行
+ctrl+l 	相当于执行clear清屏命令
+ctrl-s 	暂时冻结当前shell的输入
+ctrl-q 	解冻
+ctrl+w	删除光标前面一个字段
+ctrl+t: 交换光标位置前的两个字符
+ctrl+b:光标左移一个字母
+ctrl+d:退出当前 Shel
+Ctrl+p重复上一次命令，相当于向上键
+Ctrl+x同上但再按一次会从新回到原位置
+ctrl+y	粘贴删除的
+ctrl + i	类似TAB健补全功能
+ctrl+r search history
+Ctrl-z	暂停进程。相当于命令：bg在后台运行或者使用fg在前端运行。
+清屏Ctrl + d：输入已结束，在shell下相当于一个exit
+Ctrl + c：键盘中断请求。
+Ctrl + s & Ctrl + q：暂停/恢复屏幕输出Ctrl + n(↓)：
+显示下一条命令Ctrl + p(↑)：
+显示上一条命令Ctrl + b：
+
+以下是b.txt
+pstree|grep sshd
+echo $RANDOM;
+echo `date`;
+

@@ -1,0 +1,80 @@
+
+
+Linux的Shell种类众多，常见的有：Bourne Shell（/usr/bin/sh或/bin/sh）、Bourne Again Shell（/bin/bash）、C Shell（/usr/bin/csh）、K Shell（/usr/bin/ksh）
+Bash也是大多数Linux系统默认的Shell。
+# ll /bin/sh		说明/bin/sh其实就是/bin/bash
+lrwxrwxrwx 1 root root 4 2009-11-12 /bin/sh -> bash
+
+1. 通配符（wildcards）:
+通配符	含义
+\	按字面意思解释字符
+&	后台进程
+$	替换变量
+?	与一个字符匹配
+*	与0个或多个字符匹配
+[abc]	与字符集a,b,c内的一个字符匹配
+[!abc]	与不在字符集a,b,c内的一个字符匹配
+;	分隔命令
+(cmds)	在一个子shell里的执行命令
+{cmds}	在当前shell里执行命令
+2. 文件名（路径名）替换元字符：
+元字符	含义
+?	匹配一个字符
+*	匹配0或多个字符
+[abc]	匹配字符集a,b,c里的一个字符
+[a-z]	匹配a-z范围内的字符
+[!a-z]	匹配不在a-z范围内的字符
+\	元字符转义或使之无效
+3. 环境变量：
+环境变量	值
+PATH	命令搜索路径
+HOME	用户起始目录（cd命令没有指定参数时会跳转到此目录）
+LOGNAME	用户登录名
+SHELL	当调用shell时，搜索环境找此变量
+PS1	主提示符，bash默认为一个美元符号
+PS2	辅提示符，bash默认为一个大于号
+PWD	当前工作目录
+IFS	内部域分割符，一般为空格，tab和换行符
+ps:设置环境变量，需要在赋值后或设置变量时使用export命令。
+
+
+5. 专用变量
+$?	表示上一个shell命令的返回值
+$$	表示当前Shell的pid
+$-	表示当前Shell的命令行选项
+$!	最后一个放入后台作业的PID值
+$0	表示脚本的名字
+$1--$9	表示脚本的第一到九个参数
+${10}	表示脚本的第十个参数
+$#	表示参数的个数
+$*,$@	表示所有的参数，有双引号时除外，"$*"表示赋值到一个变量，"$@"表示赋值到多个。
+
+变量	含义
+$	shell的PID
+?	之前执行命令的退出值
+!	后台最后一个作业的PID
+_ (下划线)	之前执行命令的最后一个参数
+- (减号)	shell选项的当前设置
+ps: 使用echo $变量名来查看变量值
+
+6. 变量修饰符：
+修饰符提供快捷的条件测试来检查变量是否被置值了，然后根据测试的结果给变量赋值。
+修饰符	值
+${variable:-word}	如果variable被赋值且非空，则替换它的值；否则，替换成word。
+${variable:=word}	如果variable被赋值且非空，则替换它的值；置成word的值。
+之后variable的值会被永久替代。这种方式不可以赋定位参数。
+${variable:+word}	如果variable被赋值且非空，则替换word的值；否则，不作替换。
+${variable:?word}	如果variable被赋值且非空，则替换它的值；否则，打印word并退出shell。
+如果省略word，则打印消息”parameter null or not set”
+
+7. shell变量相关：
+shell变量赋值时，等号两边不能有空格。
+set和env命令可打印变量；set打印所有变量，包括局域和全局变量；env只打印全局变量（即环境变量）。
+unset命令可以删除变量，包括局域和环境变量。
+echo命令可以打印变量值。
+单引号禁止解释元字符；双引号除变量和命令替换元字符（``）外，也不允许解释元字符。
+
+
+
+
+

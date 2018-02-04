@@ -1,0 +1,53 @@
+
+
+# mem
+-bash: /root/bin/mem: /bin/sh^M: bad interpreter: No such file or directory
+ 
+这个是由系统编码所引起的错误，有些在WINDOWS系统中编辑的文件，上传到CENTOS中运行时会出现上述错误提示，解决方法：
+ 
+# vi mem
+:set ff=unix
+:wq
+
+Linux下执行.sh脚本错误：bin/sh^M: bad interpreter: No such file or directory
+原因是.sh脚本在Windows系统下用记事本文件编写的。不同系统的编码格式引起的。
+转行文件的编码格式：
+或者用editplus打开mem，文件的换行格式改为unix
+
+利用如下命令查看文件格式 
+:set ff 或 :set fileformat 
+可以看到如下信息 
+fileformat=dos 或 fileformat=unix 
+利用如下命令修改文件格式 
+:set ff=unix 或 :set fileformat=unix 
+:wq (存盘退出)
+
+
+用命令vi -b 打开你的SHELL脚本文件，你会。发现每行脚本最后多了个^M。
+# vi –b mem		以二进制方式打开文件
+那么接下来就要搞清楚这个^M是什么东东？
+对于换行，window下用回车换行（0A0D）来表示，linux下是回车（0A）来表示。这样，将window上的文件拷到unix上用时，总会有个^M.请写个用在unix下的过滤windows文件的换行符（0D）的shell或c程序。 
+在Vim中解决这个问题，很简单，在Vim中利用替换功能就可以将“^M”都干掉，键入如下替换命令行：
+# vi -b setup.sh
+:%s/^M//g
+注意：上述命令行中的“^M”符，不是“^”再加上“M”，而是由“Ctrl+v”、“Ctrl+M”键生成的。
+这样替换掉以后，保存就可以执行了。
+
+vim 的 -b 选项是告诉 vim 打开的是一个二进制文件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

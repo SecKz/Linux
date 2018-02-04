@@ -1,0 +1,61 @@
+
+ /etc/DIR_COLORS 文件为系统默认颜色参数配置文件
+
+可以直接修改 /etc/DIR_COLORS，也可以cp一份到用户家目录再编辑
+设置一下自己的~/.dir_colors可以解决：
+复制一份系统的到自己的目录：
+# cp /etc/DIR_COLORS ~/.dir_colors	修改.dir_colors
+# eval `dircolors /etc/DIR_COLORS`	或者重新登陆shell即可 保存设置
+
+修改目录的颜色
+1 将/etc/DIR_COLORS文件cp到~/下，并改名为.dir_colors。
+2 编辑.dir_colors文件，找到“DIR 01;34   # directory”，将34改为36。
+3 按照颜色 对应的数字，你还可以把目录显示颜色 改成其他的，重新登陆shell即可看到效果。
+# eval `dircolors .dir_colors`
+
+修改sh后缀的文件的颜色，打开/etc/DIR_COLORS，找到.sh  01;32这一行修改数值
+.sh  01;32
+
+
+样式： 
+00 — Normal (no color, no bold) 
+01 — Bold    //粗体
+文字颜色 
+30 — Black   //黑色
+31 — Red     //红色
+32 — Green   //绿色
+33 — Yellow  //黄色
+34 — Blue    //蓝色
+35 — Magenta //洋红色
+36 — Cyan    //蓝绿色
+37 — White   //白色
+背景颜色 
+40 — Black 
+41 — Red 
+42 — Green 
+43 — Yellow 
+44 — Blue 
+45 — Magenta 
+46 — Cyan 
+47 – White
+
+白色：    表示普通文件
+蓝色：    表示目录
+绿色：    表示可执行文件
+红色：    表示压缩文件
+蓝绿色：  链接文件
+红色闪烁：表示链接的文件有问题
+黄色：    表示设备文件
+灰色：    表示其他文件
+
+
+
+
+
+
+
+
+
+
+
+

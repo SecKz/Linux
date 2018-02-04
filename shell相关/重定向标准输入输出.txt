@@ -1,0 +1,58 @@
+
+
+# aa 1> w.txt					1>只将正确输出重定向，因此这行有输出 等同于aa > ss.txt 
+# aa 2> w.txt					只将错误输出重写向文件
+# aa 2>> w.txt				将标准错误信息追加输出到ss.txt
+# aa &> w.txt				屏蔽正确和错误输出
+# aa &> w.txt				屏蔽正确和错误输出，并输入到文件中
+# aa &>> w.txt				屏蔽正确和错误输出，并追加到文件中
+# aa >> w.txt 2>&1			功能等同上句
+# aa > w.txt 2>&1			清空原来再写入
+
+# aa 1>&2 w.txt				对的当成错的
+# aa 2>&1 w.txt				错当成对的
+
+
+
+# aa						屏幕有错误输出
+# aa > /dev/null			屏幕有错误输出  >默认是1>，>>默认是1>>
+# aa 2> /dev/null			屏幕无错误输出
+# aa 2>&1 /dev/null		有输出，2>&1将标准错误输出重定向到标准输出
+# aa 1>&2 /dev/null		1>&2将标准输出重定向到标准错误输出
+
+# aa > w.txt			不会写入w.txt，直接输出到终端
+# aa 2>w.txt			会写入w.txt
+#pwd 2> w.txt		会清空w.txt
+
+
+cmd < file >file2 cmd 命令以 file 文件作为 stdin，以 file2 文件作为 stdout；
+cat <>file 以读写的方式打开 file；
+cmd < file cmd 命令以 file 文件作为 stdin；
+cmd << delimiter Here document，从 stdin 中读入，直至遇到 delimiter 分界符。
+
+标准输入输出  交互式硬件设备：　
+标准输入：从该设备接收用户输入的数据
+标准输出：通过该设备向用户输出数据
+标准错误：通过该设备报告执行出错信息
+
+类型	设备文件	文件描述编号	默认设备
+标准输入	/dev/stdin	0	键盘
+标准输出	/dev/stdout	1	显示器
+标准错误输出	/dev/stderr	2	显示器
+（备注：/dev/stdin、/dev/stdout、/dev/stderr这三个文件是一个符号链接，输入输出与重定向关系紧密）
+
+
+
+Linux shell下"2>&1"的含义 2>&1 的意思就是将标准错误也输出到标准输出当中。
+
+
+
+
+
+
+
+
+
+
+
+

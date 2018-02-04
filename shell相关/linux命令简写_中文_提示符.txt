@@ -1,0 +1,95 @@
+
+PS1 提示符定义
+改变 提示符格式 在家目录.bash_profile加入
+# PS1=[\u@\h \W]\$
+# echo $PS1	输出[\u@\h \w]\$
+#env	可以看到用户的全部环境变量
+
+PS1：就是用户平时的提示符。
+PS2：第一行没输完，等待第二行输入的提示符。
+
+Linux系统提示符是用系统变量PS1来定义的。一般系统默认的形式是：[username@host 工作目录]$.
+登录后可以更改PS1的显示样式，但是当退出重启登录进入系统后，样式又变成系统默认的样式了，如果要彻底改变它的样式，只能从配置文件中改。
+PS1是在用户根目录下的.bash_profile中定义的。
+
+更改提示符的前景色
+
+\e[		提示符颜色的开始处
+F;Bm	其中“F”为字体颜色，编号30~37；“B”为背景色，编号40~47。
+\e[m	提示符颜色的结束处
+
+颜色的格式为
+\[\e[F;Bm\]
+
+将下面指令添加到.bash_profile或者.bashrc中,使其永久生效
+#改变整个提示符的着色
+PS1="\[\e[01;31m\][\u@\h \W]#\[\e[m\]"
+export PS1								让其在所有bash中都有效，如screen,子shell，而不是当前shell．这行可选
+#只改变$的着色
+PS1="[\u@\h \W]\[\e[01;31m\]#\[\e[m\]"
+export PS1
+
+在.bashrc中设置
+# vi .bashrc
+alias la='ls -A'
+alias ll='ls -Al'
+alias lt='ls -Alt'
+让/etc/profile文件修改后立即生效 ,可以使用如下命令:
+# source /etc/profile
+
+在/etc/virc文件中添加如下两行，每次vi打开文件不用重复输入以下命令,
+或者是/etc/vimrc，或者是家目录的~/.virc文件
+# set nu
+# set ic
+# :x     				#退出保存
+# source /etc/virc   #刷新文件
+
+乱码可能是linux的字符设置导致，也可能是终端如putty字符设置不对
+一般把putty的默认字符设置为utf-8
+针对当前用户：修改/root/.bash_profile文件，增加LANG=zh_CN.utf8
+针对所有用户：修改/etc/sysconfig/i18n LANG=zh_CN.utf8
+
+en_US.utf8针对英文
+zh_CN.utf8针对中文
+
+方法一：   
+修改/root/.bash_profile文件，修改或加上
+export LANG=zh_CN.utf8		
+
+方法二：  
+修改/etc/sysconfig/i18n文件
+LANG="zh_CN.utf8"
+LANGUAGE="zh_CN. utf-8:zh_CN. utf-8:zh_CN"
+SUPPORTED="zh_CN. utf-8:zh_CN:zh"
+SYSFONT="lat0-sun16"
+SYSFONTACM="8859-15"
+
+
+
+在~/.bash_profile or /etc/profile 添加，让一定时间内用户无操作时自动退出
+# set a 1小时 timeout policy for bash shell
+TMOUT=3600
+export TMOUT
+# source /etc/profile
+
+禁用自动退出
+export TMOUT=0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

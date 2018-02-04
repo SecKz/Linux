@@ -1,0 +1,25 @@
+
+# echo $LANG 				读取的是/etc/sysconfig/i18n的lang的值
+# locale 					查看当前语系
+# locale -a					查看系统支持的全部语系
+# locale -a|grep -i gb			查看支持中文
+
+locale的输出可在.bash_profile编辑
+若设置为LANG="zh_CN.GB18030"
+locale输出的各变量为zh_CN.GB18030
+
+
+# locale时出现以下错误
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+解决
+# export LC_ALL='zh_CN.utf8'
+
+设置locale的语系为支持中文的
+修改/etc/sysconfig/i18n文件
+LANG="zh_CN.utf8"
+LANGUAGE="zh_CN. utf-8:zh_CN. utf-8:zh_CN"
+SUPPORTED="zh_CN. utf-8:zh_CN:zh"
+SYSFONT="lat0-sun16"
+SYSFONTACM="8859-15"
