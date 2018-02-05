@@ -69,7 +69,7 @@ File > Default Settings
 you can set the options that would be applied to all new projects 
 
 Turn off background color for SQL strings
-搜索Injected language fragment
+Editor -> Colors & Fonts -> General. 搜索Injected language fragment
 Click 'Injected language fragment' and simply untick the Background checkbox.
 
 关闭phpstorm的拼写检查
