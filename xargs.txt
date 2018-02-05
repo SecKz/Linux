@@ -1,7 +1,7 @@
 
 
 -i 或者是-I，将xargs的每项名称，一行一行赋值给{}
-# pwd|xargs -i basename {}		i要配合{}一起使用 获取当前所在目录的名称 
+# pwd|xargs -i basename {}		i要配合{}一起使用
 # pwd|xargs -ti basename {}
 # rpm -ql pure-ftpd | xargs -ti rm -rf {}
 
