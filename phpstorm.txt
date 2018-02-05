@@ -78,7 +78,7 @@ settings ---> inspections ---> spelling ---> Typo的勾去掉
 默认展开html中的style
 settings搜索folding, 勾选keep single-line blocks
 
-css格式化有空行
+css格式化去掉空行
 Settings -> Code Style -> Css(PHP or whatever your language is) -> Blank Lines 改为0
 
 css简写时关闭自动换行 Settings -> Code Style -> css
