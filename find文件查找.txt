@@ -1,7 +1,7 @@
 
-
-# find . -type f|xargs chmod 644		把当前所有文件权限都改为644，chmod不要加-R		find /data/wwwroot/ -type d -exec chmod 755 {} \;
-# find . -type d|xargs chmod 755 	把当前所有文件夹权限都改为755，chmod不要加-R		find /data/wwwroot/ -type f -exec chmod 644 {} \;
+# find /data/wwwroot/ -type d -exec chmod 755 {} \;		把当前所有文件夹权限都改为755
+# find /data/wwwroot/ -type f -exec chmod 644 {} \;		把当前所有文件权限都改为644
+	
 
 # find tgfiles/ -name '*国有企业*影响*'			多关键字查找
 # find /dir /dir2 -iname aa.txt				find同时查找多个目录

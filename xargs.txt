@@ -1,5 +1,21 @@
 
-# echo '11@22@33@44@55' | xargs -d '@' -tn2 echo
+
+-i 或者是-I，将xargs的每项名称，一行一行赋值给{}
+# rpm -ql pure-ftpd | xargs -ti rm -rf {}
+# pwd|xargs -i basename {}		i要配合{}一起使用 获取当前所在目录的名称 
+# pwd|xargs -ti basename {}
+
+-t 表示先打印命令，然后再执行
+# find . -type d | xargs -ti chmod 755 {}
+# find . -type f | xargs -t -I{} mv {} {}.bak				文件名加上.bak后缀
+# ls|xargs -ti mv {} {}.bak												把当前文件夹的文件加后缀.bak
+# ls|sed -n 's/\.bak$//p'|xargs -ti -n1 mv {}.bak {}							文件名去掉.bak
+
+# find . -name '*.log' | xargs -t0 rm -f		
+# find . -type f | xargs -ti bash -c 'echo zz >> {}'			直接用xargs -ti echo zz >> {}执行不了
+# find . -type f | xargs -ti sh -c 'echo zz >> "{}"'		文件名空格时,用-0不起作用
+
+# echo '11@22@33@44@55' | xargs -d '@' -tn2 echo				-d delim 分隔符，默认的xargs分隔符是回车
 # find /home/html/prz22/ -type f | xargs -tn2 chmod 644			# 一次传2个参数
 
 n的用法  表示命令在执行的时候一次用的argument的个数，默认是用所有
@@ -14,25 +30,11 @@ n的用法  表示命令在执行的时候一次用的argument的个数，默认
 # find . | xargs -n2 basename	
 # find . | xargs -n2 -t
 
--i 或者是-I，将xargs的每项名称，一行一行赋值给{}，和{}配合使用
-# rpm -ql pure-ftpd | xargs -ti rm -rf {}
-# pwd|xargs -i basename {}		i要配合{}一起使用 获取当前所在目录的名称 等同用 xargs -I {}
-# pwd|xargs -ti basename {}
-
 # find . -inum 3735617 | xargs -ti mv {} shell			找到inode为3735617 的文件并重命名为shell
 # find . -name '*.log' | xargs -i mv {} {}.bak				给所有以log结尾的文件名加上bak
 # find . -inum 3735617 | xargs -ti mv {} shell			找到inode为3735617 的文件并重命名为shell
 # find . -name '*.log' | xargs -i mv {} {}.bak				给所有以log结尾的文件名加上bak
 
-# find . -name '*.log' | xargs -t0 rm -f		
-# find . -type f | xargs -ti bash -c 'echo zz >> {}'			直接用xargs -ti echo zz >> {}执行不了
-# find . -type f | xargs -ti sh -c 'echo zz >> "{}"'		文件名空格时,用-0不起作用
-
--t 表示先打印命令，然后再执行
-# find . -type d | xargs -ti chmod 755 {}
-# find . -type f | xargs -t -I{} mv {} {}.bak				文件名加上.bak后缀
-# ls|xargs -ti mv {} {}.bak												把当前文件夹的文件加后缀.bak
-# ls|sed -n 's/\.bak$//p'|xargs -ti -n1 mv {}.bak {}							文件名去掉.bak
 
 搜索到-e指定的命令行参数，则只会将-e指定的命令行参数之前的参数(不包括-e指定的这个参数)传递给xargs后面的命令
 # echo '11 22 33' | xargs -E '33' echo 
@@ -49,8 +51,6 @@ n的用法  表示命令在执行的时候一次用的argument的个数，默认
 # find . -name '*.sh' | xargs -i mv {} test4									使用xargs执行mv
 # find . -iname '*.sh'|xargs -ti mv {} sh										边打印命令边执行命令，xargs -ti等同于xargs -t -i
 # find . -iname '*.sh'|xargs -ti cp {} ../{}										使用xargs执行cp命令 把目录中sh文件复制到上层目录
-
-
 
 
 -d delim 分隔符，默认的xargs分隔符是回车，argument的分隔符是空格，这里修改的是xargs的分隔符
