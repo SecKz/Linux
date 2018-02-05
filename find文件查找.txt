@@ -3,7 +3,7 @@
 # find /data/wwwroot/ -type f -exec chmod 644 {} \;		把当前所有文件权限都改为644
 	
 
-# find tgfiles/ -name '*国有企业*影响*'			多关键字查找
+# find . -name '*redis*php*'			多关键字查找
 # find /dir /dir2 -iname aa.txt				find同时查找多个目录
 # find . -perm 0777 
 # find . -type f -name "* *" -print		查看文件名有空格的文件
