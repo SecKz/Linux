@@ -1,3 +1,4 @@
+
 # top -p pid 查看程序的情况 
 # ps -aux | grep process_name 
 # cat /proc/pid/status 

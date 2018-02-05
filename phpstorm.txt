@@ -58,9 +58,15 @@ ctrl+shift+/      块注释
 黄色波浪线: 变量未名单词拼写问题
 红色波浪线: 变量未定义
 
+PHPStorm默认是UTF-8		加载GBK编码会出现麻将牌
+FILE->Setting->File Encoding->将UTF-8改成GBK
+
 关闭自动完成大小写敏感
 Preferences -> Editor -> Code Completion
 
+所有新建的project公用一个setting
+File > Default Settings 
+you can set the options that would be applied to all new projects 
 
 Turn off background color for SQL strings
 搜索Injected language fragment
@@ -72,6 +78,12 @@ settings ---> inspections ---> spelling ---> Typo的勾去掉
 默认展开html中的style
 settings搜索folding, 勾选keep single-line blocks
 
+css格式化有空行
+Settings -> Code Style -> Css(PHP or whatever your language is) -> Blank Lines 改为0
+
+css简写时关闭自动换行 Settings -> Code Style -> css
+settings搜索css, 勾选keep single-line blocks
+
 自动换行
 勾选Use soft wrap in editor
 
@@ -81,8 +93,6 @@ Wrap attributes选择do not wrap
 给被选中的字符加上引号或括号
 Editor > General > Smart Keys: Surround selection on typing quote or brace
 
-css简写时关闭自动换行 Settings -> Code Style -> css
-settings搜索css, 勾选keep single-line blocks
 
 关闭灯泡提示
 settings搜索bulb，找到show intention bulb关闭
