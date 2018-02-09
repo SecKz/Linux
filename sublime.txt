@@ -1,4 +1,41 @@
 
+ctrl+alt+f		格式化
+Ctrl + H		替换
+Ctrl + P		列出当前打开的文件  /文件名, @函数名
+Ctrl + R		列出Markdown文件大纲
+Ctrl + G		跳转到指定行
+CTRL + R		显示函数列表
+
+alt+-			跳到上一个编辑处
+alt+shift+-		跳到下一个编辑处
+
+Ctrl + D 选中单词
+Alt + F3 批量编辑
+
+Ctrl + / 注释整行
+Ctrl+Shift+/ 注释多行。
+
+Ctrl+Z 撤销。
+Ctrl+Y 恢复撤销。
+
+
+Ctrl+KU		改为大写
+Ctrl+KL		改为小写
+
+Ctrl+U 软撤销，感觉和 Gtrl+Z 一样。
+Ctrl+F2 设置书签，F2切换书签
+Ctrl+T 左右字母互换。
+F6 单词检测拼写
+
+
+Ctrl+F 打开底部搜索框，查找关键字。
+Ctrl+shift+F 在文件夹内查找，与普通编辑器不同的地方是sublime允许添加多个文件夹进行查找，略高端，未研究。
+Ctrl+P 打开搜索框。举个栗子：1、输入当前项目中的文件名，快速搜索文件，2、输入@和关键字，查找文件中函数名，3、输入：和数字，跳转到文件中该行代码，4、输入#和关键字，查找变量名。
+Ctrl+G 打开搜索框，自动带：，输入数字跳转到该行代码。举个栗子：在页面代码比较长的文件中快速定位。
+Ctrl+R 打开搜索框，自动带@，输入关键字，查找文件中的函数名。举个栗子：在函数较多的页面快速查找某个函数。
+Ctrl+： 打开搜索框，自动带#，输入关键字，查找文件中的变量名、属性名等。
+Esc 退出光标多行选择，退出搜索框，命令框等。
+Ctrl+Shift+P 打开命令框。场景栗子：打开命名框，输入关键字，调用sublime text或插件的功能，例如使用package安装插件。
 
 
 sublime安装
@@ -16,7 +53,7 @@ Sublime安装、删除插件
 
 https://www.cnblogs.com/purplefox2008/p/5369702.html
 
-CodeFormatter插件用来对代码进行格式化，使用方式，快捷键 ctrl+alt+f
+CodeFormatter插件用来对代码进行格式化，
 
 3.设置CodeFormatter
 
