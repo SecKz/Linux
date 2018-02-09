@@ -42,10 +42,8 @@
 > tree					树形显示当前目录结构，不包含文件
 > tree /f					树形显示当前文件目录结构
 
-
-cmd 支持gbk中文
-> chcp 936					中文显示为乱码	 936表示当前使用的是简体中文（GB2312）编码 字体选择点阵字体
-cmd 支持utf8中文
+> chcp		
+> chcp 936					中文显示为乱码, 936表示设为（GB2312）编码 字体选择点阵字体
 > chcp 65001				UTF8代码页的编号：65001 右键-字体选择Lucida Console 确定->“只应用到当前窗口”
 
 cmd中出现The system cannot write to the specified device
