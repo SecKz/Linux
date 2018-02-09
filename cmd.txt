@@ -27,7 +27,6 @@
 > copy left.php e:\left.php	
 
 
-
 删除
 > del "d:\linux\windows\新建 文本文档.txt"				文件及目录路径：若存在空格，应使用双引号将路径引起来
 > del b.txt											删除文件
@@ -43,7 +42,7 @@
 > tree /f					树形显示当前文件目录结构
 
 > chcp		
-> chcp 936					中文显示为乱码, 936表示设为（GB2312）编码 字体选择点阵字体
+> chcp 936					936表示设为（GB2312）编码 字体选择点阵字体 中文显示为乱码时 
 > chcp 65001				UTF8代码页的编号：65001 右键-字体选择Lucida Console 确定->“只应用到当前窗口”
 
 cmd中出现The system cannot write to the specified device
