@@ -9,6 +9,7 @@ ctrl+shift+u      字母大小写转换
 ctrl+f            查找
 ctrl+r            替换
 CTRL+G			  定位行，跳转行
+Shift + Tab		 减少缩进
 
 ctrl+shift+]/[    选中块代码
 Ctrl + shift + m	 html标签跳转
