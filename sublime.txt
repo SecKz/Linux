@@ -1,5 +1,6 @@
 
-ctrl+alt+f		格式化
+ctrl+alt+f		格式化  CodeFormatter的快捷键
+ctrl+shift+r	sublime3格式化
 Ctrl + H		替换
 Ctrl + P		列出当前打开的文件  /文件名, @函数名
 Ctrl + R		列出Markdown文件大纲
@@ -27,7 +28,6 @@ Ctrl+F2 设置书签，F2切换书签
 Ctrl+T 左右字母互换。
 F6 单词检测拼写
 
-
 Ctrl+F 打开底部搜索框，查找关键字。
 Ctrl+shift+F 在文件夹内查找，与普通编辑器不同的地方是sublime允许添加多个文件夹进行查找，略高端，未研究。
 Ctrl+P 打开搜索框。举个栗子：1、输入当前项目中的文件名，快速搜索文件，2、输入@和关键字，查找文件中函数名，3、输入：和数字，跳转到文件中该行代码，4、输入#和关键字，查找变量名。
@@ -53,16 +53,13 @@ Sublime安装、删除插件
 
 https://www.cnblogs.com/purplefox2008/p/5369702.html
 
-CodeFormatter插件用来对代码进行格式化，
-
 3.设置CodeFormatter
+根据自己的编程环境需要，可通过”Preferences > package setttings > codeFormatter > settings-user“设置一些参数,如PHP的安装路径。
+"formatter_version": "regexp",		 格式化模式使用regexp比较理想
+"format_on_save": true,				 启用保存时格式化，很不错
 
-    根据自己的编程环境需要，可通过”Preferences > package setttings > codeFormatter > settings-user“设置一些参数,如PHP的安装路径。
-
-4.使用CodeFormatter
-
-  打开需要格式化代码的文件，如这里的p020.php文件，再使用快捷键 "ctrl+alt+f" 即可。
-
+用sublime3格式化代码Edit → Line → Reindent
+{ "keys": ["ctrl+shift+r"], "command": "reindent" , "args": { "single_line": false } }
 
 
 
