@@ -57,6 +57,9 @@ ctrl+shift+/      块注释
 黄色波浪线: 变量未名单词拼写问题
 红色波浪线: 变量未定义
 
+修改最多打开的tab数
+Settings | Editor | General | Editor Tabs | Tab limit
+
 PHPStorm默认是UTF-8		加载GBK编码会出现麻将牌
 FILE->Setting->File Encoding->将UTF-8改成GBK
 
