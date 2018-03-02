@@ -11,9 +11,9 @@ ctrl+r            替换
 CTRL+G			  定位行，跳转行
 Shift + Tab		 减少缩进
 
-ctrl+shift+]/[    选中块代码
-Ctrl + shift + m	 html标签跳转，鼠标焦点要放在标签外
-Ctrl+Shift + left  回到上次编辑点 Ctrl+Shift + right 相反操作
+ctrl+shift+]/[		选中块代码
+Ctrl + shift + m	 括号跳转、html标签跳转，鼠标焦点要放在标签外
+Ctrl+Shift + left	回到上次编辑点 Ctrl+Shift + right 相反操作
 
 Ctrl+Shift+Delete	删除外围标签
 Ctrl+Alt+J			给光标所在行或被选择块加tag	
