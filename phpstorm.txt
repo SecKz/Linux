@@ -1,16 +1,11 @@
 
 shift+enter       新的一行
-ctrl+j            插入活动代码提示
-ctrl+alt+t        当前位置插入环绕代码
-alt+insert        生成代码菜单
-ctrl+q            查看代码注释
 shift+F6          批量重命名变量
 ctrl+shift+u      字母大小写转换
-ctrl+f            查找
-ctrl+r            替换
-CTRL+G			  定位行，跳转行
+
 Shift + Tab		 减少缩进
 
+CTRL+ []			光标移动到{}[]开头或结尾位置
 ctrl+shift+]/[		选中块代码
 Ctrl + shift + m	 括号跳转、html标签跳转，鼠标焦点要放在标签外
 Ctrl+Shift + left	回到上次编辑点 Ctrl+Shift + right 相反操作
@@ -20,9 +15,18 @@ Ctrl+Alt+J			给光标所在行或被选择块加tag
 Ctrl+Alt+t			给光标所在行或被选择块加if	
 
 Ctrl + Shift + F  全文查找 
+CTRL+E				最近打开的文件
 ctrl+alt+F12      跳转至当前文件在磁盘上的位置
 Ctrl+N					类查找  菜单Navigate
 Ctrl+Shift+N			文件查找
+
+ctrl+f            查找
+ctrl+r            替换
+CTRL+G			  定位行，跳转行
+
+ctrl+alt+t        当前位置插入环绕代码
+alt+insert        生成代码菜单
+ctrl+q            查看代码注释
 
 Shift+F1		查看php.net函数文档
 
@@ -31,12 +35,10 @@ CIRL+B		找变量的来源，跳到变量申明处 (CTRL+ 鼠标单击 也可以
 Ctrl+F12	显示当前文件的全部类、函数、变量
 CTRL+H        显示类结构图
 
-Ctrl+y		删除当前行
-Ctrl+Shift+H  方法的层次结构
-CTRL+R 当前窗口替换文本
-CTRL+J 自动代码提示，自动补全
-CTRL+E 最近打开的文件
-CTRL+ [] 光标移动到{}[]开头或结尾位置
+Ctrl+y			删除当前行
+Ctrl+Shift+H	方法的层次结构
+
+CTRL+J			 自动代码提示，自动补全
 
 F4   查找变量来源
 F3   查找下一个
