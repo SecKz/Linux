@@ -4,7 +4,7 @@ Python中第三方的库的安装方法
 # pip help
 
 # pip3 install setuptools --upgrade		升级包
-# pip3 show you-get				显示包的信息
+# pip3 show requests			显示包的信息
 # python -m pip install --upgrade pip		升级pip
 # pip -V
 # pip3 -V
