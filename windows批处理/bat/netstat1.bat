@@ -2,6 +2,7 @@
 
 @echo off
 ::color 0A
+chcp 936
 title 查找端口/pid/进程名
 
 :whichtype
