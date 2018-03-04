@@ -17,3 +17,7 @@ CTRL+H        显 示类结构图
 F4   查找变量来源
 CIRL+B   找变量的来源，跳到变量申明处
 
+pycharm2017.3破解码
+选择 Activate new license with License server 
+在 License sever address 处填入 https://jetlicense.nss.im/
+
