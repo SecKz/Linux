@@ -128,8 +128,6 @@ erverything找到xml文件
 Preferences->Appearance & Behavior ->System Settings 
 去掉 Reopen last project on startup.
 
-4. 取消勾选不常用的插件
-phpstorm 中可以集成很多插件，这些插件也会影响运行速度，有的插件你可能压根都没听过，更不会使用，可以取消勾选。
 
 安装EditorConfig
 
@@ -150,4 +148,11 @@ font: consolas, size:18
 
 PhpStorm 添加jQuery自动提示，自动补全，提示文档
 http://blog.csdn.net/arex_efan/article/details/45363829
+
+
+4. 取消勾选不常用的插件
+phpstorm 中可以集成很多插件，这些插件也会影响运行速度，有的插件你可能压根都没听过，更不会使用，可以取消勾选。
+
+安装常用插件
+editroconfig, codeglance
 
