@@ -21,3 +21,6 @@ pycharm2017.3破解码
 选择 Activate new license with License server 
 在 License sever address 处填入 https://jetlicense.nss.im/
 
+关闭右边栏的SciView
+Settings | Tools | Python Scientific | Show Plots in Toolwindow.
+
