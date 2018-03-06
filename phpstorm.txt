@@ -105,7 +105,7 @@ settings搜索bulb，找到show intention bulb关闭
 Status Bar右下角，右数第2个
 
 设置当前光标所在行高亮颜色
-settings搜索caret row 设为3D3D3D
+settings搜索caret row 设为 363636
 
 
 给函数自动生成注释
