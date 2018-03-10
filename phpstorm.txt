@@ -1,4 +1,8 @@
 
+phpstrom查找一个方法在整个项目中的哪里被调用？
+1 选中类名或者方法名右键:find Usages
+2 ctrl + shift + f
+
 shift+enter       新的一行
 shift+F6          批量重命名变量
 ctrl+shift+u      字母大小写转换
