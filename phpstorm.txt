@@ -1,24 +1,27 @@
 
+查找一个方法在整个项目中的哪里被调用
+1 右键find Usages
+2 ctrl + shift + f
+
 shift+enter       新的一行
 shift+F6          批量重命名变量
 ctrl+shift+u      字母大小写转换
-
 Shift + Tab		 减少缩进
 
-CTRL+ []			光标移动到{}[]开头或结尾位置
+Ctrl + shift + m	{}、[]、 html标签跳转， 鼠标焦点要放在标签外
+CTRL+ []			光标移动到{}[]开头或结尾位置，同 Ctrl + shift + m
 ctrl+shift+]/[		选中块代码
-Ctrl + shift + m	 括号跳转、html标签跳转，鼠标焦点要放在标签外
 Ctrl+Shift + left	回到上次编辑点 Ctrl+Shift + right 相反操作
 
 Ctrl+Shift+Delete	删除外围标签
 Ctrl+Alt+J			给光标所在行或被选择块加tag	
 Ctrl+Alt+t			给光标所在行或被选择块加if	
 
-Ctrl + Shift + F  全文查找 
 CTRL+E				最近打开的文件
-ctrl+alt+F12      跳转至当前文件在磁盘上的位置
+Ctrl + Shift + F  全文查找 
 Ctrl+N					类查找  菜单Navigate
 Ctrl+Shift+N			文件查找
+ctrl+alt+F12      跳转至当前文件在磁盘上的位置
 
 ctrl+f            查找
 ctrl+r            替换
