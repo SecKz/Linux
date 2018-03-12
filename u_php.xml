@@ -35,7 +35,7 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="mr" value="mt_rand($END$)" description="" toReformat="false" toShortenFQNames="true">
+  <template name="mr" value="mt_rand();$END$" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
@@ -294,6 +294,20 @@
   </template>
   <template name="p" value="&lt;p&gt;$END$&lt;/p&gt;" description="" toReformat="false" toShortenFQNames="true">
     <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="en" value="&quot;\n&quot;" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="ct" value="$DATE$ $TIME$" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="DATE" expression="date()" defaultValue="" alwaysStopAt="true" />
+    <variable name="TIME" expression="time()" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="HTML" value="true" />
+      <option name="JAVA_SCRIPT" value="true" />
       <option name="PHP" value="true" />
     </context>
   </template>

@@ -59,7 +59,7 @@
       <option name="HTML" value="true" />
     </context>
   </template>
-  <template name="zcss" value="&lt;style type=&quot;text/css&quot;&gt;&#10;$END$&#10;&#10;&lt;/style&gt;" toReformat="false" toShortenFQNames="true">
+  <template name="zcss" value="&lt;style type=&quot;text/css&quot;&gt;&#10;$END$&#10;&#10;&lt;/style&gt;" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="HTML" value="true" />
     </context>
