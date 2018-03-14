@@ -1,0 +1,78 @@
+
+要使用你自己的系统类替换默认的系统类只需简单的将你自己的文件放入目录 application/core 下:
+如果这个目录不存在，你可以创建一个。
+类名必须以 CI 开头，例如，你的文件是 Input.php，那么类应该命名为:
+class CI_Input {
+
+http://localhost/codeigniter_user_guide/general/core_classes.html
+
+
+mysql查询构造器类来自       system/database/DB_query_builder.php
+$this->db->query函数来自    system/database/DB_driver.php
+$this->load函数来自          system\core\Loader.php
+
+
+公共函数
+system\core\Common.php
+
+CI获取控制器名称
+
+只在控制器有效
+__CLASS__
+__FUNCTION__
+
+在控制器和视图都有效
+$this->router->class			CI获取控制器名
+$this->router->method			CI获取方法名
+
+$this->router->fetch_class()
+$this->router->fetch_method()
+
+默认控制器
+$this->router->default_controller
+
+开启phpinfo模式
+$config['enable_query_strings'] = FALSE;
+
+
+ci控制器中默认的方法  application\config\routes.php
+$route['default_controller'] = "index";  默认index类的index方法
+$route['default_controller'] = "index/test";   默认index类的test方法
+
+在每个控制器开始前自动执行的方法是：加__construct
+public function __construct() {
+parent::__construct();
+echo 'start running<br />';
+}
+
+在PHP主流的框架中，CI中url的pathinfo传递参数是一个特殊情况，它没有使用传统pathinfo的‘c/m/key/value‘
+这种模式，而是在URI类中封装了segment这个方法，假设uri为/index.php/welcome/index/phpjyz/5,在控制器中调用如下
+echo $this->uri->segment(3);//输出phpjyz
+echo $this->uri->segment(4);//输出5
+echo $this->uri->segment(1);//welcome
+
+
+在CI控制其中可以直接使用PHP中的$_POST['key']来获取post数据；
+
+另外CI还封装了一个Input类，里面提供post方法来获取post提交过来的数据。
+$this->input->post('key');
+
+关于CodeIgniter中get_instance() 函数
+你随便下个CI框架的源码都会看到很多的get_instance() 函数，这个函数是用来获取CI 的全局超级对象，CI 是单例模式的框架，所有全局有一个超级对象。
+因为只有一个实例，所以无论这个函数使用多少次都不会消耗资源的。一般来说，只有在helper或library中才使用get_instance。
+$CI =& get_instance();通过引用的方式赋给变量将使使用原始的CodeIgniter对象,而不是创建一个拷贝
+
+打印sql语句的4种方法
+1 get_compiled_update 或 get_comiled_insert
+2 update_string或insert_string
+3 $this->db->last_query()
+4 在system\database\drivers\mysqli\mysqli_driver.php的方法_execute输出
+
+
+CI db会将所有的查询sql和和sql执行时间保存下来，为了debug。关键是这个$save_queries为TRUE，在config中并没有关闭开关。
+修改数据库配置文件，config/database.php，增加save_queries选项，如下：
+$db['default']['save_queries'] = FALSE;
+$config['sess_time_to_update'] = 36000;
+$config['sess_regenerate_destroy'] = TRUE;
+
+
