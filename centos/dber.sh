@@ -8,7 +8,7 @@
 # dber.sh i dbname db.sql	导入sql文件到已有数据库
 
 # mysql_upgrade -uroot -p123456    # mysql升级
-# CREATE DATABASE IF NOT EXISTS `bbbb` DEFAULT CHARACTER SET utf8;
+# CREATE DATABASE IF NOT EXISTS aa123 DEFAULT CHARACTER SET utf8;
 # drop database if exists webauth;
 
 # 添加root用户和修改密码
@@ -30,7 +30,7 @@ pwd=aJt94RLjfcP8H7lZmAHPmNG2OYP7FI
 VER=$(mysql -V |awk -F"," '{ print $1}' | awk '{ print $NF}' | grep -Eo '[0-9]+.[0-9]+')
 
 pwzd="password"
-if (( $(echo "$VER >= 5.7 " | bc) )); then
+if [ $(echo "$VER >= 5.7"|bc) = 1 ]; then
 	pwzd="authentication_string"
 fi
 
