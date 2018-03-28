@@ -3,8 +3,8 @@
 # find . -type f | egrep -i '\.(js|php)$'	
 
 按文件内容过滤
-# find . -iname '*.js' | xargs -i fgrep -li 'window.open' {}
-# find . -type f | egrep '\.xml$' | xargs -i fgrep -l '5200tv.com' {}		找出xml中含有5200tv.com的文件
+# find . -iname '*.js' | xargs -i fgrep -li 'window' {}
+# find . -type f | egrep '\.php$' | xargs -i fgrep -l '5200tv.com' {}		找出含有5200tv.com的php文件
 # find . -type f | xargs -i egrep -l 'config\.ini' {}
 # find . -type f | xargs -i egrep -l '\.(js|php)$' {}	
 

@@ -6,8 +6,8 @@
 # scp -P 2222 /home/gg.js user@host:/home	通过端口2222传输
 
 (2) 复制目录：
-# scp -r dir 119.147.143.30:/home
-# scp -r dir root@119.147.143.30:/home/newname
+# scp -r home/html/dir 119.147.143.30:/home
+# scp -r home/html/dir root@119.147.143.30:/home/newname
 
 从远程服务器复制到本地服务器 
 # scp 119.147.143.30:/home/gg.js /root			把119.147.143.30的gg.js复制到本地

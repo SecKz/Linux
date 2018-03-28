@@ -12,6 +12,8 @@
 # cat /etc/httpd/conf/httpd.conf |awk '$0 ~/log/ && $0 !~/^#/'			等同上句
 # cat access_log-20130804 | awk '{a[$1]++;}END{for(i in a){print a[i], i;}}' | sort -nr	
 
+# httpd -k start/stop/restart		启停apache, service命令用不了，用这个
+
 # httpd -t		检查配置是否正确
 # httpd -M    列出已安装模块modules are built-in or shared.
 # httpd –l  	查处apche的编译的模块，如工作模式，prefork模式和worker模式
