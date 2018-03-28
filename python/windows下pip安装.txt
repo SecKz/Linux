@@ -6,7 +6,6 @@ pipy国内镜像目前有：
 http://pypi.douban.com/  豆瓣
 
 
-
 手动指定源：
 在pip后面跟-i 来指定源，比如用豆瓣的源来安装web.py框架：
 pip install web.py -i http://pypi.douban.com/simple

@@ -1,14 +1,16 @@
 
-
-IIS下MySQL停止和启动的方法
-mysql服务的启动与停止：点击开始--运行，输入services.msc 。找到mysql重启
-
 MySQL 5中，出现错误提示：Field 'id' doesn't have a default value
 打开my.ini，查找
 sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 修改为
 sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 然后重启MYSQL
+
+通过php设置
+mysql_query("SET SESSION sql_mode='NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'");
+
+IIS下MySQL停止和启动的方法
+mysql服务的启动与停止：点击开始--运行，输入services.msc 。找到mysql重启
 
 重启IIS
 点击 开始->运行，输入iisreset 回车。
