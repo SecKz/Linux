@@ -65,10 +65,12 @@ fi
 
 [ $# -gt 0 ] && exit
 
-dbs=""					#要备份的数据库
+dbs="allcaca cargool fitibest fyk okidso petacc prettysee runacc sonlike sxsx testDB tooltoo uarter unistyle vbiger waimao"					#要备份的数据库
+
 
 for db in $dbs; do
 	mysqldump $hup $db | gzip > $dir$db-$time.sql.gz
+	#mysqldump $hup $db > $dir$db-$time.sql
 done
 
 

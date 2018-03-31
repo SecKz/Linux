@@ -1,0 +1,14 @@
+
+ubuntu下无法使用add-apt-repository命令
+apt-get install python-software-properties
+apt-get install software-properties-common
+apt-get update
+
+
+ubuntu的cron日志
+tail -f /var/log/syslog | grep CRON
+
+pip is showing error 'lsb_release -a' returned non-zero exit status 1
+lsb_release需要使用python2，查看/usr/bin/lsb_release环境是不是python2，如果不是编辑 /usr/bin/lsb_release  改为#! /usr/bin/python2.7
+
+

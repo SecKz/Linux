@@ -1,23 +1,19 @@
 
 从本地服务器复制到远程服务器
 # scp yum.txt root@119.147.143.30:/home 	 把yum.txt传到主机119.147.143.30的/home目录下
-# scp g.js 119.147.143.30:/home			把g.js传到主机119.147.143.30的/home目录下
+# scp g.js 119.147.143.30:/home				把g.js传到主机119.147.143.30的/home目录下
 # scp g.js 119.147.143.30:/home/gg.js		把g.js传到主机119.147.143.30的/home目录下并改名为gg.js
 # scp -P 2222 /home/gg.js user@host:/home	通过端口2222传输
 
-(2) 复制目录：
-# scp -r home/html/dir 119.147.143.30:/home
-# scp -r home/html/dir root@119.147.143.30:/home/newname
+复制目录：
+# scp -r /home/html/dir 119.147.143.30:/home
+# scp -r /home/html/dir root@119.147.143.30:/home/newname
 
 从远程服务器复制到本地服务器 
 # scp 119.147.143.30:/home/gg.js /root			把119.147.143.30的gg.js复制到本地
 # scp 119.147.143.30:/home/file*.js	.
-
 # scp -r 45.63.122.222:/home/html /home/	复制html文件夹
-
-
-如果ssh不是用22端口，而别的端口。
-scp -P 2222 user@host:/home/gg.js /g.js
+# scp -P 2222 user@host:/home/gg.js /g.js			如果ssh不是用22端口，而别的端口。
 
 
 scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。linux的scp命令可以在linux服务器之间复制文件和目录.

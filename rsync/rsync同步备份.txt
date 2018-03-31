@@ -10,7 +10,7 @@ rsync -avzP --delete --password-file=/etc/rsyncd.pass backer@113.98.255.42::home
 向服务端发数据 把本地的/home下文件发到远程的web_bak模块指定的目录
 rsync -avz --delete --password-file=/etc/rsyncd.pass /home backer@192.168.1.100::web_bak  
 
---delete：把备份机器上的文件，删除该文件在主服务器上却没有的文件；
+--delete：把备份机器上的文件，删除该文件在主服务器上没有的文件；
 
 发送文件的一方/etc/rsync.pass的格式必须为Username:password, 且权限为root的600
 接收文件的一方/etc/rsync.pass的格式必须为password, 且权限为root的600
@@ -24,10 +24,11 @@ rsync服务端启动的两种方法
 # rsync --daemon		启动rsync服务端（独立启动）
 # /etc/init.d/xinetd reload		启动rsync服务端 （有xinetd超级进程启动）
 
-
-用ssh传输c
+用ssh传输
 rsync -avzhe ssh backup.tar root@192.168.0.100:/backups/
 rsync -avzhe ssh root@192.168.0.100:/root/install.log /tmp/
+
+配置文件/etc/rsyncd.conf	
 
 use chroot = no # 不使用chroot
 max connections = 4 # 最大连接数为4
@@ -35,6 +36,7 @@ pid file = /var/run/rsyncd.pid #进程ID文件
 lock file = /var/run/rsync.lock
 log file = /var/log/rsyncd.log # 日志记录文件
 secrets file = /etc/rsyncd.pwd # 认证文件名,主要保存用户密码，权限建议设为600，所有者root
+
 [module] # 这里是认证的模块名，在client端需要指定
 path = /var/mail # 需要做镜像的目录
 comment = backup xxxx # 注释
@@ -42,6 +44,7 @@ ignore errors # 可以忽略一些无关的IO错误
 read only = yes # 只读
 list = no # 不允许列文件
 auth users = postfix # 认证的用户名，如果没有这行，则表明是匿名
+
 [other]
 path = /path/to...
 comment = xxxxx
