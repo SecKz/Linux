@@ -1,7 +1,6 @@
 
 echo bcrypt('123456'),'<br />';	 // laravel密码加密方式
 
-
 php artisan --version		查看 Laravel 的版本
 php artisan view:clear		清空laravel缓存
 php artisan route:list
@@ -17,6 +16,14 @@ php artisan generate:controller TestdController		新建控制器
 
 
 laravel框架中使用model层
+在app\Models\User.php，即将User.php模型放到Models目录下
+config/auth.php file and update the following:
+'providers' => [
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => App\User::class, //<------update your namespace here
+    ]
+],
 
 laravel 在添加操作自动完成对时间保存修改timestamps 
 https://www.cnblogs.com/huangshoushi/p/6378288.html
