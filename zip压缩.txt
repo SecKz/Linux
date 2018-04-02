@@ -1,5 +1,7 @@
 
-# zip -r filename.zip filesdir 							 r用于压缩目录
+# zip aa.zip aa										压缩文件aa
+# zip -r filename.zip filesdir 						压缩目录
+
 # zip -ru 163zcw.com.zip 163zcw.com					 只向163zcw.com.zip加入163zcw.com文件夹中更改过的文件，避免重复压缩
 # zip -rj	aa aa										 只压缩目录文件，不要目录
 
