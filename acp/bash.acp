@@ -1,0 +1,68 @@
+#TITLE=Bash
+; EditPlus Auto-completion file for *nix bash script
+; Author: Chris Lam
+
+#CASE=y
+#T="
+"^!"
+#T='
+'^!'
+#T=[
+[^!]
+#T=ec
+echo ^!
+#T=gi
+$()
+#T=rp
+read -p "^!"
+#T=re
+return
+#T=if
+if [ ^! ]; then
+
+fi
+#T=ifs
+if [ ^! ]; then
+
+elif [ ^! ]; then
+
+else
+
+fi
+
+#T=case
+case ^! in
+)
+
+;;
+*)
+
+;;
+esac
+#T=for
+for i in "^!"; do
+
+done
+#T=while
+while ^!; do
+
+done
+#T=wht
+while [ ^! ]; do
+
+done
+#T=until
+until ^!; do
+
+done
+#T=select
+select ^!; do
+
+done
+#T=fun
+function ^!()
+{
+
+}
+#T=echr
+echo '---------------------------------------';

@@ -1,0 +1,314 @@
+#TITLE=XHTML
+; EditPlus Auto-completion File v1.0 written by ES-Computing.
+; This file is intended to be used by HTML Toolbar of EditPlus.
+; <WARNING>
+; This file is required for EditPlus to run correctly.
+; You can modify only the content of each entry.
+; Do not add/remove any entry , Do not modify title of each entry.
+
+#CASE=y
+
+#T=B
+<b>^!</b>
+#T=I
+<i>^!</i>
+#T=U
+<?php
+^!
+?>
+#T=FONT
+<font>^!</font>
+#T=H1
+<h1>^!</h1>
+#T=H2
+<h2>^!</h2>
+#T=H3
+<h3>^!</h3>
+#T=H4
+<h4>^!</h4>
+#T=H5
+<h5>^!</h5>
+#T=H6
+<h6>^!</h6>
+#T=BR
+<br />
+#T=P
+->^!
+#T=nb
+&nbsp;
+#T=A
+<a href="#">^!</a>
+#T=HR
+<hr />
+#T=IMG
+<img src=""  alt="^!" />
+#T=CENTER
+<center>^!</center>
+#T=BLOCKQUOTE
+(^!)
+#T=PRE
+{^!}
+#T=<!
+<!-- ^! -->
+#T=UL
+<ul>
+<li>^!</li>
+<li></li>
+</ul>
+#T=OL
+<ol>
+<li>^!</li>
+<li></li>
+</ol>
+#T=DL
+<dl>
+<dt>^!</dt><dd></dd>
+<dt></dt><dd></dd>
+</dl>
+
+#T=FRAME
+<frameset rows="^!," cols=",">
+<frame src="" id="" />
+<frame src="" id="" />
+</frameset>
+#T=MAP
+<MAP NAME="^!">
+<AREA SHAPE="" HREF="" COORDS="" ALT="">
+</MAP>
+#T=SCRIPT
+<script type="text/javascript">
+
+^!
+
+</script>
+#T=APPLET
+<script type="text/javascript" src="^!"></script>
+#T=FORM
+<form method="post" action="" id="form">
+^!
+</form>
+#T=TEXT
+<input type="text" id="name" name="name" maxlength=""/>
+#T=SELECT
+<select id="" name="">
+<option value="">^!</option>
+<option value=""></option>
+</select>
+#T=RADIO
+<input type="radio" name="^!" value="" id=""/>
+#T=CHECKBOX
+<input type="checkbox" name="^!" value="" id=""/>
+#T=TEXTAREA
+<textarea id="content" name="content">^!</textarea>
+#T=RESET
+<input type="reset" value=""/>
+#T=SUBMIT
+<input type="submit" id="subform" name="subform" value="确 定"/>
+#T=PASSWORD
+<input type="password" id="password" name="password" maxlength=""/>
+#T=HIDDEN
+<input type="hidden" id="hidetxt" name="hidetxt"/>
+#T=FORMIMAGE
+<input type="image" src="^!" />
+#T=BUTTON
+<input type="button" id="btn" value="确 定"/>
+#T=TABLE
+<table class="table">
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+#T=TABLE2
+</tbody>
+</table>
+#T=TR
+
+<tr>
+
+#T=TR2
+</tr>
+
+#T=TD
+<td></td>
+
+#T=TD2
+<td></td>
+
+#T=OBJECT
+<object id="%s" width="^!" height="" classid="clsid:%s">
+</object>
+#T=STYLE
+<style type="text/css">
+^!
+</style>
+#T=DIV
+<div>^!</div>
+#T=SPAN
+<span>^!</span>
+#T=TH
+<th>^!</th>
+#T=st
+style="^!"
+#T=sdn
+style="display:none;"
+#T=sdb
+style="display:block;"
+#T=scom
+<!-- ^! -->
+#T=com
+<!------------------------------- ^! --------------------------------->
+#T=id
+id="^!"
+#T=cl
+class="^!"
+#T=tb
+target="_blank"
+#T=onm
+onmouseover=
+#T=onc
+onclick=
+#T=onf
+onfocus=
+#T=onb
+onblur=^!
+#T="
+"^!"
+#T='
+'^!'
+#T=di
+<div id="^!"></div>
+#T=dc
+<div class="^!"></div>
+#T=zlab			############################################# Zen Coding begin
+<label for="">^!</label>
+#T=zimg
+<img src="^!" alt=""/>
+#T=zb
+<b>^!</b>
+#T=zstrong
+<strong>^!</strong>
+#T=zi
+<i>^!</i>
+#T=zem
+<em>^!</em>
+#T=zfont
+<font color=#a40000>^!</font>
+#T=zcaption
+<caption>^!</caption>
+#T=zthead
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+#T=ztbody
+<tbody>
+<tr>
+<td>^!</td>
+<td>^!</td>
+</tr>
+</tbody>
+#T=ztfoot
+<tfoot>
+<tr>
+<td>^!</td>
+<td>^!</td>
+</tr>
+</tfoot>
+#T=ztd
+<td>^!</td>
+#T=zth
+<th>^!</th>
+#T=ztr
+<tr>^!</tr>
+#T=ztrd
+<tr>
+<td>^!</td>
+<td>^!</td>
+</tr>
+#T=zxmp
+<xmp>
+
+^!
+
+</xmp>
+#T=ztitle
+<title>^!</title>
+#T=zbody
+<body>
+
+^!
+
+</body>
+#T=zhead
+<head>
+^!
+</head>
+#T=zdel
+<del>^!</del>
+#T=zsub
+<sub>^!</sub>
+#T=zsub
+<sub>^!</sub>
+#T=zsup
+<sup>^!</sup>
+#T=zbq
+<blockquote>^!</blockquote>
+#T=zpre
+<pre>
+^!
+</pre>
+#T=zcode
+<code>
+^!
+</code>
+#T=ziframe
+<iframe src="^!" width="100%" height="100%" scrolling="no" frameborder="0" ></iframe>
+#T=zoptgroup
+<optgroup label="">
+<option value ="">^!</option>
+<option value =""></option>
+</optgroup>
+#T=zabbr
+<abbr title=""></abbr>
+#T=zoption
+<option value="">^!</option>
+#T=zcenter
+<center>^!</center>
+#T=zspan
+<span>^!</span>
+#T=zdiv
+<div>^!</div>
+#T=zul
+<ul>^!</ul>
+#T=zli
+<li>^!</li>
+#T=zp
+<p>^!</p>
+#T=zh1
+<h1>^!</h1>
+#T=zh2
+<h2>^!</h2>
+#T=zh3
+<h3>^!</h3>
+#T=zs
+<s>^!</s>
+#T=ifp
+<?php if(^!) { ?>
+
+<?php } ?>
+#T=ifps
+<?php if(^!) { ?>
+
+<?php } else { ?>
+
+<?php } ?>
+#T=zjs
+<script type="text/javascript" src="^!"></script>
+#T=zcss
+<link rel="stylesheet" type="text/css" href="^!.css"/>
+#

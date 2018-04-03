@@ -1,0 +1,116 @@
+#TITLE=HTML
+; EditPlus Auto-completion file v1.0 written by JustinYoung(http://justinyoung.cnblogs.com).
+; This file is provided as a default auto-completion file for HTML
+
+#CASE=n
+
+#T=b
+<strong>^!</strong>
+#T=em
+<em>^!</em>
+#T=sp
+<span>^!</span>
+#T=h1
+<h1>^!</h1>
+#T=h2
+<h2>^!</h2>
+#T=h3
+<h3>^!</h3>
+#T=h4
+<h4>^!</h4>
+#T=h5
+<h5>^!</h5>
+#T=h6
+<h6>^!</h6>
+#T=p
+<p>^!</p>
+#T=nb
+&nbsp;
+#T=a
+<a href="" title="">^!</a>
+#T=at
+<a target="_blank" href="" title="">^!</a>
+#T=hr
+<hr />
+#T=img
+<img src="img/^!.gif" alt="Í¼Æ¬ËµÃ÷" />
+#T=d
+<div>^!</div>
+#T=di
+<div id="^!">
+ 
+</div>
+#T=dc
+<div class="^!"> 
+</div>
+#T=dic
+<div id="^!" class=""> 
+</div>
+#T=!--
+<!--end: ^! -->
+#T=lab
+<label>^!</label>
+#T=text
+<input type="text" name="^!" />
+#T=select
+<select name="">
+<option value="" selected="true">^!</option>
+</select>
+#T=btn
+<button>^!</button>
+#T=lbl
+<label for="">^!</label>
+#T=table
+<table>
+<tr>
+<td>^!</td>
+<td></td>
+</tr>
+</table>
+#T=th
+<thead>
+<th>^!</th>
+<th></th>
+<th></th>
+<th></th>
+</thead>
+#T=tr
+<tr>
+<td>^!</td>
+<td></td>
+</tr>
+#T=td
+<td>^!</td>
+#T=br
+<div class="jui-divBr"></div>
+#T=**
+/**************************************************/
+^!
+#T=#
+#^!{
+}
+#T=ul
+<ul>
+ <li>^!</li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+</ul>
+#T=ua
+<ul>
+ <li><a href="^!" title=""></a></li>
+ <li><a href="" title=""></a></li>
+ <li><a href="" title=""></a></li>
+ <li><a href="" title=""></a></li>
+ <li><a href="" title=""></a></li>
+</ul>
+#T=uia
+<ul id="^!">
+ <li><a href="" title=""></a></li>
+ <li><a href="" title=""></a></li>
+ <li><a href="" title=""></a></li>
+ <li><a href="" title=""></a></li>
+ <li><a href="" title=""></a></li>
+</ul>
+#

@@ -1,0 +1,230 @@
+F#TITLE=CSS
+; EditPlus Auto-completion file v1.0 written by Andy Mao.
+; This file is provided as a default auto-completion file for CSS.
+
+#CASE=y
+
+#T=css
+*{list-style:none;font-size:14px;font-family:tahoma;}
+#T=w
+width:^!px;
+#T=h
+height:^!px;
+#T=fl
+float:left;
+#T=fr
+float:right;
+#T=fn
+float:none;
+#T=cb
+clear:both;
+#T=cl
+clear:left;
+#T=cr
+clear:right;
+#T=p
+padding:^!
+#T=pt
+padding-top:^!px;
+#T=pri				       ;;;;; position:relative
+padding-right:^!px;
+#T=pl
+padding-left:^!px;
+#T=pb
+padding-bottom:^!px;
+#T=m
+margin:^!
+#T=ma
+margin:^!px auto;
+#T=mt
+margin-top:^!px;
+#T=mr
+margin-right:^!px;
+#T=ml
+margin-left:^!px;
+#T=mb
+margin-bottom:^!px;
+#T=btw
+border-top-width:^!px;
+#T=brw
+border-right-width:^!px;
+#T=bbw
+border-bottom-width:^!px;
+#T=blw
+border-left-width:^!px;
+#T=blc
+border-left-color:^!;
+#T=btc
+border-top-color:^!;
+#T=bbc
+border-bottom-color:^!;
+#T=brc
+border-right-color:^!;
+#T=pm
+padding:^! margin:
+#T=db
+display:block;
+#T=dib
+display:inline-block;
+#T=di
+display:inline;
+#T=dt
+display:table;
+#T=dn
+display:none;
+#T=oh
+overflow:hidden;
+#T=ohx
+overflow-x:hidden;
+#T=ohy
+overflow-y:hidden;
+#T=os
+overflow:scroll;
+#T=ov
+overflow:visible;
+#T=vh
+visibility:hidden;
+#T=vv
+visibility:visible;
+#T=pr
+position:relative;
+#T=pa
+position:absolute;
+#T=pf
+position:fixed;
+#T=paz
+position:absolute;z-index:^!;
+#T=prz
+position:relative;z-index:^!;
+#T=zi
+z-index:^!;
+#T=b
+border:1px solid ^!
+#T=bn
+border:0;
+#T=btn
+border-top:0;
+#T=brn
+border-right:0;
+#T=bbn
+border-bottom:0;
+#T=bln
+border-left:0;
+#T=bo
+border:1px solid #ccc;
+#T=bt
+border-top:1px solid ^!
+#T=br
+border-right:1px solid ^!;
+#T=bb
+border-bottom:1px solid ^!
+#T=bl
+border-left:1px solid ^!
+#T=bw
+border-width:^!px;
+#T=bco
+border-color:^!;
+#T=cu
+cursor:pointer;
+#T=cd
+cursor:default;
+#T=fs
+font-size:^!px;
+#T=fwb
+font-weight:bold;
+#T=fwn
+font-weight:normal;
+#T=tac
+text-align:center;
+#T=tal
+text-align:left;
+#T=tar
+text-align:right;
+#T=tdn
+text-decoration:none;
+#T=tdu
+text-decoration:underline;
+#T=tdl
+text-decoration:line-through;
+#T=lh
+line-height:^!;
+#T=ls
+letter-spacing:^!px;
+#T=c
+color:^!
+#T=cf
+color:#fff;
+#T=scom
+/* ^! */
+#T=com
+/*********************************** ^! ***********************************/
+#T=ti
+text-indent:2em;
+#T=bc
+border-collapse:collapse;
+#T=nobr
+overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+#T=wbr					;;;;;;;;;;border-right
+word-wrap:break-word;word-break:break-all;
+#T=wb
+word-break:break-all;
+#T=mw
+width:auto !important;width:^!px;min-width:px;
+#T=mmw
+width:auto !important;width:^!px;max-width:px;
+#T=mh
+height:auto !important;height:^!px;min-height:px;
+#T=mmh
+height:auto !important;height:^!px;max-height:px;
+#T=ho
+hover
+#T=tlf
+table-layout:fixed;
+#T=lsn
+list-style:none
+#T=ff
+font-family:^!;
+#T=fv
+font-family:Verdana;
+#T=fa
+font-family:arial;
+#T=ft
+font-family:tahoma;^!
+#T=fsi
+font-style:italic;
+#T=va
+vertical-align:^!;
+#T=vam
+vertical-align:middle;
+#T=bg
+background:^!
+#T=bgn
+background:none;
+#T=bgu
+background:url(^!) no-repeat 0px 0px;
+#T=bgx
+background:url(^!) repeat-x 0px 0px;
+#T=bgy
+background:url(^!) repeat-y 0px 0px;
+#T=bf
+background:#fff;
+#T=bgc
+background-color:^!
+#T=bi
+background-image:url(^!);
+#T=bp
+background-position:^!;
+#T=bra
+border-radius:^!px;
+#T=maw
+max-width:^!px;
+#T=miw
+min-width:^!px;
+#T=mah
+max-height:^!px;
+#T=mih
+min-height:^!px;
+#T=bs
+box-shadow: 2px 2px 2px #E8E8E8, -2px -2px 2px #E8E8E8;
+
+#

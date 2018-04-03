@@ -1,0 +1,352 @@
+#TITLE=JavaScript
+
+; EditPlus auto-completion file written by Stefan van As.
+; This file is provided as a default auto-completion file for JavaScript.
+; Revision 1.0
+; @Author: Le Yang
+; @Date: 2009-3-21
+
+#CASE=y
+#T="
+"^!"
+#T=[
+[^!]
+#T=if
+if(^!)
+#T=ifs
+if(^!) {
+
+}
+#T=rf
+return false;
+#T=rt
+return true;
+#T=wh
+while(^!) {
+
+}
+#T=dow
+do {
+
+}
+while (^!)
+#T=for
+for(var i=0, len=^!; i<len; i++) {
+
+}
+#T=fore
+for(var k in ^!) {
+
+}
+#T=sw
+switch(^!) {
+case condi:
+code;
+break;
+default:
+code;
+}
+#T=dce
+document.createElement("^!");
+#T=dct
+document.createTextNode("^!");
+#T=dcd
+document.createDocumentFragment();
+#T=dw
+document.write(^!);
+#T=dwb
+document.write(^! + "<br />");
+#T=doc
+document
+#T=dbo
+document.body
+#T=de
+documentElement
+#T=lhr
+location.href
+#T=doct
+document.title
+#T=docu
+document.URL
+#T=docr
+document.referrer
+#T=nu
+navigator.userAgent
+#T=rc
+removeChild(target);
+#T=rch
+replaceChild(^!, target);
+#T=ibe
+insertBefore(^!, target)
+#T=app
+appendChild(^!)
+#T=lc
+lastChild
+#T=fc
+firstChild
+#T=nn
+nodeName
+#T=tn
+tagName
+#T=nv
+nodeValue
+#T=nt
+nodeType
+#T=pn
+parentNode
+#T=ns
+nextSibling
+#T=ps
+previousSibling
+#T=cns
+childNodes
+#T=ih
+innerHTML
+#T=io
+indexOf(^!)
+#T=pari
+parseInt(^!)
+#T=parf
+parseFloat(^!)
+#T=rep
+replace(^!, new)
+#T=cn
+className
+#T=fun
+function ^!() {
+
+}
+#T=fu
+function() {
+^!
+}
+#T=onm
+onmouseover = ^!
+#T=ono
+onmouseout = ^!
+#T=onc
+onclick = ^!
+#T=onch
+onchange = ^!
+#T=onf
+onfocus = ^!
+#T=onb
+onblur = ^!
+#T=one
+onerror = ^!
+#T=onl
+onload = ^!
+#T=onsc
+onscroll = ^!
+#T=onr
+onresize = ^!
+#T=onbe
+onbeforeunload = ^!
+#T=al
+alert(^!);
+#T=scom
+/* ^! */
+#T=com
+/**
+ * ^!
+*/
+#T=br
+break;
+#T=con
+continue;
+#T=sa
+setAttribute("^!", );
+#T=ga
+getAttribute("^!");
+#T=ra
+removeAttribute("^!");
+#T=st
+setTimeout(^!);
+#T=ct
+clearTimeout(^!);
+#T=si
+setInterval(^!);
+#T=ci
+clearInterval(^!);
+#T=ty
+typeof ^!
+#T=gtn
+getElementsByTagName("^!");
+#T=ow
+offsetWidth
+#T=oh
+offsetHeight
+#T=ol
+offsetLeft
+#T=ot
+offsetTop
+#T=cw
+clientWidth
+#T=ch
+clientHeight
+#T=sto			      ;;;;;;;;;;;setTimeout
+scrollTop
+#T=sl
+scrollLeft
+#T=sh
+scrollHeight
+#T=swi
+scrollWidth
+#T=ar
+arguments
+#T=mr
+Math.random()
+#T=mma
+Math.max(^!)
+#T=mmi
+Math.min(^!)
+#T=mc
+Math.ceil(^!)
+#T=mf
+Math.floor(^!)
+#T=mro
+Math.round(^!)
+#T=mab
+Math.abs(^!)
+#T=gid
+function z(id){ return document.getElementById(id)}
+#T=esc
+escape(^!)
+#T=une
+unescape(^!)
+#T=prot
+prototype
+#T=cons
+constructor
+#T=try
+try{
+	^!
+} catch(e) {
+
+}
+#T=tryf
+try{
+	^!
+} catch(e) {
+
+} finally {
+
+}
+#T=thr
+throw ^!
+#T=inst
+instanceof
+#T=und
+undefined
+#T=sdn
+style.display = "none";
+#T=sdb
+style.display = "block";
+#T=bg
+background
+#T=hist
+history
+#T=vo
+valueOf()
+#T=isn
+isNaN(^!)
+#T=op
+offsetParent
+#T=visi
+visibility
+#T=sp
+split(^!)
+#T=cno
+cloneNode(^!)
+#T=jn
++","+
+#T=tl
+toLowerCase()
+#T=tu
+toUpperCase()
+#T=ts
+toString()
+#T=lm
+lastModified
+#T=je
+var e = window.event||e, o = e.target || e.srcElement;
+^!
+#T=dv
+defaultValue
+#T=cte				 ;;;;;;;;;;;clearTimeout
+cssText
+#T=nd
+new Date()
+#T=gt
+getTime()
+#T=cto
+clientTop
+#T=cl
+clientLeft
+#T=ons
+onsubmit
+#T=ifp
+<?php if(^!) { ?>
+
+<?php } ?>
+#T=ifps
+<?php if(^!) { ?>
+
+<?php } else { ?>
+
+<?php } ?>
+#T=prr
+print_r(^!);
+#T=dwh
+document.write("<hr />");
+#T=slice
+slice(^!, end);
+
+#T=aj
+ajax({
+	url: "test.php",
+	type: "get",
+	data: {name: name},
+	success: function(data, xhr) {
+
+	}
+});
+#T=tf
+toFixed(^!)
+#T=gi
+z("^!")
+#T=qi
+$("^!")
+#T=jq		;jQuery---------------------------------------------
+(function($) {
+
+	^!
+
+})(jQuery);
+
+#T=jqr
+$(function() {
+
+	^!
+
+});
+#T=jqre
+jQuery(function() {
+
+	^!
+
+});
+
+#T=jaj
+$.ajax({
+	type: "GET",
+	url: "test.php",
+	data: {name: name},
+	dataType: "text",
+	success: function(data) {
+
+	}
+});
+#T=conlog
+console.log(^!);
+#

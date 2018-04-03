@@ -1,0 +1,56 @@
+#TITLE=Python
+; EditPlus Auto-completion file v1.0 written by Martin Stehle in winter 2002.
+; This file is provided as a default auto-completion file for Phyton.
+
+#CASE=y
+#T="
+"^!"
+#T='
+'^!'
+#T=[
+[^!]
+#T=(
+(^!)
+#T=pr
+print ( ^! )
+#T=prhr
+print ( '---------------------------------------' )
+#T=ifs
+if ^!:
+
+else:
+
+#T=com
+"""
+^!
+
+"""
+#T=def
+def ^!():
+
+#T=class
+class ^!():
+
+#T=for
+for ^! in :
+
+#T=forr
+for ^! in range():
+
+#T=ford
+for key,val in ^!.items():
+	
+
+#T=ra
+random.random()
+#T=rai
+random.randint(^!)
+#T=ifn
+if __name__ == '__main__':	
+	^!
+#T=ztry
+try:
+	^!    
+except Exception as e:
+#T=exit
+exit("^!")
