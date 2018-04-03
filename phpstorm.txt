@@ -153,7 +153,7 @@ font: consolas, size:18
 phpstorm 中可以集成很多插件，这些插件也会影响运行速度，有的插件你可能压根都没听过，更不会使用，可以取消勾选。
 
 安装常用插件
-editroconfig, codeglance
+editorconfig, codeglance
 
 phpstorm卡顿问题解决方法
 点击导航菜单：Help -> Edit Custom VM Options 
