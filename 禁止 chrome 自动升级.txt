@@ -1,0 +1,6 @@
+
+
+google目录下的GoogleUpdate.exe改名，新建空文件GoogleUpdate.exe
+删除更新相关文件夹，或改个名字
+
+https://blog.csdn.net/woaiqianzhige/article/details/78781755
