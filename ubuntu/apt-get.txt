@@ -1,9 +1,30 @@
 
+
+apt-get update				更新apt源	apt-get不能安装包的情况下执行一下apt-get update	
+dpkg-query -L rsyslog		列出包的文件
+dpkg -S /usr/bin/whereis			查看文件属于哪个包
+
+apt-cache policy iftop		显示包的安装状态和版本信息
+apt-cache show iftop		显示包的详细信息
+apt-cache search iftop		搜索包
+
+apt-cache depends iftop		显示指定软件包所依赖的软件包。
+apt-cache stats				显示当前系统所使用的数据源的统计信息,用户可以使用该命令查看数据源的相关统计信息.
+
+apt-get install nginx
+apt-get install --reinstall rsyslog		重新安装一个包
+apt-get -h
+
+apt-file list rsyslog		列出一个包的文件，包未安装的情况下也可以查看
+apt-get install apt-file	安装apt-file包
+ 
+修改apt-get更新源 修改之后要记得apt-get update
+vim /etc/apt/sources.list
+apt-get update	
+apt-get upgrade		
+
 apt-get没有search命令，用 aptitude search nginx
 apt-get不能批量安装，aptitude可以
-
-apt-get -h
-apt-get install nginx
 
 搜索包
 aptitude search nginx
@@ -13,8 +34,6 @@ apt-cache search nginx
 aptitude show nginx
 apt-cache show nginx
 
-查看文件属于哪个包
-dpkg -S /usr/bin/whereis
 
 aptitude 与 apt-get 一样，是 Debian 及其衍生系统中功能极其强大的包管理工具。与 apt-get 不同的是，aptitude 在处理依赖问题上更佳一些。
 举例来说，aptitude 在删除一个包时，会同时删除本身所依赖的包。这样，系统中不会残留无用的包，整个系统更为干净。
@@ -29,3 +48,5 @@ aptitude search string	搜索包
 aptitude show pkgname	显示包的详细信息
 aptitude clean	删除下载的包文件
 aptitude autoclean	仅删除过期的包文件
+
+

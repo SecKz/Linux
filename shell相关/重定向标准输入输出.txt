@@ -22,7 +22,7 @@
 
 # aa > w.txt			不会写入w.txt，直接输出到终端
 # aa 2>w.txt			会写入w.txt
-#pwd 2> w.txt		会清空w.txt
+# pwd 2> w.txt			会清空w.txt
 
 
 cmd < file >file2 cmd 命令以 file 文件作为 stdin，以 file2 文件作为 stdout；

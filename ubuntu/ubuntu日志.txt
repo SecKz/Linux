@@ -1,0 +1,10 @@
+
+
+la /etc/init.d
+service rsyslog status					查系统日志是否启动	
+apt-get install --reinstall rsyslog		如果syslog文件不存在，重新安装rsyslog并启动
+apt-cache policy rsyslog				查看rsyslog是否安装
+
+grep CRON /var/log/syslog		查看cron日志
+
+
