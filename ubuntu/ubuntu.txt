@@ -9,3 +9,10 @@ pip is showing error 'lsb_release -a' returned non-zero exit status 1
 lsb_release需要使用python2，查看/usr/bin/lsb_release环境是不是python2，如果不是编辑 /usr/bin/lsb_release  改为#! /usr/bin/python2.7
 
 
+buntu14.04上安装python3.6
+使用这些命令安装就行，如果没有add-apt-repository命令。先安装 apt-get install software-properties-common
+add-apt-repository ppa:jonathonf/python-3.6
+apt-get update
+apt-get install python3.6
+
+

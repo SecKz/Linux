@@ -1,7 +1,7 @@
 
 
-apt-get update				更新apt源	apt-get不能安装包的情况下执行一下apt-get update	
-dpkg-query -L rsyslog		列出包的文件
+apt-get update						更新apt源	apt-get不能安装包的情况下执行一下apt-get update	
+dpkg-query -L rsyslog				列出包的文件
 dpkg -S /usr/bin/whereis			查看文件属于哪个包
 
 apt-cache policy iftop		显示包的安装状态和版本信息
