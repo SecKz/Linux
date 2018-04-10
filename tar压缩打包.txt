@@ -1,9 +1,8 @@
 
 
-# tar -zxvf lnmp1.0.tar.gz -C /home/html		   将压缩包解压到指定目录
-
 # tar -zcvf /tmp/etc.tar.gz  /home	 					以 gzip 压缩打包
 # tar -zxvf /tmp/etc.tar.gz 	 						解压一个包到当前文件夹
+# tar -zxvf lnmp1.0.tar.gz -C /home/html		   将压缩包解压到指定目录
 
 # tar -zcvf a.tar.gz test --exclude test/00 
 # tar -tf 包名	 								查看包里有什么文件 -p 的属性是保留文件的属性

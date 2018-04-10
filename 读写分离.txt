@@ -1,0 +1,94 @@
+
+mysql读写分离基于主从复制，而主从复制又基于binlog
+
+mysql主从复制的原理：
+1、master将数据改变记录到二进制日志(binarylog)中,也即是配置文件log-bin指定的文件(这些记录叫做二进制日志事件，binary log events)
+2、slave将master的binary logevents拷贝到它的中继日志(relay log)
+3、slave重做中继日志中的事件,将改变反映它自己的数据(数据重演)
+
+主从同步是通过binlog进行的，从库有两个线程，一个负责接受binlog日志，一个负责解析日志将数据写入库中。所以主从同步一般是有一定的延时的。
+解决读写分离的方案有两种：应用层解决和中间件解决。
+
+binlog-do-db=db1						#需要记录二进制日志的数据库
+binlog-ignore-db=mysql					#不需要记录日志的数据库
+
+replicate-ignore-db=mysql				#不需要同步的库
+replicate-do-db=db1							#需要同步的数据库
+
+
+2.设置主服务器
+修改my.cnf
+binlog-do-db=zcx				
+binlog-ignore-db=mysql					
+server-id = 1
+log_bin = mybin
+
+添加用户
+grant replication slave on *.* to 'buck'@'%' identified by '12300bb';
+flush privileges;
+
+show master status;
+show binary logs;
+
+2.设置从服务器
+把要同步的数据库zcx导入slave机
+修改my.cnf  5.7才支持多线程同步
+server-id = 2
+
+stop slave;
+set global slave_parallel_type='logical_clock';
+set global slave_parallel_workers = 3;
+change master to master_host='45.63.122.222',master_user='buck',master_password='12300bb', master_port=3306, master_log_file='mybin.000004',master_log_pos=505;
+start slave;
+show slave status;
+show processlist;
+
+双机热备的概念简单说一下，就是要保持两个数据库的状态自动同步。对任何一个数据库的操作都自动应用到另外一个数据库，始终保持两个数据库数据一致。 
+这样做的好处多。 
+1. 可以做灾备，其中一个坏了可以切换到另一个。 
+2. 可以做负载均衡，可以将请求分摊到其中任何一台上，提高网站吞吐量。  对于异地热备，尤其适合灾备。
+
+
+MySQL主从复制延迟
+
+主从同步：5.6以前是单线程同步，5.6可以多库间并行同步，5.7有了多进程同步。
+最后说一下为什么需要多线程复制？因为主从之间的同步会有延时，多线程的目的是为了尽量减少这个延时时间。虽然如何优化主从是一个系统的功能，不同的场景需要不同的解决方案，但是多线程至少从基础上能减少延迟时间。
+
+
+首先明确一点，mysql的主从架构本来就应该允许这种复制延迟，如果你的业务不允许有这种情况出现，那么我想到两种方案：
+
+1，重新考虑架构
+2，继续使用这种架构，允许这种延迟的业务下读从库，不允许这种业务的情况下读写都主库
+
+试试Mysql5.7GA版本，另外加入读写分离组件：例如atlas，Mycat（延迟时间基本上是毫秒级的，并没有像官方所说毫无延迟）；
+但，如果你确保毫无延迟，
+最好就别做读写分离，可以根据实际情况进行分库分服务；
+还有就是，你业务逻辑跟着改造
+
+
+解决Mysql读写分离数据延迟
+
+由于数据延迟问题的存在，当应用程序在Master 上进行数据更新，然后又立刻需要从数据库中读取数据时，这时候如果应用程序从Slave上取数据(这也是当前Web开发的常规做法)，就可能出现读取不到期望的数据
+
+解决这个问题有多种方式，比如最简单的在所有的insert和update之后，强制sleep几秒钟。
+这是非常粗鲁的方式，对于更新操作不是很高的中小型系统，此方式基本能解决问题。 
+
+1， 分库分表的优缺点
+分表：在台服务器上，优点是易维护，类似表分区，缺点是在一台db服务器上，无法分担IO、负载集中。 
+分库：在多台服务器上，优点是分担IO、负载均衡，缺点是较不易维护、数据统计以及jion操作有些难度。
+
+
+https://buzheng.org/2017/20170222-mysql-57-slave-multi-thread-replication.html
+http://www.linuxidc.com/Linux/2017-09/146663.htm
+https://www.v2ex.com/t/336311
+
+
+
+http://www.cnblogs.com/phpstudy2015-6/p/6687480.html
+http://www.cnblogs.com/nyxd/p/5382482.html
+http://www.cnblogs.com/raphael5200/p/5893709.html
+http://www.cnblogs.com/superfat/p/5267449.html
+https://segmentfault.com/a/1190000003716617
+https://segmentfault.com/a/1190000008663001
+
+

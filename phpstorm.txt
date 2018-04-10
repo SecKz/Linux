@@ -116,8 +116,7 @@ code->Generate->PHP Doc
 
 
 Phpstorm激活
-激活时选择License server 填入http://idea.higherbros.com 点击Active即可。
-http://www.imsxm.com/jetbrains-license-server.html
+https://blog.csdn.net/lamp_yang_3533/article/details/79357864
 
 
 phpstorm的自动补充功能live template
@@ -131,8 +130,6 @@ erverything找到xml文件
 Preferences->Appearance & Behavior ->System Settings 
 去掉 Reopen last project on startup.
 
-
-安装EditorConfig
 
 phpstorm+xdebug断点调试php
 
@@ -162,3 +159,5 @@ phpstorm卡顿问题解决方法
 -Dawt.usesystemAAFontSettings=lcd 
 -Dawt.java2d.opengl=true 
 
+解决phpstorm重复index
+Go to File -> Invalidate Caches and Restart

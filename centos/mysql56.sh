@@ -11,6 +11,7 @@ if [ $? != 0 ]; then
 	if [ $? = 0 ]; then
 		mysql_root_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c32)
 		echo $mysql_root_password > /root/centos/myroot_pwd.txt
+		/root/centos/mysql.sh
 		service mysqld start;
 		\cp /etc/my.cnf /root
 		mysql -e "drop user 'root'@'::1'; drop user 'root'@'127.0.0.1'; drop user ''@'localhost';drop user ''@'%';";

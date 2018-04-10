@@ -18,13 +18,10 @@ APC：Alternative PHP Cache（APC）是 PHP 的一个免费公开的优化代码
 # yun search apc
 # yum install php-pecl-apc
 
-
 php5.3已经不再支持zendOptimizer，所以不能安装．可以用zend-guard取代
 # yum search zend
 # yum info php-zend-guard-loader.i386
 # yum install php-zend-guard-loader.i386
-
-
 
 Zend Guard Loader 是加速php的，能提高30%—40%速度。
 PHP 5.3.X 开始 Zend Optimizer 正式被 Zend Guard Loader 取代。
