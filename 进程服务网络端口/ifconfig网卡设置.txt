@@ -31,7 +31,7 @@ fconfig命令配置的网卡信息，在网卡重启后机器重启后，配置�
 linux常规网络配置文件
 1. /etc/hosts　　　　　　主机文件
 2. /etc/resolv.conf  　　  DNS文件
-3. etc/sysconfig/network-scripts/ifcfg-eth0　　网卡配置文件
+3. /etc/sysconfig/network-scripts/ifcfg-eth0　　网卡配置文件
 
 BOOTPROTO=static 		配置静态IP
 BOOTPROTO=dhcp		表明是自动ip地址分配。
