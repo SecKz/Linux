@@ -1,8 +1,2 @@
 
 
-给以下文件重命名，并新建空文件替代
-GoogleUpdateSetup.exe
-GoogleUpdate.exe
-
-
-https://blog.csdn.net/woaiqianzhige/article/details/78781755
