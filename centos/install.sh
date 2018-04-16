@@ -25,7 +25,7 @@ if [ "$1" = 'un' ]; then
 		service redis stop;
 		service memcached stop;
 		yum remove "php*" mysql "httpd*" pure-ftpd nginx "redis*" "memcache*"
-		rm -rf /var/log/mysqld.log /var/log/mysqld.log.rpmsave /etc/php.ini.rpmsave /etc/my.cnf.rpmsave
+		rm -rf /var/log/mysqld.log /var/log/mysqld.log.rpmsave /etc/my.cnf.rpmsave /etc/php.ini.rpmsave
 		rm -rf /etc/nginx /etc/pure-ftpd
 		cp -a /var/lib/mysql /root
 	fi
@@ -260,31 +260,7 @@ fi
 ##################################### mysql
 
 if [ "$mysqlyn" = 'y' -o "$mysqlyn" = 'Y' ]; then
-	rpm -q mysql-community-server > /dev/null
-	if [ $? != 0 ]; then
-		yum install -y mysql-community-server
-		if [ $? = 0 ]; then
-			mysql_root_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c32)
-			red "mysql root密码 $mysql_root_password"
-			echo $mysql_root_password > /root/centos/mypwd.txt
-			/root/centos/mysql.sh
-			service mysqld start;
-
-			mysql -uroot << EOF
-			flush privileges;
-			update mysql.user set authentication_string=password('$mysql_root_password'), password_expired = 'N', password_last_changed = now() where user='root';
-EOF
-
-			sed -i "s/^pwd=.*/pwd=${mysql_root_password}/" "/root/centos/dber.sh"
-			sed -i "s/^pwd=.*/pwd=${mysql_root_password}/" "/root/centos/addsite.sh"
-			sed -i "s/^define('DBPW'.*/define('DBPW', '${mysql_root_password}');/" "/root/centos/expuser.php"
-			ln -vsf /root/centos/dber.sh /sbin
-			sed -i 's/^skip-grant-tables/#skip-grant-tables/' /etc/my.cnf
-			rm -f /var/lock/subsys/mysqld
-			service mysqld restart
-			chkconfig mysqld on;
-		fi
-	fi
+	/root/centos/mysql57.sh
 fi
 
 ##################################### pure-ftpd
