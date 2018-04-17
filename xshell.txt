@@ -21,11 +21,12 @@ Linux系统服务器的登录方式最常见的无非通过ssh进行用户名、
 有两个方法生成密钥对，步骤简单说下并分别做步骤操作记录：
 方案一：
 1，登录Linux服务器通过ssh-keygen生成密钥
-2，将生成的公钥追加到~/.ssh/authorized_keys
+2，将生成的公钥追加到~/.ssh/authorized_keys			(要登录的服务器的~/.ssh/authorized_keys)
 3，将私钥下载到本地并导入到客户端软件，进行密钥登录。
 方案二：
 1，通过Xshell生成密钥对。
 2，将生成的公钥追加到~/.ssh/authorized_keys
 3，客户端选中生成的key（私钥），进行密钥登录。
+
 http://www.21yunwei.com/archives/5659
 
