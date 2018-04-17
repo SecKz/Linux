@@ -2,3 +2,20 @@
 Xshell数字小键盘乱码不能使用的解决办法
 1、打开Xshell，点击“属性”，打开对话框。
 2、在类别中选择“VT模式”，然后在右侧的选项中，选择：初始数字键盘模式中的“设置为普通”。
+
+xshell 使用pem文件登录
+新建会话属性-->连接-->用户身份验证-->方法（Public Key）-->浏览（选择pem文件）
+http://www.aiezu.com/system/linux/xshell_ssh_public-key_login.html
+
+使用xshell中的工具菜单下的“新建用户密钥生成向导”生成密钥
+然后选择相应的密钥类型和长度，建议使用RSA，长度选择2048位或更多位的。
+下一步”，输入一个好区分的密钥名称，给用户密钥加密的密码我选择不输入，空白，直接点击“完成”，这样就生成了一个私钥。
+你可以在 工具 菜单中的 “用户密钥管理者”当中查看你刚才生成的密钥的私钥，查看对应私钥的属性还能查看到它的公钥。
+
+
+使用XShell导入KEY的时候报“Failed to import the user key!”错误
+这个错误表明导入的private key文件不是XShell所支持的，有三种可能：
+
+将Public Key当成Private Key导入。
+使用Putty的ppk文件，请使用PUTTY的puttygen.exe转换成OPENSSH格式的
+Key文件有多种格式，目前看来XShell支持SSH1-RSA, OpenSSH2-RSA, OpenSSH2-DSA, SSH.COM, NetSarang User Key

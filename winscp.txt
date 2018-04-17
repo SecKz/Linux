@@ -1,0 +1,10 @@
+
+
+ppk和pem文件互转
+
+winscp进行文件传输，我们通过privatekey的方式进行认证。
+winscp只能识别ppk格式(putty格式)的privatekey文件，如果我们有.pem格式的privatekey，我们需要进行如下的转换。
+从PEM格式转成PPK格式才能在winscp上使用，PuTTY自带转换工具PuTTYgen，安装PuTTY后在开始菜单很容易找到PuTTYgen工具，启动它。
+
+xshell 使用pem文件登录
+新建会话属性-->连接-->用户身份验证-->方法（Public Key）-->浏览（选择pem文件）

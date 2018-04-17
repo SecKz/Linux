@@ -42,6 +42,8 @@ elif [ $# = 1 -a "$1" = 1 ]; then
 	mysql $hup -e 'show databases;'
 elif [ $# = 1 -a "$1" = 'u'  ]; then								#查看数据库用户
 	mysql $hup -e "select user,host,$pwzd from mysql.user;"
+elif [ $# = 2 -a "$1" = 'q'  ]; then								# 执行sql语句
+	mysql $hup -e "$2"
 elif [ $# = 2 -a "$1" = 't'  ]; then								#查看数据库表
 	mysql $hup -e "use $2;show tables;"
 elif [ $# = 2 -a "$1" = e ]; then					#导出数据库
@@ -59,6 +61,8 @@ elif [ "$1" = p ]; then								#查询进程
 	mysql $hup -e "show processlist\G;"
 elif [ "$1" = pp ]; then								#查询进程
 	mysql $hup -e "show processlist;"
+elif [ "$1" = pf ]; then
+	mysql $hup -e "show full processlist;"
 elif [ $# = 1 ]; then
 	head -10 $0 | tail -n +3 | grep '^#'
 fi

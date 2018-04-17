@@ -130,6 +130,32 @@ erverything找到xml文件
 Preferences->Appearance & Behavior ->System Settings 
 去掉 Reopen last project on startup.
 
+phpstrom font配置
+edit -> font 
+font: consolas, size:18
+
+4. 取消勾选不常用的插件
+phpstorm 中可以集成很多插件，这些插件也会影响运行速度，有的插件你可能压根都没听过，更不会使用，可以取消勾选。
+
+安装常用插件
+editorconfig, codeglance
+
+解决phpstorm重复index
+Go to File -> Invalidate Caches and Restart
+
+对于修改过的文件显示'*'号  editor/general/editor tabs
+勾选 Mark modified tabs with asterisk
+
+取消自动保存
+进入 File -> Settings ->Appearance & Behavior -> System Settings，取消中间那两选项的勾选，即 Save ……  两项：
+
+phpstorm卡顿问题解决方法
+点击导航菜单：Help -> Edit Custom VM Options 
+如果是第一次点击，会提示是否新建配置文件，点击“是”
+添加以下两行代码：
+-Dawt.usesystemAAFontSettings=lcd 
+-Dawt.java2d.opengl=true 
+
 
 phpstorm+xdebug断点调试php
 
@@ -142,22 +168,3 @@ phpstorm+xdebug断点调试php
 https://www.cnblogs.com/shiwaitaoyuan/p/6404604.html
 http://blog.csdn.net/wzj0808/article/details/55223095
 
-phpstrom font配置
-edit -> font 
-font: consolas, size:18
-
-4. 取消勾选不常用的插件
-phpstorm 中可以集成很多插件，这些插件也会影响运行速度，有的插件你可能压根都没听过，更不会使用，可以取消勾选。
-
-安装常用插件
-editorconfig, codeglance
-
-phpstorm卡顿问题解决方法
-点击导航菜单：Help -> Edit Custom VM Options 
-如果是第一次点击，会提示是否新建配置文件，点击“是”
-添加以下两行代码：
--Dawt.usesystemAAFontSettings=lcd 
--Dawt.java2d.opengl=true 
-
-解决phpstorm重复index
-Go to File -> Invalidate Caches and Restart
