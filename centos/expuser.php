@@ -18,6 +18,8 @@ function DB()
 
 $link = DB();
 
+$pwzd="authentication_string"
+
 $r = mysqli_query($link, "select user,host,password from user") or die(mysqli_error());
 while($row = mysqli_fetch_assoc($r)) {
 	extract($row);

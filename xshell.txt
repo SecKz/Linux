@@ -13,9 +13,19 @@ http://www.aiezu.com/system/linux/xshell_ssh_public-key_login.html
 你可以在 工具 菜单中的 “用户密钥管理者”当中查看你刚才生成的密钥的私钥，查看对应私钥的属性还能查看到它的公钥。
 
 
-使用XShell导入KEY的时候报“Failed to import the user key!”错误
-这个错误表明导入的private key文件不是XShell所支持的，有三种可能：
+Linux系统服务器的登录方式最常见的无非通过ssh进行用户名、密码登录或者采用密钥登录
+本文简单记录下通过Xshell使用密钥对登录Linux服务器。
 
-将Public Key当成Private Key导入。
-使用Putty的ppk文件，请使用PUTTY的puttygen.exe转换成OPENSSH格式的
-Key文件有多种格式，目前看来XShell支持SSH1-RSA, OpenSSH2-RSA, OpenSSH2-DSA, SSH.COM, NetSarang User Key
+平台：Centos 6.8_x86_64
+
+有两个方法生成密钥对，步骤简单说下并分别做步骤操作记录：
+方案一：
+1，登录Linux服务器通过ssh-keygen生成密钥
+2，将生成的公钥追加到~/.ssh/authorized_keys
+3，将私钥下载到本地并导入到客户端软件，进行密钥登录。
+方案二：
+1，通过Xshell生成密钥对。
+2，将生成的公钥追加到~/.ssh/authorized_keys
+3，客户端选中生成的key（私钥），进行密钥登录。
+http://www.21yunwei.com/archives/5659
+
