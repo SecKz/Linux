@@ -1,7 +1,7 @@
 
 
 http://localhost:94/index.php?r=site/index		yii的路由访问方式
-http://localhost:94/index.php?r=gii			gii的访问路径
+http://localhost:94/index.php?r=gii			gii的访问路径，开启了url地址美化是 http://localhost:94/index.php/gii
 http://localhost:94/index.php/debug			debug条的访问路径
 
 给控制器分类可以使用模块modules，也可以使用二级目录
@@ -56,4 +56,7 @@ Yii2 在视图中：获取模块名、控制器名、方法名
 控制器名 $this->context->id
 方法名 $this->context->action->id
 
+Yii2.0高级版开发指南（推荐）
+http://www.yii-china.com/doc/detail/1.html?postid=359
+http://www.yii-china.com/site/index.html
 

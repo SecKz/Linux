@@ -1,5 +1,4 @@
-linux 踢出在线用户
-# pkill -kill -t pts/2			pts/2可通过w查看
+
 
 # w							w命令默认显示的信息比who命令详细
 # who
@@ -8,11 +7,44 @@ linux 踢出在线用户
 # who -q			查看所以登录用户并统计数量		
 # who -a			查看系统启动时间，运行级别
 
+linux 踢出在线用户
+# pkill -kill -t pts/2			pts/2可通过w查看
 
 Linux是一个多用户的用户系统，在同一时刻可以登录多个不同的用户。在登录到系统后可以通过命令查看当前的登录用户名
 
 在Linux下，系统启动后有一个运行级别的概念，不同的运行级别可以登录到不同的环境，同时在启动的过程中运行不同的启动脚本。
- 用户登录时默认的运行级别通过配置文件配置， 配置文件为：/etc/inittab
+用户登录时默认的运行级别通过配置文件配置， 配置文件为：/etc/inittab
 
 # runlevel			查看当前运行级别
 # cat /etc/inittab
+
+安装htop查看cpu使用情况
+通过htop可查看到查看逻辑CPU的个数
+
+通过系统命令"w"查看当前load average情况
+平均负载(load average)是指系统的运行队列的平均利用率，也可以认为是可运行进程的平均数。
+
+第一位0.31：表示最近1分钟平均负载
+第二位0.30：表示最近5分钟平均负载
+第三位0.31：表示最近15分钟平均负载
+
+注：linux系统是5秒钟进行一次Load采样
+
+0.00-1.00 之间的数字表示此时路况非常良好，没有拥堵。
+1.00 表示系统已经没有多余的资源了，管理员需要进行优化。
+1.00-*** 表示路况不太好了，如果到达2.00表示有桥上车辆一倍数目的车辆正在等待。这种情况你必须进行检查了。
+
+多核CPU的话，满负荷状态的数字为 "1.00 * CPU核数"，即双核CPU为2.00，四核CPU为4.00。 
+
+grep 'model name' /proc/cpuinfo | wc -l						查看逻辑CPU的个数
+
+查看物理CPU信息
+cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l	查看物理CPU个数
+cat /proc/cpuinfo| grep "cpu cores"| uniq					查看每个物理CPU中core的个数(即核数)
+cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c		查看CPU信息（型号）
+
+CPU总核数 = 物理CPU个数 * 每颗物理CPU的核数 
+总逻辑CPU数 = 物理CPU个数 * 每颗物理CPU的核数 * 超线程数
+
+https://www.cnblogs.com/bugutian/p/6138880.html
+

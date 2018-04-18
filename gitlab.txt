@@ -1,0 +1,37 @@
+
+GitLab是利用 Ruby on Rails 一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。它拥有与Github类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。团队成员可以利用内置的简单聊天程序(Wall)进行交流。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。
+
+二、安装
+
+1）apt-get方式
+
+curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+sudo apt-get install gitlab-ce
+sudo gitlab-ctl reconfigure
+
+2 yum安装
+rpm -ivh gitlab-ce-7.10.0~omnibus.2-1.x86_64.rpm 
+
+修改 自带的nginx配置，以及邮件提醒配置
+vim /var/opt/gitlab/nginx/conf/gitlab-http.conf
+vim /etc/gitlab/gitlab.rb
+
+保存配置
+sudo gitlab-ctl reconfigure
+
+启动运行，以及查看状态
+gitlab-ctl start/stop/restart		启动Gitlab所有组件
+gitlab-ctl status
+
+gitlab-rake gitlab:check			检查gitlab的配置
+gitlab-rake -T # 列出所有的job
+
+gitlab-rake gitlab:setup #在db中创建新内容并设置管理员账号
+gitlab-rake gitlab:backup:create
+gitlab-rake gitlab:backup:restore
+
+head -1 /opt/gitlab/version-manifest.txt		查看安装gitlab的版本
+
+https://segmentfault.com/a/1190000000345686
+https://my.oschina.net/jdragon/blog/491045
+
