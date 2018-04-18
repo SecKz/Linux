@@ -1,13 +1,7 @@
 #!/bin/sh
-echo "check system info in lunux/ubuntu"
-##
-# Description: Executable et fichier de config
-# Copyright(c) 2013-2014 Ismail Elyaakouby
-#
-# Web site : http://www.tutorials-space.com
-##
 
-#!/bin/bash
+echo "check system info in lunux/ubuntu"
+echo
 
 echo "============= CPUs ==========================="
 
@@ -27,14 +21,11 @@ echo " "
 
 echo "============= CPUs Width   ==================="
 LM=`cat /proc/cpuinfo | grep ' lm ' | wc -l`
-if [[ $LM -gt 0 ]] ; then
-echo "64 Bits"
-else echo "32 Bits"
+if [ $LM -gt 0 ] ; then
+	echo "64 Bits"
+else
+	echo "32 Bits"
 fi
-#(long mode) 64 bits
-#(protected mode) 32 bits
-#(real mode) 16 bits
-
 
 echo "============= Memory =========================="
 KiB=`grep 'MemTotal' /proc/meminfo | tr -s ' ' | cut -d' ' -f2`
