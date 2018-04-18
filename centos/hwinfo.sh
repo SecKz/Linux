@@ -2,59 +2,41 @@
 echo "check system info in lunux/ubuntu"
 ##
 # Description: Executable et fichier de config
-#
-# Author: Ismail Elyaakouby <elyakouby@gmail.com> / moujan
-# Contributor: none
-#
-#
 # Copyright(c) 2013-2014 Ismail Elyaakouby
 #
 # Web site : http://www.tutorials-space.com
 ##
+
 #!/bin/bash
-echo -e "============= Hostname =======================\n"
-hostname
+
+echo "============= CPUs ==========================="
+
+# CPU总核数 = 物理CPU个数 * 每颗物理CPU的核数
+# 总逻辑CPU数 = 物理CPU个数 * 每颗物理CPU的核数 * 超线程数
+
+echo "逻辑CPU的个数"
+cat /proc/cpuinfo| grep "processor"| wc -l
+
+echo "物理CPU个数"
+cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l
+
+echo "每个物理CPU中core的个数(即核数)"
+cat /proc/cpuinfo| grep "cpu cores"| uniq
+
 echo " "
 
-echo -e "============= Serial Number ==================\n"
-dmidecode -s system-serial-number
-echo " "
-echo -e "============= carte graphic ==================\n"
- lspci|grep VGA
-echo " "
-
-
-echo -e "============= Product Number =================\n"
-dmidecode -t system | grep 'SKU Number' | sed -n 1p | cut -c14-
-echo " "
-
-echo -e "============= Manufacturer ===================\n"
-dmidecode -s system-manufacturer
-echo " "
-
-echo -e "============= Product Name ===================\n"
-dmidecode -s system-product-name
-echo " "
-
-echo -e "============= CPUs ===========================\n"
-grep 'model name' /proc/cpuinfo | tr -s ' ' | cut -c14-
-echo " "
-
-echo -e "============= CPUs Width   ===================\n"
+echo "============= CPUs Width   ==================="
 LM=`cat /proc/cpuinfo | grep ' lm ' | wc -l`
 if [[ $LM -gt 0 ]] ; then
-echo -e "64 Bits\n"
-else echo -e "32 Bits\n"
+echo "64 Bits"
+else echo "32 Bits"
 fi
 #(long mode) 64 bits
 #(protected mode) 32 bits
 #(real mode) 16 bits
 
-#echo -e "============= CPUs Temp =============\n"
-#COUNTER=`sensors|grep temp | tail -n 1 |  cut -d':' -f1,3 | sed -e "s/temp//g"`
-#COUNTER=`sensors|grep temp|tail -n 1|awk '{print $2}'|cut -c2-5`
 
-echo -e "============= Memory ==========================\n"
+echo "============= Memory =========================="
 KiB=`grep 'MemTotal' /proc/meminfo | tr -s ' ' | cut -d' ' -f2`
 MiB=`expr $KiB / 1024`
 #note various mem not accounted for, so round to appropriate size
@@ -64,49 +46,72 @@ round=32
 echo "`expr \( \( $MiB / $round \) + 1 \) \* $round` MiB"
 echo " "
 
-echo -e "============= Memory Used =====================\n"
+echo "============= Memory Used ====================="
 KiB=`free | sed -n 3p | awk '{print $3}'`
 MiB=`expr $KiB / 1024`
 round=32
 echo "`expr \( \( $MiB / $round \) + 1 \) \* $round` MiB"
 echo " "
 
-echo -e "============= Mem Max Capacity ================\n"
+echo "============= Mem Max Capacity ================"
 dmidecode -t Memory | grep 'Maximum Capacity' | sed -n 1p | awk '{print $3,$4}'
 echo " "
 
-echo -e "============= Hard Disk =======================\n"
-fdisk -l | grep 'Dis' | cut -d',' -f1,3
-echo " "
+#echo "============= Hard Disk ======================="
+#fdisk -l | grep 'Dis' | cut -d',' -f1,3
+#echo " "
 
-echo -e "============= Hard Disk =======================\n"
+echo "============= Hard Disk ======================="
 df -h
 echo " "
 
-echo -e "============= Partitions Space ================\n"
+echo "============= Partitions Space ================"
 df -h | grep '/dev/'
 echo " "
 
-echo -e "============= Operating System ================\n"
+echo "============= Hostname ======================="
+hostname
+echo " "
+
+echo "============= Operating System ================"
 cat /etc/issue.net
 echo " "
 
-echo -e "============= Linux Kernel ====================\n"
+echo "============= Linux Kernel ===================="
 uname -mrs
 echo " "
 
-echo -e "============= UpTime ==========================\n"
+echo "============= UpTime =========================="
 uptime | awk '{ print $3,$4,$5}' | sed -e "s/,//g"
 echo " "
 
-echo -e "============= IP Route ========================\n"
+echo "============= IP Route ========================"
 ip route | grep 'via'
 echo " "
 
-echo -e "============= IP Address ======================\n"
+echo "============= IP Address ======================"
 ifconfig | grep 'inet ad' | awk '{print $2}' | cut -d':' -f2 | sed /127.0.0.1/d
 echo " "
 
-echo -e "============= MAC Address ======================\n"
+echo "============= MAC Address ======================"
 ifconfig | grep 'HWaddr' | sed -e "s/Link encap:Ethernet  HWaddr//g"
+echo " "
+
+echo "============= Serial Number =================="
+dmidecode -s system-serial-number
+echo " "
+echo "============= carte graphic =================="
+ lspci|grep VGA
+echo " "
+
+echo "============= Product Number ================="
+dmidecode -t system | grep 'SKU Number' | sed -n 1p | cut -c14-
+echo " "
+
+echo "============= Manufacturer ==================="
+dmidecode -s system-manufacturer
+echo " "
+
+echo "============= Product Name ==================="
+dmidecode -s system-product-name
 echo " "

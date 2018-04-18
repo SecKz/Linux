@@ -36,7 +36,7 @@ Linux是一个多用户的用户系统，在同一时刻可以登录多个不同
 
 多核CPU的话，满负荷状态的数字为 "1.00 * CPU核数"，即双核CPU为2.00，四核CPU为4.00。 
 
-grep 'model name' /proc/cpuinfo | wc -l						查看逻辑CPU的个数
+cat /proc/cpuinfo| grep "processor"| wc -l				查看逻辑CPU的个数
 
 查看物理CPU信息
 cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l	查看物理CPU个数
