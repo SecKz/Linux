@@ -42,8 +42,8 @@
 > tree /f					树形显示当前文件目录结构
 
 > chcp		
-> chcp 936					936表示设为（GB2312）编码 字体选择点阵字体 中文显示为乱码时 
-> chcp 65001				UTF8代码页的编号：65001 右键-字体选择Lucida Console 确定->“只应用到当前窗口”
+> chcp 936					936表示GB2312编码 字体选择点阵字体
+> chcp 65001				UTF8， 右键-字体选择Console
 
 cmd中出现The system cannot write to the specified device
 修改注册表， HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe，找到CodePage将其值更改为936(十进制),936代表简体中文
