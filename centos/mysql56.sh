@@ -1,5 +1,5 @@
 #!/bin/sh
-# service mysqld stop; yum remove mysql mysql-community-common; rm -rf /var/lib/mysql; rm -rf /etc/my.cnf;
+# service mysqld stop; rm -rf /var/lib/mysql; rm -rf /etc/my.cnf; yum remove mysql mysql-community-common;
 # sed -i 's/^skip-grant-tables/#skip-grant-tables/' /etc/my.cnf
 
 . "/root/centos/fun.sh"
@@ -26,6 +26,7 @@ if [ $? != 0 ]; then
 		[ -f '/root/centos/mysql.sh' ] && /root/centos/mysql.sh
 		ln -vsf /root/centos/dber.sh /sbin
 		rm -f /var/lock/subsys/mysqld
+		sed -i 's/^skip-grant-tables/#skip-grant-tables/' /etc/my.cnf
 		service mysqld restart
 		chkconfig mysqld on;
 	fi
