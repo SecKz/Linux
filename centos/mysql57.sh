@@ -1,5 +1,5 @@
 #!/bin/sh
-# service mysqld stop; rm -rf /var/lib/mysql; rm -rf /etc/my.cnf;  yum -y remove mysql;
+# service mysqld stop; yum remove mysql mysql-community-common; rm -rf /var/lib/mysql; rm -rf /etc/my.cnf;
 # sed -i 's/^skip-grant-tables/#skip-grant-tables/' /etc/my.cnf
 # yum install mysql-community-server  --enablerepo="mysql57-community"
 
