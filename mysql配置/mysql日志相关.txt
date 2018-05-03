@@ -1,10 +1,10 @@
 
 使用mysql自带命令mysqldumpslow查看慢查询
 
-# mysqldumpslow -s c -t 20 host-slow.log
-# mysqldumpslow -s r -t 20 host-slow.log
+# mysqldumpslow -s c -t 20 /var/log/mysqlslow.log
+# mysqldumpslow -s r -t 20 /var/log/mysqlslow.log
 上述命令可以看出访问次数最多的20个sql语句和返回记录集最多的20个sql。
-# mysqldumpslow -t 10 -s t -g 'left join' host-slow.log			这个是按照时间返回前10条里面含有左连接的sql语句。 
+# mysqldumpslow -t 10 -s t -g 'left join' /var/log/mysqlslow.log			这个是按照时间返回前10条里面含有左连接的sql语句。 
 
 -s ORDER what to sort by (t, at, l, al, r, ar etc), ‘at’ is default
 -t NUM just show the top n queries
