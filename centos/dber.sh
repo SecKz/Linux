@@ -13,6 +13,7 @@
 
 # 添加root用户和修改密码
 # grant all privileges on *.* to root@'%' identified by '123456' with grant option; flush privileges;
+# update mysql.user set authentication_string=password('123456') where User='root';flush privileges;
 # update mysql.user set password=password('123456') where User='root';
 
 time=`date +%Y%m%d`

@@ -1,0 +1,12 @@
+
+能够项github一样的创建仓库做团队协助。 
+对比了几个git-server。 gitlab gogs gitblit这几个工具。 
+gogs最适合。国人开发功能齐全。最关键的是跨平台。github上开源。golang编写。
+
+https://www.cnblogs.com/phpisbest/p/7000255.html
+https://blog.csdn.net/blogsun/article/details/54895589
+
+Git服务器Gogs简易安装-Windows环境
+https://www.cnblogs.com/configure/p/7878501.html
+
+

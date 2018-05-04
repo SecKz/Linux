@@ -1,11 +1,12 @@
 
+show processlist发现sleep进程过多的原因
+sleep state means that MySQL process has done with its query, but the client-side did not yet exit. Many web applications don't clean up their connections afterwards, which leads to sleeping MySQL processes. Don't worry if there are only handful of them; MySQL will clean up those after a configurable timeout period (wait_timeout).
 
 show processlist时解决sleep进程过多的办法
+
 1 减少/etc/my.cnf的wait_timeout为30
 2 程序执行完毕，应该显式调用mysql_close
 3 查看information_schema 中表PROCESSLIST记录 SELECT * FROM information_schema.`PROCESSLIST` t WHERE t.`COMMAND` NOT IN 'Sleep';
-
-http://blog.sina.com.cn/s/blog_78ecbe330101332k.html
 
 
 程序中报错： MySQL server has gone away 是什么意思？ 如何避免？
