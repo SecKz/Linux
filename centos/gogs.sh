@@ -13,7 +13,7 @@ id git > /dev/null 2>&1
 if [ $? != 0 ]; then
 	echo "添加git用户"
 	useradd git
-#	rm -f /home/git/.bash*
+	rm -f /home/git/.bash*
 fi
 
 cd /home/git

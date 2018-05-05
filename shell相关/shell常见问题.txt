@@ -1,14 +1,5 @@
 
 
-# mem
--bash: /root/bin/mem: /bin/sh^M: bad interpreter: No such file or directory
- 
-这个是由系统编码所引起的错误，有些在WINDOWS系统中编辑的文件，上传到CENTOS中运行时会出现上述错误提示，解决方法：
- 
-# vi mem
-:set ff=unix
-:wq
-
 Linux下执行.sh脚本错误：bin/sh^M: bad interpreter: No such file or directory
 原因是.sh脚本在Windows系统下用记事本文件编写的。不同系统的编码格式引起的。
 转行文件的编码格式：
