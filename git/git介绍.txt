@@ -3,14 +3,16 @@
 工作区就是.git文件夹所在的目录
 master是分支名, orgin/master指远程仓库origin的master分支
 
-# git init															创建一个版本库
+创建一个版本库
+# git init															
 # git remote add origin git@github.com:ericdd/python.git		把一个已有的本地仓库关联到GitHub仓库   
 # git push -u origin master										把本地仓库的内容推送到上面关联的GitHub仓库
-# git remote rm origin										 	取消本地仓库与GitHub仓库的关联   
+# ssh -T -p 443 git@ssh.github.com								To test if SSH over the HTTPS port is possible	
 
+取消本地仓库与GitHub仓库的关联
 # git remote show origin					显示远程信息
 # git remote -v							要查看远程库的详细信息
-# git remote rm 远程仓库名称				取消本地仓库与GitHub仓库的关联
+# git remote rm origin				 git remote rm 远程仓库名称				
 
 不一定必须在空目录下创建Git仓库，选择一个已经有东西的目录也是可以的。
 git init创建版本库 当前目录下多了一个.git的目录，这个目录是Git来跟踪管理版本库的

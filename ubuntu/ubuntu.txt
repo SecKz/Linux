@@ -15,4 +15,8 @@ add-apt-repository ppa:jonathonf/python-3.6
 apt-get update
 apt-get install python3.6
 
+ubuntu的iptables没有配置文件，配置规则都是存在内存中
+iptables-save > /etc/iptables.conf		# 导出规则到文件
+iptables-restore < /etc/iptables.conf	# 导入规则
+
 
