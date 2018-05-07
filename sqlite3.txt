@@ -1,0 +1,9 @@
+
+
+# sqlite3 --version
+# sqlite3				查看sqlite是否安装
+> .databases			列出数据库的名称及其所依附的文件
+
+http://www.runoob.com/sqlite/sqlite-commands.html
+
+

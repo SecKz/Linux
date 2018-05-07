@@ -187,7 +187,6 @@ if [ -f '/etc/sysconfig/iptables' -a ! -e /root/iptables ]; then
 	mv /etc/sysconfig/iptables /root/iptables
 	mv /root/centos/iptables.txt /etc/sysconfig/iptables
 	sed -i "s/tcp --dport 22 -j ACCEPT/tcp --dport $sshport -j ACCEPT/" /etc/sysconfig/iptables;
-
 	service iptables restart
 	\cp /etc/passwd /root
 	\cp /etc/fstab	/root
