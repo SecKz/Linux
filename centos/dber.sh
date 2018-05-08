@@ -15,6 +15,7 @@
 # grant all privileges on *.* to root@'%' identified by '123456' with grant option; flush privileges;
 # update mysql.user set authentication_string=password('123456') where User='root';flush privileges;
 # update mysql.user set password=password('123456') where User='root';
+# drop user user@localhost;flush privileges;
 
 time=`date +%Y%m%d`
 dir=/root/backdb/							#备份目录
@@ -43,6 +44,8 @@ elif [ $# = 1 -a "$1" = 1 ]; then
 	mysql $hup -e 'show databases;'
 elif [ $# = 1 -a "$1" = 'u'  ]; then								#查看数据库用户
 	mysql $hup -e "select user,host,$pwzd from mysql.user;"
+elif [ $# = 3 -a "$1" = 'host' ]; then								#   更新root的host dber.sh host localhsot %
+	mysql $hup -e "update mysql.user set host='$3' where User='root' and host='$2' limit 1;flush privileges;"
 elif [ $# = 2 -a "$1" = 'q'  ]; then								# 执行sql语句
 	mysql $hup -e "$2"
 elif [ $# = 2 -a "$1" = 't'  ]; then								#查看数据库表

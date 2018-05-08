@@ -9,10 +9,10 @@ master是分支名, orgin/master指远程仓库origin的master分支
 # git push -u origin master										把本地仓库的内容推送到上面关联的GitHub仓库
 # ssh -T -p 443 git@ssh.github.com								To test if SSH over the HTTPS port is possible	
 
-取消本地仓库与GitHub仓库的关联
+取消本地仓库与远程仓库的关联
 # git remote show origin					显示远程信息
 # git remote -v							要查看远程库的详细信息
-# git remote rm origin				 git remote rm 远程仓库名称				
+# git remote rm origin					取消本地仓库与远程仓库的关联  git remote rm 远程仓库名称				
 
 不一定必须在空目录下创建Git仓库，选择一个已经有东西的目录也是可以的。
 git init创建版本库 当前目录下多了一个.git的目录，这个目录是Git来跟踪管理版本库的
@@ -78,7 +78,11 @@ git fetch：相当于是从远程获取最新版本到本地，不会自动merge
 git pull：相当于是从远程获取最新版本并merge到本地
 			
 pull
-git fetch origin
+
+git pull <远程主机名> <远程分支名>:<本地分支名> 
+git pull origin wy:wy			拉取远程的wy分支到本地wy分支： 
+git pull origin aa				如果远程分支是与当前分支合并，则冒号后面的部分可以省略。
+
 git pull origin master								抓取远程仓库所有分支更新并合并到本地  git pull = git fetch + git merge
 git fetch origin master 								抓取远程仓库更新
 git merge origin/master 								 将远程主分支合并到本地当前分支
@@ -101,6 +105,7 @@ git push origin test:b1         提交本地test分支作为远程的b1
 git branch -d name     	  			删除分支
 git push -d origin feat  		删除远程分支feat
 
+	
 git push [远程repo] [本地分支]:[远程分支]，如果省略 [本地分支]，那就等于是在说“在这里提取空白然后把它变成[远程分支]”。
 
 

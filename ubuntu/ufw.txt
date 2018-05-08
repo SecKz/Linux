@@ -1,0 +1,5 @@
+
+apt-get install python-ufw
+apt-get install ufw
+ufw status
+

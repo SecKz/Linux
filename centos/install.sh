@@ -163,6 +163,8 @@ if [ "${version}" -gt 6 -a ! -e /root/iptables ]; then
 	systemctl enable iptables.service
 fi
 
+curl ip.cn
+
 IP=`curl -s ipv4.icanhazip.com`
 [ -z "$IP" ] && IP=$(ifconfig | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
 mysql_root_password=$(egrep '^pwd=.+' /root/centos/dber.sh | cut -d= -f2)
