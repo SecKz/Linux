@@ -15,3 +15,10 @@ r/s 和 w/s 分别是每秒的读操作和写操作，而rKB/s 和wKB/s 列以�
 -k某些使用block为单位的列强制使用Kilobytes为单位；
 1 10表示，数据显示每隔1秒刷新一次，共显示10次。
 
+
+测试linux下磁盘的读写速率 
+
+# yum install hdparm
+# hdparm -t /dev/sda		# 通过 df -h 查看硬盘
+
+

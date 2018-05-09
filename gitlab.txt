@@ -8,14 +8,22 @@ gitlab-ctl status
 
 gitlab-ctl reconfigure				重启gitlab使配置生效
 gitlab-rake gitlab:check			检查gitlab的配置
-gitlab-rake -T						# 列出所有的job
+gitlab-rake -T						列出所有的job
 
-gitlab-rake gitlab:setup #在db中创建新内容并设置管理员账号
+
+删除gitlab
+gitlab-ctl stop
+gitlab-ctl uninstall	
+gitlab-ctl cleanse
+gitlab-ctl remove-accounts
+dpkg -P gitlab-ce
+find / -name gitlab|xargs rm -rf					
+
+gitlab-rake gitlab:setup				#在db中创建新内容并设置管理员账号
 gitlab-rake gitlab:backup:create
 gitlab-rake gitlab:backup:restore
 
 head -1 /opt/gitlab/version-manifest.txt		查看安装gitlab的版本
-
 
 
 gitlab配置的配置文件

@@ -14,13 +14,16 @@
 # 添加root用户和修改密码
 # grant all privileges on *.* to root@'%' identified by '123456' with grant option; flush privileges;
 # update mysql.user set authentication_string=password('123456') where User='root';flush privileges;
-# update mysql.user set password=password('123456') where User='root';
+# update mysql.user set password=password('123456') where User='root' and host='localhost';
 # drop user user@localhost;flush privileges;
+# show grants for 'root'@localhost;
+# dber.sh host localhsot %			设置root用户可远程连接
 
-time=`date +%Y%m%d`
-dir=/root/backdb/							#备份目录
-days=2										#保留几天的备份
-otime=$((60*24*days-60))					#以分钟算更精确的控制，减60，防止保存3份
+time=`date +%Y%m%d%H`							# 备份的文件名格式  +%Y%m%d%H%M
+dir=/root/backdb/							# 备份目录
+days=2										# 保留几天的备份
+otime=$((60*24*days-60))					# 以分钟算更精确的控制，减60，防止保存3份
+
 
 port=3306
 host=localhost
@@ -42,10 +45,25 @@ if [ $# = 1 -a "$1" = 0 ]; then
 	mysql $hup;
 elif [ $# = 1 -a "$1" = 1 ]; then
 	mysql $hup -e 'show databases;'
-elif [ $# = 1 -a "$1" = 'u'  ]; then								#查看数据库用户
+
+elif [ $# = 2 -a "$1" = 'db' ]; then								#   创建数据库  删除数据库 dber.sh q 'drop database sports'
+	mysql $hup -e "create database IF NOT EXISTS $2;";
+
+elif [ $# = 1 -a "$1" = 'u'  ]; then								#	查看数据库用户
 	mysql $hup -e "select user,host,$pwzd from mysql.user;"
+
+elif [ "$1" = 'user' -a $# -gt 2  ]; then								#	创建用户 dber.sh user aaa database password
+	mysqlpwd=$(</dev/urandom tr -dc A-Za-z0-9 | head -c20)
+	[ -n "$4" ] && mysqlpwd=$4
+	mysql $hup -e "grant all privileges on $3.* to '$2'@'localhost' identified by '$mysqlpwd';flush privileges;"
+	echo "$2 $3 $mysqlpwd" >> /root/centos/site.txt
+
+elif [ $# = 2 -a "$1" = 'drop' ]; then								#   删除用户  dber.sh q 'drop user aaa@localhost;flush privileges;'
+	mysql $hup -e "drop user $2@localhost;flush privileges;"
+
 elif [ $# = 3 -a "$1" = 'host' ]; then								#   更新root的host dber.sh host localhsot %
 	mysql $hup -e "update mysql.user set host='$3' where User='root' and host='$2' limit 1;flush privileges;"
+
 elif [ $# = 2 -a "$1" = 'q'  ]; then								# 执行sql语句
 	mysql $hup -e "$2"
 elif [ $# = 2 -a "$1" = 't'  ]; then								#查看数据库表
@@ -61,9 +79,9 @@ elif [ $# = 2 -a "$1" = v ]; then					#查询配置项
 	mysql $hup -e "show variables like '%$2%';"
 elif [ $# = 2 -a "$1" = s ]; then					#查询服务器的状态信息
 	mysql $hup -e "show global status like '%$2%';"
-elif [ "$1" = p ]; then								#查询进程
+elif [ "$1" = pg ]; then								#查询进程
 	mysql $hup -e "show processlist\G;"
-elif [ "$1" = pp ]; then								#查询进程
+elif [ "$1" = p ]; then								#查询进程
 	mysql $hup -e "show processlist;"
 elif [ "$1" = pf ]; then
 	mysql $hup -e "show full processlist;"
@@ -73,7 +91,7 @@ fi
 
 [ $# -gt 0 ] && exit
 
-dbs="allcaca cargool fitibest fyk okidso petacc prettysee runacc sonlike sxsx testDB tooltoo uarter unistyle vbiger waimao"					#要备份的数据库
+dbs=""					#要备份的数据库
 
 
 for db in $dbs; do
