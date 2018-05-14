@@ -1,18 +1,6 @@
 
-# /usr/local/apache/bin/apachectl -V					如果apache为编译安装 			安装目录，使用apachectl -v
-# curl -I 119.147.143.30								查看httpd请求头的信息
-# curl -I www.baidu.com
-
-# htpasswd -n eric1 									不生成密码文件，直接输出
-# htpasswd -c /root/pwdfile eric						生成eric的密码到文件/root/pwdfile中
-# cat /usr/local/apache/build/config.nice				查看apache编译参数
-
-
-# cat /etc/httpd/conf/httpd.conf |grep log|egrep -v ^#				查看apache日志
-# cat /etc/httpd/conf/httpd.conf |awk '$0 ~/log/ && $0 !~/^#/'			等同上句
-# cat access_log-20130804 | awk '{a[$1]++;}END{for(i in a){print a[i], i;}}' | sort -nr	
-
-# httpd -k start/stop/restart		启停apache, service命令用不了，用这个
+# httpd -k start/stop/restart					启停apache, service命令用不了，用这个
+# /usr/local/apache/bin/apachectl -V			如果apache为编译安装 			安装目录，使用apachectl -v
 
 # httpd -t		检查配置是否正确
 # httpd -M    列出已安装模块modules are built-in or shared.
@@ -25,34 +13,22 @@
 # rpm –ql httpd		查看apache安装详细
 # rpm –ql httpd > apache.txt
 
+# htpasswd -n eric1 									不生成密码文件，直接输出
+# htpasswd -c /root/pwdfile eric						生成eric的密码到文件/root/pwdfile中
+# cat /usr/local/apache/build/config.nice				查看apache编译参数
 
 # ps -ef|grep httpd|wc -l		统计httpd进程数，连个请求会启动一个进程，使用于Apache服务器。
 1388		`				表示Apache能够处理1388个并发请求，这个值Apache可根据负载情况自动调整。
+
 # netstat -nat | grep -i 80 | wc -l					当前所有80端口的请求总数
 # netstat -nat | grep -i 3306 | wc -l				当前所有3306端口的请求总数
-
-让apache能解析php文件，在httpd.conf加上
-LoadModule	php5_module	modules/libphp5.so
-AddType	application/x-httpd-php .php
-AddType	application/x-httpd-php-source .phps
 
 
 以倒序方式查看apache日志最新30行
 # tail -30  /var/log/httpd/access_log |tac
 
-实时监听apache访问日志，Ctrl-c结束监听
-# tail -f  /var/log/httpd/access_log
-# tail –n 30 -f  /var/log/httpd/access_log
-
-相关命令
 # /usr/local/apache2/bin/apachectl status|start|stop|restart
 # /etc/init.d/httpd fullstatus
-
-要在重启 Apache 服务器时不中断当前的连接，则应运行：
-# /usr/local/sbin/apachectl graceful
-
-httpd访问日志：/var/log/httpd/access_log
-httpd错误日志：/var/log/httpd/error_log
 
 linux中的apachectl是什么命令
 apachectl是slackware内附Apache HTTP服务器的script文件，可供管理员控制服务器，但在其他Linux的Apache HTTP服务器不一定有这个文件

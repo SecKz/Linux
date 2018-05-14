@@ -8,7 +8,7 @@ issue='/etc/issue.net'
 version=$(grep -Eo 'release [0-9]' $issue | cut -d' ' -f2)
 cups=$(cat /proc/cpuinfo | grep "processor" | wc -l)
 IP=`curl -s ipv4.icanhazip.com`
-[ -z "$IP" ] && IP=$(ifconfig | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
+[[ $IP =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || IP=$(ifconfig | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
 
 [ -f "/etc/yum.repos.d/nginx.repo" ] || cp -a /root/centos/nginx.repo /etc/yum.repos.d/
 [ -f '/etc/yum.repos.d/nginx.repo' ] && sed -i "s@\$releasever@${version}@" /etc/yum.repos.d/nginx.repo
