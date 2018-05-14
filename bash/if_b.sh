@@ -1,7 +1,7 @@
 #!/bin/sh
 # if 与 [ 要有空格
 if [ "$1" -gt 10 ]; then
-date
+	date
 else
-echo $RANDOM
+	echo $RANDOM
 fi

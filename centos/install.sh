@@ -1,6 +1,6 @@
 #!/bin/sh
 # centos安装，若有/home/html目录，请先备份。
-#mkfs -t ext3 /dev/sdb1; mount /dev/sdb1 /home; echo '/dev/sdb1               /home                   ext4    defaults        1 2' >> /etc/fstab
+# mkfs -t ext3 /dev/sdb1; mount /dev/sdb1 /home; echo '/dev/sdb1               /home                   ext4    defaults        1 2' >> /etc/fstab
 # http://dev.mysql.com/downloads/repo/yum/
 # /usr/sbin/ntpdate -u pool.ntp.org && /sbin/hwclock -w
 
@@ -84,56 +84,10 @@ if [ $? != 0 ]; then
 	rm -f /home/www/.bash*
 fi
 
-cd /etc/yum.repos.d/
 
-####################################
+#################################### yum源配置
 
-read -p "是否安装epel和remi源 [Y/N] " inyums
-read -p "是否更新yum源 [Y/N] " upyum
-read -p "是否安装组件 [Y/N] " inapps
-
-if [ "$inyums" = 'y' -o "$inyums" = 'Y' ]; then
-
-	if [ ! -f 'epel.repo' ]; then
-		yum install epel-release
-	else
-		green "epel.repo已安装";
-	fi
-
-	if [ ! -f 'remi.repo' ]; then
-		rpm -Uvh https://rpms.remirepo.net/enterprise/remi-release-${version}.rpm
-	else
-		green "remi.repo已安装";
-	fi
-
-	# https://dev.mysql.com/downloads/repo/yum/
-	if [ ! -f 'mysql-community.repo' ]; then
-		rpm -Uvh http://repo.mysql.com/mysql57-community-release-el${version}-11.noarch.rpm
-	else
-		green "mysql-community.repo已安装";
-	fi
-fi
-
-if [ "$upyum" = 'y' -o "$upyum" = 'Y' ]; then
-	yum -y update yum;
-	yum -y install yum-priorities yum-fastestmirror yum-utils;
-	yum clean all;
-	rm -rf /var/lib/yum/history/*.sqlite;
-	yum-complete-transaction --cleanup-only;
-	yum makecache;
-fi
-
-if [ "$inapps" = 'y' -o "$inapps" = 'Y' ]; then
-	yum install -y kernel gcc gcc-c++ glibc automake autoconf libtool make curl curl-devel ibmcrypt-devel mhash-devel libxslt-devel zlib zlib-devel glibc glibc-devel openssl openssl-devel bash wget rpm
-	yum install -y net-tools psmisc rar unzip zip p7zip lsof util-linux-ng man man-pages bind-utils cronie screen mlocate iftop nethogs htop lvm2 tree sysstat mailx rsync openssh-clients openssl finger vim ntpdate iptables-services iptables pciutils python tcpdump the_silver_searcher virt-what iotop
-	#yum install jemalloc
-	service crond start
-	chkconfig crond on
-	chkconfig iptables on
-fi
-
-
-purple ++-----------------------------------------------------++
+/root/centos/0yum.sh
 
 #################################### 删除原来的/home/html
 if [ ! -d /home/html ]; then
@@ -177,36 +131,9 @@ green "CPU个数是 $cups"
 green "交换分区大小是 $Swap"
 [ -f '/root/centos/memory.sh' ] && /root/centos/memory.sh
 
-purple ++-----------------------------------------------------++
+#################################### 更改ssh端口
 
-sshport=$(grep -Eo '^Port\s+([0-9])+' /etc/ssh/sshd_config | grep -Eo '[0-9]+');
-[ -n "$sshport" ] || sshport=22
-green "当前ssh端口是 $sshport"
-
-
-if [ -f '/etc/sysconfig/iptables' -a ! -e /root/iptables ]; then
-	yellow "设置iptables并备份iptables文件"
-	mv /etc/sysconfig/iptables /root/iptables
-	mv /root/centos/iptables.txt /etc/sysconfig/iptables
-	sed -i "s/tcp --dport 22 -j ACCEPT/tcp --dport $sshport -j ACCEPT/" /etc/sysconfig/iptables;
-	service iptables restart
-	\cp /etc/passwd /root
-	\cp /etc/fstab	/root
-
-fi
-
-read -p "是否更改ssh端口号，若更改请输入新的端口号 [Y/N] " sshport2
-sshport2=$(echo $sshport2 | grep -E '^[0-9]{2,5}$');
-
-if [ -n "$sshport2" ]; then
-	yellow "更改ssh的端口为 $sshport2";
-	sed -ri '/^Port\s+[0-9]+/d' /etc/ssh/sshd_config;
-	echo "Port	$sshport2" >>  /etc/ssh/sshd_config
-	sed -i "s/tcp --dport $sshport -j ACCEPT/tcp --dport $sshport2 -j ACCEPT/" /etc/sysconfig/iptables;
-	service sshd restart
-	service iptables restart
-	iptables -nL
-fi
+/root/centos/0ssh_port.sh
 
 read -p "是否配置rsync [Y/N] " rsyncyn
 read -p "是否安装mysql [Y/N] " mysqlyn
@@ -215,7 +142,7 @@ read -p "是否安装nginx [Y/N] " nginxyn
 
 yellow "1. php-5.3"
 yellow "2. php-5.6"
-yellow "3. php-7"
+yellow "3. php-7.2"
 read -p "请选择要安装的php-fpm版本:" PHP_version
 
 case $PHP_version in
@@ -226,10 +153,10 @@ case $PHP_version in
 		arepo=remi-php56
 		;;
 	3)
-		arepo=remi-php71
+		arepo=remi-php72
 		;;
 	*)
-		#arepo=0
+		arepo=remi-php71
 		;;
 esac
 
@@ -238,133 +165,42 @@ read -p "是否安装memcached [Y/N] " memcachedyn
 read -p "是否优化sysctl.conf [Y/N] " sysanswer
 
 
-##################################### rsync
-if [ "$rsyncyn" = 'y' -o "$rsyncyn" = 'Y' ]; then
-	rpm -q rsync || yum install -y rsync
-	grep -q '^rsync --daemon' /etc/rc.local || echo "rsync --daemon" >> /etc/rc.local
-	if [ $? = 0 ]; then
-		\cp -a /root/centos/rsyncd.conf /etc
-		killall rsync 2> /dev/null;
-		rsync --daemon
-		grep -q '/root/centos/rsync.sh' /var/spool/cron/root &> /dev/null || echo '0 2 * * * /root/centos/rsync.sh' >> /var/spool/cron/root
-		rpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c30)
-		echo "backer:$rpass" > /etc/rsyncd.pass
-		chmod 600 /etc/rsyncd.pass
-		chown root.root /etc/rsyncd.pass
-	else
-		red 'rsync未安装'
-	fi
-fi
+##################################### php-fpm php5.3以上支持mysqlnd
 
-
-
-##################################### mysql
-
-if [ "$mysqlyn" = 'y' -o "$mysqlyn" = 'Y' ]; then
-	/root/centos/mysql57.sh
-fi
-
-##################################### pure-ftpd
-
-if [ "$ftpyn" = 'y' -o "$ftpyn" = 'Y' ]; then
-	rpm -q pure-ftpd > /dev/null
-	if [ $? != 0 ]; then
-		hup="-uroot -p$mysql_root_password"
-		mysql $hup -e ''
-		if [ $? = 0 ]; then
-			yum install -y pure-ftpd
-			if [ $? = 0 ]; then
-				pureftpd_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c32)
-				green "pureftpd密码 $pureftpd_password"
-				mysql $hup  < /root/centos/pureftpd.sql
-				mysql $hup -e "grant all privileges on pureftpd.* to 'pureftpd'@'localhost' identified by '${pureftpd_password}';";
-				mysql $hup -e "flush privileges;select user,host,password from mysql.user;show databases;";
-				sed -i "s/^MYSQLPassword.*/MYSQLPassword	$pureftpd_password/" /root/centos/pureftpd-mysql.conf
-				cd /etc/pure-ftpd
-				sed -i 's/^# MySQLConfigFile/MySQLConfigFile/' pure-ftpd.conf
-				mv pureftpd-mysql.conf pureftpd-mysql.conf1
-				cp -a /root/centos/pureftpd-mysql.conf .
-				service pure-ftpd start
-				chkconfig pure-ftpd on
-
-				#sed -i 's/^IPTABLES_MODULES=""$/IPTABLES_MODULES="ip_conntrack_netbios_ns ip_conntrack_ftp ip_nat_ftp"/' /etc/sysconfig/iptables-config
-
-
-			fi
-		else
-			red '数据库连接错误'
-		fi
-	fi
+if [ -n "$arepo" ]; then
+	/root/centos/0php.sh $arepo
 fi
 
 
 ##################################### nginx
 
 if [ "$nginxyn" = 'y' -o "$nginxyn" = 'Y' ]; then
-
-	[ -f "/etc/yum.repos.d/nginx.repo" ] || cp -a /root/centos/nginx.repo /etc/yum.repos.d/
-	[ -f '/etc/yum.repos.d/nginx.repo' ] && sed -i "s@\$releasever@${version}@" /etc/yum.repos.d/nginx.repo
-
-	rpm -q nginx > /dev/null
-	if [ $? != 0 ]; then
-		yum install -y nginx 			# nginx-1.8.0-1.el6.ngx
-		if [ $? = 0 ]; then
-			\mv /etc/nginx/nginx.conf /root
-			\cp -a /root/centos/nginx.conf /etc/nginx/
-			\cp -a /root/centos/g.conf /etc/nginx/
-			\cp -a /root/centos/agent_deny.conf /etc/nginx/
-			sed -i "s/^# allow ip;$/allow $IP;/" /etc/nginx/nginx.conf
-
-			green "修改nginx.conf worker_processes值为：" $cups
-			sed -i "1,10s/^worker_processes.*/worker_processes  $cups;/" /etc/nginx/nginx.conf
-			echo 'fastcgi_param PHP_ADMIN_VALUE "open_basedir=$document_root/:/tmp/";' >> /etc/nginx/fastcgi_params
-			sed -ri 's/rotate [0-9]+$/rotate 4/' /etc/logrotate.d/nginx
-			mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf1
-			cp -a /root/centos/block_ip_ngx.conf /etc/nginx/
-			[ -d "/var/lib/nginx/" ] && find /var/lib/nginx/ -type d -exec chmod 755 {} \;
-			nginx;
-			chkconfig nginx on;
-		fi
-	fi
+	/root/centos/0nginx.sh
 fi
 
-##################################### php-fpm php5.3以上支持mysqlnd
 
-if [ -n "$arepo" ]; then
-	rpm -q php-fpm > /dev/null
-	if [ $? != 0 ]; then
-		yum install -y php php-fpm php-gd php-xml php-mbstring php-ldap php-mcrypt php-pear php-devel php-mysqlnd php-pecl-zendopcache --enablerepo=$arepo
-		rpm -q php-mysqlnd || yum install -y php-mysql --disablerepo="remi*"
-		if [ -f '/etc/php.ini' ]; then
-			\cp /etc/php.ini /root
-			\cp /etc/php-fpm.d/www.conf /root
-			sed -i 's/^;date\.timezone =/date.timezone = Asia\/Shanghai/' /etc/php.ini
-			sed -i 's/^expose_php = On/expose_php = Off/' /etc/php.ini
-			sed -ri 's/^upload_max_filesize = [0-9]+M/upload_max_filesize = 10M/' /etc/php.ini
-			sed -ri 's/^post_max_size = [0-9]+M/post_max_size = 10M/' /etc/php.ini
-			sed -ri 's/^error_reporting = .+/error_reporting = E_ALL ^ E_NOTICE/' /etc/php.ini
-			sed -ri 's/^display_errors = Off/display_errors = On/' /etc/php.ini
-			[ -f '/root/centos/php-fpm.sh' ] && /root/centos/php-fpm.sh
-			[ -d '/var/lib/php/session' ] && chown -R www.www /var/lib/php/session
-			service php-fpm start;
-			chkconfig php-fpm on;
-		fi
-	fi
+##################################### rsync
+if [ "$rsyncyn" = 'y' -o "$rsyncyn" = 'Y' ]; then
+	/root/centos/0rsync.sh
+fi
+
+
+##################################### mysql
+
+if [ "$mysqlyn" = 'y' -o "$mysqlyn" = 'Y' ]; then
+	/root/centos/0mysql57.sh
+fi
+
+##################################### pure-ftpd
+
+if [ "$ftpyn" = 'y' -o "$ftpyn" = 'Y' ]; then
+	/root/centos/0pureftp.sh
 fi
 
 
 if [ "$redisyn" = 'y' -o "$redisyn" = 'Y' ]; then
-	rpm -q redis > /dev/null
-	if [ $? != 0 ]; then
-		yum install -y redis --enablerepo=remi
-		yum install -y php-pecl-redis --enablerepo=$arepo
-		grep -q 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' /etc/rc.local || echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local
-		grep -q '^vm.overcommit_memory = 1' /etc/sysctl.conf || echo 'vm.overcommit_memory = 1' >> /etc/sysctl.conf
-		chkconfig redis on
-		service redis start
-		service php-fpm restart
-		sysctl -p
-	fi
+
+	/root/centos/0redis.sh $arepo
 
 	if [ ! -e "/home/html/prz22" ]; then
 		cd /home/html
@@ -377,14 +213,7 @@ if [ "$redisyn" = 'y' -o "$redisyn" = 'Y' ]; then
 fi
 
 if [ "$memcachedyn" = 'y' -o "$memcachedyn" = 'Y' ]; then
-	rpm -q php memcached > /dev/null
-	if [ $? != 0 ]; then
-		yum install -y memcached --enablerepo=remi
-		yum install -y php-pecl-memcached --enablerepo=$arepo
-		chkconfig memcached on
-		service memcached start
-		service php-fpm restart
-	fi
+	/root/centos/0memcache.sh $arepo
 fi
 
 
@@ -428,14 +257,6 @@ EOF
 	fi
 fi
 
-myslow="/var/log/mysqlslow.log"
-
-if [ ! -f "$myslow" ]; then
-	touch $myslow
-	chown mysql.mysql $myslow
-	rm -f /var/lock/subsys/mysqld
-	service mysqld restart
-fi
 
 if [ -f '/etc/init.d/yum-updatesd' ]; then
 	service yum-updatesd stop
@@ -521,7 +342,7 @@ purple "别忘了reboot，删除安装文件"
 #EOF
 
 # Set timezone
-#ln -svf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+# ln -svf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # ntpdate time.nist.gov
 # 0 */2 * * * root /usr/sbin/ntpdate -u pool.ntp.org && /sbin/hwclock -w
@@ -530,4 +351,4 @@ purple "别忘了reboot，删除安装文件"
 # iftop 			进入界面按3可按流量大小排序
 # > np3
 
-#wget -qO- bench.sh | bash
+# wget -qO- bench.sh | bash

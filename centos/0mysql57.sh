@@ -29,11 +29,17 @@ EOF
 			sed -i "s/^pwd=.*/pwd=${mysql_root_password}/" "/root/centos/addsite.sh"
 			sed -i "s/^define('DBPW'.*/define('DBPW', '${mysql_root_password}');/" "/root/centos/expuser.php"
 			ln -vsf /root/centos/dber.sh /sbin
+
 			sed -i 's/^#validate_password_policy=0/validate_password_policy=0/' /etc/my.cnf
 			sed -i 's/^skip-grant-tables/#skip-grant-tables/' /etc/my.cnf
+
+			touch /var/log/mysqlslow.log
+			chown mysql.mysql /var/log/mysqlslow.log
+
 			rm -f /var/lock/subsys/mysqld
 			service mysqld restart
 			chkconfig mysqld on;
 	fi
+else
+	green "mysql已安装"
 fi
-
