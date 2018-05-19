@@ -1,5 +1,5 @@
 #!/bin/sh
-# service nginx stop; yum remove "ngnix"
+# service nginx stop; yum remove nginx
 # /root/centos/0nginx.sh
 . "/root/centos/fun.sh"
 
