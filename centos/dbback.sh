@@ -10,7 +10,6 @@ port=3306
 host=172.19.6.112
 user=root
 pwd="suneee@mysql768"
-dbs="suneee_payment"					#要备份的数据库
 
 [ -d "$dir" ] || mkdir -p "$dir"
 
@@ -22,6 +21,8 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
+
+dbs="suneee_payment"					#要备份的数据库
 
 for db in $dbs; do
 	mysqldump $hup $db > ${dir}${db}-$time.sql

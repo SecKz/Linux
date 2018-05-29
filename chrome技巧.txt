@@ -17,6 +17,7 @@ console 中输入函数名，不要()会出来代码，双击结果会定位到�
 
 
 对network请求进行筛选
+-str:	排除含有str的request
 domain：筛选出指定域名的请求，不仅支持自动补全，还支持*匹配。
 has-response-header：筛选出包含指定响应头的请求。
 is：通过is:running找出WebSocket请求。

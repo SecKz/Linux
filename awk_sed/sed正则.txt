@@ -1,5 +1,16 @@
 
 
+查找
+# find . -type f | xargs -i fgrep -l 'aaaa' {}
+# find . -type f | egrep '\.(html|htm|php)$' | xargs -i fgrep -l '5200tv.com' {}		找出文件有5200tv.com的php和html文件
+# find . -iname '*.js' | xargs -i fgrep -li 'window.open' {}
+# find . -type f | egrep '\.xml$' | xargs -i fgrep -l '5200tv.com' {}		找出中含有5200tv.com的xml文件
+
+替换
+# find . -type f | egrep '\.(css|js|html|htm|php|txt|inc|xml)$' | xargs -i sed -i 's/5200tv.com/nrclady.com/g' {}		
+# find . -type f | xargs -ti sed -i 's/2/zzz/g' {}																	把当前目录下所有文件中的2都替换为zzzz
+# find . -type f | egrep -vi '\.(jpg|gif|png|bmp)$' | xargs -i sed -i 's/5200tv.com/nrclady.com/g' {}
+
 正则 -r∶sed 的动作支援的是延伸型正规表示法的语法
 
 # sed -nr '/[^0-9][0-9]{3}[^0-9]/p' passwd		只查找含有3位数的行
@@ -8,7 +19,7 @@
 
 # find . -type f -iname aa.doc | sed 's/aa.doc$//' 		查找含有aa.doc文件的文件夹
 # find . -type f -iname aa.doc | sed 's/aa.doc$//' | xargs -ti rm -r {} 		查找含有aa.doc文件的文件夹并删除
-# sed 's/^...//' passwd			删除开头的3个 支付
+# sed 's/^...//' passwd			删除开头的3个字符
 # sed 's/...$//' passwd 			删除每行的最后3个字符
 	
 # ll | sed -r 's/.{13}//'			去掉每行的头13字符		等同 ll | cut -c 13-			
@@ -52,17 +63,6 @@
 # sed 's/被替换的内容/要替换成的内容/g' file > file.out
 # sed -i "s/zhangsan/lisi/g" `grep zhangsan -rl /modules` 要将目录/modules下面所有文件中的zhangsan都修改成lisi
 
-
-查找
-# find . -type f | xargs -i fgrep -l 'aaaa' {}
-# find . -type f | egrep '\.(html|htm|php)$' | xargs -i fgrep -l '116.204.15.42/tg7' {}		找出文件有116.204.15.42/tg7的php和html文件
-# find . -iname '*.js' | xargs -i fgrep -li 'window.open' {}
-# find . -type f | egrep '\.xml$' | xargs -i fgrep -l '5200tv.com' {}		找出中含有5200tv.com的xml文件
-
-替换
-# find . -type f | egrep '\.(css|js|html|htm|php|txt|inc|xml)$' | xargs -i sed -i 's/5200tv.com/nrclady.com/g' {}		
-# find . -type f | xargs -ti sed -i 's/2/zzz/g' {}																	把当前目录下所有文件中的2都替换为zzzz
-# find . -type f | egrep -vi '\.(jpg|gif|png|bmp)$' | xargs -i sed -i 's/5200tv.com/nrclady.com/g' {}
 
 # find . -type f | xargs -ti sed -i 's/5200tv.com/nrclady.com/g' {}			批量替换
 # sed -i "s/5200tv.com/nrclady.com/g" `grep -rl 5200tv.com .`			等同上句	
