@@ -16,9 +16,10 @@ gitlab-ctl stop
 gitlab-ctl uninstall	
 gitlab-ctl cleanse
 gitlab-ctl remove-accounts
-dpkg -P gitlab-ce
+rpm -e gitlab-ce
 find / -name gitlab|xargs rm -rf					
 
+# 在db中创建新内容并设置管理员账号
 gitlab-rake gitlab:setup				#在db中创建新内容并设置管理员账号
 gitlab-rake gitlab:backup:create
 gitlab-rake gitlab:backup:restore

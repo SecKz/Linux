@@ -33,11 +33,21 @@ linux常规网络配置文件
 2. /etc/resolv.conf  　　  DNS文件
 3. /etc/sysconfig/network-scripts/ifcfg-eth0　　网卡配置文件
 
+IP地址分配方式
 BOOTPROTO=static 		配置静态IP
-BOOTPROTO=dhcp		表明是自动ip地址分配。
-ONBOOT=yes			开机自动联网
-ONBOOT=no  			 禁用网卡
+BOOTPROTO=dhcp			自动获取ip地址
+ONBOOT=yes				开机自动联网
+ONBOOT=no  				禁用网卡
 
+
+
+由于一般服务器有多个网卡，系统默认自动激活的是eth0，假如想激活别的网卡,执行
+# vi /etc/rc.local 
+在最下行加入 
+ifup eth1 
+route add -net 192.168.1.200/24 gw 192.168.1.1 dev eth1 
+其中192.168.1.200为服务器静态IP，192.168.1.1为网关。 
+假如有多个，往下加就是了。
 
 
 ifconfig
@@ -117,15 +127,6 @@ dstaddr 设定一个远端地址，建立点对点通信
 multicast 为网卡设置组播标志
 address 为网卡设置IPv4地址
 txqueuelen<长度> 为网卡设置传输列队的长度
-
-
-由于一般服务器有多个网卡，系统默认自动激活的是eth0，假如想激活别的网卡,执行
-# vi /etc/rc.local 
-在最下行加入 
-ifup eth1 
-route add -net 192.168.1.200/24 gw 192.168.1.1 dev eth1 
-其中192.168.1.200为服务器静态IP，192.168.1.1为网关。 
-假如有多个，往下加就是了。
 
 
 

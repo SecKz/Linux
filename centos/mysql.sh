@@ -17,7 +17,7 @@ symbolic-links=0
 
 skip-name-resolve
 back_log = 300
-wait_timeout = 100
+wait_timeout = 120
 interactive_timeout = 600
 
 max_connections = 1500

@@ -6,6 +6,7 @@
 # find . -iname '*.php' | xargs -i fgrep -li 'window' {}
 # find . -type f | egrep '\.php$' | xargs -i fgrep -l '5200tv.com' {}		找出含有5200tv.com的php文件
 # find . -type f | xargs -i egrep -l 'config\.ini' {}
+# find . -type f | xargs -i fgrep -l 'config.ini' {}
 # find . -type f | xargs -i egrep -l '\.(js|php)$' {}	
 
 匹配空格或tab开头的root行

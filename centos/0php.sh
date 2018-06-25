@@ -1,6 +1,6 @@
 #!/bin/sh
 # service php-fpm stop; yum remove "php*"
-# /root/centos/0redis.sh remi-php72
+# /root/centos/0php.sh remi-php72
 
 . "/root/centos/fun.sh"
 
@@ -13,7 +13,7 @@ fi
 
 rpm -q php-fpm > /dev/null
 if [ $? != 0 ]; then
-	yum install php php-fpm php-gd php-xml php-mbstring php-ldap php-mcrypt php-pear php-devel php-mysqlnd php-pecl-zendopcache --enablerepo=$1
+	yum install php php-fpm php-gd php-xml php-mbstring php-ldap php-mcrypt php-bcmath php-pear php-devel php-mysqlnd php-pecl-zendopcache --enablerepo=$1
 	rpm -q php-mysqlnd || yum install php-mysql --disablerepo="remi*"
 	if [ -f '/etc/php.ini' ]; then
 		\cp /etc/php.ini /root
