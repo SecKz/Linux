@@ -352,3 +352,7 @@ purple "别忘了reboot，删除安装文件"
 # > np3
 
 # wget -qO- bench.sh | bash
+
+# 列出前15个最耗内存的进程
+# ps aux --sort -rss | head -n15
+

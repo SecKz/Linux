@@ -1,6 +1,8 @@
 #!/bin/sh
 # killall rsync;  rm -rf /etc/nginx /etc/rsyncd.pass
 # /root/centos/0rsync.sh
+# rpm -ev rsync --nodeps
+
 
 . "/root/centos/fun.sh"
 

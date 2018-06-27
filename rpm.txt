@@ -1,4 +1,7 @@
 
+
+# rpm -ev rsync --nodeps							只删除这个包，不删除它的依赖包
+
 # rpm -ivh php.rpm --force --nodeps				强制安装
 # rpm -qa |grep '5.1.59'							查找版本号为5.1.59的包
 # rpm -qa 'mysql*'								先找出有关mysql的包名 rpm –qa|grep –i mysql
@@ -104,7 +107,6 @@ RPM的配置文件；RPM包管理，的配置文件是 rpmrc ，我们可以在�
 
 --force 强制安装，即使覆盖属于其他包的文件也要安装
 --nodeps 当要安装的rpm包依赖其他包时，即使其他包没有安装，也要安装这个包
---nodeps	当遇到软件依赖于其它软件而无法安装时，可强制安装
 --replacefiles	在安装过程中，如果遇到某个文件已经存在的情况，可直接覆盖
 --replacepkgs	如果软件已经安装过，可使用该选项重复安装
 --force	强制安装，已存在的文件会被覆盖，已安装过的软件会重新安装

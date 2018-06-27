@@ -3,9 +3,9 @@
 # free -t | grep "buffers/cache" | awk '{print $4/($3+$4) * 100}'			查看内存剩余率
 # watch -n 1 -d free -mt		实时监控内存使用
 # free -mt
+# ps aux --sort -rss | head -n15		列出前15个最耗内存的进程
 
-
- $ free -m
+# free -m
                  total       used       free     shared    buffers     cached
 Mem:         1002        769        232          0         62        421
 -/+ buffers/cache:        286        715					这行才是真正表示使用的和可用的内存数
@@ -37,7 +37,6 @@ The "buffers" (62MB) and "cached" (421MB) will be released by the kernal if they
 buffers指Buffer cache
 cached指Page cache
 这是内核中两种不同的缓存机制。
-
 
 
 

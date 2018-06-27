@@ -1,5 +1,5 @@
 #!/bin/sh
-# service mysqld stop; rm -rf /var/lib/mysql; rm -rf /etc/my.cnf; yum remove mysql mysql-community-common;
+# service mysqld stop; rm -rf /var/lib/mysql; rm -rf /etc/my.cnf; yum remove mysql-community-server mysql mysql-community-client mysql
 # sed -i 's/^skip-grant-tables/#skip-grant-tables/' /etc/my.cnf
 
 . "/root/centos/fun.sh"

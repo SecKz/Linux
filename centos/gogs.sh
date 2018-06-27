@@ -48,8 +48,6 @@ fi
 
 chown -R git.git /home/git/
 
-# git -c "/home/git/gogs/gogs web"
-
 chmod +x /etc/init.d/gogs
 service gogs start
 

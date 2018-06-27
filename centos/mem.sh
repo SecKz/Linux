@@ -2,9 +2,9 @@
 #
 
 if [ $# = 1 ]; then
-mem1=$(ps aux | grep "$1" |awk '{sum+=$6};END{print sum/1024}')
-echo "$mem1"
-exit
+	mem1=$(ps aux | grep "$1" |awk '{sum+=$6};END{print sum/1024}')
+	echo "$mem1"
+	exit
 fi
 
 ngx_mem=$(ps aux | grep nginx |awk '{sum+=$6};END{print sum/1024}')
