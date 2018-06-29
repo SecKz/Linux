@@ -1,11 +1,11 @@
 #!/bin/sh
 # sh netstat.sh 刷新间隔 刷新次数
 if [ $# = 0 ];then
-interval=0
-count=1
+	interval=0
+	count=1
 else
-interval=$1
-count=$2
+	interval=$1
+	count=$2
 fi
 ips=20
 

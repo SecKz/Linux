@@ -2,8 +2,10 @@
 # service mysqld stop; rm -rf /var/lib/mysql; rm -rf /etc/my.cnf; yum remove mysql-community-server mysql mysql-community-client mysql
 # sed -i 's/^skip-grant-tables/#skip-grant-tables/' /etc/my.cnf
 # yum install mysql-community-server  --enablerepo="mysql57-community"
-
 # set global validate_password_policy=0;
+
+# tpwd=$(grep "temporary password is" /var/log/mysqld.log |awk -F": " '{ print $2}')
+
 
 . "/root/centos/fun.sh"
 
@@ -13,8 +15,7 @@ if [ $? != 0 ]; then
 	yum install mysql-community-server  --enablerepo="mysql57-community"
 	if [ $? = 0 ]; then
 		mysql_root_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c32)
-		echo $mysql_root_password > /root/centos/myroot_pwd.txt
-		tpwd=$(grep "temporary password is" /var/log/mysqld.log |awk -F": " '{ print $2}')
+		echo $mysql_root_password >> /root/centos/site.txt
 		/root/centos/mysql.sh
 		service mysqld start;
 		\cp /etc/my.cnf /root
@@ -31,6 +32,7 @@ EOF
 			ln -vsf /root/centos/dber.sh /sbin
 
 			sed -i 's/^#validate_password_policy=0/validate_password_policy=0/' /etc/my.cnf
+			sed -i 's/^#validate_password_length=6/validate_password_length=6/' /etc/my.cnf
 			sed -i 's/^skip-grant-tables/#skip-grant-tables/' /etc/my.cnf
 
 			touch /var/log/mysqlslow.log

@@ -10,7 +10,7 @@ if [ $? != 0 ]; then
 	yum install mysql-community-server
 	if [ $? = 0 ]; then
 		mysql_root_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c32)
-		echo $mysql_root_password > /root/centos/myroot_pwd.txt
+		echo $mysql_root_password >> /root/centos/site.txt
 		/root/centos/mysql.sh
 		service mysqld start;
 		\cp /etc/my.cnf /root

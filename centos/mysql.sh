@@ -68,9 +68,7 @@ log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
 
 #validate_password_policy=0
-#validate_password_special_char_count=0
-#validate_password_mixed_case_count=0
-#validate_password_number_count=0
+#validate_password_length=6
 
 explicit_defaults_for_timestamp = 1
 
