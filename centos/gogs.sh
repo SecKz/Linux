@@ -20,10 +20,10 @@ cd /home/git
 
 bit=$(getconf LONG_BIT)
 
-file="https://dl.gogs.io/0.11.43/gogs_0.11.43_linux_amd64.tar.gz"
+file="https://dl.gogs.io/0.11.53/gogs_0.11.53_linux_amd64.tar.gz"
 
 if [ "$bit" = 32 ]; then
-	file = "https://dl.gogs.io/0.11.43/gogs_0.11.43_linux_386.tar.gz"
+	file = "https://dl.gogs.io/0.11.53/gogs_0.11.53_linux_386.tar.gz"
 fi
 
 bfile=$(basename $file)
@@ -45,8 +45,6 @@ if [ $? = 0 ]; then
 else
 	cp /home/git/gogs/scripts/init/centos/gogs /etc/init.d/
 fi
-
-chown -R git.git /home/git/
 
 chmod +x /etc/init.d/gogs
 service gogs start

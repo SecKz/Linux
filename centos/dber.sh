@@ -6,7 +6,7 @@
 # dber.sh i dbname db.sql, 导入sql文件到数据库，没有则创建数据库
 # dber.sh user eric database password	创建用户eric, 授权给数据库database, 密码可以不指定, dber.sh q 'drop user aaa@localhost;flush privileges;'删除用户
 # dber.sh db zcx 创建数据库, dber.sh q 'drop database sports' 删除数据库
-# dber.sh host localhsot % 更改root的host为%
+# dber.sh host root localhsot % 更改root的host为%
 # dber.sh s max 查看运行状态, dber.sh v slow 查看配置信息
 
 # CREATE DATABASE IF NOT EXISTS aa123 DEFAULT CHARACTER SET utf8;
@@ -14,8 +14,11 @@
 
 # 添加root用户和修改密码
 # grant all privileges on *.* to root@'%' identified by '123456' with grant option; flush privileges;
+
+# 修改密码
 # update mysql.user set authentication_string=password('123456') where User='root';flush privileges;
 # update mysql.user set password=password('123456') where User='root' and host='localhost';
+
 # drop user user@localhost;flush privileges;
 # show grants for 'root'@localhost;
 
@@ -60,8 +63,8 @@ elif [ "$1" = 'user' -a $# -gt 2  ]; then								#	创建用户 dber.sh user aaa
 elif [ $# = 2 -a "$1" = 'drop' ]; then								#   删除用户  dber.sh q 'drop user aaa@localhost;flush privileges;'
 	mysql $hup -e "drop user $2@localhost;flush privileges;"
 
-elif [ $# = 3 -a "$1" = 'host' ]; then								#   更新root的host dber.sh host localhsot %
-	mysql $hup -e "update mysql.user set host='$3' where User='root' and host='$2' limit 1;flush privileges;"
+elif [ $# = 4 -a "$1" = 'host' ]; then								#   更新root的host dber.sh host root localhsot %
+	mysql $hup -e "update mysql.user set host='$4' where User='$2' and host='$3' limit 1;flush privileges;"
 
 elif [ $# = 2 -a "$1" = 'q'  ]; then								# 执行sql语句
 	mysql $hup -e "$2"
@@ -88,7 +91,7 @@ elif [ "$1" = pf ]; then
 	mysql $hup -e "show full processlist;"
 
 elif [ $# = 0 -o "$1" = h ]; then
-	head -20 $0 | grep '^# dber'
+	head -30 $0 | grep '^# dber'
 fi
 
 [ $# = 0 -o "$1" != 'bak' ] && exit

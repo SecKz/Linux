@@ -11,10 +11,10 @@ yum groupinstall "Development tools"
 yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel openssl-static
 
 cd /root
-[ -e "Python-3.6.4.tar.xz" ] || wget --no-check-certificate https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tar.xz
-[ -d "Python-3.6.4" ] && rm -rf "Python-3.6.4"
-tar xf Python-3.6.4.tar.xz
-cd Python-3.6.4
+[ -e "Python-3.6.5.tar.xz" ] || wget --no-check-certificate https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tar.xz
+[ -d "Python-3.6.5" ] && rm -rf "Python-3.6.5"
+tar xf Python-3.6.5.tar.xz
+cd Python-3.6.5
 
 ./configure --prefix=/usr/local/python36
 make && make install
@@ -31,9 +31,9 @@ pip3 install wheel
 pip3 install requests
 pip3 install psutil
 pip3 install lxml
+pip3 install pymysql
+pip3 install pillow
 pip3 install beautifulsoup4
 pip3 install gevent
 pip3 install virtualenv
-pip3 install pillow
-pip3 install pymysql
 pip3 install pandas

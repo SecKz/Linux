@@ -17,7 +17,7 @@ symbolic-links=0
 
 skip-name-resolve
 back_log = 300
-wait_timeout = 120
+wait_timeout = 600
 interactive_timeout = 600
 
 max_connections = 1500
@@ -71,6 +71,8 @@ pid-file=/var/run/mysqld/mysqld.pid
 #validate_password_length=6
 
 explicit_defaults_for_timestamp = 1
+
+sql-mode=NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
 
 EOF
 

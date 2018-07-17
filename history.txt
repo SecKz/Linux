@@ -1,10 +1,10 @@
 
 # set|grep HISTFILE
 
-# history | egrep ' ln'					查看以ln开关的命令	
+# history | fgrep ' ln'					查看以ln开关的命令	
 # history | wc -l						查看history数量
 # history 30							查看最近30个命令
-# history|grep cp					查看cp的历史命令
+# history | fgrep cp					查看cp的历史命令
 # history -c							清空历史命令
 
 让linux的history命令显示时间记录
