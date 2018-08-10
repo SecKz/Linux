@@ -16,6 +16,7 @@ if [ $? != 0 ]; then
 	if [ $? = 0 ]; then
 		mysql_root_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c32)
 		echo $mysql_root_password >> /root/centos/site.txt
+		echo >> /root/centos/site.txt
 		/root/centos/mysql.sh
 		service mysqld start;
 		\cp /etc/my.cnf /root

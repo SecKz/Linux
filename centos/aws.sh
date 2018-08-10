@@ -121,8 +121,7 @@ fi
 
 if [ "$inapps" = 'y' -o "$inapps" = 'Y' ]; then
 	yum install kernel gcc gcc-c++ glibc automake autoconf libtool make curl curl-devel ibmcrypt-devel mhash-devel libxslt-devel zlib zlib-devel glibc glibc-devel openssl openssl-devel bash wget rpm
-	yum install net-tools psmisc rar unzip zip p7zip lsof util-linux-ng man bind-utils cronie screen mlocate iftop nethogs htop lvm2 tree sysstat mailx rsync openssh-clients openssl finger vim ntpdate iptables-services iptables pciutils python tcpdump
-	#yum install jemalloc
+	yum install -y net-tools psmisc rar unzip zip p7zip lsof util-linux-ng man man-pages bind-utils cronie screen mlocate iftop nethogs htop lvm2 tree sysstat mailx rsync openssh-clients openssl finger vim ntpdate iptables-services iptables pciutils python tcpdump virt-what iotop
 	service crond start
 	chkconfig crond on
 	chkconfig iptables on
@@ -324,7 +323,7 @@ if [ "$PHP_version" = 1 -o "$PHP_version" = 2 ]; then
 	rpm -q php-fpm > /dev/null
 	if [ $? != 0 ]; then
 		if [ "$PHP_version" = 1 ]; then
-			yum install php php-fpm php-gd php-xml php-mbstring php-ldap php-mcrypt php-pear php-devel php-mysqlnd php56-opcache
+			yum install php php-fpm php-zip php-bcmath php-gd php-xml php-mbstring php-ldap php-mcrypt php-pear php-devel php-mysqlnd php56-opcache
 			rpm -q php-mysqlnd || yum install php-mysql -y --disablerepo="remi*"
 		else
 			yum install php56 php56-fpm php56-gd php56-xml php56-mbstring php56-ldap php56-mcrypt php56-pear php56-devel php56-mysqlnd php56-opcache

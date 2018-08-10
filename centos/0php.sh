@@ -14,7 +14,7 @@ fi
 
 rpm -q php-fpm > /dev/null
 if [ $? != 0 ]; then
-	yum install php php-fpm php-gd php-xml php-zip php-mbstring php-ldap php-mcrypt php-bcmath php-pear php-devel php-mysqlnd php-pecl-zendopcache --enablerepo=$1
+	yum install php php-fpm php-gd php-xml php-zip php-bcmath php-mbstring php-ldap php-mcrypt php-pear php-devel php-mysqlnd php-pecl-zendopcache --enablerepo=$1
 	rpm -q php-mysqlnd || yum install php-mysql --disablerepo="remi*"
 	if [ -f '/etc/php.ini' ]; then
 		\cp /etc/php.ini /root

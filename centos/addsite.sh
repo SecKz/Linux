@@ -62,7 +62,6 @@ read -p "是否添加数据库和用户 [Y/N] (Default N) " dbanswer
 [ "$dbanswer" = 'Y' ] && dbanswer=y
 if [ "$dbanswer" = 'y' ]; then
 	mysql $hup -e "create database IF NOT EXISTS $domain1;";
-
 	mysql $hup << EOF
 	grant all privileges on $domain1.* to '$domain1'@'localhost' identified by '$mysqlpwd';
 EOF
@@ -73,13 +72,13 @@ fi
 
 ngx_conf="/etc/nginx/conf.d/${domain}.conf"
 if [ -f $ngx_conf ]; then
-echo "网站配置文件已经存在:$ngx_conf"
+	echo "网站配置文件已经存在:$ngx_conf"
 else
-read -p "是否添加网站配置文件 [Y/N] (Default N) " siteanswer
-[ "$siteanswer" = 'Y' ] && siteanswer=y
-if [ "$siteanswer" = 'y' ]; then
+	read -p "是否添加网站配置文件 [Y/N] (Default N) " siteanswer
+	[ "$siteanswer" = 'Y' ] && siteanswer=y
+	if [ "$siteanswer" = 'y' ]; then
 
-cat << EOF > $ngx_conf
+	cat << EOF > $ngx_conf
 server {
 	listen       80;
 	server_name  www.${domain};
@@ -96,15 +95,15 @@ server {
 }
 EOF
 
-nginx -s reload
-fi
+	nginx -s reload
+	fi
 fi
 
 if [ "$siteanswer" = 'y' -o "$ftpanswer" = 'y' ]; then
-[ -d "$sitehome" ] || mkdir -p $sitehome;
-cd $sitehome
-echo '网站创建成功' $date >> '0index.php'
-chown -R www:www $sitehome;
+	[ -d "$sitehome" ] || mkdir -p $sitehome;
+	cd $sitehome
+	echo '网站创建成功' $date >> '0index.php'
+	chown -R www:www $sitehome;
 fi
 
 echo "++---------------------------------------------------------------------++"

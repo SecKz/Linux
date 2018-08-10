@@ -19,6 +19,7 @@ skip-name-resolve
 back_log = 300
 wait_timeout = 600
 interactive_timeout = 600
+lock_wait_timeout = 1800
 
 max_connections = 1500
 max_connect_errors = 6000
@@ -73,6 +74,7 @@ pid-file=/var/run/mysqld/mysqld.pid
 explicit_defaults_for_timestamp = 1
 
 sql-mode=NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+
 
 EOF
 
