@@ -20,6 +20,9 @@ Python中第三方的库的安装方法
 # pip list --outdated 			#列出所有过期的库
 
 
+# pip install --default-timeout=100 lxml		解决read timeout 问题
+
+
 pip和easy_install安装方法
 python -m ensurepip
 python -m pip install --upgrade pip

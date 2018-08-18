@@ -1,0 +1,14 @@
+
+
+# telnet host port           From outside, just  (or telnet host:port on Unix systems) to see if the connection is refused, accepted, or timeouts
+# netstat -an				 On the server itself, use it to check to see which ports are listening
+
+connection refused means that nothing is running on that port
+accepted means that something is running on that port
+timeout means that a firewall is blocking access
+
+
+开启CMD的telnet命令
+控制面板 进入“程序与功能”找到“打开或关闭Windows功能”点击进入
+找到“Telnet服务器”和“Telne客户端”两项，勾选保存
+
