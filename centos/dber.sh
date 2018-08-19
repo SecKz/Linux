@@ -2,7 +2,7 @@
 # 导出表中遇到Table is marked as crashed and should be repaired ,进到mysql控制台修复表repair table tablename;
 # dber.sh 0  进入控制台, dber.sh 1 列出全部数据库
 # dber.sh t dbname 列出数据库的表
-# dber.sh e dbname 导出数据库, dber.sh e dbname table 导出数据库的表
+# dber.sh e dbname 导出数据库, dber.sh e dbname table 导出表, dber.sh e dbname table t 只导出表的数据
 # dber.sh i dbname db.sql, 导入sql文件到数据库，没有则创建数据库
 # dber.sh user eric database password	创建用户eric, 授权给数据库database, 密码可以不指定, dber.sh q 'drop user aaa@localhost;flush privileges;'删除用户
 # dber.sh db zcx 创建数据库, dber.sh q 'drop database sports' 删除数据库
@@ -70,10 +70,14 @@ elif [ $# = 2 -a "$1" = 'q'  ]; then								# 执行sql语句
 	mysql $hup -e "$2"
 elif [ $# = 2 -a "$1" = 't'  ]; then								# 查看数据库表
 	mysql $hup -e "use $2;show tables;"
+
 elif [ $# = 2 -a "$1" = e ]; then					# 导出数据库
 	mysqldump $hup $2 > ${dir}${2}-$time.sql
 elif [ $# = 3 -a "$1" = e ]; then					# 导出数据库的单个表
 	mysqldump $hup $2 $3 > ${dir}${2}-${3}-$time.sql
+elif [ $# = 4 -a "$1" = e ]; then					# 导出表数据，不包括表结构
+	mysqldump $hup -t $2 $3 > ${dir}${2}-${3}-$time.sql
+
 elif [ $# = 3 -a "$1" = i ]; then					# 导入sql文件到数据库，没有则创建数据库
 	mysql $hup -e "create database IF NOT EXISTS $2;";
 	mysql $hup $2 < $3;
