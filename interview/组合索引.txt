@@ -1,0 +1,20 @@
+
+为什么要创建组合索引呢？这么简单的情况直接创建一个order_id的索引不就行了吗？
+如果只有一个order_id索引，没什么问题，会用到这个索引，然后mysql要去磁盘上的表里面取到product_id。
+如果有组合索引的话，mysql可以完全从索引中取到product_id，速度自然会快。
+
+再多说几句组合索引的最左优先原则：
+组合索引的第一个字段必须出现在查询组句中，这个索引才会被用到。
+如果有一个组合索引(col_a,col_b,col_c)
+
+下面的情况都会用到这个索引：
+col_a = "some value";
+col_a = "some value" and col_b = "some value";
+col_a = "some value" and col_b = "some value" and col_c = "some value";
+col_b = "some value" and col_a = "some value" and col_c = "some value";
+
+对于最后一条语句，mysql会自动优化成第三条的样子~~。
+
+下面的情况就不会用到索引：
+col_b = "aaaaaa";
+col_b = "aaaa" and col_c = "cccccc";

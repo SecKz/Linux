@@ -1,0 +1,22 @@
+
+MySQL LEFT JOIN 语法
+SQL（MySQL） LEFT JOIN 会取得左表（table1）全部记录，即使右表（table2）并无对应匹配记录。LEFT JOIN 基本语法如下：
+
+select article.aid,article.title,user.username from article left join user on article.uid = user.uid
+select article.aid,article.title,user.username from article left join user on article.uid = user.uid where user.uid is null
+
+
+left join(左联接) 返回包括左表中的所有记录和右表中联结字段相等的记录 
+right join(右联接) 返回包括右表中的所有记录和左表中联结字段相等的记录
+inner join(等值连接) 只返回两个表中联结字段相等的行
+
+
+左表(A)的记录将会全部表示出来,而右表(B)只会显示符合搜索条件的记录(例子中为: A.aID = B.bID).B表记录不足的地方均为NULL.
+这里只显示出了 A.aID = B.bID的记录.这说明inner join并不以谁为基础,它只显示符合条件的记录.
+
+left join与 inner join 明显的区别是，左表记录被全部取出，即使右表无对应匹配记录，记录不足的地方均为NULL.
+
+http://www.cnblogs.com/pcjim/articles/799302.html
+
+
+

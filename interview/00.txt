@@ -1,0 +1,27 @@
+
+* 第4题:简述一下echo、print、print_r 区别
+* print_r()主要用来输出数组的结构;echo 和 print 主要用来输出字符串,只不过echo 可同时输出多个字符串,print 只能输出一个字符串;
+* echo 和 print 区别:
+(1)使用命令方式来输出字符串,
+(2)使用函数方式来输出字符串,
+echo无返回值,print有返回值,成功返回 1,失败返回 0
+
+include产生一个warning，而require产生直接产生错误中断
+require在运行前载入
+include在运行时载入
+require_once
+include_once
+
+ *      (1)使用include时,当包含的文件不存在时系统会报出警告级别的错误,但并不影响程序的后续执行.
+ *      (2)使用require时,当包含的文件不存在时系统会先报出警告级别的错误,接着又报出一个致命性的错误,将终止程序的后续执行.
+ *      (3)require只会解释包含的文件一次,不会再解释第二次,因而效率相对较高;而include则会重复的解释包含的文件
+ *      (4)载入时机不同:require在运行前载入包含文件,include在运行时载入包含文件
+
+
+
+1.12 Safe_mode 打开后哪些地方受限.
+启动safe_mode，会对许多PHP函数进行限制，特别是和系统相关的文件打开、命令执行等函数.
+所有操作文件的函数将只能操作与脚本UID相同的文件.
+
+touch rmdir chmod chown system  fopen  exec copy unlink
+

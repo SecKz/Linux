@@ -1,0 +1,114 @@
+
+localStorage		可以跨页面,跨窗口
+sessionStorage		只能存储字符串数据，无法直接存储数组类型和JSON对象
+
+
+HTML5 Canvas 元素有什么用？
+答：Canvas 元素用于在网页上绘制图形，该元素标签强大之处在于可以直接在 HTML 上进行图形操作。
+
+绘画 canvas 元素
+
+用于媒介回放的 video 和 audio 标签
+
+
+6、HTML5 存储类型有什么区别？
+
+HTML5 能够本地存储数据，在之前都是使用 cookies 使用的。HTML5 提供了下面两种本地存储方案：
+localStorage 用于持久化的本地存储，数据永远不会过期，关闭浏览器也不会丢失。
+sessionStorage 同一个会话中的页面才能访问并且当会话结束后数据也随之销毁。因此sessionStorage不是一种持久化的本地存储，仅仅是会话级别的存储
+
+web storage和cookie的区别
+
+Web Storage的概念和cookie相似，区别是它是为了更大容量存储设计的。
+Cookie的大小是受限的，并且每次你请求一个新的页面的时候Cookie都会被发送过去，这样无形中浪费了带宽，另外cookie还需要指定作用域，不可以跨域调用。
+
+Cookie的作用是与服务器进行交互，作为HTTP规范的一部分而存在 ，而Web Storage仅仅是为了在本地“存储”数据而生。
+
+HTML5 有哪些新增的表单元素？
+
+datetime， output，keygen date month week time color number range email url
+
+
+
+下面我们来看一下HTML 5提供的一些新的标签用法以及和HTML 4的区别。
+
+<audio> 标签定义声音，比如音乐或其他音频流。
+HTML5:<audio src="someaudio.wav">您的浏览器不支持 audio 标签。</audio>
+HTML4:<object type="application/ogg" data="someaudio.wav"><param name="src" value="someaudio.wav"></object>
+
+<video> 标签定义视频，比如电影片段或其他视频流。
+HTML5: <video src="movie.ogg" controls="controls">您的浏览器不支持 video 标签。</video>
+HTML4:<object type="video/ogg" data="movie.ogv"><param name="src" value="movie.ogv"></object>
+
+
+<canvas> 标签定义图形，比如图表和其他图像。这个 HTML 元素是为了客户端矢量图形而设计的。它自己没有行为，但却把一个绘图 API 展现给客户端 JavaScript 以使脚本能够把想绘制的东西都绘制到一块画布上。
+HTML5:<canvas id="myCanvas" width="200" height="200"></canvas>
+HTML4:<object data="inc/hdr.svg" type="image/svg+xml" width="200" height="200"></object>
+
+<nav> 标签定义导航链接的部分。
+HTML5: <nav></nav>
+HTML4:<ul></ul>
+
+<footer> 标签定义 section 或 document 的页脚。典型地，它会包含创作者的姓名、文档的创作日期以及/或者联系信息。
+HTML5: <footer></footer>
+HTML4: <div></div>
+
+<header> 标签定义 section 或 document 的页眉。
+HTML5: <header></header>
+HTML4: <div></div>
+
+<hgroup> 标签用于对网页或区段（section）的标题进行组合。
+HTML5: <hgroup></hgroup>
+HTML4: <div></div>
+
+<keygen> 标签定义生成密钥。
+HTML5: <keygen>
+HTML4: none
+
+<datalist> 标签定义可选数据的列表。与 input 元素配合使用，就可以制作出输入值的下拉列表。
+HTML5: <datalist></datalist>
+HTML4: see combobox.
+
+<details> 标签定义元素的细节，用户可进行查看，或通过点击进行隐藏。与 <legend> 一起使用，来制作 detail 的标题。该标题对用户是可见的，当在其上点击时可打开或关闭 detail。
+HTML5: <details></details>
+HTML4: <dl style="display:hidden"></dl>
+
+<embed> 标签定义嵌入的内容，比如插件。
+HTML5: <embed src="horse.wav" />
+HTML4: <object data="flash.swf"  type="application/x-shockwave-flash"></object>
+
+<figcaption> 标签定义 figure 元素的标题。”figcaption” 元素应该被置于 “figure” 元素的第一个或最后一个子元素的位置。
+HTML5: <figure><figcaption>PRC</figcaption></figure>
+HTML4: none
+
+<figure> 标签用于对元素进行组合。使用 <figcaption> 元素为元素组添加标题。
+HTML5: <figure><figcaption>PRC</figcaption><p>The People's Republic of China was born in 1949...</p></figure>
+HTML4: <dl><h1>PRC</h1><p>The People's Republic of China was born in 1949...</p></dl>
+
+
+<output> 标签定义不同类型的输出，比如脚本的输出。
+HTML5: <output></output>
+HTML4: <span></span>
+
+<progress> 标签运行中的进程。可以使用 <progress> 标签来显示 JavaScript 中耗费时间的函数的进程。
+HTML5: <progress></progress>
+HTML4: none
+
+<section> 标签定义文档中的节（section、区段）。比如章节、页眉、页脚或文档中的其他部分。
+HTML5: <section></section>
+HTML4: <div></div>
+
+<source> 标签为媒介元素（比如 <video> 和 <audio>）定义媒介资源。
+HTML5: <source>
+HTML4: <param>
+
+<summary> 标签包含 details 元素的标题，”details” 元素用于描述有关文档或文档片段的详细信息。”summary” 元素应该是 “details” 元素的第一个子元素。
+HTML5: <details><summary>HTML 5</summary>This document teaches you everything you have to learn about HTML 5.</details>
+HTML4: none
+
+<time> 标签定义日期或时间，或者两者。
+HTML5: <time></time>
+HTML4: <span></span>
+
+
+

@@ -1,0 +1,18 @@
+
+tcp, http
+https://phperzh.com/articles/1709
+
+
+CI和TP的区别
+redis
+pdo
+php设计模式
+nginx
+
+缓存
+mysql
+优化mysql
+引用操作符
+
+高并发解决方案
+https://www.zhihu.com/question/20049768

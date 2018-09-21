@@ -1,0 +1,44 @@
+
+http://www.cnblogs.com/oshine/p/3953259.html
+http://www.cnblogs.com/oshine/p/3964362.html
+
+Nginx的负载均衡 - 保持会话 (ip_hash)
+
+3. 那么负载均衡如何保持通话呢？
+当然现在有好几种方案，IP哈希策略和redis
+IP哈希策略
+　　优点：能较好地把同一个客户端的多次请求分配到同一台服务器处理，避免了加权轮询无法适用会话保持的需求。
+　　缺点：当某个时刻来自某个IP地址的请求特别多，那么将导致某台后端服务器的压力可能非常大，而其他后端服务器却空闲的不均衡情况。
+
+ip_hash算法的原理很简单，根据请求所属的客户端IP计算得到一个数值，然后把请求发往该数值对应的后端。
+所以同一个客户端的请求，都会发往同一台后端，除非该后端不可用了。ip_hash能够达到保持会话的效果。
+
+
+https://segmentfault.com/q/1010000005654691
+http://www.cnblogs.com/mecity/archive/2011/06/20/2085529.html
+二、文件上传下载
+
+如果实现了负载均衡，除了Session问题，我们还会碰到文件的上传下载问题。文件不可能上传不同的服务器上，这样会导致下载不到对应文件的问题。我们看一下下面的方案
+
+独立文件服务器 
+文件压缩数据库
+
+1.专门整几台服务器用来存这些静态资源；
+2.整出几个盘，弄成网络盘(nfs)，专门用来存储这些文件，每个服务器都去挂载这几个盘，和windows的共享文件夹类似；
+3.上传成功之后返回一个文件的url，这个url就是文件的地址了；
+
+Nginx 集群负载均衡器：NFS文件存储共享安装配置优化篇
+https://www.renwole.com/archives/321
+
+会话数据一般放在共享存储中，如放到redis或关系数据库，会话id一般就保存在cookie中；
+用户上传文件，简单的话可以放云存储中，比如七牛或又拍；另一种方式是搭网络共享文件存储系统，如nfs, 或者分布式文件系统，如moosefs, dfs 等等。
+
+
+
+nginx负载均衡 loadbalancing 故障转移 failover
+https://serverfault.com/questions/140990/nginx-automatic-failover-load-balancing
+
+
+双机热备
+
+

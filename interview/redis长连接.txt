@@ -1,0 +1,9 @@
+
+
+2、抓包方式
+抓包命令：tcpdump –i any –X –v –vv tcp and dst port 6379
+同样用connec方式和pconnect方式执行多次，通过抓包发现，使用connect方式连接每次都能抓到包，说明connect每次都会建立连接；使用pconnect方式连接只有第一次访问的时候能抓到包，以后每次执行都抓不到包，说明连接只建立一次。
+而且，当使用pconnect方式连接时，通过redis-cli连接到redis，并执行info clients，可以看到connected_clients=2，排除终端的命令行连接以外，还有一个是与php-fpm保持的长连接，说明即使请求结束，php-fpm仍然会保留与redis的连接；如果采用connect方式进行连接，则connected_clients=1，即请求结束后php-fpm就释放了与redis的连接。
+
+
+

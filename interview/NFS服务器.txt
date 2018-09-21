@@ -1,0 +1,18 @@
+
+虽然动态内容可交由后端的PHP服务器执行，但静态页面还需要Web服务器自己解析，那是否意味着多台Web服务器都需要在各自的系统中都存有一份静态页面数据呢？那么如果能将静态页面集中存放，所有Web服务器都来集中地取文件，对于文件的一致性就有了保障，这个集中地就叫做“文件共享服务器”；
+
+
+
+vi /etc/exports   #编辑配置文件，添加以下内容
+/home/html/data *(rw,sync,no_subtree_check,anonuid=500,anongid=500)
+
+相关参数说明：
+/home/html/data 						NFS共享目录
+192.168.21.0/24							允许这个网段内的IP地址访问共享目录
+rw  									读取写入权限
+sync 									数据实时同步
+no_subtree_check 						不检查目录权限，提高数据读取效率
+anonuid=500 							500代表www用户 
+anongid=500  							500代表www组  
+
+mount -t nfs 45.63.122.222:/home/html/data /home/html/data

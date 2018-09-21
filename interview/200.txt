@@ -1,0 +1,33 @@
+200"   ; OK
+
+| "301"   ; Moved Permanently
+| "302"   ; Moved Temporarily
+| "401"   ; Unauthorized     401： 表示未经授权,
+| "403"   ; Forbidden		403禁止访问
+| "404"   ; Not Found
+| "500"   ; Internal Server Error
+| "502"   ; Bad Gateway
+| "503"   ; Service Unavailable
+
+502 Bad Gateway错误
+504 Bad Gateway timeout 网关超时
+
+2、502、504出现的可能性
+web服务器故障、程序进程不够
+
+200 : 请求成功，请求的数据随之返回。
+301 : 永久性重定向。
+302 : 暂时行重定向。
+401 : 当前请求需要用户验证。
+403 : 服务器拒绝执行请求，即没有权限。
+404 : 请求失败，请求的数据在服务器上未发现。
+500 : 服务器错误。一般服务器端程序执行错误。
+503 : 服务器临时维护或过载。这个状态时临时性的。
+
+Include require include_once require_once 的区别.
+处理失败方式不同：
+require 失败时会产生一个致命级别错误，并停止程序运行。
+include 失败时只产生一个警告级别错误，程序继续运行。
+
+include_once/require_once和include/require 处理错误方式一样，
+唯一区别在于当所包含的文件代码已经存在时候，不在包含。

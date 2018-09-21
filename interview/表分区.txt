@@ -1,0 +1,77 @@
+
+2. 表分区与分表的区别
+
+表分区，是指根据一定规则，将数据库中的一张表分解成多个更小的，容易管理的部分。从逻辑上看，只有一张表，但是底层却是由多个物理分区组成。
+分表：指的是通过一定规则，将一张表分解成多张不同的表。比如将用户订单记录根据时间成多个表。
+分表与分区的区别在于：分区从逻辑上来讲只有一张表，而分表则是将一张表分解成多张表。
+
+3. 表分区有什么好处？
+
+1）分区表的数据可以分布在不同的物理设备上，从而高效地利用多个硬件设备。和单个磁盘或者文件系统相比，可以存储更多数据 
+2）通过跨多个磁盘来分散数据查询，来获得更大的查询吞吐量。
+3）优化查询。在where语句中包含分区条件时，可以只扫描一个或多个分区表来提高查询效率；涉及sum和count语句时，也可以在多个分区上并行处理，最后汇总结果。
+4）分区表更容易维护。例如：想批量删除大量数据可以清除整个分区。
+5）可以使用分区表来避免某些特殊的瓶颈，例如InnoDB的单个索引的互斥访问，ext3问价你系统的inode锁竞争等。
+
+4. 分区表的限制因素
+
+1）一个表最多只能有1024个分区 
+2） MySQL5.1中，分区表达式必须是整数，或者返回整数的表达式。在MySQL5.5中提供了非整数表达式分区的支持。 
+3）如果分区字段中有主键或者唯一索引的列，那么多有主键列和唯一索引列都必须包含进来。即：分区字段要么不包含主键或者索引列，要么包含全部主键和索引列。 
+4）分区表中无法使用外键约束 
+5）MySQL的分区适用于一个表的所有数据和索引，不能只对表数据分区而不对索引分区，也不能只对索引分区而不对表分区，也不能只对表的一部分数据分区。
+
+5. 如何判断当前MySQL是否支持分区？
+命令：show variables like '%partition%' 运行结果:
+
+6. MySQL支持的分区类型有哪些？
+
+1 RANGE分区：按照数据的区间范围分区 
+2 LIST分区：按照List中的值分区，与RANGE的区别是，range分区的区间范围值是连续的。 
+3 HASH分区 
+4 KEY分区 说明 在MySQL5.1版本中，RANGE,LIST,HASH分区要求分区键必须是INT类型，或者通过表达式返回INT类型。但KEY分区的时候，可以使用其他类型的列（BLOB，TEXT类型除外）作为分区键。
+
+3. Hash分区
+对表的一个或多个列的hashkey进行计算，最后通过这个Hash码不同数值对应的数据区域进行自动分区，但需要指定分区数量。
+List和range必须指定一个给定的列值或列值集合应该保存在哪个分区中，而在HASH分区中，MYSQL自动完成这些工作。
+Hash分区的目的是将数据均匀的分布到预先定义的各个分区中
+
+根据手册，增加myisam_max_sort_file_size 会增加分区性能
+
+mysql5.6可以在query语句中指定分区
+SELECT * FROM `buserfq` PARTITION (p0); 
+
+SELECT table_rows as 'count(*)' FROM information_schema.partitions WHERE table_schema = schema() and table_name ='employees' and partition_name = 'p0';
+
+给已存在的表分区
+ALTER TABLE tbl PARTITION BY RANGE( id ) ( 
+PARTITION p0 VALUES LESS THAN (10), 
+PARTITION p1 VALUES LESS THAN (20), 
+PARTITION p2 VALUES LESS THAN maxvalue
+); 
+
+删除分区
+alter table tbl remove partitioning;		只删除分区，数据还在
+alter table tbl truncate partition all;		删除分区数据
+alter table tbl truncate partition p1,p2;  	删除分区p1，p2的数据，但分区还在
+alter table tbl drop partition p0;			删除分区p0及其数据
+
+desc PARTITIONS  select * from buserfq where u_id > 100 and u_id < 30000
+
+
+创建分区表
+create table t(
+  id int
+) engine=myisam 
+  partition by range(id)(
+  partition p0 values less than (10),
+  partition p1 values less than (20)
+);
+
+http://286.iteye.com/blog/1901944
+http://blog.csdn.net/zzy7075/article/details/70054818
+http://www.ywnds.com/?p=7226
+http://zccst.iteye.com/blog/1697043
+
+http://lobert.iteye.com/blog/1955841
+https://dev.mysql.com/doc/refman/5.5/en/alter-table-partition-operations.html

@@ -1,0 +1,64 @@
+
+MySQL Router
+MySQL Router是处于应用client和dbserver之间的轻量级代理程序，它能检测，分析和转发查询到后端数据库实例，并把结果返回给client。是mysql-proxy的一个替代品。
+
+Mysql router高可用和负载均衡测试
+https://my.oschina.net/neochen/blog/631951
+http://www.fblinux.com/?p=922
+http://blog.csdn.net/Becivells/article/details/58332931
+https://dev.mysql.com/downloads/router/
+
+MySQL集群的几种方案
+http://blog.csdn.net/terry_water/article/details/50292913
+
+bind_address  指定mysql router绑定的服务器
+bind_port         指定绑定的端口
+destinations     指定后端mysql server 列表 (ip:port 格式，使用逗号分隔)
+mode               读写模式(read-write, read_only)
+
+
+http://www.linuxidc.com/Linux/2017-04/142771p5.htm
+
+MySQL Proxy是一个处于你的client端和MySQL server端之间的简单程序，它可以监测、分析或改变它们的通信。它使用灵活，没有限制，常见的用途包括：负载平衡，故障、查询分析，查询过滤和修改等等。
+
+MySQL Proxy就是这么一个中间层代理，简单的说，MySQL Proxy就是一个连接池，负责将前台应用的连接请求转发给后台的数据库，并且通过使用lua脚本，可以实现复杂的连接控制和过滤，从而实现读写分离和负载平衡。对于应用来说，MySQL Proxy是完全透明的，应用则只需要连接到MySQL Proxy的监听端口即可。
+
+MySQL Proxy更强大的一项功能是实现“读写分离”，基本原理是让主数据库处理事务性查询，让从库处理SELECT查询。数据库复制被用来把事务性查询导致的变更同步到集群中的从库。
+
+/etc/mysql-proxy.cnf
+
+daemon=true                        #以后台守护进程方式启动
+keepalive=true                     #当进程故障后自动重启
+log-level=debug                  #设置日志级别为debug，可以在调试完成后改成info
+log-file=/var/log/mysql-proxy.log                      #设置日志文件路径
+basedir=/usr/local/mysql-proxy                        #设置mysql-proxy的家目录
+
+proxy-backend-addresses=192.168.216.133:3306                             #设置主服务器
+proxy-read-only-backend-addresses=192.168.216.132:3306                   #设置从服务器
+
+proxy-address=192.168.216.132:4040          #指定mysql-proxy的监听地址
+
+proxy-lua-script=/usr/local/mysql-proxy/share/doc/mysql-proxy/rw-splitting.lua     #设置读写分离脚本路径
+
+admin-address=192.168.216.132:4041        #设置mysql-proxy管理地址，需要家长admin插件
+admin-username=admin                                  #设置登录管理地址用户
+admin-password=admin                                   #设置管理用户密码
+admin-lua-script=/usr/local/mysql-proxy/share/doc/mysql-proxy/admin.lua     #设置管理后台lua脚本路径，改脚本默认没有要自动定义
+
+
+http://zhangguangzhi.top/2017/09/01/%E4%BD%BF%E7%94%A8mysql-proxy%E9%85%8D%E7%BD%AEmysql%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/
+
+测试proxy 3307端口
+mysql -h127.0.0.1 -uroot -p123 -P3307
+> show processlist;
+
+
+mysql -uadmin  -padmin  -h45.63.122.222 -P4041
+> SELECT * FROM backends;
+
+
+sysbench
+使用sysbench对mysql压力测试
+
+http://blog.chinaunix.net/uid-23284114-id-5754589.html
+http://blog.csdn.net/fgf00/article/details/50599814

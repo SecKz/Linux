@@ -1,0 +1,150 @@
+
+MySQL存储引擎
+在mysql客户端中，使用以下命令可以查看MySQL支持的引擎。
+show engines;
+
+InnoDB
+MyISAM
+memory
+merge
+archive
+csv
+
+
+
+如MyISAM和MEMORY存储引擎采用的是表级锁（table-level locking）；
+InnoDB存储引擎既支持行级锁（row-level locking），也支持表级锁，但默认情况下是采用行级锁。
+select 和 insert 都会产生锁
+
+7 ）所有表类型都支持表级锁，但是 MyISAM 只支持表级锁。
+8 ）有两种类型的表级锁：读锁和写锁。
+读锁是共享锁，支持并发读，写操作被锁。
+写锁是独占锁，上锁期间其他线程不能读表或写表。
+
+10 ） MySQL 的表级锁都是写锁优先，而且是采用排队机制，这样不会出现死锁的情况。
+
+lock tables [table1] read,[table2] write;
+
+1. table1 允许所有人读, 但任何进程都不能写，直到锁被释放。
+2. table2 仅允许本进程读写, 其他进程不能读写。
+
+lock tables为当前线程锁定表。 unlock tables释放被当前线程持有的任何锁。
+当线程发出另外一个lock tables时，或当服务器的连接被关闭时，当前线程锁定的所有表会自动被解锁。 
+
+
+如果您正在使用MySQL中的一个不支持事务的存储引擎，则如果您想要确定在SELECT和UPDATE之间没有其它线程，您必须使用LOCK TABLES。
+如果您正在对一组MyISAM表运行许多操作，锁定您正在使用的表，可以快很多。锁定MyISAM表可以加快插入、更新或删除的速度。不利方面是会影响其他进程的操作
+
+MyISAM在执行查询语句（SELECT）前，会自动给涉及的所有表加读锁，
+在执行更新操作（UPDATE、DELETE、INSERT等）前，会自动给涉及的表加写锁，这个过程并不需要用户干预，因此用户一般不需要直接用LOCK TABLE命令给MyISAM表显式加锁。
+
+什么时候使用表锁
+
+MySQL中有表锁定和行锁定，MySQL中myisam存储引擎是表锁定，innodb存储引擎是行锁定。
+分为包含共享锁和独占锁两种。独占锁就是整个数据文件归一个线程所有，其他线程就必须等待。
+
+对于InnoDB表，在绝大部分情况下都应该使用行级锁，因为事务和行锁往往是我们之所以选择InnoDB表的理由。
+但在个另特殊事务中，也可以考虑使用表级锁。
+第一种情况是：事务需要更新大部分或全部数据，表又比较大，如果使用默认的行锁，不仅这个事务执行效率低，而且可能造成其他事务长时间锁等待和锁冲突，这种情况下可以考虑使用表锁来提高该事务的执行速度。
+第二种情况是：事务涉及多个表，比较复杂，很可能引起死锁，造成大量事务回滚。这种情况也可以考虑一次性锁定事务涉及的表，从而避免死锁、减少数据库因事务回滚带来的开销。
+当然，应用中这两种事务不能太多，否则，就应该考虑使用ＭyISAＭ表。
+
+表级锁：开销小，加锁快；不会出现死锁；锁定粒度大，发生锁冲突的概率最高,并发度最低。
+行级锁：开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低,并发度也最高。
+
+1.共享锁(S)
+允许一个事务去读一行,阻止其他事务获得相同数据集的排他锁.
+2.排他锁(X)
+允许获得排他锁的事务更新数据,阻止其他事务取得相同数据集的共享读锁和排他写锁.
+
+1.共享锁(S)
+SELECT * FROM table_name WHERE ... LOCK IN SHARE MODE
+2.排他锁(X)
+SELECT * FROM table_name WHERE ... FOR UPDATE
+
+innodb行锁实现方式
+只有通过索引条件检索数据，InnoDB才使用行级锁，否则，InnoDB将使用表锁！
+行锁是索引记录上的锁。 例如，SELECT c1 FROM t WHERE c1 = 10 FOR UPDATE; 阻止任何其它事务插入，更新或删除t.c1的值为10的行。
+
+
+所谓死锁：是指两个或两个以上的进程在执行过程中，因争夺资源而造成的一种互相等待的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。
+
+问题4：innodb如何处理死锁？
+Innodb目前处理死锁的方法是：将持有最少行级排他锁的事务进行回滚。
+
+show OPEN TABLES where In_use > 0
+
+lock table user read
+unlock TABLES
+
+update user set set u_type=1 where u_id=1
+select * from admin
+
+show OPEN TABLES where In_use > 0
+show PROCESSLIST
+kill pid
+
+Mysql中的事务
+
+自动提交（AutoCommit）
+mysql默认采用AutoCommit模式，也就是每个sql都是一个事务，并不需要显示的执行事务
+
+脏读：指一个线程中的事务读取到了另外一个线程中未提交的数据。
+不可重复读（虚读）：指一个线程中的事务读取到了另外一个线程中提交的update的数据。
+幻读：指一个线程中的事务读取到了另外一个线程中提交的insert的数据。
+
+脏读（Dirty Read) 读取未提交内容
+脏读意味着一个事务读取了另一个事务未提交的数据,而这个数据是有可能回滚
+
+不可重复读(Unrepeatable Read)
+在第一个事务读取数据后，第二个事务对数据进行了修改，导致第一个事务结束前再访问这个数据的时候，会发现两次读取到的数据是不一样的，因此称为不可重复读。
+
+不可重复读意味着，在数据库访问中，一个事务范围内两个相同的查询却返回了不同数据。这是由于查询时系统中其他事务修改的提交而引起的。
+例如：事务B中对某个查询执行两次，当第一次执行完时，事务A对其数据进行了修改。事务B中再次查询时，数据发生了改变
+
+
+幻读(phantom read)
+幻读,是指当事务不是独立执行时发生的一种现象，例如第一个事务对一个表中的数据进行了修改，这种修改涉及到表中的全部数据行。同时，第二个事务也修改这个表中的数据，这种修改是向表中插入一行新数据。那么，以后就会发生操作第一个事务的用户发现表中还有没有修改的数据行，就好象发生了幻觉一样.
+
+
+MySQL中乐观锁和悲观锁 原理、区别
+https://www.cnblogs.com/qiaoyanlin/p/6705661.html
+http://blog.csdn.net/qq_36617521/article/details/53379846
+
+悲观锁的特点是先获取锁，再进行业务操作，即“悲观”的认为获取锁是非常有可能失败的，因此要先确保获取锁成功再进行业务操作。
+通常所说的“一锁二查三更新”即指的是使用悲观锁。
+
+
+悲观锁(Pessimistic Lock), 顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。
+
+一个典型的依赖数据库的悲观锁调用：
+select * from account where name="Jack" for update
+这条 sql 语句锁定了 account 表中所有符合检索条件（ name=”Jack” ）的记录。
+本次事务提交之前，外界无法修改这些记录, 但是事物提交后，会释放事务过程中的锁。
+
+注：需要注意的是，在事务中，只有SELECT ... FOR UPDATE 或LOCK IN SHARE MODE 同一笔数据时会等待其它事务结束后才执行，一般SELECT ... 则不受此影响。
+拿上面的实例来说，当我执行select status from t_goods where id=1 for update;后。
+我在另外的事务中如果再次执行select status from t_goods where id=1 for update;则第二个事务会一直等待第一个事务的提交，此时第二个查询处于阻塞的状态，但是如果我是在第二个事务中执行select status from t_goods where id=1;则能正常查询出数据，不会受第一个事务的影响。
+
+
+五、select ... for update 锁表的范围
+由于InnoDB预设是Row-Level Lock，所以只有「明确」的指定主键，MySQL才会执行Row lock (只锁住被选取的资料行) ，否则MySQL将会执行Table lock
+
+举个例子: 假设有个表是products ，里面有id跟name二个栏位，id是主键。
+
+例1: (明确指定主键，并且有此笔资料，row lock)
+SELECT * FROM products WHERE id='3' FOR UPDATE;
+SELECT * FROM products WHERE id='3' and type=1 FOR UPDATE;
+
+例2: (明确指定主键，若查无此笔资料，无lock)
+SELECT * FROM products WHERE id='-1' FOR UPDATE;
+
+例2: (无主键，table lock)
+SELECT * FROM products WHERE name='Mouse' FOR UPDATE;
+
+例3: (主键不明确，table lock)
+SELECT * FROM products WHERE id<>'3' FOR UPDATE;
+
+例4: (主键不明确，table lock)
+SELECT * FROM products WHERE id LIKE '3' FOR UPDATE;
+

@@ -1,0 +1,22 @@
+
+
+1、创建索引
+2、复合索引
+优化你的MySQL查询缓存  show variables like "%query_cache%"
+EXPLAIN你的查询语句
+避免使用 SELECT *
+定位慢查询
+http://www.jb51.net/article/42884.htm
+http://www.cnblogs.com/chenshishuo/p/5014829.html
+
+
+优化MYSQL数据库的方法
+
+语句方面：
+1 使用索引，增加查询效率
+2 优化查询语句，提高索引命中率
+数据库涉及方面：
+1 构造分库分表，提高数据库的存储和扩展能力
+2 根据需要使用不同的存储引擎
+
+

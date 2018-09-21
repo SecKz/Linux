@@ -1,0 +1,48 @@
+
+http://www.cnblogs.com/zhongyuan/p/4385747.html
+http://dataunion.org/14895.html
+https://segmentfault.com/q/1010000005881971
+http://bbs.earnp.com/article/314
+
+https://cnodejs.org/topic/5502a23573263b0e4eef9b85
+http://www.infoq.com/cn/articles/summary-and-key-steps-of-vip-orders-depots-table
+
+
+如果你切分了10张表，需要做一个归并查询，即查询10张表里的数据再合并返回，我目前的解决方案是用多线程查询后对结果进行合并，线程池设置大的话速度会快些，但要根据自己的情况动态调整线程数。
+
+https://www.kancloud.cn/thinkphp/mysql-design-optimalize/39326
+
+
+1. 水平分割 (取模的方式)
+1. 拆分原则
+通常情况下，我们使用取模的方式来进行表的拆分;比如一张有400W的用户表users，为提高其查询效率我们把其分成4张表users1，users2，users3，users4
+通过用ID取模的方法把数据分散到四张表内Id%4+1 = [1,2,3,4]
+然后查询,更新,删除也是通过取模的方法来查询
+
+$_GET['id'] = 17,
+17%4 + 1 = 2,  
+$tableName = 'users'.'2'
+Select * from users2 where id = 17;
+
+水平拆分后，同一张表的数据放在不同的库上，无法再依赖数据库本身的auto_increment实现ID的唯一性，多个库之间产生的ID会造成冲突。
+
+实际上你需要的是一个全局的global的ID生成器
+1 临时表uid_temp来提供自增的ID。
+2 通过redis的incr产生自增序列值
+
+在insert时还需要一张临时表uid_temp来提供自增的ID,该表的唯一用处就是提供自增的ID;
+insert into uid_temp values(null);
+得到自增的ID后,又通过取模法进行分表插入;
+
+注意,进行水平拆分后的表,字段的列和类型和原表应该是相同的,但是要记得去掉auto_increment自增长
+
+2.垂直分割
+垂直分割指的是：表的记录并不多，但是字段却很长，表占用空间很大，检索表的时候需要执行大量的IO，严重降低了性能。这时需要把大的字段拆分到另一个表，并且该表与原表是一对一的关系。
+
+比如论坛文章列表，如果都在一条记录，那样在文章列表中查看文章，文章这个大字段也会被扫描，很消耗性能。
+
+这时候我们怎么办呢？其实我们需要建立2个表，一个表存文章标题，作者，点击量等信息，例外一个子表只存储文章id和文章内容，每次需要查看文章详情的时候，才去获取这个大字段，这样可以对mysql达到很好的优化！
+
+
+数据库水平切分架构实践
+http://www.ywnds.com/?p=11500

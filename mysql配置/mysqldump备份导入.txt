@@ -1,8 +1,8 @@
 
 
 根据条件导出
-mysqldump -uroot -p123 zcx admin --where="status=0 and id>20" > dump.sql
-
+mysqldump -uroot -p123 zcx admin --where="admin_id>1" > d:/dump.sql
+mysqldump -uroot -p123 zcx admin -t --where="admin_id>1" > d:/dump.sql			只导出数据，不导出结构
 
 导出用mysqldump,导入用mysql或source，帮助mysqldump --help
 

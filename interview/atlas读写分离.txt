@@ -1,0 +1,17 @@
+
+https://github.com/Qihoo360/Atlas/wiki/Atlas%E7%9A%84%E6%9E%B6%E6%9E%84
+https://github.com/Qihoo360/Atlas/wiki/Atlas%E7%9A%84%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95
+
+atlas下载
+https://github.com/Qihoo360/Atlas/releases/
+
+
+mysql读写分离（使用Atlas实现）
+http://www.cnblogs.com/yyhh/p/5084844.html
+
+/usr/local/mysql-proxy  生成4个文件夹
+
+/usr/local/mysql-proxy/bin
+./mysql-proxyd test start      #启动Atlas。
+./mysql-proxyd test restart    #重启Atlas。
+./mysql-proxyd test stop       #停止Atlas。

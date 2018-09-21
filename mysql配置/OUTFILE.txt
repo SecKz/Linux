@@ -1,0 +1,14 @@
+
+导出sql语句的结果到文件
+
+select *
+into outfile "aa001.csv"
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\n';
+
+
+导入, csv文件中的每一列要按顺序对应表中的每一个字段
+load data infile 'D:/phpStudy/PHPTutorial/MySQL/aa002.csv' into table admin fields terminated by ',' lines terminated by '\n';
+
+

@@ -1,0 +1,5 @@
+
+http://blog.csdn.net/wanglei_storage/article/details/51175135
+
+什么是Keepalived呢，keepalived观其名可知，保持存活，在网络里面就是保持在线了，也就是所谓的高可用或热备，用来防止单点故障(单点故障是指一旦某一点出现故障就会导致整个系统架构的不可用)的发生，那说到keepalived时不得不说的一个协议就是VRRP协议，可以说这个协议就是keepalived实现的基础
+

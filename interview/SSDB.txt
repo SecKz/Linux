@@ -1,0 +1,19 @@
+
+
+ssdb是一款类似于redis的nosql数据库，不过redis是基于内存的，服务器比较昂贵，ssdb则是基于硬盘存储的，很容易扩展，对于一些对速度要求不是太高的应用，还是不错的选择。
+
+SSDB 是一个使用 C/C++ 语言开发的高性能 NoSQL 数据库, 支持 KV, list, map(hash), zset(sorted set) 等数据结构, 用来替代或者与 Redis 配合存储十亿级别列表的数据。实现上其使用了 Google 的 LevelDB作为存储引擎，SSDB 不会像 Redis 一样狂吃内存，而是将大部分数据存储到磁盘上。最重要的是，SSDB采用了New BSD License 开源协议进行了开源，目前已经在许多互联网公司得到广泛使用, 如奇虎 360, TOPGAME等。其有以下几个特点：
+
+替代 Redis 数据库, Redis 的 100 倍容量
+LevelDB 网络支持, 使用 C/C++ 开发
+Redis API 兼容, 支持 Redis 客户端
+适合存储集合数据, 如 list, hash, zset...
+客户端 API 支持的语言包括: C++, PHP, Python, Java, Go
+持久化的队列服务
+主从复制, 负载均衡
+拥有GUI管理工具（phpssdbadmin）
+
+https://www.iteblog.com/archives/2160.html
+
+
+
