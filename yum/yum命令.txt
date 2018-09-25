@@ -1,5 +1,5 @@
 
-
+# yum localinstall nginx					yum也可以安装本地rpm包，从而解决依赖问题, rpm -ivh nginx会有依赖问题
 # tail /var/log/yum.log						查看yum安装的日志
 # rpm -qi php								可以查看比yum info php更详细的信息
 # yum --showduplicates list php				列出所有可安装的版本

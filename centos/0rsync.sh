@@ -6,9 +6,9 @@
 
 . "/root/centos/fun.sh"
 
-rpm -q rsync > /dev/null
+grep -q '^rsync --daemon' /etc/rc.local > /dev/null
 if [ $? != 0 ]; then
-	yum install rsync
+	yum reinstall rsync
 	grep -q '^rsync --daemon' /etc/rc.local || echo "rsync --daemon" >> /etc/rc.local
 	\cp -a /root/centos/rsyncd.conf /etc
 	killall rsync 2> /dev/null;

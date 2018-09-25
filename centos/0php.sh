@@ -24,7 +24,11 @@ if [ $? != 0 ]; then
 		sed -ri 's/^upload_max_filesize = [0-9]+M/upload_max_filesize = 10M/' /etc/php.ini
 		sed -ri 's/^post_max_size = [0-9]+M/post_max_size = 10M/' /etc/php.ini
 		sed -ri 's/^error_reporting = .+/error_reporting = E_ALL ^ E_NOTICE/' /etc/php.ini
-		sed -ri 's/^display_errors = Off/display_errors = On/' /etc/php.ini
+		sed -ri 's/^display_errors = Off/display_errors = On/' /etc/httpd/conf/httpd.conf
+
+		sed -ri 's/^User apache/User www/' /etc/httpd/conf/httpd.conf
+		sed -ri 's/^Group apache/Group www/' /etc/httpd/conf/httpd.conf
+
 		[ -f '/root/centos/php-fpm.sh' ] && /root/centos/php-fpm.sh
 		[ -d '/var/lib/php/session' ] && chown -R www.www /var/lib/php/session
 		service php-fpm start;
