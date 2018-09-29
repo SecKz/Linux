@@ -1,0 +1,35 @@
+
+
+https://www.cnblogs.com/gyouxu/p/3617906.html
+Amazon EC2是一个IaaS云服务，主要提供弹性的计算资源。通俗的讲，就是提供多种类型的虚拟机。EC2也是整个AWS最核心的组成部分，AWS中有许多的服务需要依赖它。在EC2环境中，虚拟机被称为实例，实例的镜像被称为AMI。
+
+
+亚马逊AWS免费套餐EC2安装centos连接登录并创建root
+https://www.cnblogs.com/wusir/p/3728200.html
+https://www.cnblogs.com/pangguoming/p/7514531.html
+
+
+aws ec2允许root用户密码登陆
+
+1.首先 用密钥登陆 
+2.给 root 设置密码 sudo passwd root
+3.密码设置好后 切换到root用户 su root
+4.修改ssh配置文件， vim /etc/ssh/sshd_config 
+passwordAuthentication no 改为  passwordAuthentication yes
+5 重启 ssh /etc/init.d/ssh restart 或者  /bin/systemctl restart sshd.service
+
+
+aws ec2安装epel源
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+
+aws简单开发之ec2定时开关机
+https://blog.csdn.net/hackstoic/article/details/49563305
+
+
+百度搜索
+aws ec2 site:cnblogs.com
+
+
+18.208.170.229
+ www.amazon.com/gp/profile/amzn1.account.AEUTYUJ2SD45PYZJGLAIRKAK67FQ
