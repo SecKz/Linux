@@ -32,7 +32,7 @@ if [ "$1" = 'un' ]; then
 	exit;
 fi
 
-issue='/etc/issue.net'
+issue='/etc/redhat-release'
 if [ ! -f "$issue" ]; then
 	red '${issue}不存在'
 	exit;
@@ -94,7 +94,7 @@ if [ ! -d /home/html ]; then
 	green "创建目录/home/html"
 	mkdir -p /home/html
 	cd /home/html
-	cp /root/centos/01pinfo.php .
+	cp /root/centos/010pinfo.php .
 	cp /root/centos/ocp22.php .
 	unzip /root/centos/phpmyadmin.zip -d . > /dev/null
 	mv phpmyadmin pan113
@@ -102,7 +102,7 @@ if [ ! -d /home/html ]; then
 	find /home/html -type f -exec chmod 644 {} \;
 	mkdir 0aa
 	cd 0aa
-	cp ../01pinfo.php .
+	cp ../010pinfo.php .
 	echo 123 > test.html;
 fi
 
@@ -294,16 +294,16 @@ red ++-----------------------------------------------------++
 blue "mysql root密码 $mysql_root_password"
 echo "${IP}/pan113"
 echo "${IP}/prz22"
-echo "${IP}/01pinfo.php"
+echo "${IP}/010pinfo.php"
 
 purple ++-----------------------------------------------------++
 green "压力测试"
-echo "ab -H 'Accept-Encoding: gzip' -n1000000 -kc10000 ${IP}/01pinfo.php"
+echo "ab -H 'Accept-Encoding: gzip' -n1000000 -kc10000 ${IP}/010pinfo.php"
 purple ++-----------------------------------------------------++
 
 green "检测nginx配置"
-curl -A 'apachebench' -o /dev/null -s -w %{http_code}  127.0.0.1/01pinfo.php
-curl -A 'java/' -o /dev/null -s -w %{http_code}  127.0.0.1/01pinfo.php
+curl -A 'apachebench' -o /dev/null -s -w %{http_code}  127.0.0.1/010pinfo.php
+curl -A 'java/' -o /dev/null -s -w %{http_code}  127.0.0.1/010pinfo.php
 curl -o /dev/null -s -w %{http_code} -I 127.0.0.1/attachment/aa.php
 curl -o /dev/null -s -w %{http_code} -I 127.0.0.1/aaaa/upload/aa.php
 curl -o /dev/null -s -w %{http_code} -I 127.0.0.1/00/aa.sql
@@ -324,7 +324,7 @@ purple "别忘了reboot，删除安装文件"
 
 # curl 127.0.0.1/nginx_status; curl 127.0.0.1/phpfpm_status
 
-# ab -H 'Accept-Encoding: gzip' -n1000000 -kc10000 ${IP}/01pinfo.php
+# ab -H 'Accept-Encoding: gzip' -n1000000 -kc10000 ${IP}/010pinfo.php
 
 #echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all
 #echo "当前的mta是："

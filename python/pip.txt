@@ -1,10 +1,13 @@
 
-Python中第三方的库的安装方法
+
+# pip3 show -f requests					显示包的文件	
+# pip3 show requests			显示包的信息
+
 # pip search aa					在pypi搜索包
 # pip help
 
 # pip3 install setuptools --upgrade		升级包
-# pip3 show requests			显示包的信息
+
 # python -m pip install --upgrade pip		升级pip
 # pip -V
 # pip3 -V
@@ -16,12 +19,11 @@ Python中第三方的库的安装方法
 # pip install --upgrade simplejson          升级Python包
 # pip download numpy				下载包
 
-# pip list 					 #列出所有安装的库
+# pip list 					   # 列出所有安装的库
 # pip list --outdated 			#列出所有过期的库
 
 
 # pip install --default-timeout=100 lxml		解决read timeout 问题
-
 
 pip和easy_install安装方法
 python -m ensurepip

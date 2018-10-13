@@ -37,3 +37,4 @@ pip3 install beautifulsoup4
 pip3 install gevent
 pip3 install virtualenv
 pip3 install pandas
+pip3 install selenium

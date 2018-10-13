@@ -22,7 +22,7 @@
 # drop user user@localhost;flush privileges;
 # show grants for 'root'@localhost;
 
-time=`date +%Y%m%d%H`							# 备份的文件名格式  +%Y%m%d%H%M
+time=`date +%Y%m%d%H`						# 备份的文件名格式  +%Y%m%d%H%M
 dir=/root/backdb/							# 备份目录
 days=2										# 保留几天的备份
 otime=$((60*24*days-60))					# 以分钟算更精确的控制，减60，防止保存3份

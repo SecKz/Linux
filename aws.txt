@@ -1,12 +1,31 @@
 
+# aws ec2 describe-regions										AWS区域列表
+# aws ec2 describe-regions --output table
+# aws ec2 describe-availability-zones --region us-east-1		使用describe-availability-zones命令描述指定区域内的可用区 
 
-https://www.cnblogs.com/gyouxu/p/3617906.html
-Amazon EC2是一个IaaS云服务，主要提供弹性的计算资源。通俗的讲，就是提供多种类型的虚拟机。EC2也是整个AWS最核心的组成部分，AWS中有许多的服务需要依赖它。在EC2环境中，虚拟机被称为实例，实例的镜像被称为AMI。
+# aws ec2 describe-key-pairs
+# aws ec2 describe-tags
+# aws ec2 describe-instances
+# aws ec2 describe-instances --instance-ids i-0d3b0e6f10dd75c34 --output table     查看实例
+# aws ec2 start-instances --instance-ids i-0d3b0e6f10dd75c34		启动实例
+# aws ec2 stop-instances --instance-ids i-0d3b0e6f10dd75c34			关闭实例
+
+You are not authorized to perform this operation的解决办法
+select "policies" in left hand menu
+select "AdministratorAccess" checkbox and attach to your user
+https://stackoverflow.com/questions/28222445/aws-cli-client-unauthorizedoperation-even-when-keys-are-set
+
+AWS系列：深入了解IAM和访问控制
+https://blog.csdn.net/whatnamecaniuse/article/details/78104189
 
 
 亚马逊AWS免费套餐EC2安装centos连接登录并创建root
 https://www.cnblogs.com/wusir/p/3728200.html
 https://www.cnblogs.com/pangguoming/p/7514531.html
+
+https://www.cnblogs.com/gyouxu/p/3617906.html
+Amazon EC2是一个IaaS云服务，主要提供弹性的计算资源。通俗的讲，就是提供多种类型的虚拟机。
+EC2也是整个AWS最核心的组成部分，AWS中有许多的服务需要依赖它。在EC2环境中，虚拟机被称为实例，实例的镜像被称为AMI。
 
 
 aws ec2允许root用户密码登陆
@@ -14,9 +33,11 @@ aws ec2允许root用户密码登陆
 1.首先 用密钥登陆 
 2.给 root 设置密码 sudo passwd root
 3.密码设置好后 切换到root用户 su root
-4.修改ssh配置文件， vim /etc/ssh/sshd_config 
-passwordAuthentication no 改为  passwordAuthentication yes
-5 重启 ssh /etc/init.d/ssh restart 或者  /bin/systemctl restart sshd.service
+4.修改ssh配置文件， vi /etc/ssh/sshd_config 
+PermitRootLogin yes 
+PasswordAuthentication  yes
+
+5 重启ssh service sshd restart 或者  /bin/systemctl restart sshd.service
 
 
 aws ec2安装epel源
@@ -27,9 +48,11 @@ aws简单开发之ec2定时开关机
 https://blog.csdn.net/hackstoic/article/details/49563305
 
 
+pem文件转为ppk文件
+# puttygen pemKey.pem -o ppkKey.ppk -O private
+
+http://technote.aven-network.com/781/ssh-pem-to-ppk
+https://aws.amazon.com/cn/premiumsupport/knowledge-center/convert-pem-file-into-ppk/
+
 百度搜索
 aws ec2 site:cnblogs.com
-
-
-18.208.170.229
- www.amazon.com/gp/profile/amzn1.account.AEUTYUJ2SD45PYZJGLAIRKAK67FQ

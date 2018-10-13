@@ -21,6 +21,7 @@ if [ $? != 0 ]; then
 			sed -i "s/^MYSQLPassword.*/MYSQLPassword	$pureftpd_password/" /root/centos/pureftpd-mysql.conf
 			cd /etc/pure-ftpd
 			sed -i 's/^# MySQLConfigFile/MySQLConfigFile/' pure-ftpd.conf
+			sed -i 's/^#-A INPUT -p tcp -m state --state NEW -m tcp --dport 21 -j ACCEPT/-A INPUT -p tcp -m state --state NEW -m tcp --dport 21 -j ACCEPT/' /etc/sysconfig/iptables
 			mv pureftpd-mysql.conf pureftpd-mysql.conf1
 			cp -a /root/centos/pureftpd-mysql.conf .
 			service pure-ftpd start

@@ -120,8 +120,9 @@ if [ "$upyum" = 'y' -o "$upyum" = 'Y' ]; then
 fi
 
 if [ "$inapps" = 'y' -o "$inapps" = 'Y' ]; then
-	yum install kernel gcc gcc-c++ glibc automake autoconf libtool make curl curl-devel ibmcrypt-devel mhash-devel libxslt-devel zlib zlib-devel glibc glibc-devel openssl openssl-devel bash wget rpm
+	yum install -y kernel gcc gcc-c++ glibc automake autoconf libtool make curl curl-devel ibmcrypt-devel mhash-devel libxslt-devel zlib zlib-devel glibc glibc-devel openssl openssl-devel bash wget rpm
 	yum install -y net-tools psmisc rar unzip zip p7zip lsof util-linux-ng man man-pages bind-utils cronie screen mlocate iftop nethogs htop lvm2 tree sysstat mailx rsync openssh-clients openssl finger vim ntpdate iptables-services iptables pciutils python tcpdump virt-what iotop
+	#yum install jemalloc
 	service crond start
 	chkconfig crond on
 	chkconfig iptables on

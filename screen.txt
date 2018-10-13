@@ -1,11 +1,14 @@
 
 # screen -S name     				 新建名为name的session
-# screen -r yourname  				 回到yourname这个session
-# screen -d yourname				detach某个session
-# screen -d -r yourname				结束当前session并回到yourname这个session
 # screen -ls  						列出所有screen会话
 
+# screen -r yourname  				 回到yourname这个session
 # screen -r 26307 或screen -r abc均可		重新连接会话
+
+# screen -d yourname				detach某个session
+# screen -d -r yourname				结束当前session并回到yourname这个session
+
+
 ctrl +ad 	按住ctrl +a和d，可暂时退出当前会话。
 ctrl+d		退出screen的shell, 相当于exit该screen
 exit 	进入指定会话后执行exit即可关闭该会话。

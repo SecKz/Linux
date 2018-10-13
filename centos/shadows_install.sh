@@ -52,15 +52,18 @@ fi
 
 
 yum install libevent openssl-devel swig libsodium
-pip install gevent
-pip install m2crypto
-pip show m2crypto > /dev/null;[ $? != 0 ] && yum install m2crypto
-pip install shadowsocks
+pip3 install gevent
+pip3 install m2crypto
+pip3 show m2crypto > /dev/null;[ $? != 0 ] && yum install m2crypto
+pip3 install shadowsocks
 
+ln -vsf  /usr/local/python36/bin/ssserver /usr/bin/
+ln -vsf  /usr/local/python36/bin/sslocal /usr/bin/
 
 cp /root/centos/shadowsocks.ini /etc/init.d/shadowsocks
 #wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks -O /etc/init.d/shadowsocks;
 chmod +x /etc/init.d/shadowsocks
 service shadowsocks start
 chkconfig shadowsocks on
+
 

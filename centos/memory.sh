@@ -11,6 +11,8 @@
 Mem=`free -m | awk '/Mem:/{print $2}'`
 Swap=`free -m | awk '/Swap:/{print $2}'`
 
+echo $Mem, $Swap
+
 if [ $Mem -le 640 ]; then
   Mem_level=512M
   Memory_limit=64
@@ -45,11 +47,6 @@ Make-swapfile() {
 
 # add swapfile
 if [ "$Swap" == '0' ]; then
-  if [ $Mem -le 1024 ]; then
-    COUNT=512
-    Make-swapfile
-  elif [ $Mem -gt 1024 -a $Mem -le 2048 ]; then
-    COUNT=1024
-    Make-swapfile
-  fi
+   COUNT=512
+   Make-swapfile
 fi

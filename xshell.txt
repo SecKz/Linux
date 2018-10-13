@@ -19,9 +19,11 @@ http://www.aiezu.com/system/linux/xshell_ssh_public-key_login.html
 Xshell导入ppk格式文件报错
 使用Xshell导入ppk格式文件报错：Failed to import the user key!
 
-解决方法：使用PUTTYGEN.EXE转换，打开PUTTYGEN.EXE，点击“Conversions”->“Import key”选择要导入的ppk文件。导入后，再点击“Conversions”->“Export OpenSSH key”，然后选择“是”，导出一个自己命名的文件，该文件默认没有后缀名。
-
+解决方法：
+使用PUTTYGEN.EXE转换，打开PUTTYGEN.EXE，点击“Conversions”->“Import key”选择要导入的ppk文件。导入后，再点击“Conversions”->“Export OpenSSH key”，然后选择“是”，导出一个自己命名的ppk文件。
 通过导出的这个文件（key），新建会话即可登录xshell了。
+
+
 
 Linux系统服务器的登录方式最常见的无非通过ssh进行用户名、密码登录或者采用密钥登录
 本文简单记录下通过Xshell使用密钥对登录Linux服务器。
