@@ -6,7 +6,7 @@
 # dber.sh i dbname db.sql, 导入sql文件到数据库，没有则创建数据库
 # dber.sh user eric database password	创建用户eric, 授权给数据库database, 密码可以不指定, dber.sh q 'drop user aaa@localhost;flush privileges;'删除用户
 # dber.sh db zcx 创建数据库, dber.sh q 'drop database sports' 删除数据库
-# dber.sh host root localhsot % 更改root的host为%
+# dber.sh host root localhost % 更改root的host为%
 # dber.sh s max 查看运行状态, dber.sh v slow 查看配置信息
 
 # CREATE DATABASE IF NOT EXISTS aa123 DEFAULT CHARACTER SET utf8;

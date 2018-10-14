@@ -1,28 +1,11 @@
 
-创建与合并分支
-https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375840038939c291467cc7c747b1810aab2fb8863508000
-
-$ git merge dev				把dev分支的工作成果合并到当前所在分支上
 
 
-origin 是默认的远程版本库名称
-你可以在 .git/config 之中进行修改
-git push origin master 的意思是 git push origin master:master 将本地的 master 分支推送至远端的 master 分支，如果没有就新建一个
-
+把github恢复到7f6d03, github上的7f6d03之前的commit ID都会删除
+# git push origin +7f6d03:master
 
 git强制pull
 # git fetch --all
-
-Then, you have two options:
-# git reset --hard origin/master
-OR If you are on some other branch:
-# git reset --hard origin/<branch_name>
-
-
-
-1、在每次执行 git add . 或者 git commit -m "修改信息" 前，都执行git status 查看当前本地文件的状态
-2、每次commit后执行git pull origin master,以获取最新远程代码，尽早解决冲突
-
 
 单独clone远程分支
 git clone -b <branch> <remote_repo>
@@ -31,3 +14,12 @@ git clone -b my-branch git@github.com:user/myproject.git
 HEAD^和HEAD的区别
 # git reset --hard HEAD^				回退到上一个版本
 # git reset --hard HEAD					撤销未提交的全部修改 相当与git reset HEAD 加 git checkout -- .
+
+
+origin 是默认的远程版本库名称
+你可以在 .git/config 之中进行修改
+git push origin master 的意思是 git push origin master:master 将本地的 master 分支推送至远端的 master 分支，如果没有就新建一个
+
+
+$ git merge dev				把dev分支的工作成果合并到当前所在分支上
+
