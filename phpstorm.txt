@@ -114,10 +114,9 @@ settings搜索caret row 设为 363636
 给函数自动生成注释
 code->Generate->PHP Doc
 
-
 Phpstorm激活
+http://idea.lanyus.com/
 https://blog.csdn.net/lamp_yang_3533/article/details/79357864
-
 
 phpstorm的自动补充功能live template
 setting-editor-live template

@@ -33,7 +33,7 @@ aws ec2允许root用户密码登陆
 1.首先 用密钥登陆 
 2.给 root 设置密码 sudo passwd root
 3.密码设置好后 切换到root用户 su root
-4.修改ssh配置文件， vi /etc/ssh/sshd_config 
+4.修改ssh配置文件， vi /etc/ssh/sshd_config
 PermitRootLogin yes 
 PasswordAuthentication  yes
 

@@ -39,8 +39,6 @@ BOOTPROTO=dhcp			自动获取ip地址
 ONBOOT=yes				开机自动联网
 ONBOOT=no  				禁用网卡
 
-
-
 由于一般服务器有多个网卡，系统默认自动激活的是eth0，假如想激活别的网卡,执行
 # vi /etc/rc.local 
 在最下行加入 

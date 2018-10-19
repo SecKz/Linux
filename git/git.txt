@@ -1,8 +1,12 @@
 
 
 
-把github恢复到7f6d03, github上的7f6d03之前的commit ID都会删除
-# git push origin +7f6d03:master
+# git fetch --all; git reset --hard origin/master; git pull origin master		强制git pull到本地，覆盖本地的变化
+
+# git push -f origin master			 # 强制git push到github, github git push -f <remote> <branch>
+
+# git reset --soft 0000978				本地文件不变, 把本地的commid ID恢复到0000978, 0000978之前的commit ID都会删除
+# git push origin +0000978:master		把github恢复到0000978, github上的0000978之前的commit ID都会删除
 
 git强制pull
 # git fetch --all
