@@ -1,0 +1,32 @@
+
+
+
+终端登陆Shadowsocks账号
+
+sslocal -s 100.100.100.100 -p 8888 -b 127.0.0.1 -l 1080 -k 123456 -t 600 -m aes-256-cfb
+
+-s 远程shadowsocks服务器ip
+-p 远程shadowsocks服务器端口
+-b 本地ip
+-l 本地监听端口
+-k 密码
+-t 超时设置
+-m 加密方式
+
+也可以将ss账号资料写入/etc/shadowsocks.json中，通过配置文件来登陆账号，省去输入过多命令
+{
+	"server" : "100.100.100.100",
+	"server_port" : 8989,
+	"local_address": "127.0.0.1",
+	"local_port" : 1080,
+	"password" : "123456",
+	"timeout" : 600,
+	"method" : "aes-256-cfb"
+}
+运行shadowsocks命令
+
+nohup sslocal -c /etc/shadowsocks.json /dev/null 2>&1 &
+然后加入开机自启动
+
+echo " nohup sslocal -c /etc/shadowsocks.json /dev/null 2>&1 &" /etc/rc.local
+

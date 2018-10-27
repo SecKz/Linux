@@ -3,7 +3,7 @@
 # /root/centos/0nginx.sh
 . "/root/centos/fun.sh"
 
-issue='/etc/issue.net'
+issue='/etc/redhat-release'
 
 version=$(grep -Eo 'release [0-9]' $issue | cut -d' ' -f2)
 cups=$(cat /proc/cpuinfo | grep "processor" | wc -l)

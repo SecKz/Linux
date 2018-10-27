@@ -31,7 +31,7 @@ mongod --port 27017 --dbpath d:\MongoDB\data\db --logpath d:\MongoDB\mongo.log
 # mongod --config "D:\MongoDB\mongo.conf"  --install --serviceName "MongoDB"
 # net start MongoDB
 
-
+> mongo				进入mongo shell环境
 > db.version()		查看mongoDB版本 
 > db.getMongo()		查看当前连接机器的ip
 > db.help()		查看命令提示 

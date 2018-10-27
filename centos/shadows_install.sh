@@ -1,6 +1,7 @@
 #!/bin/sh
 # https://fatesinger.com/76137
-# http://ss.jidingwan.cn/cms/45
+# ssserver -c /etc/shadowsocks.json 启动ss服务器
+# curl --socks5 127.0.0.1:41080 http://httpbin.org/ip
 
 # Make sure only root can run our script
 rootness(){
@@ -19,18 +20,16 @@ disable_selinux(){
 }
 
 config_shadowsocks(){
-    cat > /etc/shadowsocks.json<<-EOF
+    cat > /etc/shadowsocks.json << EOF
 {
-    "server":"${IP}",
-    "local_address": "127.0.0.1",
-    "local_port":1080,
-    "port_password":{
-         "9001":"1230.1",
-         "9002":"1230.2"
-    },
-    "timeout":300,
-    "method":"aes-256-cfb",
-    "fast_open": false
+	"server":"0.0.0.0",
+	"server_port":49001,
+	"local_address": "127.0.0.1",
+	"local_port":41080,
+	"password":"1230.1",
+	"timeout":300,
+	"method":"aes-256-cfb",
+	"fast_open": false
 }
 
 EOF
@@ -45,14 +44,13 @@ rootness
 disable_selinux
 config_shadowsocks
 
-if [ -z `grep "dport 9001" /etc/sysconfig/iptables` ]; then
-	iptables -I INPUT -p tcp --dport 9001 -j ACCEPT
+if [ -z `grep -q "dport 49001" /etc/sysconfig/iptables` ]; then
+	iptables -I INPUT -p tcp --dport 49001 -j ACCEPT
 	service iptables save;service iptables restart
 fi
 
 
-yum install libevent openssl-devel swig libsodium
-pip3 install gevent
+yum install libevent openssl-devel libsodium
 pip3 install m2crypto
 pip3 show m2crypto > /dev/null;[ $? != 0 ] && yum install m2crypto
 pip3 install shadowsocks
