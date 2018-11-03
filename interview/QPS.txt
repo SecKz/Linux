@@ -1,30 +1,23 @@
-PV是什么：
-PV是page view的简写。PV是指页面的访问次数，每打开或刷新一次页面，就算做一个pv。 
 
-计算模型： 
-每台服务器每秒处理请求的数量=((80%*总PV量)/(24小时*60分*60秒*40%)) / 服务器数量 。
-其中关键的参数是80%、40%。表示一天中有80%的请求发生在一天的40%的时间内。24小时的40%是9.6小时，有80%的请求发生一天的9.6个小时当中（很适合互联网的应用，白天请求多，晚上请求少）。 
- 
-简单计算的结果：
-((80%*500万)/(24小时*60分*60秒*40%))/1 = 115.7个请求/秒 
-((80%*100万)/(24小时*60分*60秒*40%))/1 = 23.1个请求/秒 
 
-初步结论： 
-现在我们在做压力测试时，就有了标准，如果你的服务器一秒能处理115.7个请求，就可以承受500万PV/每天。如果你的服务器一秒能处理23.1个请求，就可以承受100万PV/每天。
- 
-留足余量：
-以上请求数量是均匀的分布在白天的9.6个小时中，但实际情况并不会这么均匀的分布，会有高峰有低谷。为了应对高峰时段，应该留一些余地，最少也要x2倍，x3倍也不为过。
-115.7个请求/秒 *2倍=231.4个请求/秒
-115.7个请求/秒 *3倍=347.1个请求/秒
-23.1个请求/秒 *2倍=46.2个请求/秒
-23.1个请求/秒 *3倍=69.3个请求/秒
 
-最终结论：
-如果你的服务器一秒能处理231.4--347.1个请求/秒，就可以应对平均500万PV/每天。
-如果你的服务器一秒能处理46.2--69.3个请求，就可以应对平均100万PV/每天。
- 
-说明：
-这里说明每秒N个请求，就是QPS。因为我关心的是应用程序处理业务的能力。 
- 
 
-http://elf8848.iteye.com/blog/967049
+
+
+TPS - Transactions Per Second（每秒传输的事物处理个数），即服务器每秒处理的事务数，如果是InnoDB会显示，没有InnoDB就不会显示。
+
+TPS = (COM_COMMIT + COM_ROLLBACK)/UPTIME
+
+use information_schema; select VARIABLE_VALUE into @num_com from GLOBAL_STATUS where VARIABLE_NAME ='COM_COMMIT'; select VARIABLE_VALUE into @num_roll from GLOBAL_STATUS where VARIABLE_NAME ='COM_ROLLBACK'; select VARIABLE_VALUE into @uptime from GLOBAL_STATUS where VARIABLE_NAME ='UPTIME'; select (@num_com+@num_roll)/@uptime; 
+
+QPS - Queries Per Second（每秒查询处理量）MyISAM 引擎 QUESTIONS/UPTIME
+
+use information_schema; select VARIABLE_VALUE into @num_queries from GLOBAL_STATUS where VARIABLE_NAME ='QUESTIONS'; select VARIABLE_VALUE into @uptime from GLOBAL_STATUS where VARIABLE_NAME ='UPTIME'; select @num_queries/@uptime; 
+
+https://segmentfault.com/a/1190000009506375
+https://my.oschina.net/renwofei423/blog/215128
+https://blog.csdn.net/weiwangchao_/article/details/51198571
+http://hongyitong.github.io/2017/01/11/Mysql%20%E7%9B%91%E6%8E%A7%E6%80%A7%E8%83%BD%E7%8A%B6%E6%80%81%20QPS%E3%80%81TPS/
+
+
+

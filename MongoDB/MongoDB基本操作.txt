@@ -1,0 +1,77 @@
+
+
+删除表sites的url字段
+db.sites.update({},{$unset:{'url':''}},false, true)
+
+添加表sites的url字段
+db.sites.update({}, {$set: {'url':""}}, {multi: 1})
+
+表sites的alexa字段类型修改成NumberInt
+db.sites.find({}).forEach(
+    function(i){
+        i.alexa=new NumberInt(i.alexa);
+        db.sites.save(i);
+    }
+);
+
+表sites的alexa字段类型修改成float
+db.sites.find({}).forEach(
+    function(i){
+        i.alexa=parseFloat(i.alexa);
+        db.sites.save(i);
+    }
+);
+
+
+db.zcx.renameCollection('user')		集合zcx改名为user
+
+创建固定集合 mycol，整个集合空间大小 6142800 KB, 文档最大个数为 10000 个。
+db.createCollection("mycol", { capped : true, autoIndexId : true, size :  6142800, max : 10000 } )
+
+db.users.save({"name":"菜鸟教程"})					创建了名为users的集合，并新增了一条{"name":"lecaf"}的数据
+db.users.insert({"name":"ghost", "age":10})    在users集合中插入一条新数据，，如果没有users这个集合，mongodb会自动创建
+如果不指定 _id 字段 save() 方法类似于 insert() 方法。如果指定 _id 字段，则会更新该 _id 的数据。
+
+删除
+
+db.users.remove()    删除users集合下所有数据
+db.users.remove({"name": "lecaf"})    删除users集合下name=lecaf的数据
+db.users.drop()或db.runCommand({"drop","users"})    删除集合users
+db.runCommand({"dropDatabase": 1})    删除当前数据库
+
+查找
+
+db.users.find()    查找users集合中所有数据
+db.users.findOne()    查找users集合中的第一条数据
+
+条件查找
+
+db.collection.find({ "key" : value })    查找key=value的数据
+db.collection.find({ "key" : { $gt: value } })    key > value
+db.collection.find({ "key" : { $lt: value } })    key < value
+db.collection.find({ "key" : { $gte: value } })    key >= value
+db.collection.find({ "key" : { $lte: value } })    key <= value
+db.collection.find({ "key" : { $gt: value1 , $lt: value2 } })    value1 < key <value2
+db.collection.find({ "key" : { $ne: value } })    key <> value
+db.collection.find({ "key" : { $mod : [ 10 , 1 ] } })    取模运算，条件相当于key % 10 == 1 即key除以10余数为1的
+db.collection.find({ "key" : { $nin: [ 1, 2, 3 ] } })    不属于，条件相当于key的值不属于[ 1, 2, 3 ]中任何一个
+db.collection.find({ "key" : { $in: [ 1, 2, 3 ] } })    属于，条件相当于key等于[ 1, 2, 3 ]中任何一个
+db.collection.find({ "key" : { $size: 1 } })    $size 数量、尺寸，条件相当于key的值的数量是1（key必须是数组，一个值的情况不能算是数量为1的数组）
+db.collection.find({ "key" : { $exists : true|false } })    $exists 字段存在，true返回存在字段key的数据，false返回不存在字度key的数据
+db.collection.find({ "key": /^val.*val$/i })    正则，类似like；“i”忽略大小写，“m”支持多行
+db.collection.find({ $or : [{a : 1}, {b : 2} ] })    $or或，符合条件a=1的或者符合条件b=2的数据都会查询出来
+db.collection.find({ "key": value , $or : [{ a : 1 } , { b : 2 }] })    符合条件key=value ，同时符合其他两个条件中任意一个的数据
+db.collection.find({ "key.subkey" :value })    内嵌对象中的值匹配，注意："key.subkey"必须加引号
+db.collection.find({ "key": { $not : /^val.*val$/i } })    这是一个与其他查询条件组合使用的操作符，不会单独使用。上述查询条件得到的结果集加上$not之后就能获得相反的集合。
+
+2.排序
+
+db.collection.find().sort({ "key1" : -1 ,"key2" : 1 })    这里的1代表升序，-1代表降序
+
+3.其他
+
+db.collection.find().limit(5)    控制返回结果数量，如果参数是0，则当作没有约束，limit()将不起作用
+db.collection.find().skip(5)    控制返回结果跳过多少数量，如果参数是0，则当作没有约束，skip()将不起作用，或者说跳过了0条
+db.collection.find().skip(5).limit(5)    可用来做分页，跳过5条数据再取5条数据
+db.collection.find().count(true)    count()返回结果集的条数
+db.collection.find().skip(5).limit(5).count(true)    在加入skip()和limit()这两个操作时，要获得实际返回的结果数，需要一个参数true，否则返回的是符合查询条件的结果总数

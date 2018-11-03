@@ -1,40 +1,9 @@
 
 
-MongoDB 3.6社区版安装
-安装比较简单，中间主要是选择“Custom”自定义 安装路径修改下 D:\MongoDB\Server
-将 MongoDB 安装目录下的 bin 目录添加到环境变量 Path 中
-
-然后再在这个文件夹下建立一个名为 db 和一个名为 log 的文件夹，最后在 log 文件夹下建立一个名为 mongodb.log 的文件
-
-# mongod --dbpath D:\MongoDB\db						启动mongodb服务并创建db目录. 浏览器输入http://localhost:27017 查看
-# mongod --logpath d:\MongoDB\mongo.log				创建log文件 
-
-# mongod --config "D:\MongoDB\mongo.conf"   通过配置文件来启动mongo服务，配置文件需要自己创建
-
-# mongod -v
-# mongod -help				 要测试环境变量是否添加成功，只需打开cmd(可以在任何路径下)，然后输入
-# net start MongoDB			启动服务，同样需要以管理员的身份打开 cmd
-# net restart MongoDB		停止服务
-# net stop MongoDB
-
-
-启动MongoDB 服务器 在 MongoDB 安装目录的 bin 目录下执行 mongod
-mongod --port 27017 --dbpath d:\MongoDB\data\db --logpath d:\MongoDB\mongo.log
-
---logpath	定MongoDB日志文件，注意是指定文件不是目录
---logappend	使用追加的方式写日志
---dbpath	指定数据库路径
---port	指定服务端口号，默认端口27017
-
-创建并启动MongoDB服务
-如果每次都如上操作，岂不是相当麻烦，按照如下命令来创建并启动MongoDB服务，就可以通过windows服务来管理MongoDB的启动和关闭了
-# mongod --config "D:\MongoDB\mongo.conf"  --install --serviceName "MongoDB"
-# net start MongoDB
 
 > mongo				进入mongo shell环境
-> db.version()		查看mongoDB版本 
-> db.getMongo()		查看当前连接机器的ip
-> db.help()		查看命令提示 
+> db._adminCommand( {getCmdLineOpts: 1})		查看启动配置
+
 > db			查看当前所在数据库的名字 
 > use zcx		表示切换或是创建数据库。就是当数据库不存在的时候，MongoDB中的use可以创建数据库。
 > show dbs		显示数据库
@@ -46,60 +15,12 @@ mongod --port 27017 --dbpath d:\MongoDB\data\db --logpath d:\MongoDB\mongo.log
 > db.system.users.find()
 > db.auth("admin","123456")		用户验证登录
 
-MongoDB 中默认的数据库为 test，如果你没有创建新的数据库，集合将存放在 test 数据库中。
-1. MongoDB是没有默认管理员账号，所以要先添加管理员账号，再开启权限认证。
-2. 切换到admin数据库，添加的账号才是管理员账号。
-3. 用户只能在用户所在数据库登录，包括管理员账号。
-4. 管理员可以管理所有数据库，但是不能直接管理其他数据库，要先在admin数据库认证后才可以。
+> db.version()		查看mongoDB版本 
+> db.getMongo()		查看当前连接机器的ip
+> db.help()		查看命令提示 
 
-
-> use zcx
-> db.zcx.insert({"name":"菜鸟教程"})	
-
-创建管理员
-> use admin
-> db.createUser({user: "dba", pwd: "123456", roles:[ { role: "userAdminAnyDatabase", db: "admin" }]})
-重启mongodb
-> mongod --auth --port 27017 --dbpath /var/lib/mongodb
-
-> mongo --port 27017 -u "root" -p "123456" --authenticationDatabase 'admin'
-
-http://www.jianshu.com/p/a4e94bb8a052
-http://www.cnblogs.com/mymelody/p/5906199.html
-http://ibruce.info/2015/03/03/mongodb3-auth/
-
-创建管理员
-首先，不使用 –auth 参数，启动 mongoDB
-use admin
-db.createUser(
-  {
-    user: "admin",
-    pwd: "123456",
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
-  }
-)
-
-创建普通用户
-use zcx
-db.createUser(
- {
-   user: "bao",
-   pwd: "123456",
-   roles: [
-      { role: "readWrite", db: "zcx" },
-      { role: "read", db: "zcx2" }
-   ]
- }
-)
-
-db.auth("bao","123456")
-
+# mongod --dbpath D:\MongoDB\db			启动mongodb服务并创建db目录和log文件. 浏览器输入http://localhost:27017 查看
+# mongod -f "D:\MongoDB\mongo.conf"     通过配置文件来启动mongo服务，配置文件需要自己创建
 
 mongodb 3.2开始 使用$lookup做多表关联处理
-
-- mongod.exe负责开机 
-- mongo.exe负责运行数据库(开机) 
-- mongoimport.exe负责导入数据库 
-- mongoexport.exe负责输出数据库 
-- mongorestore.exe负责备份数据库
 
