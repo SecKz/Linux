@@ -93,7 +93,7 @@ git branch e							创建分支e
 git checkout e							切换分支
 git branch 							查看当前分支
 git branch -r							列出远程分支
-git branch -a						列出所有分支 
+git branch -a						列出本地和远程的所有分支 
 git checkout -b e					创建并切换到分支
 git checkout  						后面不跟任何参数，则就是对工作区进行检查
 git checkout --filename 				撤销文件在工作区做的修改，前提是文件没加到暂存区

@@ -1,7 +1,8 @@
 
 
 
-# git fetch --all; git reset --hard origin/master; git pull origin master		强制git pull到本地，覆盖本地的变化
+# git checkout dev; git fetch origin dev; git reset --hard origin/dev; git pull origin dev				拉取远程的dev分支覆盖本地dev分支
+# git checkout master; git fetch --all; git reset --hard origin/master; git pull origin master			拉取所有分支到本地，覆盖本地的变化
 
 # git push -f origin master			 # 强制git push到github, github git push -f <remote> <branch>
 
@@ -26,4 +27,8 @@ git push origin master 的意思是 git push origin master:master 将本地的 m
 
 
 $ git merge dev				把dev分支的工作成果合并到当前所在分支上
+
+修改远程仓库地址
+# git remote set-url origin git@192.168.3.104:eric/cdp.git
+
 

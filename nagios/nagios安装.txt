@@ -113,8 +113,24 @@ Nagios学习实践系列——产品介绍篇
 http://www.cnblogs.com/kerrycode/p/3273629.html
 
 
+Nagos是一款开源电脑系统和网络监视工具，能够有效监控windows,linux，Uninx的主机状态，交换机路由器等网络设置，打印机等.
+在系统或服务状态异常时发出邮件或短信报警第一时间通知运维人员，在状态恢复后发出正常的邮件或短信报警通知
 
+主要功能:                                       
 
+*网络服务监控（STMP简单电子邮件服务；POP3邮件服务器；HTTP；NNTP;ICMP;SNMP;FTP;SSH）
+*主机 资源监控（CPU locd,disk usage,system logs）,也包括windows主机（使用NSCLIENT++ Plugin）
+*可以指定自己编写的Plugin通过网络收集数据来监控任何情况（温度，警告。。。）
+*可以监控支持SSH或SSK加通道方式进行监
+可以通过配置Nagio远程 执行插件远程执行脚本
+*简单的plugin设计允许用户很容易的开发自己 需要的检查服务，支持很多开发语言（shel scripts,c++,perl,ruby,python,php,c）
+*包含很多图形化数据plugins(Nagiosgraph,Nagiosgrapher,PNP4Nagios等)
+*可并行服务检查
+*能够定义网络主机的层，允许逐级调查，就是从父主机开始向下检查，
+*当服务或主机 出现 问题是发出通告 ，可通过emall,pager,sms或任意用户自定义的plugin进行通知
+
+Nagiosq的功能是监控服务和主机，但也是 他 自身并不包括这部分功能，所有的监控，检测功能都是通过各种插件来完成的。
+https://www.cnblogs.com/bixiaoyu/p/6915763.html
 
 
 

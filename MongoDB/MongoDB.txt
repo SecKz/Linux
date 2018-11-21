@@ -3,6 +3,8 @@
 
 > mongo				进入mongo shell环境
 > db._adminCommand( {getCmdLineOpts: 1})		查看启动配置
+> db.runCommand({connectionStatus : 1})			查看当前登录用户
+> db.runCommand({hostInfo : 1})	
 
 > db			查看当前所在数据库的名字 
 > use zcx		表示切换或是创建数据库。就是当数据库不存在的时候，MongoDB中的use可以创建数据库。

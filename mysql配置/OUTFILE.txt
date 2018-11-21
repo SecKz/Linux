@@ -1,7 +1,7 @@
 
 导出sql语句的结果到文件
 
-select *
+select * from table
 into outfile "aa001.csv"
 fields terminated by ','
 enclosed by '"'
@@ -10,5 +10,9 @@ lines terminated by '\n';
 
 导入, csv文件中的每一列要按顺序对应表中的每一个字段
 load data infile 'D:/phpStudy/PHPTutorial/MySQL/aa002.csv' into table admin fields terminated by ',' lines terminated by '\n';
+
+
+LOAD DATA INFILE "/path/to/file" INTO TABLE table_name;
+注意：如果导出时用到了FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n'语句，那么LODA时也要加上同样的分隔限制语句。还要注意编码问题。
 
 

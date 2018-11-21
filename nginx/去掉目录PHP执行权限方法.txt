@@ -5,7 +5,7 @@ deny all;
 }
 
 nginx禁止访问目录，禁止访问path目录
-location ^~ /path {
+location ^~ /path/ {
 deny all;
 }
 
