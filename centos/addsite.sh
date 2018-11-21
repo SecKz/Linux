@@ -82,9 +82,10 @@ else
 server {
 	listen       80;
 	server_name  www.${domain};
-	index	index.html index.php index.htm;
+	index	index.php index.html;
 	root   ${sitehome};
 	include agent_deny.conf;
+	#include ${sitehome}ng.htaccess;
 	include	g.conf;
 }
 

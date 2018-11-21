@@ -26,14 +26,16 @@ root					只在admin数据库中可用。超级账号，超级权限
 use admin
 db.createUser({user:"root",pwd:"123456",roles:["root"]})
 
+创建普通用户
+use zcx
+db.createUser({
+    user: "eric",
+    pwd: "123456",
+    roles: [{role: "readWrite",db: "zcx"}]
+})
+
+
 创建admin并赋予多个角色, 权限等同root
 use admin
 db.createUser({ user: "admin" , pwd: "123456", roles: ["userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase", "clusterAdmin"]})
 
-创建普通用户
-use test
-db.createUser({
-    user: "football",
-    pwd: "password",
-    roles: [{role: "readWrite",db: "test"}]
-})

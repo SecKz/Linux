@@ -1,0 +1,53 @@
+2 来自Flicker的解决方案
+因为MySQL本身支持auto_increment操作，很自然地，我们会想到借助这个特性来实现这个功能。
+Flicker在解决全局ID生成方案里就采用了MySQL自增长ID的机制（auto_increment + replace into + MyISAM）。一个生成64位ID方案具体就是这样的： 
+先创建单独的数据库(eg:ticket)，然后创建一个表：
+
+CREATE TABLE Tickets64 (
+id bigint(20) unsigned NOT NULL auto_increment,
+stub char(1) NOT NULL default '',
+PRIMARY KEY (id),
+UNIQUE KEY stub (stub)
+) ENGINE=MyISAM
+　　
+
+当我们插入记录后，执行SELECT * from Tickets64，查询结果就是这样的：
+
++-------------------+------+
+| id | stub |
++-------------------+------+
+| 72157623227190423 | a |
++-------------------+------+
+在我们的应用端需要做下面这两个操作，在一个事务会话里提交：
+
+REPLACE INTO Tickets64 (stub) VALUES ('a');
+SELECT LAST_INSERT_ID();
+这样我们就能拿到不断增长且不重复的ID了。 
+到上面为止，我们只是在单台数据库上生成ID，从高可用角度考虑，接下来就要解决单点故障问题：Flicker启用了两台数据库服务器来生成ID，通过区分auto_increment的起始值和步长来生成奇偶数的ID。
+
+TicketServer1:
+auto-increment-increment = 2
+auto-increment-offset = 1
+ 
+TicketServer2:
+auto-increment-increment = 2
+auto-increment-offset = 2
+最后，在客户端只需要通过轮询方式取ID就可以了。
+
+SET @@auto_increment_increment=2;
+SET @@auto_increment_offset=2;
+
+优点：充分借助数据库的自增ID机制，提供高可靠性，生成的ID有序。
+缺点：占用两个独立的MySQL实例，有些浪费资源，成本较高。
+
+五 MongoDB文档（Document）全局唯一ID
+
+为了考虑分布式，“_id”要求不同的机器都能用全局唯一的同种方法方便的生成它。因此不能使用自增主键（需要多台服务器进行同步，既费时又费力），
+因此选用了生成ObjectId对象的方法
+
+
+
+https://www.cnblogs.com/baiwa/p/5318432.html
+https://stackoverflow.com/questions/14373582/how-to-auto-increment-by-2-for-a-particular-table-in-mysql
+
+

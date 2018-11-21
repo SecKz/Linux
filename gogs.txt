@@ -13,3 +13,6 @@ https://www.cnblogs.com/configure/p/7878501.html
 # ssh -T git@192.168.1.217           					 测试连接是否成功
 # ssh -T -p 443 git@ssh.github.com  					To test if SSH over the HTTPS port is possible
 
+修改gogs的配置
+直接修改文件/home/git/gogs/custom/conf，然后重启gogs  
+

@@ -75,3 +75,17 @@ db.collection.find().skip(5)    控制返回结果跳过多少数量，如果参
 db.collection.find().skip(5).limit(5)    可用来做分页，跳过5条数据再取5条数据
 db.collection.find().count(true)    count()返回结果集的条数
 db.collection.find().skip(5).limit(5).count(true)    在加入skip()和limit()这两个操作时，要获得实际返回的结果数，需要一个参数true，否则返回的是符合查询条件的结果总数
+
+
+导出
+mongoexport -h 127.0.0.1:27017 -u eric -p 123456 -d zcx -c users --out users.json	只导出集合的数据，不导出结构	
+mongodump -h 127.0.0.1:27017 -u eric -p 123456 -d zcx -c users -o zcx.json			导出集合的数据和结构	
+mongodump -h 127.0.0.1:27017 -u eric -p 123456 -d zcx -o zcx.json					导出数据库
+
+
+导入
+mongorestore -h 127.0.0.1:27017 -u eric -p 123456 -d zcx zcx.json/zcx		
+
+压缩包导出导入
+mongodump -h 127.0.0.1:27017 -u eric -p 123456 -d zcx --gzip --archive=zcx.gzip
+mongorestore --gzip --archive=/path/to/archive

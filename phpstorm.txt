@@ -10,6 +10,7 @@ Shift + Tab		 减少缩进
 
 Ctrl + shift + m	{}、[]、 html标签跳转， 鼠标焦点要放在标签外
 CTRL+ []			光标移动到{}[]开头或结尾位置，同 Ctrl + shift + m
+
 ctrl+shift+]/[		选中块代码
 Ctrl+Shift + left	回到上次编辑点 Ctrl+Shift + right 相反操作
 
@@ -150,10 +151,6 @@ Go to File -> Invalidate Caches and Restart
 
 取消自动保存
 进入 File -> Settings ->Appearance & Behavior -> System Settings，取消中间那两选项的勾选，即 Save ……  两项：
-
-
-
-
 
 phpstorm卡顿问题解决方法
 点击导航菜单：Help -> Edit Custom VM Options 
