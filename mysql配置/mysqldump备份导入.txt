@@ -1,4 +1,13 @@
 
+使用source方法导入sql文件，source只能用于导入
+# mysql -uroot -p
+> use zs;						选择要导入的数据库
+> source /home/zs.sql			比用phpmysqdmin导入快
+
+以上语句可合并为以下一句
+# mysql -uroot -p123 zcx < /root/zs.sql	导入zs.sql文件到数据库zs
+
+> select * from table into outfile 'd:/aa.sql';		把表table的数据导出到aa.sql
 
 根据条件导出
 mysqldump -uroot -p123 zcx admin --where="admin_id>1" > d:/dump.sql
@@ -32,18 +41,6 @@ mysql -uglhs -p123 huanlegoo --default-character-set=gbk < /root/huanle.sql
 一行命令快速备份并压缩
 mysqldump -uroot -p123 zs | gzip > glhyzscom-$(date +%Y%m%d).sql.gz
 mysqldump -uroot -p123 zs | gzip > zs.sql.gz						导出并压缩
-
-
-使用source方法导入sql文件，source只能用于导入
-# mysql -uroot -p
-> use zs;						选择要导入的数据库
-> source /home/zs.sql			比用phpmysqdmin导入快
-
-以上语句可合并为以下一句
-# mysql -uroot -p123 zcx < /root/zs.sql	导入zs.sql文件到数据库zs
-
-> select * from table into outfile 'd:/aa.sql';		把表table的数据导出到aa.sql
-
 
 备份数据库两个主要方法是用mysqldump程序或直接拷贝数据库文件
 如果数据库引擎是innodb,切记还需拷贝ibdata1文件

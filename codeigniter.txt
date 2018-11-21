@@ -1,4 +1,10 @@
 
+去掉CodeIgniter（CI）默认url中的index.php
+3.将CI中配置文件（application/config/config.php）中
+$config['index_page'] = "index.php";
+改成
+$config['index_page'] = "";
+
 要使用你自己的系统类替换默认的系统类只需简单的将你自己的文件放入目录 application/core 下:
 如果这个目录不存在，你可以创建一个。
 类名必须以 CI 开头，例如，你的文件是 Input.php，那么类应该命名为:
@@ -41,8 +47,8 @@ $route['default_controller'] = "index/test";   默认index类的test方法
 
 在每个控制器开始前自动执行的方法是：加__construct
 public function __construct() {
-parent::__construct();
-echo 'start running<br />';
+	parent::__construct();
+	echo 'start running<br />';
 }
 
 在PHP主流的框架中，CI中url的pathinfo传递参数是一个特殊情况，它没有使用传统pathinfo的‘c/m/key/value‘
