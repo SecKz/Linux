@@ -5,8 +5,6 @@
 4. 备份恢复角色：backup、restore；
 5. 所有数据库角色：readAnyDatabase, readWriteAnyDatabase, userAdminAnyDatabase, dbAdminAnyDatabase
 6. 超级用户角色：root  
-
-// 这里还有几个角色间接或直接提供了系统超级用户的访问（dbOwner 、userAdmin、userAdminAnyDatabase）
 7. 内部角色：__system
 
 
@@ -23,16 +21,13 @@ dbAdminAnyDatabase		只在admin数据库中可用，赋予用户所有数据库�
 root					只在admin数据库中可用。超级账号，超级权限
 
 
+创建超级管理员root
 use admin
 db.createUser({user:"root",pwd:"123456",roles:["root"]})
 
 创建普通用户
 use zcx
-db.createUser({
-    user: "eric",
-    pwd: "123456",
-    roles: [{role: "readWrite",db: "zcx"}]
-})
+db.createUser({user: "eric",pwd: "123456",roles: [{role: "readWrite", db: "zcx"}]})
 
 
 创建admin并赋予多个角色, 权限等同root

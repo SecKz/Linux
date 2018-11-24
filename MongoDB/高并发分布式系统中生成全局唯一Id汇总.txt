@@ -1,4 +1,6 @@
-2 来自Flicker的解决方案
+
+
+1 来自Flicker的解决方案
 因为MySQL本身支持auto_increment操作，很自然地，我们会想到借助这个特性来实现这个功能。
 Flicker在解决全局ID生成方案里就采用了MySQL自增长ID的机制（auto_increment + replace into + MyISAM）。一个生成64位ID方案具体就是这样的： 
 先创建单独的数据库(eg:ticket)，然后创建一个表：
@@ -46,8 +48,25 @@ SET @@auto_increment_offset=2;
 因此选用了生成ObjectId对象的方法
 
 
-
 https://www.cnblogs.com/baiwa/p/5318432.html
 https://stackoverflow.com/questions/14373582/how-to-auto-increment-by-2-for-a-particular-table-in-mysql
 
 
+1、最简单的方法
+
+4台数据库，第一台mysql主键从1开始每次加4，第二台从2开始每次加4，以此类推。
+需要配置mysql自增起点和mysql自增步长
+
+my.cnf
+auto_increment_increment = 5		自增步长
+auto_increment_offset = 3			自增起点
+
+改进方案：
+
+　　整体思想：建立两台以上的数据库ID生成服务器，每个服务器都有一张记录各表当前ID的MaxId表，但是MaxId表中Id的增长步长是服务器的数量，起始值依次错开，这样相当于把ID的生成散列到每个服务器节点上。例如：如果我们设置两台数据库ID生成服务器，那么就让一台的MaxId表的Id起始值为1（或当前最大Id+1），每次增长步长为2，另一台的MaxId表的ID起始值为2（或当前最大Id+2），每次步长也为2。这样就将产生ID的压力均匀分散到两台服务器上，同时配合应用程序控制，当一个服务器失效后，系统能自动切换到另一个服务器上获取ID，从而解决的单点问题保证了系统的容错。
+
+但是要注意：1、多服务器就必须面临负载均衡的问题；2、倘若添加新节点，需要对原有数据重新根据步长计算迁移数据。
+
+结论：适合大型应用，生成Id较短，友好性比较好。（强烈推荐）
+
+2、搭建sequence server
