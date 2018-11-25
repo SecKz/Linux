@@ -89,3 +89,5 @@ mongorestore -h 127.0.0.1:27017 -u eric -p 123456 -d zcx zcx.json/zcx
 压缩包导出导入
 mongodump -h 127.0.0.1:27017 -u eric -p 123456 -d zcx --gzip --archive=zcx.gzip
 mongorestore --gzip --archive=/path/to/archive
+mongorestore -d zcx --gzip --archive=zcx.gzip
+
