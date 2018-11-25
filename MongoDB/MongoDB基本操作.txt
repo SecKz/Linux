@@ -82,7 +82,6 @@ mongoexport -h 127.0.0.1:27017 -u eric -p 123456 -d zcx -c users --out users.jso
 mongodump -h 127.0.0.1:27017 -u eric -p 123456 -d zcx -c users -o zcx.json			导出集合的数据和结构	
 mongodump -h 127.0.0.1:27017 -u eric -p 123456 -d zcx -o zcx.json					导出数据库
 
-
 导入
 mongorestore -h 127.0.0.1:27017 -u eric -p 123456 -d zcx zcx.json/zcx		
 

@@ -1,28 +1,30 @@
 
 
-
 > mongo				进入mongo shell环境
+> mongo -u root -p 123456 --authenticationDatabase admin --host localhost --port 27017
+
+> show dbs						显示数据库
+> show collections				显示表
+> db							查看当前所在数据库的名字 
+> use zcx						表示切换或是创建数据库。就是当数据库不存在的时候，MongoDB中的use可以创建数据库。
+> db.news.find()				列出news的数据
+
+
+> db.dropDatabase()				删除当前数据。
+> db.stats()					查看当前数据的状态 
+
+> show users					查看所在数据库的的用户 
+> db.system.users.find().pretty()
+
+> db.version()		查看mongoDB版本 
+> db.getMongo()		查看当前连接机器的ip
+> db.help()			查看命令提示 
+
+
 > db._adminCommand( {getCmdLineOpts: 1})		查看启动配置
 > db.runCommand({connectionStatus : 1})			查看当前登录用户
 > db.runCommand({hostInfo : 1})	
 
-> db			查看当前所在数据库的名字 
-> use zcx		表示切换或是创建数据库。就是当数据库不存在的时候，MongoDB中的use可以创建数据库。
-> show dbs		显示数据库
-> show collections	显示表
-> db.dropDatabase()	删除当前数据。
-> db.stats()		查看当前数据的状态 
-
-> show users		查看创建的用户 
-> db.system.users.find()
-> db.auth("admin","123456")		用户验证登录
-
-> db.version()		查看mongoDB版本 
-> db.getMongo()		查看当前连接机器的ip
-> db.help()		查看命令提示 
-
-# mongod --dbpath D:\MongoDB\db			启动mongodb服务并创建db目录和log文件. 浏览器输入http://localhost:27017 查看
-# mongod -f "D:\MongoDB\mongo.conf"     通过配置文件来启动mongo服务，配置文件需要自己创建
 
 mongodb 3.2开始 使用$lookup做多表关联处理
 

@@ -3,6 +3,7 @@
 
 select * from table
 into outfile "aa001.csv"
+CHARACTER SET utf8
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\n';

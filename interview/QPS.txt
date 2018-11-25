@@ -1,9 +1,5 @@
 
 
-
-
-
-
 TPS - Transactions Per Second（每秒传输的事物处理个数），即服务器每秒处理的事务数，如果是InnoDB会显示，没有InnoDB就不会显示。
 
 TPS = (COM_COMMIT + COM_ROLLBACK)/UPTIME
