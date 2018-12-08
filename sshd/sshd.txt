@@ -1,9 +1,10 @@
 
 ssh_config和sshd_config都是ssh服务器的配置文件，二者区别在于，前者是针对客户端的配置文件，后者则是针对服务端的配置文件。
 
-# ssh 218.241.10.158 -p14322 pwd
+# ssh 218.241.10.158 -p14322											ssh登陆不能在命令行中指定密码, 要用sshpass
 # ssh user@server bash < /path/to/local/script.sh 						在远程机器上运行一段脚本。这条命令最大的好处就是不用把脚本拷到远程机器上。
 # ssh user@host cat /path/to/remotefile | diff /path/to/localfile -  		比较一个远程文件和一个本地文件
+
 
 # ssh localhost														连接本机
 # ssh 203.124.15.248													如果本地用户名与远程用户名一致，登录时可以省略用户名。

@@ -5,9 +5,12 @@
 # last -6		
 # last -x|head
 
+
 # last reboot						查看系统重启记录
 # last -F reboot					显示详细日期
-# last shutdown					查看系统关机记录
+# last shutdown						查看系统关机记录
+
+# last -x shutdown					查看最近系统一次关机的时间
 
 # who -b						查看最近系统一次重启的时间
 # last reboot -10					查看最近系统10次重启的时间

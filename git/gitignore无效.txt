@@ -13,9 +13,9 @@ fd1/*　说明：忽略目录 fd1 下的全部内容；注意，不管是根目�
 
 
 因此，要想用gitignore忽略文件，必须先把它们从staged中移除：
-git rm -r --cached .
-git add .
-git commit -m 'update .gitignore'
+git rm -r --cached . ; git add . ; git commit -m 'update .gitignore'
+
+
 
 
 

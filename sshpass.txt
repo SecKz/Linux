@@ -1,0 +1,15 @@
+
+
+
+ssh登陆不能在命令行中指定密码。sshpass的出现，解决了这一问题。sshpass用于非交互SSH的密码验证，一般用在sh脚本中，无须再次输入密码。
+支持密码从命令行、文件、环境变量中读取
+
+使用 sshpass 是不安全的，因为所有系统上的用户在命令行中通过简单的 “ps” 命令就可看到密码
+sshpass 在用于脚本时才更可靠及更有用
+为了防止在屏幕上显示密码，可以使用 -e 标志，并将密码作为 SSHPASS 环境变量的值输入
+另外，也可以使用 -f 标志，并把密码放在一个文件中。 这样，您可以从文件中读取密码
+
+# sshpass -f password_filename ssh roo@host 'df -h'
+# sshpass -p 'my_pass_here' ssh roo@host 'df -h' 
+
+# sshpass -p {密码} ssh -p ${端口} {用户名}@{主机IP}
