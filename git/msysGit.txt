@@ -1,6 +1,7 @@
 
 # echo $HOME							查看家目录					
 # git config -l							查看配置
+# git config -l | grep user				查看用户
 # git config --global alias.ci commit		设置别名
 # git config -l | grep alias
 # git config --global push.default "current"		设置当前分支为默认push分支
