@@ -14,6 +14,7 @@ windows下git的配置文件C:\Users\Administrator\.gitconfig
 本地Git仓库和GitHub仓库之间的传输是通过SSH加密
 在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件
 把id_rsa.pub文件的内容添加到github
+# ls -al ~/.ssh										查看已存在的密匙
 # ssh-keygen -t rsa -C "260741887@qq.com"       	填写email地址，然后一直“回车”ok
 # ssh -T git@github.com           					 测试连接是否成功
 # ssh -T -p 443 git@ssh.github.com  					To test if SSH over the HTTPS port is possible
