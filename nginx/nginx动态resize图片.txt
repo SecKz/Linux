@@ -1,0 +1,15 @@
+
+
+# yum install nginx-module-image-filter					# 安装模块
+# load_module modules/ngx_http_image_filter_module.so;  # 在 nginx.conf http块外加上这行
+# nginx -s reload
+
+https://www.nginx.com/blog/responsive-images-without-headaches-nginx-plus/
+
+http_image_filter_module是nginx提供的集成图片处理模块，就可以用它实时缩放图片，旋转图片，验证图片有效性以及获取图片宽高以及图片类型信息，由于是即时计算的结果，所以网站访问量大的话，需要缓存图片，下次访问直接访问图片，不用再经过nginx-module-image-filter的耗时处理。
+
+
+The configuration described in Matching Image Size to Pixel Density can deliver any size variant of an image depending on the directory name used to request the image. However, for a production environment we don’t want to wait for the web server to resize images for each request. That is not good for overall latency and can also add significant CPU overhead.
+
+The most effective solution is to cache our resized image variants so that subsequent requests for each variant are served from the cache, without going through the Image‑Filter module. We can achieve this with NGINX Plus configuration by defining a separate virtual server that performs image resizing, and proxy requests to it only if the requested image size is not already in the cache. We call this the responsive image server.
+

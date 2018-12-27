@@ -1,7 +1,7 @@
 
 能够项github一样的创建仓库做团队协助。 
 对比了几个git-server。 gitlab gogs gitblit这几个工具。 
-gogs最适合。国人开发功能齐全。最关键的是跨平台。github上开源。golang编写。
+
 
 https://www.cnblogs.com/phpisbest/p/7000255.html
 https://blog.csdn.net/blogsun/article/details/54895589
@@ -10,8 +10,10 @@ Git服务器Gogs简易安装-Windows环境
 https://www.cnblogs.com/configure/p/7878501.html
 
 
-# ssh -T git@192.168.1.217           					 测试连接是否成功
-# ssh -T -p 443 git@ssh.github.com  					To test if SSH over the HTTPS port is possible
+# ssh -T -p 50099 git@45.63.122.222       			测试连接是否成功
+
+# git remote add origin ssh://git@45.63.122.222:50099/eric/cmorr.git
+# git push -u origin master
 
 修改gogs的配置
 直接修改文件/home/git/gogs/custom/conf，然后重启gogs  

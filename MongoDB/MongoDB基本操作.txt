@@ -77,10 +77,19 @@ db.collection.find().count(true)    count()返回结果集的条数
 db.collection.find().skip(5).limit(5).count(true)    在加入skip()和limit()这两个操作时，要获得实际返回的结果数，需要一个参数true，否则返回的是符合查询条件的结果总数
 
 
+
+
+mongodump导出的是bson格式，是二进制形式。此工具对于恢复整个实例、单个数据库、指定集合都十分有用。他们可以用于备份实时运行的数据库（无需锁住或者关闭数据库）。
+
+与mongodump相比，从功能上来讲，mongoexport可以细化到集合中的字段，可以根据需要只导出指定的字段。
+从文件格式上来看，不再是Bson格式的文件，而是直接可读的Json或CSV文件，容易被第三方程序读取利用。缺点就是备份性能减低了。
+
+ 
+
 导出
-mongoexport -h 127.0.0.1:27017 -u eric -p 123456 -d zcx -c users --out users.json	只导出集合的数据，不导出结构	
 mongodump -h 127.0.0.1:27017 -u eric -p 123456 -d zcx -c users -o zcx.json			导出集合的数据和结构	
 mongodump -h 127.0.0.1:27017 -u eric -p 123456 -d zcx -o zcx.json					导出数据库
+mongoexport -h 127.0.0.1:27017 -u eric -p 123456 -d zcx -c users --out users.json	只导出集合的数据，不导出结构	
 
 导入
 mongorestore -h 127.0.0.1:27017 -u eric -p 123456 -d zcx zcx.json/zcx		

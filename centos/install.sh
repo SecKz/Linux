@@ -129,7 +129,7 @@ cups=$(cat /proc/cpuinfo | grep "processor" | wc -l)
 
 green "CPU个数是 $cups"
 green "交换分区大小是 $Swap"
-[ -f '/root/centos/memory.sh' ] && /root/centos/memory.sh
+[ -f '/root/centos/swap.sh' ] && /root/centos/swap.sh
 
 #################################### 更改ssh端口
 
